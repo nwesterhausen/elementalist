@@ -3,7 +3,7 @@ use bevy::prelude::*;
 fn main() {
     App::new()
         // Load plugins
-        .add_plugins((DefaultPlugins, HelloPlugin))
+        .add_plugins((DefaultPlugins, HelloPlugin, PandaPlugin))
         // Run the app
         .run();
 }
@@ -21,6 +21,14 @@ fn add_people(mut commands: Commands) {
     commands.spawn((Person, Name("Elaina Proctor".to_string())));
     commands.spawn((Person, Name("Silly Sausage".to_string())));
     commands.spawn((Person, Name("John Doe".to_string())));
+}
+
+fn draw_panda(mut commands: Commands, asset_server: Res<AssetServer>) {
+    commands.spawn(Camera2dBundle::default());
+    commands.spawn(SpriteBundle {
+        texture: asset_server.load("panda.png"),
+        ..Default::default()
+    });
 }
 
 fn greet_people(time: Res<Time>, mut timer: ResMut<GreetTimer>, query: Query<&Name, With<Person>>) {
@@ -43,5 +51,13 @@ impl Plugin for HelloPlugin {
             .add_systems(Startup, add_people)
             // Update systems
             .add_systems(Update, greet_people);
+    }
+}
+
+pub struct PandaPlugin;
+
+impl Plugin for PandaPlugin {
+    fn build(&self, app: &mut App) {
+        app.add_systems(Startup, draw_panda);
     }
 }

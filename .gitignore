@@ -1,1 +1,4 @@
 /target
+
+# Using pnpm to grab icons, however we selectively copy them as we don't need all of them
+node_modules

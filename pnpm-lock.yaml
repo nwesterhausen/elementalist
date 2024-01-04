@@ -1,0 +1,22 @@
+lockfileVersion: '6.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+dependencies:
+  '@tabler/icons-png':
+    specifier: ^2.45.0
+    version: 2.45.0
+
+packages:
+
+  /@tabler/icons-png@2.45.0:
+    resolution: {integrity: sha512-sC1WTXDsbyjFkUnat1X8tYitljrta/oRpbbdgMtivST+9xIHPrln7Qsyj7J0DMuk8zeJU8HlZLenH7i54FR3Iw==}
+    dependencies:
+      '@tabler/icons': 2.45.0
+    dev: false
+
+  /@tabler/icons@2.45.0:
+    resolution: {integrity: sha512-J10UDghOni9wlrj5CpKAzychDCABCKYq897mGg0wGFsd+tYLaUdz0dt/HZeGnV8gZJo0hIiTPLGwBp5EW42Qsg==}
+    dev: false

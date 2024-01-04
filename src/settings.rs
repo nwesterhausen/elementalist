@@ -4,8 +4,8 @@ use bevy::prelude::*;
 pub struct SettingsPlugin;
 
 /// A sample setting that we have in our menu. It will be a resource that we can access from anywhere.
-#[derive(Clone, Copy, Default, Eq, PartialEq, Hash, Debug, Resource)]
-enum DisplayQuality {
+#[derive(Clone, Copy, Default, Eq, PartialEq, Hash, Debug, Resource, Component)]
+pub enum DisplayQuality {
     /// Low quality
     Low,
     #[default]
@@ -18,8 +18,8 @@ enum DisplayQuality {
 /// Another sample setting that we have in our menu. It will be a resource that we can access from anywhere.
 ///
 /// This is a volume setting, which is a `u32` between 0 and 100 (or expected to be).
-#[derive(Clone, Copy, Default, Eq, PartialEq, Hash, Debug, Resource)]
-struct Volume(u32);
+#[derive(Clone, Copy, Default, Eq, PartialEq, Hash, Debug, Resource, Component)]
+pub struct Volume(pub u32);
 
 impl Plugin for SettingsPlugin {
     fn build(&self, app: &mut App) {

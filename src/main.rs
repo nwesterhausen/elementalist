@@ -13,9 +13,13 @@
 
 use bevy::prelude::*;
 
+mod game;
+mod menu;
 mod player;
 mod settings;
 mod splash;
+
+const TEXT_COLOR: Color = Color::WHITE;
 
 /// Global game state enum
 #[derive(Clone, Copy, Default, Eq, PartialEq, Hash, Debug, States)]
@@ -40,7 +44,7 @@ fn main() {
         // Setup a 2d camera
         .add_systems(Startup, setup_camera)
         // Add plugins for each state ?
-        .add_plugins(splash::SplashPlugin)
+        .add_plugins((splash::SplashPlugin, menu::MenuPlugin, game::GamePlugin))
         // Run the app
         .run();
 }

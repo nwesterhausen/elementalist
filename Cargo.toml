@@ -9,6 +9,8 @@ edition = "2021"
 # When running the game in development, use the dynamic linking feature of Bevy to speed
 # up compilation times. `cargo run --features bevy/dynamic_linking` will enable this.
 bevy = "0.12.1"
+leafwing-input-manager = "0.11.2"
+tracing = "0.1.40"
 
 # Enable a small amount of optimization in debug mode
 [profile.dev]

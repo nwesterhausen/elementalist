@@ -13,38 +13,26 @@
 
 use bevy::prelude::*;
 
-mod game;
-mod menu;
+mod main_menu;
 mod player;
 mod settings;
 mod splash;
+mod state;
+
+pub use state::GameState;
 
 const TEXT_COLOR: Color = Color::WHITE;
-
-/// Global game state enum
-#[derive(Clone, Copy, Default, Eq, PartialEq, Hash, Debug, States)]
-enum GameState {
-    #[default]
-    /// Splash screen shown when loading the game assets, et al.
-    Splash,
-    /// The main menu
-    MainMenu,
-    /// Inside the game (a loaded game)
-    Game,
-    /// A specific run as part of the game (tracks progression on a wider scale)
-    SingleRun,
-}
 
 fn main() {
     App::new()
         // Load plugins
-        .add_plugins((DefaultPlugins, settings::SettingsPlugin))
+        .add_plugins((DefaultPlugins))
         // Declare the game state (starting value is always DEFAULT)
         .add_state::<GameState>()
         // Setup a 2d camera
         .add_systems(Startup, setup_camera)
         // Add plugins for each state ?
-        .add_plugins((splash::SplashPlugin, menu::MenuPlugin, game::GamePlugin))
+        .add_plugins((splash::Plugin, main_menu::Plugin))
         // Run the app
         .run();
 }

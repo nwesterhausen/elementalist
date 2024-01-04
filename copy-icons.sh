@@ -24,8 +24,8 @@ fi
 
 ## Declare the icons we want to copy
 declare -a arr=(
-	"arrow-badge-right.png",
-	"settings.png",
+	"arrow-badge-right.png"
+	"settings.png"
 	"door-exit.png"
 )
 

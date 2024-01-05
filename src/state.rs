@@ -16,6 +16,8 @@ pub enum GameState {
     InGameMenu,
     /// Game loading screen (if ever needed)
     GameLoading,
+    /// Clean up the game before exiting (save settings, etc.)
+    CleanUp,
 }
 
 impl GameState {

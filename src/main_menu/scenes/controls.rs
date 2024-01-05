@@ -15,12 +15,19 @@ pub fn controls_settings_setup(mut commands: Commands, asset_server: Res<AssetSe
         height: Val::Px(65.0),
         padding: UiRect::all(Val::Px(5.0)),
         align_items: AlignItems::Start,
+        justify_content: JustifyContent::SpaceBetween,
         ..default()
     };
     let button_text_style = TextStyle {
         font_size: 40.0,
         color: colors::TEXT,
         font: asset_server.load("ui/fonts/AlmendraDisplay-Regular.ttf"),
+        ..default()
+    };
+    let current_control_button_text_style = TextStyle {
+        font_size: 32.0,
+        color: Color::CRIMSON,
+        font: asset_server.load("ui/fonts/Almendra-Bold.ttf"),
         ..default()
     };
 
@@ -48,10 +55,14 @@ pub fn controls_settings_setup(mut commands: Commands, asset_server: Res<AssetSe
                         background_color: colors::NORMAL_BUTTON.into(),
                         ..default()
                     },
-                    ButtonAction::ControlsUp,
+                    ButtonAction::SetControlsUp,
                 ))
                 .with_children(|parent| {
                     parent.spawn(TextBundle::from_section("Up", button_text_style.clone()));
+                    parent.spawn(TextBundle::from_section(
+                        "W",
+                        current_control_button_text_style.clone(),
+                    ));
                 });
             parent
                 .spawn((
@@ -60,10 +71,14 @@ pub fn controls_settings_setup(mut commands: Commands, asset_server: Res<AssetSe
                         background_color: colors::NORMAL_BUTTON.into(),
                         ..default()
                     },
-                    ButtonAction::ControlsDown,
+                    ButtonAction::SetControlsDown,
                 ))
                 .with_children(|parent| {
                     parent.spawn(TextBundle::from_section("Down", button_text_style.clone()));
+                    parent.spawn(TextBundle::from_section(
+                        "S",
+                        current_control_button_text_style.clone(),
+                    ));
                 });
             parent
                 .spawn((
@@ -72,10 +87,14 @@ pub fn controls_settings_setup(mut commands: Commands, asset_server: Res<AssetSe
                         background_color: colors::NORMAL_BUTTON.into(),
                         ..default()
                     },
-                    ButtonAction::ControlsLeft,
+                    ButtonAction::SetControlsLeft,
                 ))
                 .with_children(|parent| {
                     parent.spawn(TextBundle::from_section("Left", button_text_style.clone()));
+                    parent.spawn(TextBundle::from_section(
+                        "A",
+                        current_control_button_text_style.clone(),
+                    ));
                 });
             parent
                 .spawn((
@@ -84,10 +103,14 @@ pub fn controls_settings_setup(mut commands: Commands, asset_server: Res<AssetSe
                         background_color: colors::NORMAL_BUTTON.into(),
                         ..default()
                     },
-                    ButtonAction::ControlsRight,
+                    ButtonAction::SetControlsRight,
                 ))
                 .with_children(|parent| {
                     parent.spawn(TextBundle::from_section("Right", button_text_style.clone()));
+                    parent.spawn(TextBundle::from_section(
+                        "D",
+                        current_control_button_text_style.clone(),
+                    ));
                 });
             parent
                 .spawn((
@@ -96,13 +119,17 @@ pub fn controls_settings_setup(mut commands: Commands, asset_server: Res<AssetSe
                         background_color: colors::NORMAL_BUTTON.into(),
                         ..default()
                     },
-                    ButtonAction::ControlsPrimaryCast,
+                    ButtonAction::SetControlsPrimaryCast,
                 ))
                 .with_children(|parent| {
                     parent.spawn(TextBundle::from_section(
                         "Primary Cast",
                         button_text_style.clone(),
                     ));
+                    parent.spawn(TextBundle::from_section(
+                        "Left Mouse Button",
+                        current_control_button_text_style.clone(),
+                    ));
                 });
             parent
                 .spawn((
@@ -111,13 +138,17 @@ pub fn controls_settings_setup(mut commands: Commands, asset_server: Res<AssetSe
                         background_color: colors::NORMAL_BUTTON.into(),
                         ..default()
                     },
-                    ButtonAction::ControlsSecondaryCast,
+                    ButtonAction::SetControlsSecondaryCast,
                 ))
                 .with_children(|parent| {
                     parent.spawn(TextBundle::from_section(
                         "Secondary Cast",
                         button_text_style.clone(),
                     ));
+                    parent.spawn(TextBundle::from_section(
+                        "Right Mouse Button",
+                        current_control_button_text_style.clone(),
+                    ));
                 });
             parent
                 .spawn((
@@ -126,13 +157,17 @@ pub fn controls_settings_setup(mut commands: Commands, asset_server: Res<AssetSe
                         background_color: colors::NORMAL_BUTTON.into(),
                         ..default()
                     },
-                    ButtonAction::ControlsDefensiveCast,
+                    ButtonAction::SetControlsDefensiveCast,
                 ))
                 .with_children(|parent| {
                     parent.spawn(TextBundle::from_section(
                         "Defensive Cast",
                         button_text_style.clone(),
                     ));
+                    parent.spawn(TextBundle::from_section(
+                        "Space",
+                        current_control_button_text_style.clone(),
+                    ));
                 });
             parent
                 .spawn((
@@ -141,13 +176,17 @@ pub fn controls_settings_setup(mut commands: Commands, asset_server: Res<AssetSe
                         background_color: colors::NORMAL_BUTTON.into(),
                         ..default()
                     },
-                    ButtonAction::ControlsUltimateCast,
+                    ButtonAction::SetControlsUltimateCast,
                 ))
                 .with_children(|parent| {
                     parent.spawn(TextBundle::from_section(
                         "Ultimate Cast",
                         button_text_style.clone(),
                     ));
+                    parent.spawn(TextBundle::from_section(
+                        "E",
+                        current_control_button_text_style.clone(),
+                    ));
                 });
             parent
                 .spawn((
@@ -156,24 +195,13 @@ pub fn controls_settings_setup(mut commands: Commands, asset_server: Res<AssetSe
                         background_color: colors::NORMAL_BUTTON.into(),
                         ..default()
                     },
-                    ButtonAction::ControlsPause,
+                    ButtonAction::SetControlsPause,
                 ))
                 .with_children(|parent| {
                     parent.spawn(TextBundle::from_section("Pause", button_text_style.clone()));
-                });
-            parent
-                .spawn((
-                    ButtonBundle {
-                        style: button_style.clone(),
-                        background_color: colors::NORMAL_BUTTON.into(),
-                        ..default()
-                    },
-                    ButtonAction::ControlsInteract,
-                ))
-                .with_children(|parent| {
                     parent.spawn(TextBundle::from_section(
-                        "Interact",
-                        button_text_style.clone(),
+                        "Tab",
+                        current_control_button_text_style.clone(),
                     ));
                 });
             parent
@@ -183,12 +211,16 @@ pub fn controls_settings_setup(mut commands: Commands, asset_server: Res<AssetSe
                         background_color: colors::NORMAL_BUTTON.into(),
                         ..default()
                     },
-                    ButtonAction::ControlsBack,
+                    ButtonAction::SetControlsAcceptInteract,
                 ))
                 .with_children(|parent| {
                     parent.spawn(TextBundle::from_section(
-                        "Cancel",
+                        "Interact/Accept",
                         button_text_style.clone(),
+                    ));
+                    parent.spawn(TextBundle::from_section(
+                        "F",
+                        current_control_button_text_style.clone(),
                     ));
                 });
             parent
@@ -198,27 +230,35 @@ pub fn controls_settings_setup(mut commands: Commands, asset_server: Res<AssetSe
                         background_color: colors::NORMAL_BUTTON.into(),
                         ..default()
                     },
-                    ButtonAction::ControlsAutoAttack,
+                    ButtonAction::SetControlsBackCancel,
+                ))
+                .with_children(|parent| {
+                    parent.spawn(TextBundle::from_section(
+                        "Cancel/Back",
+                        button_text_style.clone(),
+                    ));
+                    parent.spawn(TextBundle::from_section(
+                        "X",
+                        current_control_button_text_style.clone(),
+                    ));
+                });
+            parent
+                .spawn((
+                    ButtonBundle {
+                        style: button_style.clone(),
+                        background_color: colors::NORMAL_BUTTON.into(),
+                        ..default()
+                    },
+                    ButtonAction::SetControlsAutoAttack,
                 ))
                 .with_children(|parent| {
                     parent.spawn(TextBundle::from_section(
                         "Auto Attack",
                         button_text_style.clone(),
                     ));
-                });
-            parent
-                .spawn((
-                    ButtonBundle {
-                        style: button_style.clone(),
-                        background_color: colors::NORMAL_BUTTON.into(),
-                        ..default()
-                    },
-                    ButtonAction::ControlsAutoAim,
-                ))
-                .with_children(|parent| {
                     parent.spawn(TextBundle::from_section(
-                        "Auto Aim",
-                        button_text_style.clone(),
+                        "Q",
+                        current_control_button_text_style.clone(),
                     ));
                 });
             parent
@@ -228,10 +268,37 @@ pub fn controls_settings_setup(mut commands: Commands, asset_server: Res<AssetSe
                         background_color: colors::NORMAL_BUTTON.into(),
                         ..default()
                     },
-                    ButtonAction::ControlsReset,
+                    ButtonAction::SetControlsAutoAim,
                 ))
                 .with_children(|parent| {
-                    parent.spawn(TextBundle::from_section("Reset", button_text_style.clone()));
+                    parent.spawn(TextBundle::from_section(
+                        "Auto Aim",
+                        button_text_style.clone(),
+                    ));
+                    parent.spawn(TextBundle::from_section(
+                        "T",
+                        current_control_button_text_style.clone(),
+                    ));
+                });
+            parent
+                .spawn((
+                    ButtonBundle {
+                        style: button_style.clone(),
+                        background_color: colors::NORMAL_BUTTON.into(),
+                        ..default()
+                    },
+                    ButtonAction::ResetControlsToDefault,
+                ))
+                .with_children(|parent| {
+                    parent.spawn(TextBundle::from_section(
+                        "Reset to Defaults",
+                        TextStyle {
+                            font_size: 40.0,
+                            color: Color::GOLD,
+                            font: asset_server.load("ui/fonts/Almendra-Bold.ttf"),
+                            ..default()
+                        },
+                    ));
                 });
             parent
                 .spawn((
@@ -243,7 +310,15 @@ pub fn controls_settings_setup(mut commands: Commands, asset_server: Res<AssetSe
                     ButtonAction::BackToSettings,
                 ))
                 .with_children(|parent| {
-                    parent.spawn(TextBundle::from_section("Back", button_text_style.clone()));
+                    parent.spawn(TextBundle::from_section(
+                        "Back",
+                        TextStyle {
+                            font_size: 40.0,
+                            color: Color::ANTIQUE_WHITE,
+                            font: asset_server.load("ui/fonts/Almendra-Bold.ttf"),
+                            ..default()
+                        },
+                    ));
                 });
         });
 }

@@ -6,70 +6,80 @@ use super::{colors, tags::SelectedOption};
 #[derive(Component, Debug, Eq, PartialEq, Hash, Clone, Copy)]
 pub enum ButtonAction {
     /// Start the game
-    Play,
+    MainMenuPlay,
     /// Open the settings menu
-    Settings,
+    MainMenuSettings,
     /// Quit the game
-    Quit,
+    MainMenuQuit,
     /// Go back to the main menu screen
-    BackToMain,
+    BackToMainMenu,
     /// Go back to the settings screen
     BackToSettings,
     // Settings sub-menu
     /// Open the display settings sub-menu
-    DisplaySettings,
+    SettingsDisplay,
     /// Open the sound settings sub-menu
-    SoundSettings,
+    SettingsSound,
     /// Open the controls settings sub-menu
-    ControlsSettings,
+    SettingsControls,
     /// Open the gameplay settings sub-menu
-    GameplaySettings,
+    SettingsGameplay,
     // Display sub-sub-menu
     /// Set the display quality
-    DisplayQuality,
+    SetDisplayQuality,
     // Sound sub-sub-menu
-    /// Set the master volume
-    VolumeLevel,
+    /// Set the game volume
+    SetGameVolume(u32),
+    /// Set the music volume
+    SetMusicVolume(u32),
+    /// Set the sound effects volume
+    SetSoundEffectsVolume(u32),
+    /// Toggle whether or not game audio is muted
+    SetGameMuted,
+    /// Toggle whether or not music is muted
+    SetMusicMuted,
+    /// Toggle whether or not sound effects are muted
+    SetSoundEffectsMuted,
     // Controls sub-sub-menu
     /// Reset all controls to their default values
-    ControlsReset,
+    ResetControlsToDefault,
     /// Set what button should be used to move up
-    ControlsUp,
+    SetControlsUp,
     /// Set what button should be used to move down
-    ControlsDown,
+    SetControlsDown,
     /// Set what button should be used to move left
-    ControlsLeft,
+    SetControlsLeft,
     /// Set what button should be used to move right
-    ControlsRight,
+    SetControlsRight,
     /// Set what button should be used to cast the primary spell
-    ControlsPrimaryCast,
+    SetControlsPrimaryCast,
     /// Set what button should be used to cast the secondary spell
-    ControlsSecondaryCast,
+    SetControlsSecondaryCast,
     /// Set what button should be used to cast the defensive spell
-    ControlsDefensiveCast,
+    SetControlsDefensiveCast,
     /// Set what button should be used to cast the ultimate spell
-    ControlsUltimateCast,
+    SetControlsUltimateCast,
     /// Set what button should be used to pause the game
-    ControlsPause,
+    SetControlsPause,
     /// Set what button should be used to interact with the environment / menus
-    ControlsInteract,
+    SetControlsAcceptInteract,
     /// Set what button should be used to go back
-    ControlsBack,
+    SetControlsBackCancel,
     /// Set what button should be used to toggle auto-attack
-    ControlsAutoAttack,
+    SetControlsAutoAttack,
     /// Set what button should be used to toggle auto-aim
-    ControlsAutoAim,
+    SetControlsAutoAim,
     // Gameplay sub-sub-menu
     /// Should the game automatically cast the primary when it is ready (if auto-aim is enabled, only when a target is found)?
-    GameplayAutoCastPrimary,
+    SetGameplayAutoCastPrimary,
     /// Should the game automatically cast the secondary when it is ready (if auto-aim is enabled, only when a target is found)?
-    GameplayAutoCastSecondary,
+    SetGameplayAutoCastSecondary,
     /// Should the game automatically cast the defensive when it is ready?
-    GameplayAutoCastDefensive,
+    SetGameplayAutoCastDefensive,
     /// Should the game automatically cast the ultimate when it is ready?
-    GameplayAutoCastUltimate,
+    SetGameplayAutoCastUltimate,
     /// Change the current save game (either reset or load)
-    GameplayChangeSaveGame,
+    SetGameplayChangeSaveGame,
 }
 
 /// This system handles changing all buttons color based on mouse interaction
@@ -93,7 +103,7 @@ pub fn button_system(
 
 /// This system updates the settings when a new value for a setting is selected, and marks
 /// the button as the one currently selected
-pub fn setting_button<T: Resource + Component + PartialEq + Copy>(
+pub fn setting_button<T: Resource + Component + PartialEq + Copy + std::fmt::Debug>(
     interaction_query: Query<(&Interaction, &T, Entity), (Changed<Interaction>, With<Button>)>,
     mut selected_query: Query<(Entity, &mut BackgroundColor), With<SelectedOption>>,
     mut commands: Commands,

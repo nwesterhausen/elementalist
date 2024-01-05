@@ -44,7 +44,7 @@ pub fn settings_menu_setup(mut commands: Commands, asset_server: Res<AssetServer
                         background_color: colors::NORMAL_BUTTON.into(),
                         ..default()
                     },
-                    ButtonAction::SoundSettings,
+                    ButtonAction::SettingsSound,
                 ))
                 .with_children(|parent| {
                     parent.spawn(TextBundle::from_section("Sound", button_text_style.clone()));
@@ -56,7 +56,7 @@ pub fn settings_menu_setup(mut commands: Commands, asset_server: Res<AssetServer
                         background_color: colors::NORMAL_BUTTON.into(),
                         ..default()
                     },
-                    ButtonAction::DisplaySettings,
+                    ButtonAction::SettingsDisplay,
                 ))
                 .with_children(|parent| {
                     parent.spawn(TextBundle::from_section(
@@ -71,7 +71,7 @@ pub fn settings_menu_setup(mut commands: Commands, asset_server: Res<AssetServer
                         background_color: colors::NORMAL_BUTTON.into(),
                         ..default()
                     },
-                    ButtonAction::ControlsSettings,
+                    ButtonAction::SettingsControls,
                 ))
                 .with_children(|parent| {
                     parent.spawn(TextBundle::from_section(
@@ -86,7 +86,7 @@ pub fn settings_menu_setup(mut commands: Commands, asset_server: Res<AssetServer
                         background_color: colors::NORMAL_BUTTON.into(),
                         ..default()
                     },
-                    ButtonAction::GameplaySettings,
+                    ButtonAction::SettingsGameplay,
                 ))
                 .with_children(|parent| {
                     parent.spawn(TextBundle::from_section(
@@ -102,7 +102,7 @@ pub fn settings_menu_setup(mut commands: Commands, asset_server: Res<AssetServer
                         background_color: colors::NORMAL_BUTTON.into(),
                         ..default()
                     },
-                    ButtonAction::BackToMain,
+                    ButtonAction::BackToMainMenu,
                 ))
                 .with_children(|parent| {
                     parent.spawn(TextBundle::from_section("Back", button_text_style.clone()));

@@ -77,7 +77,7 @@ pub fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                                 background_color: colors::NORMAL_BUTTON.into(),
                                 ..default()
                             },
-                            ButtonAction::Play,
+                            ButtonAction::MainMenuPlay,
                         ))
                         .with_children(|parent| {
                             parent.spawn(TextBundle::from_section(
@@ -92,7 +92,7 @@ pub fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                                 background_color: colors::NORMAL_BUTTON.into(),
                                 ..default()
                             },
-                            ButtonAction::Settings,
+                            ButtonAction::MainMenuSettings,
                         ))
                         .with_children(|parent| {
                             parent.spawn(TextBundle::from_section(
@@ -107,7 +107,7 @@ pub fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                                 background_color: colors::NORMAL_BUTTON.into(),
                                 ..default()
                             },
-                            ButtonAction::Quit,
+                            ButtonAction::MainMenuQuit,
                         ))
                         .with_children(|parent| {
                             parent

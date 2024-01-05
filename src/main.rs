@@ -13,6 +13,8 @@
 
 use bevy::prelude::*;
 
+use bevy_pkv::PkvStore;
+
 mod main_menu;
 mod player;
 mod settings;
@@ -40,11 +42,9 @@ fn main() {
         }))
         // Declare the game state (starting value is always DEFAULT)
         .add_state::<GameState>()
-        // Add resources for default settings.
-        // Todo: Move setting defaults to a settings plugin
-        // Todo: Make that plugin load settings from a file (and save them to a file)
-        .insert_resource(settings::VideoSettings::DisplayQuality::Medium)
-        .insert_resource(settings::AudioSettings::Volume(7))
+        // Add a persistent key-value store for settings, etc.
+        .insert_resource(PkvStore::new("nwest.games", "elementalist"))
+        .add_plugins(settings::SettingsPlugin)
         // Setup a 2d camera
         .add_systems(Startup, setup_camera)
         // Add plugins for each state ?

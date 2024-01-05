@@ -6,7 +6,7 @@ use super::scenes;
 use super::tags;
 use super::MenuState;
 use crate::despawn_screen;
-use crate::settings::AudioSettings;
+use crate::settings::AudioSettingsBundle;
 use crate::settings::VideoSettings;
 use crate::GameState;
 
@@ -62,7 +62,7 @@ impl Plugin for MainMenuPlugin {
             )
             .add_systems(
                 Update,
-                (buttons::setting_button::<AudioSettings::Volume>
+                (buttons::setting_button::<AudioSettingsBundle>
                     .run_if(in_state(MenuState::SettingsSound))),
             )
             .add_systems(
@@ -105,25 +105,25 @@ fn menu_action(
     for (interaction, menu_button_action) in &interaction_query {
         if *interaction == Interaction::Pressed {
             match menu_button_action {
-                ButtonAction::Quit => app_exit_events.send(AppExit),
-                ButtonAction::Play => {
+                ButtonAction::MainMenuQuit => app_exit_events.send(AppExit),
+                ButtonAction::MainMenuPlay => {
                     game_state.set(GameState::Game);
                     menu_state.set(MenuState::Disabled);
                 }
-                ButtonAction::Settings => menu_state.set(MenuState::Settings),
-                ButtonAction::DisplaySettings => {
+                ButtonAction::MainMenuSettings => menu_state.set(MenuState::Settings),
+                ButtonAction::SettingsDisplay => {
                     menu_state.set(MenuState::SettingsDisplay);
                 }
-                ButtonAction::SoundSettings => {
+                ButtonAction::SettingsSound => {
                     menu_state.set(MenuState::SettingsSound);
                 }
-                ButtonAction::ControlsSettings => {
+                ButtonAction::SettingsControls => {
                     menu_state.set(MenuState::SettingsControls);
                 }
-                ButtonAction::GameplaySettings => {
+                ButtonAction::SettingsGameplay => {
                     menu_state.set(MenuState::SettingsGameplay);
                 }
-                ButtonAction::BackToMain => {
+                ButtonAction::BackToMainMenu => {
                     menu_state.set(MenuState::Main);
                 }
                 ButtonAction::BackToSettings => {

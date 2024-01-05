@@ -1,12 +1,12 @@
 use bevy::prelude::*;
 
-use crate::settings::AudioSettings::Volume;
+use crate::settings::{AudioSettingsBundle, Volume};
 
 use super::super::{buttons::ButtonAction, colors, tags};
 
 pub fn sound_settings_setup(
     mut commands: Commands,
-    volume: Res<Volume>,
+    volume: Res<AudioSettingsBundle>,
     asset_server: Res<AssetServer>,
 ) {
     let button_style = Style {
@@ -64,7 +64,7 @@ pub fn sound_settings_setup(
                                 "Volume",
                                 button_text_style.clone(),
                             ));
-                            for volume_setting in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] {
+                            for volume_setting in [0, 11, 22, 33, 44, 55, 66, 77, 88, 99] {
                                 let mut entity = parent.spawn((
                                     ButtonBundle {
                                         style: Style {
@@ -75,9 +75,9 @@ pub fn sound_settings_setup(
                                         background_color: Color::GRAY.into(),
                                         ..default()
                                     },
-                                    Volume(volume_setting),
+                                    Volume::from(volume_setting),
                                 ));
-                                if *volume == Volume(volume_setting) {
+                                if volume.game_volume.value == volume_setting {
                                     entity.insert(tags::SelectedOption);
                                 }
                             }

@@ -2,3 +2,6 @@
 
 # Using pnpm to grab icons, however we selectively copy them as we don't need all of them
 node_modules
+
+# use .vscode for workstation specific settings..
+.vscode

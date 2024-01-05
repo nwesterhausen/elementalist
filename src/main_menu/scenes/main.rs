@@ -13,15 +13,7 @@ pub fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
         height: Val::Px(65.0),
         margin: UiRect::all(Val::Px(20.0)),
         justify_content: JustifyContent::Center,
-        align_items: AlignItems::Center,
-        ..default()
-    };
-    let button_icon_style = Style {
-        width: Val::Px(30.0),
-        // This takes the icons out of the flexbox flow, to be positioned exactly
-        position_type: PositionType::Absolute,
-        // The icon will be close to the left border of the button
-        left: Val::Px(10.0),
+        align_items: AlignItems::Start,
         ..default()
     };
     let button_text_style = TextStyle {
@@ -88,12 +80,6 @@ pub fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                             ButtonAction::Play,
                         ))
                         .with_children(|parent| {
-                            let icon = asset_server.load("ui/icons/arrow-badge-right.png");
-                            parent.spawn(ImageBundle {
-                                style: button_icon_style.clone(),
-                                image: UiImage::new(icon),
-                                ..default()
-                            });
                             parent.spawn(TextBundle::from_section(
                                 "New Game",
                                 button_text_style.clone(),
@@ -109,12 +95,6 @@ pub fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                             ButtonAction::Settings,
                         ))
                         .with_children(|parent| {
-                            let icon = asset_server.load("ui/icons/settings.png");
-                            parent.spawn(ImageBundle {
-                                style: button_icon_style.clone(),
-                                image: UiImage::new(icon),
-                                ..default()
-                            });
                             parent.spawn(TextBundle::from_section(
                                 "Settings",
                                 button_text_style.clone(),
@@ -130,12 +110,6 @@ pub fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                             ButtonAction::Quit,
                         ))
                         .with_children(|parent| {
-                            let icon = asset_server.load("ui/icons/door-exit.png");
-                            parent.spawn(ImageBundle {
-                                style: button_icon_style,
-                                image: UiImage::new(icon),
-                                ..default()
-                            });
                             parent
                                 .spawn(TextBundle::from_section("Quit", button_text_style.clone()));
                         });

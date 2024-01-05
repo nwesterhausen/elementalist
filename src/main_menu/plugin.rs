@@ -6,6 +6,8 @@ use super::scenes;
 use super::tags;
 use super::MenuState;
 use crate::despawn_screen;
+use crate::settings::AudioSettings;
+use crate::settings::VideoSettings;
 use crate::GameState;
 
 /// The main menu plugin. This plugin is responsible for setting up the main menu.
@@ -45,6 +47,11 @@ impl Plugin for MainMenuPlugin {
                 scenes::display_settings_setup,
             )
             .add_systems(
+                Update,
+                (buttons::setting_button::<VideoSettings::DisplayQuality>
+                    .run_if(in_state(MenuState::SettingsDisplay))),
+            )
+            .add_systems(
                 OnExit(MenuState::SettingsDisplay),
                 despawn_screen::<tags::OnDisplaySettingsMenuScreen>,
             )
@@ -52,6 +59,11 @@ impl Plugin for MainMenuPlugin {
             .add_systems(
                 OnEnter(MenuState::SettingsSound),
                 scenes::sound_settings_setup,
+            )
+            .add_systems(
+                Update,
+                (buttons::setting_button::<AudioSettings::Volume>
+                    .run_if(in_state(MenuState::SettingsSound))),
             )
             .add_systems(
                 OnExit(MenuState::SettingsSound),
@@ -104,6 +116,12 @@ fn menu_action(
                 }
                 ButtonAction::SoundSettings => {
                     menu_state.set(MenuState::SettingsSound);
+                }
+                ButtonAction::ControlsSettings => {
+                    menu_state.set(MenuState::SettingsControls);
+                }
+                ButtonAction::GameplaySettings => {
+                    menu_state.set(MenuState::SettingsGameplay);
                 }
                 ButtonAction::BackToMain => {
                     menu_state.set(MenuState::Main);

@@ -51,6 +51,8 @@ pub enum ButtonAction {
     ControlsUltimateCast,
     /// Set what button should be used to pause the game
     ControlsPause,
+    /// Set what button should be used to interact with the environment / menus
+    ControlsInteract,
     /// Set what button should be used to go back
     ControlsBack,
     /// Set what button should be used to toggle auto-attack

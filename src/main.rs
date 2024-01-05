@@ -21,14 +21,30 @@ mod state;
 
 pub use state::GameState;
 
-const TEXT_COLOR: Color = Color::WHITE;
-
 fn main() {
     App::new()
+        .insert_resource(ClearColor(Color::BLACK))
         // Load plugins
-        .add_plugins((DefaultPlugins))
+        .add_plugins(DefaultPlugins.set(WindowPlugin {
+            primary_window: Some(Window {
+                title: "Elementalist".to_string(),
+                resolution: (1280.0, 720.0).into(),
+                present_mode: bevy::window::PresentMode::AutoVsync,
+                enabled_buttons: bevy::window::EnabledButtons {
+                    maximize: false,
+                    ..Default::default()
+                },
+                ..Default::default()
+            }),
+            ..Default::default()
+        }))
         // Declare the game state (starting value is always DEFAULT)
         .add_state::<GameState>()
+        // Add resources for default settings.
+        // Todo: Move setting defaults to a settings plugin
+        // Todo: Make that plugin load settings from a file (and save them to a file)
+        .insert_resource(settings::VideoSettings::DisplayQuality::Medium)
+        .insert_resource(settings::AudioSettings::Volume(7))
         // Setup a 2d camera
         .add_systems(Startup, setup_camera)
         // Add plugins for each state ?

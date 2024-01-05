@@ -4,7 +4,7 @@ use bevy::prelude::*;
 pub const TEXT: Color = Color::rgb(0.9, 0.9, 0.9);
 
 /// The color of the buttons in the menu
-pub const NORMAL_BUTTON: Color = Color::rgb(0.15, 0.15, 0.15);
+pub const NORMAL_BUTTON: Color = Color::rgba(0.15, 0.15, 0.15, 0.0);
 /// The color of the buttons in the menu when hovered
 pub const HOVERED_BUTTON: Color = Color::rgb(0.25, 0.25, 0.25);
 /// The color of the buttons in the menu when pressed and hovered

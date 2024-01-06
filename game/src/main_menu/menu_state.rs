@@ -5,8 +5,8 @@ use bevy::prelude::*;
 pub enum MenuState {
     Main,
     Settings,
-    SettingsDisplay,
-    SettingsSound,
+    SettingsAudio,
+    SettingsVideo,
     SettingsControls,
     SettingsGameplay,
     #[default]

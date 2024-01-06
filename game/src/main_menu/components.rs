@@ -10,11 +10,11 @@ pub struct OnSettingsMenuScreen;
 
 // Tag component used to tag entities added on the display settings menu screen
 #[derive(Component)]
-pub struct OnDisplaySettingsMenuScreen;
+pub struct OnVideoSettingsMenuScreen;
 
 // Tag component used to tag entities added on the sound settings menu screen
 #[derive(Component)]
-pub struct OnSoundSettingsMenuScreen;
+pub struct OnAudioSettingsMenuScreen;
 
 /// Tag component used to tag entities added on the controls settings menu screen
 #[derive(Component)]

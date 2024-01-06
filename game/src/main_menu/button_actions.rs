@@ -6,4 +6,10 @@ pub enum ButtonAction {
     StartGame,
     Settings,
     Quit,
+    BackToMenu,
+    BackToSettings,
+    SettingsAudio,
+    SettingsVideo,
+    SettingsControls,
+    SettingsGameplay,
 }

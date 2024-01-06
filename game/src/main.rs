@@ -46,7 +46,10 @@ fn main() {
         // Add a persistent key-value store for settings, etc.
         .insert_resource(PkvStore::new("nwest.games", "elementalist"))
         // Add Camera
-        .add_systems(Startup, app_systems::setup_camera)
+        .add_systems(
+            Startup,
+            (app_systems::setup_camera, app_systems::add_game_descriptor),
+        )
         // Add plugins for splash screen and menu
         .add_plugins((splash_screen::SplashScreenPlugin, main_menu::MainMenuPlugin))
         // Launch

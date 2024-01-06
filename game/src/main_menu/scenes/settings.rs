@@ -1,12 +1,12 @@
 use bevy::prelude::*;
 
-use crate::main_menu::{button_actions::ButtonAction, components::OnMainMenuScreen};
+use crate::main_menu::{button_actions::ButtonAction, components::OnSettingsMenuScreen};
 
 /// System to setup the main menu screen
 ///
 /// When the main menu screen is entered, we spawn the main menu entities. This includes the
 /// background, the title, and the buttons.
-pub fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
+pub fn settings_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     // Common style for all buttons on the screen
     let button_style = Style {
         margin: UiRect::px(10., 10., 0., 20.),
@@ -34,16 +34,16 @@ pub fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                 },
                 ..default()
             },
-            OnMainMenuScreen,
+            OnSettingsMenuScreen,
         ))
         .with_children(|parent| {
             // Game Title
             parent.spawn(TextBundle {
                 text: Text::from_section(
-                    "Elementalist",
+                    "Settings",
                     TextStyle {
-                        font: asset_server.load("ui/fonts/Almendra-Bold.ttf"),
-                        font_size: 112.0,
+                        font: asset_server.load("ui/fonts/AlmendraDisplay-Regular.ttf"),
+                        font_size: 72.0,
                         color: Color::WHITE,
                     },
                 ),
@@ -66,7 +66,7 @@ pub fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                     ..default()
                 })
                 .with_children(|menu_buttons| {
-                    // New Game Button
+                    // Audio button
                     menu_buttons
                         .spawn((
                             ButtonBundle {
@@ -74,16 +74,15 @@ pub fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                                 background_color: Color::NONE.into(),
                                 ..default()
                             },
-                            ButtonAction::StartGame,
+                            ButtonAction::SettingsAudio,
                         ))
                         .with_children(|button| {
                             button.spawn(TextBundle::from_section(
-                                "Start",
+                                "Audio",
                                 button_text_style.clone(),
                             ));
                         });
-
-                    // Settings Button
+                    // Video button
                     menu_buttons
                         .spawn((
                             ButtonBundle {
@@ -91,16 +90,15 @@ pub fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                                 background_color: Color::NONE.into(),
                                 ..default()
                             },
-                            ButtonAction::Settings,
+                            ButtonAction::SettingsVideo,
                         ))
                         .with_children(|button| {
                             button.spawn(TextBundle::from_section(
-                                "Settings",
+                                "Video",
                                 button_text_style.clone(),
                             ));
                         });
-
-                    // Quit Button
+                    // Controls button
                     menu_buttons
                         .spawn((
                             ButtonBundle {
@@ -108,11 +106,43 @@ pub fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                                 background_color: Color::NONE.into(),
                                 ..default()
                             },
-                            ButtonAction::Quit,
+                            ButtonAction::SettingsControls,
+                        ))
+                        .with_children(|button| {
+                            button.spawn(TextBundle::from_section(
+                                "Controls",
+                                button_text_style.clone(),
+                            ));
+                        });
+                    // Gameplay button
+                    menu_buttons
+                        .spawn((
+                            ButtonBundle {
+                                style: button_style.clone(),
+                                background_color: Color::NONE.into(),
+                                ..default()
+                            },
+                            ButtonAction::SettingsGameplay,
+                        ))
+                        .with_children(|button| {
+                            button.spawn(TextBundle::from_section(
+                                "Gameplay",
+                                button_text_style.clone(),
+                            ));
+                        });
+                    // Back button (=> main menu)
+                    menu_buttons
+                        .spawn((
+                            ButtonBundle {
+                                style: button_style.clone(),
+                                background_color: Color::NONE.into(),
+                                ..default()
+                            },
+                            ButtonAction::BackToMenu,
                         ))
                         .with_children(|button| {
                             button
-                                .spawn(TextBundle::from_section("Quit", button_text_style.clone()));
+                                .spawn(TextBundle::from_section("Back", button_text_style.clone()));
                         });
                 });
         });

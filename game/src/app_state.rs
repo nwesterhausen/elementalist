@@ -1,4 +1,7 @@
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+use bevy::prelude::*;
+
+/// The state of the game (broadly)
+#[derive(Default, Debug, Clone, Copy, PartialEq, Eq, Hash, States)]
 pub enum AppState {
     /// First boot, loading assets etc
     ///

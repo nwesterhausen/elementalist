@@ -2,8 +2,13 @@
 name = "elementalist"
 version = "0.1.0"
 edition = "2021"
+build = "build.rs"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[build-dependencies.built]
+version = "0.7"
+features = ["git2"]
 
 [dependencies]
 # When running the game in development, use the dynamic linking feature of Bevy to speed
@@ -14,11 +19,3 @@ leafwing-input-manager = "0.11.2"
 serde = "1.0.194"
 tracing = "0.1.40"
 game_library = { path = "../game_library" }
-
-# Enable a small amount of optimization in debug mode
-[profile.dev]
-opt-level = 1
-
-# Enable high optimizations for dependencies (incl. Bevy), but not for our code:
-[profile.dev.package."*"]
-opt-level = 3

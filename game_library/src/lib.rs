@@ -12,7 +12,9 @@
 #![deny(unsafe_code)]
 
 mod attribute;
+mod experience;
 mod volume;
 
 pub use attribute::Attribute;
+pub use experience::Xp;
 pub use volume::Volume;

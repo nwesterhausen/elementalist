@@ -16,7 +16,9 @@ use bevy::prelude::*;
 mod app_info;
 mod app_state;
 mod app_systems;
+mod events;
 mod game;
+mod input;
 mod main_menu;
 mod splash_screen;
 
@@ -53,6 +55,8 @@ fn main() {
         )
         // Add plugins for splash screen and menu
         .add_plugins((splash_screen::SplashScreenPlugin, main_menu::MainMenuPlugin))
+        // Add input handling
+        .add_systems(PreUpdate, input::keyboard_input_system)
         // Launch
         .run();
 }

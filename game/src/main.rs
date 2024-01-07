@@ -11,20 +11,24 @@
 )]
 #![deny(unsafe_code)]
 
+use app_systems::spawn_player;
 use bevy::prelude::*;
 
 mod app_info;
 mod app_state;
 mod app_systems;
+mod entities;
 mod events;
 mod game;
-mod input;
 mod main_menu;
 mod splash_screen;
 
 pub use app_state::AppState;
 pub use app_systems::despawn_screen;
 use bevy_pkv::PkvStore;
+use entities::Player;
+use events::{player_aim_at_cursor, MenuInteraction, PlayerAction};
+use leafwing_input_manager::{action_state::ActionState, plugin::InputManagerPlugin};
 
 fn main() {
     App::new()
@@ -55,8 +59,60 @@ fn main() {
         )
         // Add plugins for splash screen and menu
         .add_plugins((splash_screen::SplashScreenPlugin, main_menu::MainMenuPlugin))
-        // Add input handling
-        .add_systems(PreUpdate, input::keyboard_input_system)
+        // Add input processing
+        .add_plugins((
+            InputManagerPlugin::<PlayerAction>::default(),
+            InputManagerPlugin::<MenuInteraction>::default(),
+        ))
+        // Spawn player (user controller)
+        .add_systems(Startup, spawn_player)
+        // Handle player inputs
+        .add_systems(
+            Update,
+            (
+                player_aim_at_cursor,
+                handle_input_test.after(player_aim_at_cursor),
+            ),
+        )
         // Launch
         .run();
+}
+
+fn handle_input_test(query: Query<&ActionState<PlayerAction>, With<Player>>) {
+    let action_state = query.single();
+    if action_state.pressed(PlayerAction::Move) {
+        if let Some(axis_pair) = action_state.clamped_axis_pair(PlayerAction::Move) {
+            println!("Move: {:?}", axis_pair);
+        } else {
+            println!("Move");
+        }
+    }
+    if action_state.pressed(PlayerAction::Look) {
+        if let Some(axis_pair) = action_state.clamped_axis_pair(PlayerAction::Look) {
+            println!("Look: {:?}", axis_pair);
+        } else {
+            println!("Look");
+        }
+    }
+    if action_state.just_pressed(PlayerAction::CastPrimary) {
+        println!("CastPrimary");
+    }
+    if action_state.just_pressed(PlayerAction::CastSecondary) {
+        println!("CastSecondary");
+    }
+    if action_state.just_pressed(PlayerAction::CastDefensive) {
+        println!("CastDefensive");
+    }
+    if action_state.just_pressed(PlayerAction::CastUltimate) {
+        println!("CastUltimate");
+    }
+    if action_state.just_pressed(PlayerAction::ToggleAutoCast) {
+        println!("ToggleAutoCast");
+    }
+    if action_state.just_pressed(PlayerAction::ToggleAutoAim) {
+        println!("ToggleAutoAim");
+    }
+    if action_state.just_pressed(PlayerAction::Interact) {
+        println!("Interact");
+    }
 }

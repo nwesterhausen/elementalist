@@ -1,6 +1,7 @@
 use bevy::prelude::*;
+use leafwing_input_manager::{action_state::ActionState, InputManagerBundle};
 
-use crate::app_info;
+use crate::{app_info, entities::Player, events::PlayerAction};
 
 /// Spawns a basic camera
 pub fn setup_camera(mut commands: Commands) {
@@ -33,4 +34,17 @@ pub fn add_game_descriptor(mut commands: Commands, asset_server: Res<AssetServer
         },
         ..default()
     });
+}
+
+/// Spawns the player entity
+pub fn spawn_player(mut commands: Commands) {
+    commands
+        .spawn(InputManagerBundle::<PlayerAction> {
+            // What actions are currently pressed
+            action_state: ActionState::default(),
+            // Describes how to convert input into actions
+            input_map: PlayerAction::default_input_map(),
+        })
+        // Add the player component
+        .insert(Player);
 }

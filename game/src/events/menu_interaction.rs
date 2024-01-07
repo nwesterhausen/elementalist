@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use leafwing_input_manager::prelude::*;
+use leafwing_input_manager::{prelude::*, user_input::InputKind};
 
 /// Actions that can be taken in the menu.
 #[derive(Actionlike, PartialEq, Eq, Clone, Copy, Hash, Debug, Reflect)]
@@ -28,4 +28,33 @@ pub enum MenuAction {
     /// - Pressed while nothing is selected should go back to the previous menu (or exit)
     /// - Pressed while a menu item is selected should cancel the selection.
     Back,
+}
+
+impl MenuAction {
+    /// Returns the default keybinds for this action on keyboard & mouse.
+    pub fn default_keyboard_mouse_input(&self) -> UserInput {
+        match self {
+            MenuAction::Up => UserInput::Single(InputKind::Keyboard(KeyCode::W)),
+            MenuAction::Down => UserInput::Single(InputKind::Keyboard(KeyCode::S)),
+            MenuAction::Select => UserInput::Single(InputKind::Keyboard(KeyCode::F)),
+            MenuAction::Back => UserInput::Single(InputKind::Keyboard(KeyCode::X)),
+        }
+    }
+    /// Returns the default gamepad input for this action.
+    pub fn default_gamepad_input(&self) -> UserInput {
+        match self {
+            MenuAction::Up => {
+                UserInput::Single(InputKind::GamepadButton(GamepadButtonType::DPadUp))
+            }
+            MenuAction::Down => {
+                UserInput::Single(InputKind::GamepadButton(GamepadButtonType::DPadDown))
+            }
+            MenuAction::Select => {
+                UserInput::Single(InputKind::GamepadButton(GamepadButtonType::East))
+            }
+            MenuAction::Back => {
+                UserInput::Single(InputKind::GamepadButton(GamepadButtonType::South))
+            }
+        }
+    }
 }

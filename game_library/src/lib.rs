@@ -11,6 +11,8 @@
 )]
 #![deny(unsafe_code)]
 
+mod attribute;
 mod volume;
 
+pub use attribute::Attribute;
 pub use volume::Volume;

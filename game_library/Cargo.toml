@@ -8,3 +8,4 @@ edition = "2021"
 [dependencies]
 bevy = "0.12.1"
 serde = "1.0.195"
+tracing = "0.1.40"

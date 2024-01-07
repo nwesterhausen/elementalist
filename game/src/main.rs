@@ -16,6 +16,7 @@ use bevy::prelude::*;
 mod app_info;
 mod app_state;
 mod app_systems;
+mod game;
 mod main_menu;
 mod splash_screen;
 

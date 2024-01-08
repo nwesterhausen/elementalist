@@ -49,19 +49,9 @@ Each school of magic will have its own level that grows when casting, doing dama
 
 ## Magic Deep Dive
 
-Ideas for spells and upgrades.
+Ideas for spells and upgrades (see [game_data](../game_data/README.md))
 
 ### Fire
-
-One of the most basic elements -- everything burns. Or at least you can try to burn everything.
-
-| Spell Name | Casting Mode | Mana Cost | Description | Flags |
-| ---------- | ------------ | --------- | ----------- | ----- |
-| Fire bolt | Primary       | 0 | Propel a mote of flame at your target | Projectile |
-| Burning Touch | Primary   | 0 | Ignite a target by touch | Touch |
-| Flame Burst | Secondary   | 1 | Send a cone of flames out away from you | Cone, Area |
-
-
 
 ### Lightning
 

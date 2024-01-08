@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/spell.json
+name: Burning Touch
+description: Ignite a target by touch
+mana_cost: 0
+spell_tier: 0
+cast_slot: primary
+cast_time: 0
+cooldown: 2
+spell_type: fire
+flags:
+  - touch
+  - instant

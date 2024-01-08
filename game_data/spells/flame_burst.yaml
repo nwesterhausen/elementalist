@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/spell.json
+name: Flame Burst
+description: Send a cloud of flame towards your target
+cast_slot: secondary
+spell_tier: 1
+mana_cost: 1
+cast_time: 0
+cooldown: 3
+spell_type: fire
+tags:
+  - cone
+  - aoe

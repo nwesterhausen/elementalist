@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.nwest.one/games/elementalist/spell.json",
+  "title": "Elementalist Spell",
+  "description": "A spell that can be cast by the Elementalist",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "The name of the spell",
+      "type": "string"
+    },
+    "description": {
+      "description": "A description of the spell",
+      "type": "string"
+    },
+    "long_description": {
+      "description": "A longer, more thematic description of the spell that can be used in-game to add lore and flavor",
+      "type": "string"
+    },
+    "mana_cost": {
+      "description": "The cost of the spell",
+      "type": "integer",
+      "enum": [0, 1, 2, 3, 4]
+    },
+    "cast_slot": {
+      "description": "The slot the spell is cast in",
+      "type": "string",
+      "enum": ["primary", "secondary", "defensive", "ultimate"]
+    },
+    "cast_time": {
+      "description": "The time it takes to cast the spell",
+      "type": "number",
+      "inclusiveMinimum": 0
+    },
+    "cooldown": {
+      "description": "The time it takes to cool down after casting the spell",
+      "type": "number",
+      "inclusiveMinimum": 0
+    },
+    "spell_type": {
+      "description": "The family of magic the spell belongs to",
+      "type": "string",
+      "enum": [
+        "fire",
+        "lightning",
+        "water",
+        "earth",
+        "air",
+        "ice",
+        "force",
+        "light",
+        "dark",
+        "arcane",
+        "life",
+        "death",
+        "enhancement",
+        "summoning",
+        "necromancy",
+        "polymorph"
+      ]
+    },
+    "flags": {
+      "description": "Flags to specify general behavior",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "aoe",
+          "self",
+          "target",
+          "projectile",
+          "instant",
+          "homing",
+          "cone",
+          "line",
+          "beam",
+          "wall",
+          "ground",
+          "summon",
+          "buff",
+          "debuff",
+          "heal",
+          "damage",
+          "movement",
+          "touch"
+        ]
+      }
+    },
+    "spell_tier": {
+      "description": "The tier of the spell, used to indicate how soon it can be unlocked or learned. One of the tier 0 spells will be a free choice when learning a type of magic.",
+      "type": "integer",
+      "enum": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    }
+  },
+  "required": ["name", "description", "mana_cost", "cast_slot", "spell_type", "cast_time", "cooldown", "spell_tier"]
+}

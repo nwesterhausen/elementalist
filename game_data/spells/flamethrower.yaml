@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/spell.json
+name: Flamethrower
+description: Sustain a firey stream of flames.
+spell_type: fire
+spell_tier: 2
+cooldown: 5
+cast_time: 1.5
+mana_cost: 1
+cast_slot: secondary
+flags:
+  - sustained
+  - line
+  - aoe

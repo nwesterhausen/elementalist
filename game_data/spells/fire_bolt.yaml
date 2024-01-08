@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/spell.json
+name: Fire Bolt
+description: Propel a mote of flame at your target.
+mana_cost: 0
+spell_tier: 0
+spell_type: fire
+cast_slot: primary
+cast_time: 0
+cooldown: 1.5
+flags:
+  - projectile

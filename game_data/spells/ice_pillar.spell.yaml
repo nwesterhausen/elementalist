@@ -1,0 +1,13 @@
+name: Ice Pillar
+description: A frozen pillar of ice forms at a target location.
+cast_slot: secondary
+cast_time: 1
+cooldown: 5
+mana_cost: 1
+spell_tier: 1
+spell_type: ice
+flags:
+  - target
+  - aoe
+  - ground
+  - wall

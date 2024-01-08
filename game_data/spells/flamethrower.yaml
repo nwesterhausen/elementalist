@@ -1,4 +1,3 @@
-# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/spell.json
 name: Flamethrower
 description: Sustain a firey stream of flames.
 spell_type: fire

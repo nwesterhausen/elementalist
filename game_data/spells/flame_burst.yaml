@@ -1,4 +1,3 @@
-# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/spell.json
 name: Flame Burst
 description: Send a cloud of flame towards your target
 cast_slot: secondary

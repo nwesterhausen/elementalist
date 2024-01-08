@@ -82,7 +82,8 @@
           "heal",
           "damage",
           "movement",
-          "touch"
+          "touch",
+          "sustained"
         ]
       }
     },

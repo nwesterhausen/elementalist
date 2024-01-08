@@ -1,7 +1,5 @@
-use bevy::{prelude::*, window::PrimaryWindow};
-use leafwing_input_manager::{axislike::DualAxisData, prelude::*, user_input::InputKind};
-
-use crate::entities::Player;
+use bevy::prelude::*;
+use leafwing_input_manager::{prelude::*, user_input::InputKind};
 
 /// Actions that the player can take.
 #[derive(Actionlike, PartialEq, Eq, Clone, Copy, Hash, Debug, Reflect)]
@@ -85,26 +83,5 @@ impl PlayerAction {
         }
 
         input_map
-    }
-}
-
-pub fn player_aim_at_cursor(
-    window_query: Query<(&Window, &ActionStateDriver<PlayerAction>)>,
-    mut action_state_query: Query<&mut ActionState<PlayerAction>>,
-) {
-    // Update each action state with the mouse position from the window
-    // by using the referenced entities in ActionStateDriver and the stored action as
-    // a key into the action data
-    for (window, driver) in window_query.iter() {
-        for entity in driver.targets.iter() {
-            let mut action_state = action_state_query
-                .get_mut(*entity)
-                .expect("Entity does not exist, or does not have an `ActionState` component");
-
-            if let Some(val) = window.cursor_position() {
-                action_state.action_data_mut(driver.action).axis_pair =
-                    Some(DualAxisData::from_xy(val));
-            }
-        }
     }
 }

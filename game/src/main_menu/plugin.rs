@@ -5,7 +5,7 @@ use crate::{despawn_screen, AppState};
 use super::{
     components,
     menu_state::MenuState,
-    scenes,
+    screens,
     systems::{button_system, menu_actions, transition_to_main_menu},
 };
 
@@ -34,25 +34,25 @@ impl Plugin for MainMenuPlugin {
                 (button_system, menu_actions).run_if(in_state(AppState::MainMenu)),
             )
             // Main main screen
-            .add_systems(OnEnter(MenuState::Main), scenes::main_menu)
+            .add_systems(OnEnter(MenuState::Main), screens::main_menu)
             .add_systems(
                 OnExit(MenuState::Main),
                 despawn_screen::<components::OnMainMenuScreen>,
             )
             // Settings screen
-            .add_systems(OnEnter(MenuState::Settings), scenes::settings)
+            .add_systems(OnEnter(MenuState::Settings), screens::settings)
             .add_systems(
                 OnExit(MenuState::Settings),
                 despawn_screen::<components::OnSettingsMenuScreen>,
             )
             // Audio settings screen
-            .add_systems(OnEnter(MenuState::SettingsAudio), scenes::audio_settings)
+            .add_systems(OnEnter(MenuState::SettingsAudio), screens::audio_settings)
             .add_systems(
                 OnExit(MenuState::SettingsAudio),
                 despawn_screen::<components::OnAudioSettingsMenuScreen>,
             )
             // Video settings screen
-            .add_systems(OnEnter(MenuState::SettingsVideo), scenes::video_settings)
+            .add_systems(OnEnter(MenuState::SettingsVideo), screens::video_settings)
             .add_systems(
                 OnExit(MenuState::SettingsVideo),
                 despawn_screen::<components::OnVideoSettingsMenuScreen>,
@@ -60,7 +60,7 @@ impl Plugin for MainMenuPlugin {
             // Controls settings screen
             .add_systems(
                 OnEnter(MenuState::SettingsControls),
-                scenes::controls_settings,
+                screens::controls_settings,
             )
             .add_systems(
                 OnExit(MenuState::SettingsControls),
@@ -69,7 +69,7 @@ impl Plugin for MainMenuPlugin {
             // Gameplay settings screen
             .add_systems(
                 OnEnter(MenuState::SettingsGameplay),
-                scenes::gameplay_settings,
+                screens::gameplay_settings,
             )
             .add_systems(
                 OnExit(MenuState::SettingsGameplay),

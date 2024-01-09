@@ -1,0 +1,3 @@
+name: Sustained
+description: The spell is sustained until canceled.
+extended_description: Sustaining the spell costs one mana per sustain period.

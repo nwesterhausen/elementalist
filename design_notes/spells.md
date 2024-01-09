@@ -1,84 +1,41 @@
-# Spellwork
+# Spell Idea List
 
-What spells are possible, and what schools / types are there.
+## Fire
 
-## Overview
+| Name | Tier | Slot | Description | Mana |
+| ---- | ---- | ---- | ----------- | ---- |
+| Burning Touch | 0 | primary | Ignite a target by touch | 0 |
+| Fire Bolt | 0 | primary | Propel a mote of flame at your target. | 0 |
+| Flame Burst | 1 | secondary | Send a cloud of flame towards your target | 1 |
+| Flamethrower | 2 | secondary | Sustain a firey stream of flames. | 1 |
 
-There are tiers of spells, and they correspond to the complexity of the element/magic.
+## Ice
 
-- Tier 0: 3 Basic elements
-  - [Fire](#fire)
-  - [Lightning](#lightning)
-  - [Water](#water)
-- Tier 1: magic as a combo from Tier 0
-  - [Earth](#earth) (fire + water = earth)
-  - [Air](#air) (lighting => air)
-  - [Ice](#ice) (water => ice)
-  - [Force](#force) (lightning + water = force)
-- Tier 2: arcane magics
-  - [Light](#light)
-  - [Darkness](#darkness)
-  - [Arcane](#arcane)
-- Tier 3: life and death
-  - [Life](#life)
-  - [Death](#death)
-- Tier 4: self-enhancement
-  - [Enchancement](#enhancement)
-- Tier 5: summoning and transformation
-  - [Summoning](#summoning)
-  - [Necromancy](#necromancy)
-  - [Polymorph](#polymorph)
+| Name | Tier | Slot | Description | Mana |
+| ---- | ---- | ---- | ----------- | ---- |
+| Ice Dart | 0 | primary | Shoot a dart of ice at your target. | 0 |
+| Ice Pillar | 1 | secondary | A frozen pillar of ice forms at a target location. | 1 |
+| Freeze Ray | 2 | secondary | Launch a ray of freezing magic towards your target. | 2 |
+| Ice Patch | 3 | secondary | Conjure a sheet of ice on the ground. | 3 |
+| Ice Spike | 3 | secondary | Launch a spike of ice at your target. | 2 |
 
-While in the primal realm, spells can be upgraded by the magics there gaining additional effects and even effects from different schools.
+## Water
 
-## Deployment
+| Name | Tier | Slot | Description | Mana |
+| ---- | ---- | ---- | ----------- | ---- |
+| Water Bolt | 0 | primary | Send a glob of water at your target. | 0 |
+| Water Jet | 2 | secondary | Spray a powerful jet of water at your target. | 1 |
+| Whirlpool | 2 | defensive | Create a whirlpool that pulls those stuck in it towards it center. | 3 |
+| Geyser | 3 | secondary | Cause a geyser of scalding water to erupt. | 3 |
 
-Before entering the realm, the elementalist can prepare with a single "primary" school of magic, a "secondary" school, and a "defensive" school.
+## Lightning
 
-Magic slotted to a primary slot will not cost mana to cast, but the spell will be something like a cantrip.
+| Name | Tier | Slot | Description | Mana |
+| ---- | ---- | ---- | ----------- | ---- |
+| Spark | 0 | primary | Shoot a spark of electricity at your target. | 0 |
 
-Magic in the secondary slot will cost a variable amount of mana (1 or 2) and will be more powerful and offer a couple choices when selecting.
+## Earth
 
-Magic in the defensive slot will cost 1 mana to cast and does something like shield, dash, or some other "get out of trouble" effect.
-
-While in the realm, an ultimate slot can be discovered with a random school of magic. It will cost 2 - 4 mana to cast and has debilitating effects.
-
-When the game starts, only the primary slot is available. Then more is unlocked as the elementalist levels up.
-
-Each school of magic will have its own level that grows when casting, doing damage, or spending elemental essence for that school. As the spells level up, they can do more base damage, have shorter cooldowns, and other boons.
-
-## Magic Deep Dive
-
-Ideas for spells and upgrades (see [game_data](../game_data/README.md))
-
-### Fire
-
-### Lightning
-
-### Water
-
-### Earth
-
-### Air
-
-### Ice
-
-### Force
-
-### Light
-
-### Darkness
-
-### Arcane
-
-### Life
-
-### Death
-
-### Enhancement
-
-### Summoning
-
-### Necromancy
-
-### Polymorph
+| Name | Tier | Slot | Description | Mana |
+| ---- | ---- | ---- | ----------- | ---- |
+| Stone Dart | 0 | primary | Shoot a dart of rock at your target. | 0 |

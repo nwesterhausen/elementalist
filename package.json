@@ -1,5 +1,6 @@
 {
 	"dependencies": {
-		"@tabler/icons-png": "^2.45.0"
+		"@tabler/icons-png": "^2.45.0",
+		"yaml": "^2.3.4"
 	}
 }

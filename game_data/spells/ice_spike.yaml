@@ -1,0 +1,13 @@
+name: Ice Spike
+description: Launch a spike of ice at your target.
+mana_cost: 2
+cast_slot: secondary
+cast_time: 0
+cooldown: 5
+spell_type: ice
+spell_tier: 3
+long_description: >-
+  Launch a wickedly sharp spike of ice towards your target. In practice, the spike has such momentum to be able to go straight through your
+  practice target.
+
+  Tests in the field have been just as effective.

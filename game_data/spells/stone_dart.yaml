@@ -1,0 +1,8 @@
+name: Stone Dart
+description: Shoot a dart of rock at your target.
+mana_cost: 0
+cast_slot: primary
+cast_time: 0
+cooldown: 0.33
+spell_type: earth
+spell_tier: 0

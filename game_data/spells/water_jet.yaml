@@ -1,0 +1,8 @@
+name: Water Jet
+description: Spray a powerful jet of water at your target.
+mana_cost: 1
+cast_slot: secondary
+cast_time: 0
+cooldown: 2.5
+spell_type: water
+spell_tier: 2

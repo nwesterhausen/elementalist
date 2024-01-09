@@ -1,0 +1,8 @@
+name: Ice Dart
+description: Shoot a dart of ice at your target.
+mana_cost: 0
+cast_slot: primary
+cast_time: 0
+cooldown: 0.33
+spell_type: ice
+spell_tier: 0

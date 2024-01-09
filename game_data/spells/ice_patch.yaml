@@ -1,0 +1,8 @@
+name: Ice Patch
+description: Conjure a sheet of ice on the ground.
+mana_cost: 3
+cast_slot: secondary
+cast_time: 0.25
+cooldown: 6
+spell_type: ice
+spell_tier: 3

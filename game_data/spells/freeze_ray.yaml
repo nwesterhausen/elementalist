@@ -1,0 +1,8 @@
+name: Freeze Ray
+description: Launch a ray of freezing magic towards your target.
+mana_cost: 2
+cast_slot: secondary
+cast_time: .5
+cooldown: 3
+spell_type: ice
+spell_tier: 2

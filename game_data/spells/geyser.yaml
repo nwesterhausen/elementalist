@@ -1,0 +1,8 @@
+name: Geyser
+description: Cause a geyser of scalding water to erupt.
+mana_cost: 3
+cast_slot: secondary
+cast_time: 0.15
+cooldown: 5
+spell_type: water
+spell_tier: 3

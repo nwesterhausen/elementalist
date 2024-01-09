@@ -1,0 +1,8 @@
+name: Water Bolt
+description: Send a glob of water at your target.
+mana_cost: 0
+cast_slot: primary
+cast_time: 0
+cooldown: 2
+spell_type: water
+spell_tier: 0

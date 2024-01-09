@@ -11,6 +11,7 @@ file to inform it of the proper schemas for the `game_data` files:
 
 ```json
   "yaml.schemas": {
-    "https://schemas.nwest.one/games/elementalist/spell.json": ["**/game_data/spells/*.yaml"]
+    "https://schemas.nwest.one/games/elementalist/spell.json": ["**/game_data/spells/*.yaml"],
+    "https://schemas.nwest.one/games/elementalist/spell_tag.json": ["**/game_data/spell_tags/*.yaml"]
   }
 ```

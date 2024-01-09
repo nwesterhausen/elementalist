@@ -83,7 +83,10 @@
           "damage",
           "movement",
           "touch",
-          "sustained"
+          "sustained",
+          "dot",
+          "circle",
+          "square"
         ]
       }
     },

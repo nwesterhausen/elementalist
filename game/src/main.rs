@@ -12,22 +12,20 @@
 #![deny(unsafe_code)]
 
 use bevy::prelude::*;
+use leafwing_input_manager::plugin::InputManagerPlugin;
 
 mod app_info;
 mod app_state;
 mod app_systems;
-mod entities;
 mod events;
-mod game;
 mod main_menu;
+mod player;
 mod resources;
 mod splash_screen;
 
 pub use app_state::AppState;
 pub use app_systems::despawn_screen;
-use bevy_pkv::PkvStore;
 use events::{MenuInteraction, PlayerAction};
-use leafwing_input_manager::plugin::InputManagerPlugin;
 
 fn main() {
     App::new()
@@ -49,38 +47,22 @@ fn main() {
         }))
         // Add state
         .add_state::<AppState>()
-        // Add a persistent key-value store for settings, etc.
-        .insert_resource(PkvStore::new("nwest.games", "elementalist"))
         // Add all the general resources and their update systems (e.g. cursor position)
         .add_plugins(resources::ElementalistResourcesPlugin)
-        // Add Camera
-        .add_systems(
-            Startup,
-            (app_systems::setup_camera, app_systems::add_game_descriptor),
-        )
-        // Add plugins for splash screen and menu
-        .add_plugins((splash_screen::SplashScreenPlugin, main_menu::MainMenuPlugin))
         // Add input processing
         .add_plugins((
             InputManagerPlugin::<PlayerAction>::default(),
             InputManagerPlugin::<MenuInteraction>::default(),
         ))
-        // Spawn player (user controller)
-        .add_systems(Startup, game::spawn_player_controller)
-        // Handle player inputs
+        // Add Camera
         .add_systems(
-            Update,
-            (
-                game::player_control_system.after(resources::update_cursor_position_resource),
-                game::menu_input,
-            ),
+            Startup,
+            (app_systems::setup_camera, app_systems::add_game_descriptor),
         )
-        // Sprite stuff
-        .add_systems(OnEnter(AppState::InGame), game::setup_sprite)
-        .add_systems(
-            Update,
-            (game::sprite_movement).run_if(in_state(AppState::InGame)),
-        )
+        // Add our plugins for the menu screen and the splash screen
+        .add_plugins((splash_screen::SplashScreenPlugin, main_menu::MainMenuPlugin))
+        // Add the player plugin
+        .add_plugins(player::PlayerPlugin)
         // Launch
         .run();
 }

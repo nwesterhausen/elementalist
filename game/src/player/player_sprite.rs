@@ -1,32 +1,8 @@
 use bevy::prelude::*;
-use leafwing_input_manager::{action_state::ActionState, InputManagerBundle};
+use leafwing_input_manager::action_state::ActionState;
 
-use crate::{
-    entities::Player,
-    events::{MenuInteraction, PlayerAction},
-};
-
-/// Spawn a player controller (sets up input processing)
-pub fn spawn_player_controller(mut commands: Commands) {
-    commands
-        .spawn(InputManagerBundle::<PlayerAction> {
-            // What actions are currently pressed
-            action_state: ActionState::default(),
-            // Describes how to convert input into actions
-            input_map: PlayerAction::default_input_map(),
-        })
-        // Add the player component
-        .insert(Player);
-    commands
-        .spawn(InputManagerBundle::<MenuInteraction> {
-            // What actions are currently pressed
-            action_state: ActionState::default(),
-            // Describes how to convert input into actions
-            input_map: MenuInteraction::default_input_map(),
-        })
-        // Add the player component
-        .insert(Player);
-}
+use super::{Player, MOVE_SPEED};
+use crate::events::PlayerAction;
 
 /// Sprite setup
 pub fn setup_sprite(mut commands: Commands, asset_server: Res<AssetServer>) {
@@ -42,8 +18,6 @@ pub fn setup_sprite(mut commands: Commands, asset_server: Res<AssetServer>) {
         })
         .insert(Player);
 }
-
-const MOVE_SPEED: f32 = 100.0;
 
 /// Move sprite around via translation
 pub fn sprite_movement(

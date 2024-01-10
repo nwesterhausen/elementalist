@@ -2,8 +2,8 @@ use bevy::prelude::*;
 use leafwing_input_manager::action_state::ActionState;
 
 use crate::{
-    entities::Player,
     events::{MenuInteraction, PlayerAction},
+    player::Player,
     resources::OffsetCursorPosition,
 };
 

@@ -18,6 +18,7 @@ mod app_info;
 mod app_state;
 mod app_systems;
 mod camera;
+mod common;
 mod events;
 mod main_menu;
 mod player;
@@ -62,6 +63,8 @@ fn main() {
         .add_plugins((splash_screen::SplashScreenPlugin, main_menu::MainMenuPlugin))
         // Add the player plugin
         .add_plugins(player::PlayerPlugin)
+        // Add the movement plugin
+        .add_plugins(common::movement::MovementPlugin)
         // Launch
         .run();
 }

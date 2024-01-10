@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use super::{player_control, player_creation, player_sprite};
+use super::{entity, menu_control, movement, player_control, player_creation};
 use crate::{resources, AppState};
 
 pub struct PlayerPlugin;
@@ -16,14 +16,14 @@ impl Plugin for PlayerPlugin {
                 (
                     player_control::player_control_system
                         .after(resources::update_cursor_position_resource),
-                    player_control::menu_input,
+                    menu_control::menu_input,
                 ),
             )
             // Sprite stuff
-            .add_systems(OnEnter(AppState::InGame), player_sprite::setup_sprite)
+            .add_systems(OnEnter(AppState::InGame), entity::spawn_player)
             .add_systems(
                 Update,
-                (player_sprite::sprite_movement).run_if(in_state(AppState::InGame)),
+                (movement::player_movement_controls).run_if(in_state(AppState::InGame)),
             );
     }
 }

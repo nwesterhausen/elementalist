@@ -29,7 +29,9 @@ use serde::{Deserialize, Serialize};
 /// float between 0 and 1).
 /// * Check `is_empty` to see if the entity is dead (i.e. `current_attribute` is 0).
 /// * Check `is_full` to see if the entity is at full attribute (i.e. `current_attribute` is equal to `max_attribute`).
-#[derive(Resource, Debug, Component, PartialEq, Eq, Clone, Copy, Serialize, Deserialize)]
+#[derive(
+    Resource, Debug, Component, PartialEq, Eq, Clone, Copy, Serialize, Deserialize, Default,
+)]
 pub struct Attribute {
     /// The maximum value for the attribute of the entity
     pub max: u32,

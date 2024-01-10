@@ -1,14 +1,17 @@
 use bevy::prelude::*;
 use leafwing_input_manager::action_state::ActionState;
 
-use crate::{common::movement::Velocity, events::PlayerAction, player::Player};
-
-use super::BASE_MOVE_SPEED;
+use crate::{
+    common::{movement::Velocity, stats::Speed},
+    events::PlayerAction,
+    player::Player,
+};
 
 /// Handle player input for movement
 pub fn player_movement_controls(
     mut query: Query<&mut Velocity, With<Player>>,
     action_query: Query<&ActionState<PlayerAction>, With<Player>>,
+    speed_query: Query<&Speed, With<Player>>,
 ) {
     let Ok(action_state) = action_query.get_single() else {
         tracing::error!("player_movement_controls: failed to get action state");
@@ -20,6 +23,11 @@ pub fn player_movement_controls(
         return;
     };
 
+    let Ok(speed) = speed_query.get_single() else {
+        tracing::error!("player_movement_controls: failed to get speed");
+        return;
+    };
+
     // Reset velocity to 0.0 because we're going to set it directly
     // We want the player to stop moving if they're not pressing the move button
     // Todo: This will be "jerky" and probably needs some tweaking to feel good.
@@ -27,7 +35,7 @@ pub fn player_movement_controls(
 
     if action_state.pressed(PlayerAction::Move) {
         if let Some(axis_pair) = action_state.clamped_axis_pair(PlayerAction::Move) {
-            velocity.value = axis_pair.xy().normalize() * BASE_MOVE_SPEED;
+            velocity.value = axis_pair.xy().normalize() * speed.value.value();
         }
     }
 }

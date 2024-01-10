@@ -13,8 +13,12 @@
 
 mod attribute;
 mod experience;
+mod stat;
+mod stat_bonus;
 mod volume;
 
 pub use attribute::Attribute;
 pub use experience::Xp;
+pub use stat::Stat;
+pub use stat_bonus::StatBonus;
 pub use volume::Volume;

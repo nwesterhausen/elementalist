@@ -8,5 +8,3 @@ mod plugin;
 
 pub use entity::Player;
 pub use plugin::PlayerPlugin;
-
-const BASE_MOVE_SPEED: f32 = 100.0;

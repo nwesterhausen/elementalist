@@ -1,0 +1,8 @@
+name: Fire Pillar
+description: Create a pillar of flames at the target location.
+mana_cost: 2
+cast_slot: secondary
+cast_time: 0
+cooldown: 3.3
+spell_type: fire
+spell_tier: 2

@@ -1,0 +1,8 @@
+name: Tornado
+description: Summon a tornado at the target location.
+mana_cost: 2
+cast_slot: secondary
+cast_time: 0.5
+cooldown: 5
+spell_type: air
+spell_tier: 2

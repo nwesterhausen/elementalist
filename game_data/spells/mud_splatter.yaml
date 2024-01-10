@@ -1,0 +1,8 @@
+name: Mud Splatter
+description: Launch a bunch of mud and rocks towards the target.
+mana_cost: 2
+cast_slot: secondary
+cast_time: 0
+cooldown: 5
+spell_type: earth
+spell_tier: 3

@@ -1,0 +1,8 @@
+name: Path of Coals
+description: Create an area of burning hot coals on the ground.
+mana_cost: 2
+cast_slot: secondary
+cast_time: 0
+cooldown: 2.5
+spell_type: fire
+spell_tier: 2

@@ -1,0 +1,8 @@
+name: Rock Pillar
+description: Summon a pillar of rock at the target location.
+mana_cost: 2
+cast_slot: secondary
+cast_time: 0
+cooldown: 2.5
+spell_type: earth
+spell_tier: 2

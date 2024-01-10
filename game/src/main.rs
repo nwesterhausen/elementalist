@@ -17,6 +17,7 @@ use leafwing_input_manager::plugin::InputManagerPlugin;
 mod app_info;
 mod app_state;
 mod app_systems;
+mod camera;
 mod events;
 mod main_menu;
 mod player;
@@ -49,16 +50,14 @@ fn main() {
         .add_state::<AppState>()
         // Add all the general resources and their update systems (e.g. cursor position)
         .add_plugins(resources::ElementalistResourcesPlugin)
+        .add_systems(Startup, app_systems::add_game_descriptor)
         // Add input processing
         .add_plugins((
             InputManagerPlugin::<PlayerAction>::default(),
             InputManagerPlugin::<MenuInteraction>::default(),
         ))
-        // Add Camera
-        .add_systems(
-            Startup,
-            (app_systems::setup_camera, app_systems::add_game_descriptor),
-        )
+        // Add camera plugin
+        .add_plugins(camera::CameraPlugin)
         // Add our plugins for the menu screen and the splash screen
         .add_plugins((splash_screen::SplashScreenPlugin, main_menu::MainMenuPlugin))
         // Add the player plugin

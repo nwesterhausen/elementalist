@@ -2,11 +2,6 @@ use bevy::prelude::*;
 
 use crate::app_info;
 
-/// Spawns a basic camera
-pub fn setup_camera(mut commands: Commands) {
-    commands.spawn(Camera2dBundle::default());
-}
-
 /// Despawn all entities with the given tag (component)
 pub fn despawn_screen<T: Component>(to_despawn: Query<Entity, With<T>>, mut commands: Commands) {
     for entity in &to_despawn {

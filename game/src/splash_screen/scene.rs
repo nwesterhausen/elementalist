@@ -4,7 +4,7 @@ use super::{components::*, resources::SplashTimer};
 
 /// System that draws the splash screen
 pub fn splash_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
-    let icon = asset_server.load("panda.png");
+    let icon = asset_server.load("wizard.png");
     // Display the logo
     commands
         .spawn((
@@ -24,7 +24,7 @@ pub fn splash_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
             parent.spawn(ImageBundle {
                 style: Style {
                     // This will set the logo to be 200px wide, and auto adjust its height
-                    width: Val::Px(200.0),
+                    width: Val::Px(64.0),
                     ..default()
                 },
                 image: UiImage::new(icon),

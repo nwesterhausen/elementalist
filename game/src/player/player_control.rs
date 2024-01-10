@@ -22,7 +22,7 @@ pub fn player_control_system(
         // Draw a sprite at the cursor position
         commands.spawn(SpriteBundle {
             transform: Transform::from_xyz(cursor_position.x, cursor_position.y, 0.0),
-            texture: asset_server.load("parrot.png").into(),
+            texture: asset_server.load("firebolt.png").into(),
             sprite: Sprite {
                 custom_size: Some(Vec2::new(8.0, 8.0)),
                 ..Default::default()
@@ -34,7 +34,7 @@ pub fn player_control_system(
         // Draw a sprite at the cursor position
         commands.spawn(SpriteBundle {
             transform: Transform::from_xyz(cursor_position.x, cursor_position.y, 0.0),
-            texture: asset_server.load("narwhal.png").into(),
+            texture: asset_server.load("firebolt.png").into(),
             sprite: Sprite {
                 custom_size: Some(Vec2::new(8.0, 8.0)),
                 ..Default::default()

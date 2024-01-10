@@ -14,7 +14,7 @@ pub fn game_name_and_version() -> String {
 /// A specific version of the game
 pub fn game_descriptor() -> String {
     format!(
-        "v{} ({})",
+        "Build v{} ({})",
         built_info::PKG_VERSION,
         built_info::GIT_COMMIT_HASH_SHORT.unwrap_or("unknown")
     )

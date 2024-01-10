@@ -3,9 +3,8 @@ use bevy::prelude::*;
 use crate::{despawn_screen, AppState};
 
 use super::{
-    components,
-    menu_state::MenuState,
-    screens,
+    components, screens,
+    state::MenuState,
     systems::{button_system, menu_actions, transition_to_main_menu},
 };
 

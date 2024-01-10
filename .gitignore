@@ -5,3 +5,6 @@ node_modules
 
 # use .vscode for workstation specific settings..
 .vscode
+
+# hide Mac OS X specific files
+.DS_Store

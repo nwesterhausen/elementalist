@@ -1,41 +1,30 @@
 use bevy::{prelude::*, window::PrimaryWindow};
 
-/// Tracks the cursor position in the primary window
-#[derive(Resource, Debug, Clone, Copy)]
-pub struct OffsetCursorPosition {
-    pub x: f32,
-    pub y: f32,
+use crate::camera::MainCamera;
+
+#[derive(Resource, Debug, Copy, Clone, Default)]
+pub struct CursorPosition {
+    pub position: Vec2,
 }
 
-impl Default for OffsetCursorPosition {
-    fn default() -> Self {
-        Self { x: 0.0, y: 0.0 }
-    }
-}
-
-/// Updates the cursor position resource
-pub fn update_cursor_position_resource(
-    mut cursor: EventReader<CursorMoved>,
-    primary_query: Query<&Window, With<PrimaryWindow>>,
-    mut cursor_resource: ResMut<OffsetCursorPosition>,
+pub fn update_cursor_position(
+    windows: Query<&Window, With<PrimaryWindow>>,
+    camera_q: Query<(&Camera, &GlobalTransform), With<MainCamera>>,
+    mut cursor_position: ResMut<CursorPosition>,
 ) {
-    let Ok(window) = primary_query.get_single() else {
+    let Ok(window) = windows.get_single() else {
+        tracing::error!("cursor_position: No primary window found");
         return;
     };
-    let mut cursor_position = match cursor.read().last() {
-        Some(cursor) => cursor.position,
-        // This won't update the cursor position when it is outside the window
-        None => return,
+    let Ok((camera, camera_transform)) = camera_q.get_single() else {
+        tracing::error!("cursor_position: No main camera found");
+        return;
     };
 
-    // Convert cursor position to window coordinates
-    cursor_position.x -= window.width() / 2.0;
-    cursor_position.y -= window.height() / 2.0;
-
-    // Invert the y axis ?
-    cursor_position.y *= -1.0;
-
-    // Update the cursor position resource
-    cursor_resource.x = cursor_position.x;
-    cursor_resource.y = cursor_position.y;
+    if let Some(world_position) = window
+        .cursor_position()
+        .and_then(|cursor| camera.viewport_to_world_2d(camera_transform, cursor))
+    {
+        cursor_position.position = world_position;
+    }
 }

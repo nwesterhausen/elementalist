@@ -1,8 +1,11 @@
 use bevy::prelude::*;
 
+#[derive(Component)]
+pub struct MainCamera;
+
 /// Spawns a basic camera
 pub fn setup_camera(mut commands: Commands) {
-    commands.spawn(Camera2dBundle::default());
+    commands.spawn((Camera2dBundle::default(), MainCamera));
 }
 
 // /// Zooms in on the camera (how to do this for future reference)

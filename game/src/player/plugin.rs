@@ -14,8 +14,7 @@ impl Plugin for PlayerPlugin {
             .add_systems(
                 Update,
                 (
-                    player_control::player_control_system
-                        .after(resources::update_cursor_position_resource),
+                    player_control::player_control_system.after(resources::update_cursor_position),
                     menu_control::menu_input,
                 ),
             )

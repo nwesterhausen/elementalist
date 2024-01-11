@@ -4,14 +4,14 @@ use leafwing_input_manager::action_state::ActionState;
 use crate::{
     events::PlayerAction,
     player::Player,
-    resources::OffsetCursorPosition,
+    resources::CursorPosition,
     spells::components::{CastSpell, Spell},
 };
 
 /// Handle player input
 pub fn player_control_system(
     query: Query<&ActionState<PlayerAction>, With<Player>>,
-    cursor_position: Res<OffsetCursorPosition>,
+    cursor_position: Res<CursorPosition>,
     mut commands: Commands,
     asset_server: Res<AssetServer>,
     mut ew_cast_spell: EventWriter<CastSpell>,
@@ -31,8 +31,12 @@ pub fn player_control_system(
     if action_state.just_pressed(PlayerAction::CastSecondary) {
         // Draw a sprite at the cursor position
         commands.spawn(SpriteBundle {
-            transform: Transform::from_xyz(cursor_position.x, cursor_position.y, 0.0),
-            texture: asset_server.load("firebolt.png").into(),
+            transform: Transform::from_xyz(
+                cursor_position.position.x,
+                cursor_position.position.y,
+                0.0,
+            ),
+            texture: asset_server.load("spells/firebolt.png").into(),
             sprite: Sprite {
                 custom_size: Some(Vec2::new(8.0, 8.0)),
                 ..Default::default()

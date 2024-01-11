@@ -1,7 +1,12 @@
 use bevy::prelude::*;
 use leafwing_input_manager::action_state::ActionState;
 
-use crate::{events::PlayerAction, player::Player, resources::OffsetCursorPosition};
+use crate::{
+    events::PlayerAction,
+    player::Player,
+    resources::OffsetCursorPosition,
+    spells::components::{CastSpell, Spell},
+};
 
 /// Handle player input
 pub fn player_control_system(
@@ -9,6 +14,7 @@ pub fn player_control_system(
     cursor_position: Res<OffsetCursorPosition>,
     mut commands: Commands,
     asset_server: Res<AssetServer>,
+    mut ew_cast_spell: EventWriter<CastSpell>,
 ) {
     let action_state = query.single();
     if action_state.pressed(PlayerAction::Look) {
@@ -19,16 +25,8 @@ pub fn player_control_system(
         }
     }
     if action_state.just_pressed(PlayerAction::CastPrimary) {
-        // Draw a sprite at the cursor position
-        commands.spawn(SpriteBundle {
-            transform: Transform::from_xyz(cursor_position.x, cursor_position.y, 0.0),
-            texture: asset_server.load("firebolt.png").into(),
-            sprite: Sprite {
-                custom_size: Some(Vec2::new(8.0, 8.0)),
-                ..Default::default()
-            },
-            ..Default::default()
-        });
+        // Cast a firebolt
+        ew_cast_spell.send(CastSpell(Spell::Firebolt));
     }
     if action_state.just_pressed(PlayerAction::CastSecondary) {
         // Draw a sprite at the cursor position

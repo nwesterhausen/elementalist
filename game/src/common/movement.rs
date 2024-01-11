@@ -14,6 +14,13 @@ impl Default for Velocity {
     }
 }
 
+impl Velocity {
+    /// Creates a new velocity component with the given value
+    pub fn new(value: Vec2) -> Self {
+        Self { value }
+    }
+}
+
 /// Simple acceleration component containing a 2D vector
 ///
 /// Defaults to Vec2::ZERO
@@ -25,6 +32,13 @@ pub struct Acceleration {
 impl Default for Acceleration {
     fn default() -> Self {
         Self { value: Vec2::ZERO }
+    }
+}
+
+impl Acceleration {
+    /// Creates a new acceleration component with the given value
+    pub fn new(value: Vec2) -> Self {
+        Self { value }
     }
 }
 

@@ -24,6 +24,7 @@ mod game;
 mod main_menu;
 mod player;
 mod resources;
+mod spells;
 mod splash_screen;
 
 pub use app_state::AppState;
@@ -66,6 +67,8 @@ fn main() {
         .add_plugins(game::GamePlugin)
         // Add the player plugin
         .add_plugins(player::PlayerPlugin)
+        // Add the spells plugin
+        .add_plugins(spells::SpellsPlugin)
         // Add the movement plugin
         .add_plugins(common::movement::MovementPlugin)
         // Launch

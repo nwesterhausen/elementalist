@@ -10,6 +10,9 @@ build = "build.rs"
 version = "0.7"
 features = ["git2"]
 
+[build-dependencies]
+embed-resource = "2.4.1"
+
 [dependencies]
 # When running the game in development, use the dynamic linking feature of Bevy to speed
 # up compilation times. `cargo run --features bevy/dynamic_linking` will enable this.

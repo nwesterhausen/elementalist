@@ -10,6 +10,8 @@
     clippy::expect_used
 )]
 #![deny(unsafe_code)]
+// Hide the console window on Windows when not in debug mode
+#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use bevy::prelude::*;
 use leafwing_input_manager::plugin::InputManagerPlugin;

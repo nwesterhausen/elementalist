@@ -40,6 +40,20 @@ impl SpellLifetime {
     }
 }
 
+/// Despawns spells when their lifetime expires, and updates their lifetime
+pub fn despawn_expired_spells(
+    mut commands: Commands,
+    time: Res<Time>,
+    mut query: Query<(Entity, &mut SpellLifetime)>,
+) {
+    for (entity, mut lifetime) in query.iter_mut() {
+        lifetime.update(time.delta_seconds());
+        if lifetime.is_expired() {
+            commands.entity(entity).despawn();
+        }
+    }
+}
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Component, Default)]
 pub enum Spell {
     #[default]

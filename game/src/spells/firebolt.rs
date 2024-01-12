@@ -6,9 +6,10 @@ use crate::{
     resources::CursorPosition,
 };
 
-use super::components::{CastSpell, Spell, SpellBundle};
+use super::components::{CastSpell, Spell, SpellBundle, SpellLifetime};
 
 const FIREBOLT_SPEED: f32 = 1000.0;
+const FIREBOLT_LIFETIME: f32 = 1.0;
 
 pub fn spawn_firebolt(
     mut commands: Commands,
@@ -33,6 +34,7 @@ pub fn spawn_firebolt(
 
             commands.spawn(SpellBundle {
                 spell: Spell::Firebolt,
+                lifetime: SpellLifetime::new(FIREBOLT_LIFETIME),
                 sprite: SpriteBundle {
                     texture: asset_server.load("spells/firebolt.png"),
                     transform: player_transform.clone(),

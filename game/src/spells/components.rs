@@ -54,12 +54,26 @@ pub fn despawn_expired_spells(
     }
 }
 
+/// The different spells that can be cast
+///
+/// Spells are cast using the `CastSpell` event.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Component, Default)]
 pub enum Spell {
+    /// The empty spell (default and will do nothing)
     #[default]
     Empty,
+    /// The firebolt spell
     Firebolt,
+    /// The stone dart spell
     StoneDart,
+}
+
+impl Spell {
+    /// Returns an iterator over all the variants of `Spell` (except `Empty`)
+    pub fn variants() -> impl Iterator<Item = Self> {
+        use Spell::*;
+        [Firebolt, StoneDart].iter().copied()
+    }
 }
 
 #[derive(Event)]

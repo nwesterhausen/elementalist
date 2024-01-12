@@ -2,7 +2,7 @@ use bevy::prelude::*;
 use leafwing_input_manager::action_state::ActionState;
 
 use crate::{
-    common::{movement::Velocity, stats::Speed},
+    common::{movement::Velocity, stats::MoveSpeed},
     events::PlayerAction,
     player::Player,
 };
@@ -11,7 +11,7 @@ use crate::{
 pub fn player_movement_controls(
     mut query: Query<&mut Velocity, With<Player>>,
     action_query: Query<&ActionState<PlayerAction>, With<Player>>,
-    speed_query: Query<&Speed, With<Player>>,
+    speed_query: Query<&MoveSpeed, With<Player>>,
 ) {
     let Ok(action_state) = action_query.get_single() else {
         tracing::error!("player_movement_controls: failed to get action state");

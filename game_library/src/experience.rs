@@ -1,6 +1,6 @@
 use std::ops::AddAssign;
 
-use bevy::prelude::*;
+use bevy::ecs::{component::Component, system::Resource};
 use serde::{Deserialize, Serialize};
 
 /// Experience component
@@ -46,7 +46,7 @@ use serde::{Deserialize, Serialize};
 ///   base_xp: 10,
 /// };
 /// ```
-#[derive(Resource, Debug, Component, PartialEq, Eq, Clone, Copy, Serialize, Deserialize)]
+#[derive(Resource, Debug, Component, PartialEq, Eq, Clone, Copy, Serialize, Hash, Deserialize)]
 pub struct Xp {
     /// Amount of xp accumulated for this level
     pub value: u32,

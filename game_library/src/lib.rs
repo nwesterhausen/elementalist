@@ -12,13 +12,17 @@
 #![deny(unsafe_code)]
 
 mod attribute;
+mod enums;
 mod experience;
+mod skill;
 mod stat;
 mod stat_bonus;
 mod volume;
 
 pub use attribute::Attribute;
+pub use enums::*;
 pub use experience::Xp;
+pub use skill::SkillTrack;
 pub use stat::Stat;
 pub use stat_bonus::StatBonus;
 pub use volume::Volume;

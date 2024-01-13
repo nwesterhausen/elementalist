@@ -54,9 +54,11 @@
         "life",
         "death",
         "enhancement",
+        "reduction",
         "summoning",
         "necromancy",
-        "polymorph"
+        "polymorph",
+        "time"
       ]
     },
     "flags": {

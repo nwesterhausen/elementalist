@@ -1,7 +1,5 @@
 use bevy::{prelude::*, utils::HashMap};
-use game_library::{Attribute, Stat};
-
-use crate::spells::components::Spell;
+use game_library::{Attribute, Spell, Stat};
 
 #[derive(Component, Default, Debug)]
 pub struct Health {

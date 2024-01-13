@@ -1,4 +1,4 @@
-use bevy::prelude::*;
+use bevy::ecs::{component::Component, system::Resource};
 use serde::{Deserialize, Serialize};
 
 /// Attribute component. This is a simple integer representing the attribute of an entity.

@@ -1,4 +1,7 @@
-use bevy::prelude::*;
+use bevy::{
+    ecs::{component::Component, system::Resource},
+    reflect::Reflect,
+};
 use serde::{Deserialize, Serialize};
 
 /// A stat bonus is a value that can be increased or decreased. These should be considered
@@ -12,7 +15,7 @@ use serde::{Deserialize, Serialize};
 ///
 /// This does not support negative values, they don't make sense for a percentage based
 /// multiplier. If a value would become negative, it will be clamped to 0.0 instead.
-#[derive(Debug, Clone, Copy, PartialEq, Reflect, Component, Serialize, Deserialize)]
+#[derive(Debug, Resource, Clone, Copy, PartialEq, Reflect, Component, Serialize, Deserialize)]
 pub struct StatBonus {
     /// The percentage bonus to apply to the stat.
     pub value: f32,

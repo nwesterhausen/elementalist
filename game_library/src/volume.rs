@@ -1,4 +1,4 @@
-use bevy::prelude::*;
+use bevy::ecs::{component::Component, system::Resource};
 use serde::{Deserialize, Serialize};
 
 /// A volume setting, which should be an integer between 0 and 100.

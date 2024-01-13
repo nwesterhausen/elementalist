@@ -2,11 +2,9 @@ use bevy::prelude::*;
 use leafwing_input_manager::action_state::ActionState;
 
 use crate::{
-    events::PlayerAction,
-    player::Player,
-    resources::CursorPosition,
-    spells::components::{CastSpell, Spell},
+    events::PlayerAction, player::Player, resources::CursorPosition, spells::components::CastSpell,
 };
+use game_library::Spell;
 
 /// Handle player input
 pub fn player_control_system(

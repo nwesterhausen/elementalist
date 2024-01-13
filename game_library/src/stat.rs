@@ -1,4 +1,7 @@
-use bevy::prelude::*;
+use bevy::{
+    ecs::{component::Component, system::Resource},
+    reflect::Reflect,
+};
 use serde::{Deserialize, Serialize};
 
 use crate::StatBonus;
@@ -15,7 +18,7 @@ use crate::StatBonus;
 /// - base damage
 /// - damage reduction
 /// - attack speed
-#[derive(Component, Reflect, Clone, Copy, PartialEq, Serialize, Deserialize)]
+#[derive(Resource, Component, Reflect, Clone, Copy, PartialEq, Serialize, Deserialize)]
 pub struct Stat {
     /// The base value of the stat. This is the value that the stat will
     /// scale from.

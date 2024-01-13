@@ -5,8 +5,9 @@ use crate::{
     player::Player,
     resources::CursorPosition,
 };
+use game_library::Spell;
 
-use super::components::{CastSpell, Spell, SpellBundle, SpellLifetime};
+use super::components::{CastSpell, SpellBundle, SpellLifetime};
 
 const FIREBOLT_SPEED: f32 = 1000.0;
 const FIREBOLT_LIFETIME: f32 = 1.0;
@@ -44,7 +45,6 @@ pub fn spawn_firebolt(
                     velocity: Velocity::new(slope_vec * FIREBOLT_SPEED),
                     ..Default::default()
                 },
-                ..Default::default()
             });
         }
     }

@@ -1,0 +1,8 @@
+name: Magic Missile
+description: Shoot a magic missile at the target.
+mana_cost: 0
+cast_slot: primary
+cast_time: 0
+cooldown: 0.25
+spell_type: force
+spell_tier: 0

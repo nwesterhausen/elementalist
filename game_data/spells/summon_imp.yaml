@@ -1,0 +1,8 @@
+name: Summon Imp
+description: Summon an imp to fight for you.
+mana_cost: 1
+cast_slot: primary
+cast_time: 0
+cooldown: 2
+spell_type: summoning
+spell_tier: 0

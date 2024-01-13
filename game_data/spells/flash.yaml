@@ -1,0 +1,8 @@
+name: Flash
+description: Create a blinding flash of light.
+mana_cost: 0
+cast_slot: secondary
+cast_time: 0
+cooldown: 3.5
+spell_type: light
+spell_tier: 0

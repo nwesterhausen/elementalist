@@ -1,0 +1,8 @@
+name: Snares
+description: Create an area of excellerated root growth, ensnaring entities that walk through.
+mana_cost: 3
+cast_slot: secondary
+cast_time: 0.15
+cooldown: 5
+spell_type: life
+spell_tier: 1

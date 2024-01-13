@@ -1,0 +1,8 @@
+name: Lightning Bolt
+description: Shoot a bolt of lightning at a target.
+mana_cost: 0
+cast_slot: primary
+cast_time: 0
+cooldown: 1
+spell_type: lightning
+spell_tier: 1

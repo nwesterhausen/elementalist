@@ -1,0 +1,8 @@
+name: Summon Undead (Basic)
+description: Summon a random basic-tier undead at a location.
+mana_cost: 0
+cast_slot: primary
+cast_time: 0
+cooldown: 5
+spell_type: necromancy
+spell_tier: 0

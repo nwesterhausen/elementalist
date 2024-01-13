@@ -1,0 +1,11 @@
+name: Zone of Charming
+description: Create an area with an aura of charm magic at the target location.
+mana_cost: 3
+cast_slot: secondary
+cast_time: 0.25
+cooldown: 5
+spell_type: arcane
+spell_tier: 3
+long_description:
+  Entities already in the zone when it's cast become charmed instantly, fighting for the caster. Entities entering after the zone has been
+  created take a bit of time before becoming charmed.

@@ -1,0 +1,8 @@
+name: Transform into Ogre
+description: Polymorph yourself into an ogre.
+mana_cost: 4
+cast_slot: secondary
+cast_time: 0
+cooldown: 20
+spell_type: polymorph
+spell_tier: 0

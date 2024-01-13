@@ -1,0 +1,8 @@
+name: Death Bolt
+description: Launch a homing bolt of death energy at a target.
+mana_cost: 0
+cast_slot: primary
+cast_time: 0
+cooldown: 0.75
+spell_type: death
+spell_tier: 2

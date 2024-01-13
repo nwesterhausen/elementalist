@@ -1,0 +1,8 @@
+name: Enhance Strength
+description: Enhance the strength of the target (typically the caster).
+mana_cost: 2
+cast_slot: secondary
+cast_time: 0
+cooldown: 10
+spell_type: enhancement
+spell_tier: 0

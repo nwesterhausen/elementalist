@@ -1,0 +1,9 @@
+name: Vine Whip
+description: Create a vine and whip it towards the target.
+mana_cost: 0
+cast_slot: primary
+cast_time: 0
+cooldown: 1.25
+spell_type: life
+spell_tier: 1
+long_description: Can be whipped up to 3 times.

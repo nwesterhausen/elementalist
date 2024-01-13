@@ -1,0 +1,8 @@
+name: Zone of Undeath
+description: Create an area with a necrotic area. Enemies that die within have a chance to turn into your undead.
+mana_cost: 3
+cast_slot: secondary
+cast_time: 1
+cooldown: 7
+spell_type: necromancy
+spell_tier: 3

@@ -1,0 +1,8 @@
+name: Nature Bolt
+description: Shoot a bundle of razor sharp leaves at the target.
+mana_cost: 0
+cast_slot: primary
+cast_time: 0
+cooldown: 0.5
+spell_type: life
+spell_tier: 0

@@ -1,0 +1,8 @@
+name: Magic Mirror
+description: Create a wall of arcane energy which negates magic that passes through it.
+mana_cost: 1
+cast_slot: secondary
+cast_time: 0
+cooldown: 4.25
+spell_type: arcane
+spell_tier: 0

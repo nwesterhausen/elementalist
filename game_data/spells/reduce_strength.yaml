@@ -1,0 +1,8 @@
+name: Reduce Strength
+description: Reduce the strength of the target.
+mana_cost: 2
+cast_slot: secondary
+cast_time: 0
+cooldown: 5
+spell_type: reduction
+spell_tier: 0

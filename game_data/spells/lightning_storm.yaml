@@ -1,0 +1,9 @@
+name: Lightning Storm
+description: Create a localized storm of lightning at a target location.
+mana_cost: 2
+cast_slot: secondary
+cast_time: 0
+cooldown: 4
+spell_type: lightning
+spell_tier: 2
+long_description: Constantly has lightning coming down for a short duration.

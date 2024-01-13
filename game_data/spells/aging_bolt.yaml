@@ -1,0 +1,8 @@
+name: Aging Bolt
+description: Shoot a bolt of aging magic at a target.
+mana_cost: 1
+cast_slot: primary
+cast_time: 0
+cooldown: 0.25
+spell_type: time
+spell_tier: 0

@@ -4,6 +4,27 @@ const YAML = require('yaml');
 const table_row_header = `| Name | Tier | Slot | Description | Mana |
 | ---- | ---- | ---- | ----------- | ---- |`;
 
+const table_of_contents = `## Table of Contents
+
+- [Fire](#fire) (Pyromancy)
+- [Lightning](#lightning) (Fulgomancy)
+- [Water](#water) (Hydromancy)
+- [Earth](#earth) (Geomancy)
+- [Air](#air) (Aeromancy)
+- [Ice](#ice) (Cryomancy)
+- [Force](#force) (Trudomancy)
+- [Light](#light) (Photomancy)
+- [Dark](#dark) (Umbramancy)
+- [Arcane](#arcane) (Arcanomancy)
+- [Life](#life) (Vitomancy)
+- [Death](#death) (Mortomancy)
+- [Enhancement](#enhancement) (Ampiliomancy)
+- [Reduction](#debuff) (Diminiomancy)
+- [Summoning](#summoning) (Citomancy)
+- [Necromancy](#necromancy) (Necromancy)
+- [Polymorph](#polymorph) (Mutatiomancy)
+- [Time](#time) (Chronomancy)`;
+
 function spell_to_table_row(spell) {
   return `| ${spell.name} | ${spell.spell_tier} | ${spell.cast_slot} | ${spell.description} | ${spell.mana_cost} |`;
 }
@@ -12,7 +33,7 @@ function string_with_space_to_title_case(str) {
   return str.split(' ').map(word => word[0].toUpperCase() + word.slice(1)).join(' ');
 }
 
-let out_str = '# Spell Idea List\n';
+let out_str = `# Spell Idea List\n\n${table_of_contents}\n`;
 const spell_data = [];
 
 // Read in all the spell data files, parse them, and add them to the spell_data array

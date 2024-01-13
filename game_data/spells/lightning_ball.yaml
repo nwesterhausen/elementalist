@@ -1,0 +1,9 @@
+name: Lightning Ball
+description: Launch a ball of pure lightning towards a target.
+mana_cost: 0
+cast_slot: primary
+cast_time: 0
+cooldown: 1.75
+spell_type: lightning
+spell_tier: 3
+long_description: As the ball travels it will launch a lightning bolt at the closest target to it up to 4 times before its exhausted.

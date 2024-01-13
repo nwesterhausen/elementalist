@@ -1,0 +1,10 @@
+name: Miniature Black Hole
+description: Launch a magically stable, miniature black hole towards a target.
+mana_cost: 2
+cast_slot: secondary
+cast_time: 0
+cooldown: 5.75
+spell_type: dark
+spell_tier: 3
+long_description:
+  As the black hole travels, the area it affects becomes larger and larger. Though magically stable, it can also affect the caster.

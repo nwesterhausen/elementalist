@@ -1,0 +1,8 @@
+name: Overgrown
+description: Grow a wall of plants at the target location.
+mana_cost: 2
+cast_slot: secondary
+cast_time: 0.15
+cooldown: 4
+spell_type: life
+spell_tier: 0

@@ -1,3 +1,8 @@
+//! Attribute component. This is a simple integer representing the attribute of an entity.
+//!
+//! Has properties like `max_attribute` and `current_attribute`. And you can perform math
+//! operations with integers, floats, and other `Attribute` components directly to influence
+//! the `current_attribute` value.
 use bevy::ecs::{component::Component, system::Resource};
 use serde::{Deserialize, Serialize};
 

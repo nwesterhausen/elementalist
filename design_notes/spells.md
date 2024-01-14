@@ -2,24 +2,26 @@
 
 ## Table of Contents
 
-- [Fire](#fire) (Pyromancy)
-- [Lightning](#lightning) (Fulgomancy)
-- [Water](#water) (Hydromancy)
-- [Earth](#earth) (Geomancy)
-- [Air](#air) (Aeromancy)
-- [Ice](#ice) (Cryomancy)
-- [Force](#force) (Trudomancy)
-- [Light](#light) (Photomancy)
-- [Dark](#dark) (Umbramancy)
-- [Arcane](#arcane) (Arcanomancy)
-- [Life](#life) (Vitomancy)
-- [Death](#death) (Mortomancy)
-- [Enhancement](#enhancement) (Ampiliomancy)
-- [Reduction](#debuff) (Diminiomancy)
-- [Summoning](#summoning) (Citomancy)
-- [Necromancy](#necromancy) (Necromancy)
-- [Polymorph](#polymorph) (Mutatiomancy)
-- [Time](#time) (Chronomancy)
+| Spell Type | Governing Class |
+| ---------- | --------------- |
+| [Fire](#fire) | Pyromancy |
+| [Lightning](#lightning) | Fulgomancy |
+| [Water](#water) | Hydromancy |
+| [Earth](#earth) | Geomancy |
+| [Air](#air) | Aeromancy |
+| [Ice](#ice) | Cryomancy |
+| [Force](#force) | Trudomancy |
+| [Light](#light) | Photomancy |
+| [Dark](#dark) | Umbramancy |
+| [Arcane](#arcane) | Arcanomancy |
+| [Life](#life) | Vitomancy |
+| [Death](#death) | Mortomancy |
+| [Enhancement](#enhancement) | Ampiliomancy |
+| [Reduction](#debuff) | Diminiomancy |
+| [Summoning](#summoning) | Citomancy |
+| [Necromancy](#necromancy) | Necromancy |
+| [Polymorph](#polymorph) | Mutatiomancy |
+| [Time](#time) | Chronomancy |
 
 ## Time
 

@@ -6,3 +6,18 @@ cast_time: 0
 cooldown: 0.25
 spell_type: time
 spell_tier: 0
+flags:
+  - debuff
+  - projectile
+cast_category: projectile
+cast_type: instant
+icon: panda.png
+sprite: panda.png
+debuff:
+  duration: 0.25
+  max_stacks: 1
+  affected_entity: enemies
+  affected_stats:
+    - affect_type: add
+      amount: -0.2
+      stat: healing

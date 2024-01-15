@@ -26,7 +26,7 @@
     "affected_entity": {
       "description": "The entities affected by the effect",
       "type": "string",
-      "enum": ["self", "enemies", "both", "none"]
+      "enum": ["any", "player", "enemy", "ally", "none"]
     },
     "affected_stats": {
       "description": "The stats affected by the effect",
@@ -40,17 +40,36 @@
             "enum": [
               "health",
               "mana",
-              "move_speed",
-              "spell_speed",
-              "range",
-              "duration",
-              "damage",
-              "healing",
-              "radius",
-              "angle",
-              "cooldown",
-              "cast_time",
-              "mana_cost"
+              "damageReduction",
+              "damageResistance",
+              "damageReflection",
+              "damageAmplification",
+              "criticalStrikeChance",
+              "criticalStrikeDamage",
+              "lifeSteal",
+              "manaSteal",
+              "movementSpeed",
+              "stunResistance",
+              "healthRegeneration",
+              "manaRegeneration",
+              "projectileSpeed",
+              "projectileSize",
+              "projectileLifetime",
+              "dodgeChance",
+              "attackDamage",
+              "attackSpeed",
+              "attackRange",
+              "physicalDamageReduction",
+              "physicalDamageResistance",
+              "physicalDamageReflection",
+              "physicalDamageAmplification",
+              "magicDamage",
+              "cooldownReduction",
+              "spellRange",
+              "magicDamageReduction",
+              "magicDamageResistance",
+              "magicDamageReflection",
+              "magicDamageAmplification"
             ]
           },
           "amount": {

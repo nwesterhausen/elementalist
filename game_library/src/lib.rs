@@ -38,6 +38,7 @@ mod skill;
 mod spell_data;
 mod stat;
 mod stat_bonus;
+mod stat_effect;
 mod volume;
 
 pub use attribute::Attribute;
@@ -47,4 +48,5 @@ pub use skill::SkillTrack;
 pub use spell_data::SpellData;
 pub use stat::Stat;
 pub use stat_bonus::StatBonus;
+pub use stat_effect::StatEffect;
 pub use volume::Volume;

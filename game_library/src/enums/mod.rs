@@ -5,6 +5,8 @@ mod magic;
 mod skill;
 mod spell;
 mod spell_collision;
+mod spell_target;
+mod stat;
 
 pub use cast_category::CastCategory;
 pub use cast_slot::CastSlot;
@@ -13,3 +15,5 @@ pub use magic::MagicType;
 pub use skill::Skill;
 pub use spell::Spell;
 pub use spell_collision::SpellCollision;
+pub use spell_target::SpellTarget;
+pub use stat::StatEnum;

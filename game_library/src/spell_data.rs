@@ -6,12 +6,12 @@
 //! # $schema: "https://schemas.nwest.one/games/elementalist/spell.json"
 //! ```
 
-use crate::{CastCategory, CastSlot, CastType, MagicType, Skill, SpellCollision};
+use crate::{CastCategory, CastSlot, CastType, MagicType, Skill, SpellCollision, StatEffect};
 
 /// Details about a spell.
 ///
 /// Describes in detail how a spell works and how it should be displayed.
-#[derive(Debug, Clone, Hash, PartialEq, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct SpellData {
     /// The internal ID of the spell.
     pub internal_id: String,
@@ -19,6 +19,8 @@ pub struct SpellData {
     pub name: String,
     /// A short description of the spell.
     pub description: String,
+    /// A longer description of the spell.
+    pub long_description: String,
     /// The tier of the spell (0-9 officially).
     pub spell_tier: u8,
     /// The type of magic the spell uses.
@@ -70,10 +72,7 @@ pub struct SpellData {
 
     // #### SPELL EFFECTS ####
     /// Buffs that the spell can apply to the caster or to the target.
-    pub buffs: Vec<SpellEffect>,
+    pub buffs: Vec<StatEffect>,
     /// Debuffs that the spell can apply to the caster or to the target.
-    pub debuffs: Vec<SpellEffect>,
+    pub debuffs: Vec<StatEffect>,
 }
-
-#[derive(Debug, Clone, Hash, PartialEq, serde::Serialize, serde::Deserialize)]
-struct SpellEffect;

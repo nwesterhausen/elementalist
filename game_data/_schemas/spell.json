@@ -37,7 +37,7 @@
       "type": "number",
       "inclusiveMinimum": 0
     },
-    "spell_type": {
+    "magic": {
       "description": "The family of magic the spell belongs to",
       "type": "string",
       "enum": [

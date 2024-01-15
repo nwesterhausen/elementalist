@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 
 use crate::{
-    common::movement::{MovingThingBundle, Velocity},
+    common::movement::{MovementBundle, Velocity},
     player::Player,
     resources::CursorPosition,
 };
@@ -41,7 +41,7 @@ pub fn spawn_firebolt(
                     transform: player_transform.clone(),
                     ..Default::default()
                 },
-                moving_thing: MovingThingBundle {
+                movement: MovementBundle {
                     velocity: Velocity::new(slope_vec * FIREBOLT_SPEED),
                     ..Default::default()
                 },

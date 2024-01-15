@@ -1,11 +1,11 @@
 use bevy::prelude::*;
 use game_library::Spell;
 
-use crate::common::movement::MovingThingBundle;
+use crate::common::movement::MovementBundle;
 
 #[derive(Bundle)]
 pub struct SpellBundle {
-    pub moving_thing: MovingThingBundle,
+    pub movement: MovementBundle,
     pub spell: Spell,
     pub sprite: SpriteBundle,
     pub lifetime: SpellLifetime,

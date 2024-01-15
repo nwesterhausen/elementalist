@@ -44,7 +44,7 @@ impl Acceleration {
 
 /// Bundle that contains all components needed for moving things
 #[derive(Bundle, Debug, Default)]
-pub struct MovingThingBundle {
+pub struct MovementBundle {
     pub velocity: Velocity,
     pub acceleration: Acceleration,
 }

@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 
 use crate::common::{
-    movement::MovingThingBundle,
+    movement::MovementBundle,
     stats::{Health, Mana, MoveSpeed, SpellDamage, SpellSpeed},
 };
 
@@ -15,7 +15,7 @@ pub struct Player;
 #[derive(Bundle)]
 pub struct PlayerBundle {
     pub player: Player,
-    pub moving_thing: MovingThingBundle,
+    pub movement: MovementBundle,
     pub sprite: SpriteBundle,
     pub health: Health,
     pub mana: Mana,
@@ -26,7 +26,7 @@ pub struct PlayerBundle {
 
 pub fn spawn_player(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn(PlayerBundle {
-        moving_thing: MovingThingBundle::default(),
+        movement: MovementBundle::default(),
         sprite: SpriteBundle {
             texture: asset_server.load("wizard.png").into(),
             transform: Transform::from_xyz(0.0, 0.0, 0.0),

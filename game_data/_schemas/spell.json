@@ -96,6 +96,64 @@
       "description": "The tier of the spell, used to indicate how soon it can be unlocked or learned. One of the tier 0 spells will be a free choice when learning a type of magic.",
       "type": "integer",
       "enum": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    },
+    "speed": {
+      "description": "The speed of the spell, used to determine how quickly it travels",
+      "type": "number",
+      "inclusiveMinimum": 0
+    },
+    "range": {
+      "description": "The range of the spell, used to determine how far it can travel",
+      "type": "number",
+      "inclusiveMinimum": 0
+    },
+    "duration": {
+      "description": "The duration of the spell, used to determine how long it lasts",
+      "type": "number",
+      "inclusiveMinimum": 0
+    },
+    "damage": {
+      "description": "The damage of the spell, used to determine how much damage it does",
+      "type": "number",
+      "inclusiveMinimum": 0
+    },
+    "healing": {
+      "description": "The healing of the spell, used to determine how much healing it does",
+      "type": "number",
+      "inclusiveMinimum": 0
+    },
+    "radius": {
+      "description": "The radius of the spell, used to determine how large the area of effect is",
+      "type": "number",
+      "inclusiveMinimum": 0
+    },
+    "angle": {
+      "description": "The angle of the spell, used to determine how wide the area of effect is",
+      "type": "number",
+      "inclusiveMinimum": 0
+    },
+    "collider": {
+      "description": "The collider of the spell, used to determine how it interacts with the world",
+      "type": "string",
+      "enum": ["circle", "square", "line", "cone", "point"]
+    },
+    "debuffs": {
+      "description": "The debuffs applied by the spell",
+      "$ref": "https://schemas.nwest.one/games/elementalist/stat_effect.json"
+    },
+    "buffs": {
+      "description": "The buffs applied by the spell",
+      "$ref": "https://schemas.nwest.one/games/elementalist/stat_effect.json"
+    },
+    "cast_type": {
+      "description": "The type of cast the spell uses",
+      "type": "string",
+      "enum": ["instant", "channeled", "cast"]
+    },
+    "spell_category": {
+      "description": "The broad category of the spell",
+      "type": "string",
+      "enum": ["touch", "projectile", "ground", "summon", "self"]
     }
   },
   "required": ["name", "description", "mana_cost", "cast_slot", "spell_type", "cast_time", "cooldown", "spell_tier"]

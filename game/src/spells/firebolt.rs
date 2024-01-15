@@ -1,7 +1,10 @@
 use bevy::prelude::*;
 
 use crate::{
-    common::movement::{MovementBundle, Velocity},
+    common::{
+        math,
+        movement::{MovementBundle, Velocity},
+    },
     player::Player,
     resources::CursorPosition,
 };
@@ -26,12 +29,7 @@ pub fn spawn_firebolt(
         };
 
         if *spell == Spell::Firebolt {
-            let player_xy = Vec2::new(
-                player_transform.translation.x,
-                player_transform.translation.y,
-            );
-            let slope_vec = cursor_position.position - player_xy;
-            let slope_vec = slope_vec.normalize();
+            let slope_vec = math::slope_vec(&player_transform, &cursor_position);
 
             commands.spawn(SpellBundle {
                 spell: Spell::Firebolt,

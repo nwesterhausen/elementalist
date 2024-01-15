@@ -150,11 +150,33 @@
       "type": "string",
       "enum": ["instant", "channeled", "cast"]
     },
-    "spell_category": {
+    "cast_category": {
       "description": "The broad category of the spell",
       "type": "string",
       "enum": ["touch", "projectile", "ground", "summon", "self"]
+    },
+    "icon": {
+      "description": "The icon of the spell (path in the assets folder)",
+      "type": "string"
+    },
+    "sprite": {
+      "description": "The sprite of the spell (path in the assets folder)",
+      "type": "string"
     }
   },
-  "required": ["name", "description", "mana_cost", "cast_slot", "spell_type", "cast_time", "cooldown", "spell_tier"]
+  "required": [
+    "name",
+    "description",
+    "mana_cost",
+    "cast_slot",
+    "spell_type",
+    "cast_time",
+    "cooldown",
+    "spell_tier",
+    "flags",
+    "cast_type",
+    "cast_category",
+    "icon",
+    "sprite"
+  ]
 }

@@ -21,6 +21,7 @@ mod app_state;
 mod app_systems;
 mod camera;
 mod common;
+mod dev_systems;
 mod events;
 mod game;
 mod main_menu;
@@ -51,6 +52,8 @@ fn main() {
             }),
             ..Default::default()
         }))
+        // Add our dev-mode systems (they disable themselves in release mode)
+        .add_plugins(dev_systems::DevSystemsPlugin)
         // Add state
         .add_state::<AppState>()
         // Add all the general resources and their update systems (e.g. cursor position)

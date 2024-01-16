@@ -1,9 +1,11 @@
 use bevy::prelude::*;
+use bevy_inspector_egui::prelude::*;
 
 /// Simple velocity component containing a 2D vector
 ///
 /// Defaults to Vec2::ZERO
-#[derive(Component, Debug)]
+#[derive(Component, Debug, Reflect, InspectorOptions)]
+#[reflect(InspectorOptions)]
 pub struct Velocity {
     pub value: Vec2,
 }
@@ -24,7 +26,8 @@ impl Velocity {
 /// Simple acceleration component containing a 2D vector
 ///
 /// Defaults to Vec2::ZERO
-#[derive(Component, Debug)]
+#[derive(Component, Debug, Reflect, InspectorOptions)]
+#[reflect(InspectorOptions)]
 pub struct Acceleration {
     pub value: Vec2,
 }

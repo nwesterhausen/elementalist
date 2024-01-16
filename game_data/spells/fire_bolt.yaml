@@ -16,6 +16,6 @@ data:
   castTime: 0
   cooldown: 150
   spriteTileset: tileset/spell_projectiles.png
-  spriteIndex: 2
+  spriteIndex: 3
   flags:
     - projectile

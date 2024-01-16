@@ -1,4 +1,8 @@
-use bevy::ecs::{component::Component, system::Resource};
+use bevy::{
+    ecs::{component::Component, system::Resource},
+    reflect::Reflect,
+};
+use bevy_inspector_egui::inspector_options::{InspectorOptions, ReflectInspectorOptions};
 use serde::{Deserialize, Serialize};
 
 use crate::{Skill, Xp};
@@ -15,7 +19,21 @@ use crate::{Skill, Xp};
 /// Skills are also used to gate spells, so that a player must have a certain
 /// level in a skill before they can unlock a spell. All of that is built on top
 /// of this skill system.
-#[derive(Resource, Component, Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(
+    Resource,
+    Component,
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Hash,
+    Serialize,
+    Deserialize,
+    Reflect,
+    InspectorOptions,
+)]
+#[reflect(InspectorOptions)]
 pub struct SkillTrack {
     /// The skill the this is tracking
     pub skill: Skill,

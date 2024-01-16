@@ -2,16 +2,14 @@ use bevy::prelude::*;
 use leafwing_input_manager::action_state::ActionState;
 
 use crate::{
-    events::PlayerAction, player::Player, resources::CursorPosition, spells::components::CastSpell,
+    events::PlayerAction, player::Player, resources::SpellChoices, spells::components::CastSpell,
 };
 
 /// Handle player input
 pub fn player_control_system(
     query: Query<&ActionState<PlayerAction>, With<Player>>,
-    cursor_position: Res<CursorPosition>,
-    mut commands: Commands,
-    asset_server: Res<AssetServer>,
     mut ew_cast_spell: EventWriter<CastSpell>,
+    spell_choices: Res<SpellChoices>,
 ) {
     let action_state = query.single();
     if action_state.pressed(PlayerAction::Look) {
@@ -22,30 +20,36 @@ pub fn player_control_system(
         }
     }
     if action_state.just_pressed(PlayerAction::CastPrimary) {
-        // Cast a firebolt
-        ew_cast_spell.send(CastSpell(String::from("AgingBolt0TimePrimary")));
+        // Cast a the primary spell
+        if let Some(spell_id) = spell_choices.primary.clone() {
+            ew_cast_spell.send(CastSpell(spell_id));
+        } else {
+            tracing::warn!("No primary spell selected")
+        }
     }
     if action_state.just_pressed(PlayerAction::CastSecondary) {
-        // Draw a sprite at the cursor position
-        commands.spawn(SpriteBundle {
-            transform: Transform::from_xyz(
-                cursor_position.position.x,
-                cursor_position.position.y,
-                0.0,
-            ),
-            texture: asset_server.load("spells/firebolt.png").into(),
-            sprite: Sprite {
-                custom_size: Some(Vec2::new(8.0, 8.0)),
-                ..Default::default()
-            },
-            ..Default::default()
-        });
+        // Cast a the secondary spell
+        if let Some(spell_id) = spell_choices.secondary.clone() {
+            ew_cast_spell.send(CastSpell(spell_id));
+        } else {
+            tracing::warn!("No secondary spell selected")
+        }
     }
     if action_state.just_pressed(PlayerAction::CastDefensive) {
-        println!("CastDefensive");
+        // Cast a the defensive spell
+        if let Some(spell_id) = spell_choices.defensive.clone() {
+            ew_cast_spell.send(CastSpell(spell_id));
+        } else {
+            tracing::warn!("No defensive spell selected")
+        }
     }
     if action_state.just_pressed(PlayerAction::CastUltimate) {
-        println!("CastUltimate");
+        // Cast a the ultimate spell
+        if let Some(spell_id) = spell_choices.ultimate.clone() {
+            ew_cast_spell.send(CastSpell(spell_id));
+        } else {
+            tracing::warn!("No ultimate spell selected")
+        }
     }
     if action_state.just_pressed(PlayerAction::ToggleAutoCast) {
         println!("ToggleAutoCast");

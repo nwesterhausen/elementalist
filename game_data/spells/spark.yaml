@@ -20,4 +20,4 @@ data:
     - target
     - homing
   spriteTileset: tileset/spell_projectiles.png
-  spriteIndex: 3
+  spriteIndex: 10

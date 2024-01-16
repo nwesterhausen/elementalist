@@ -92,6 +92,10 @@ pub fn cast_spells(
 
         let slope_vec = common::math::slope_vec(&player_transform, &cursor_position);
 
+        // Todo: include the player's velocity in the spell's velocity
+        // Todo: include the player's stats to effect the spell (damage, speed, etc)
+        // Todo: figure out how we will track cooldowns. Maybe a resource?
+
         commands.spawn(SpellBundle {
             lifetime: SpellLifetime::new(spell.duration as f32 / 100.0),
             movement: MovementBundle {

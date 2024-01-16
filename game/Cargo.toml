@@ -22,3 +22,5 @@ leafwing-input-manager = "0.11.2"
 serde = "1.0.194"
 tracing = "0.1.40"
 game_library = { path = "../game_library" }
+egui_dock = "0.10.0"
+bevy-inspector-egui = "0.22.1"

@@ -1,4 +1,8 @@
-use bevy::ecs::{component::Component, system::Resource};
+use bevy::{
+    ecs::{component::Component, system::Resource},
+    reflect::Reflect,
+};
+use bevy_inspector_egui::inspector_options::{InspectorOptions, ReflectInspectorOptions};
 use serde::{Deserialize, Serialize};
 
 /// A volume setting, which should be an integer between 0 and 100.
@@ -9,9 +13,23 @@ use serde::{Deserialize, Serialize};
 /// the volume as a decimal; i.e. 50% volume would be 0.5 as `f32`).
 ///
 /// Keeps tract of whether or not the volume is muted.
-#[derive(Resource, Debug, Component, PartialEq, Eq, Clone, Copy, Serialize, Deserialize)]
+#[derive(
+    Resource,
+    Debug,
+    Component,
+    PartialEq,
+    Eq,
+    Clone,
+    Copy,
+    Serialize,
+    Deserialize,
+    Reflect,
+    InspectorOptions,
+)]
+#[reflect(InspectorOptions)]
 pub struct Volume {
     /// The volume as a percentage
+    #[inspector(min = 0, max = 100)]
     pub value: u32,
     /// Whether or not the volume is muted
     pub muted: bool,

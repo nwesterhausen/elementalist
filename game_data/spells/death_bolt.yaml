@@ -16,4 +16,4 @@ data:
   magic: death
   spellTier: 2
   spriteTileset: tileset/spell_projectiles.png
-  spriteIndex: 1
+  spriteIndex: 2

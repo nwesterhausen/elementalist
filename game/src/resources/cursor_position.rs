@@ -1,8 +1,10 @@
-use bevy::{prelude::*, window::PrimaryWindow};
+use bevy::{prelude::*, reflect::Reflect, window::PrimaryWindow};
+use bevy_inspector_egui::prelude::*;
 
 use crate::camera::MainCamera;
 
-#[derive(Resource, Debug, Copy, Clone, Default)]
+#[derive(Resource, Debug, Copy, Clone, Default, Reflect, InspectorOptions)]
+#[reflect(InspectorOptions)]
 pub struct CursorPosition {
     pub position: Vec2,
 }

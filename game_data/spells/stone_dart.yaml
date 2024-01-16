@@ -16,4 +16,4 @@ data:
   magic: earth
   spellTier: 0
   spriteTileset: tileset/spell_projectiles.png
-  spriteIndex: 7
+  spriteIndex: 11

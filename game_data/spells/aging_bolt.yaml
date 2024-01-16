@@ -14,7 +14,7 @@ data:
   castCategory: projectile
   castType: instant
   spriteTileset: tileset/spell_projectiles.png
-  spriteIndex: 11
+  spriteIndex: 13
   debuff:
     duration: 250
     maxStacks: 1

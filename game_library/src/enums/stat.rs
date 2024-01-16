@@ -1,6 +1,20 @@
+use bevy::reflect::Reflect;
+use bevy_inspector_egui::inspector_options::{InspectorOptions, ReflectInspectorOptions};
+
 /// Possible stats that a character can have. These are available for both the player
 /// and the enemies.
-#[derive(Debug, Clone, Hash, PartialEq, serde::Serialize, serde::Deserialize)]
+#[derive(
+    Debug,
+    Clone,
+    Hash,
+    PartialEq,
+    Eq,
+    serde::Serialize,
+    serde::Deserialize,
+    Reflect,
+    InspectorOptions,
+)]
+#[reflect(InspectorOptions)]
 #[serde(rename_all = "camelCase")]
 pub enum StatEnum {
     /// The maximum health of the character. (Health is measured as an integer.)

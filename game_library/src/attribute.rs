@@ -3,7 +3,11 @@
 //! Has properties like `max_attribute` and `current_attribute`. And you can perform math
 //! operations with integers, floats, and other `Attribute` components directly to influence
 //! the `current_attribute` value.
-use bevy::ecs::{component::Component, system::Resource};
+use bevy::{
+    ecs::{component::Component, system::Resource},
+    reflect::Reflect,
+};
+use bevy_inspector_egui::inspector_options::{InspectorOptions, ReflectInspectorOptions};
 use serde::{Deserialize, Serialize};
 
 /// Attribute component. This is a simple integer representing the attribute of an entity.
@@ -35,8 +39,20 @@ use serde::{Deserialize, Serialize};
 /// * Check `is_empty` to see if the entity is dead (i.e. `current_attribute` is 0).
 /// * Check `is_full` to see if the entity is at full attribute (i.e. `current_attribute` is equal to `max_attribute`).
 #[derive(
-    Resource, Debug, Component, PartialEq, Eq, Clone, Copy, Serialize, Deserialize, Default,
+    Resource,
+    Debug,
+    Component,
+    PartialEq,
+    Eq,
+    Clone,
+    Copy,
+    Serialize,
+    Deserialize,
+    Default,
+    Reflect,
+    InspectorOptions,
 )]
+#[reflect(InspectorOptions)]
 pub struct Attribute {
     /// The maximum value for the attribute of the entity
     pub max: u32,

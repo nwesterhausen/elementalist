@@ -1,4 +1,8 @@
-use bevy::ecs::{component::Component, system::Resource};
+use bevy::{
+    ecs::{component::Component, system::Resource},
+    reflect::Reflect,
+};
+use bevy_inspector_egui::InspectorOptions;
 use serde::{Deserialize, Serialize};
 
 use crate::MagicType;
@@ -9,7 +13,20 @@ use crate::MagicType;
 /// it's just what corresponds to the different spells so far.
 ///
 /// Skills are used to track a meta-progression of a player's abilities.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Component, Resource, Serialize, Deserialize)]
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Hash,
+    Component,
+    Resource,
+    Serialize,
+    Deserialize,
+    Reflect,
+    InspectorOptions,
+)]
 #[serde(rename_all = "camelCase")]
 pub enum Skill {
     /// Pyromancy is the school of fire magic.

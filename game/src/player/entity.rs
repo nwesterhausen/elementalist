@@ -1,8 +1,9 @@
 use bevy::prelude::*;
+use game_library::StatEnum;
 
 use crate::common::{
     movement::MovementBundle,
-    stats::{Health, Mana, MoveSpeed, SpellDamage, SpellSpeed},
+    stats::{Health, Mana, StatBundle},
 };
 
 const BASE_SPEED: f32 = 100.0;
@@ -19,9 +20,7 @@ pub struct PlayerBundle {
     pub sprite: SpriteBundle,
     pub health: Health,
     pub mana: Mana,
-    pub move_speed: MoveSpeed,
-    pub spell_speed: SpellSpeed,
-    pub spell_damage: SpellDamage,
+    pub stats: StatBundle,
 }
 
 pub fn spawn_player(mut commands: Commands, asset_server: Res<AssetServer>) {
@@ -35,8 +34,6 @@ pub fn spawn_player(mut commands: Commands, asset_server: Res<AssetServer>) {
         player: Player,
         health: Health::new(BASE_HEALTH),
         mana: Mana::new(BASE_MANA),
-        move_speed: MoveSpeed::new(BASE_SPEED),
-        spell_speed: SpellSpeed::new(1.0),
-        spell_damage: SpellDamage::default(),
+        stats: StatBundle::new(vec![(StatEnum::MovementSpeed, BASE_SPEED)]),
     });
 }

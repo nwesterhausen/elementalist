@@ -2,6 +2,7 @@ use bevy::{
     ecs::{component::Component, system::Resource},
     reflect::Reflect,
 };
+use bevy_inspector_egui::inspector_options::{InspectorOptions, ReflectInspectorOptions};
 use serde::{Deserialize, Serialize};
 
 use crate::StatBonus;
@@ -18,13 +19,18 @@ use crate::StatBonus;
 /// - base damage
 /// - damage reduction
 /// - attack speed
-#[derive(Resource, Component, Reflect, Clone, Copy, PartialEq, Serialize, Deserialize)]
+#[derive(
+    Resource, Component, Reflect, Clone, Copy, PartialEq, Serialize, Deserialize, InspectorOptions,
+)]
+#[reflect(InspectorOptions)]
 pub struct Stat {
     /// The base value of the stat. This is the value that the stat will
     /// scale from.
+    #[inspector(speed = 0.1)]
     base_value: f32,
     /// The current value of the stat. This is the value that will be
     /// used for calculations.
+    #[inspector(speed = 0.1)]
     value: f32,
     /// The current bonus applied the stat. This then multiplied to get
     /// the final value.
@@ -129,6 +135,22 @@ impl Stat {
         }
         // Use our existing multiply function to clamp
         self.bonus.divide_value(value);
+        self.update_value();
+    }
+
+    /// Set the base value of the stat.
+    ///
+    /// This will overwrite the existing base value.
+    pub fn set_base_value(&mut self, value: f32) {
+        self.base_value = value;
+        self.update_value();
+    }
+
+    /// Set the bonus of the stat.
+    ///
+    /// This will overwrite the existing bonus.
+    pub fn set_bonus_value(&mut self, value: f32) {
+        self.bonus.set_value(value);
         self.update_value();
     }
 }

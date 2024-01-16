@@ -1,5 +1,4 @@
 use bevy::prelude::*;
-use game_library::SpellData;
 
 use crate::common::movement::MovementBundle;
 

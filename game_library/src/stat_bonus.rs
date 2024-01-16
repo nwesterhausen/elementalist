@@ -2,6 +2,7 @@ use bevy::{
     ecs::{component::Component, system::Resource},
     reflect::Reflect,
 };
+use bevy_inspector_egui::inspector_options::{InspectorOptions, ReflectInspectorOptions};
 use serde::{Deserialize, Serialize};
 
 /// A stat bonus is a value that can be increased or decreased. These should be considered
@@ -15,10 +16,23 @@ use serde::{Deserialize, Serialize};
 ///
 /// This does not support negative values, they don't make sense for a percentage based
 /// multiplier. If a value would become negative, it will be clamped to 0.0 instead.
-#[derive(Debug, Resource, Clone, Copy, PartialEq, Reflect, Component, Serialize, Deserialize)]
+#[derive(
+    Debug,
+    Resource,
+    Clone,
+    Copy,
+    PartialEq,
+    Reflect,
+    Component,
+    Serialize,
+    Deserialize,
+    InspectorOptions,
+)]
+#[reflect(InspectorOptions)]
 #[serde(rename_all = "camelCase")]
 pub struct StatBonus {
     /// The percentage bonus to apply to the stat.
+    #[inspector(min = 0.0, speed = 0.1)]
     pub value: f32,
 }
 

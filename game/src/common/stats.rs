@@ -1,7 +1,9 @@
-use bevy::{prelude::*, utils::HashMap};
-use game_library::{Attribute, Spell, Stat};
+use bevy::{prelude::*, reflect::Reflect, utils::hashbrown::HashMap};
+use bevy_inspector_egui::prelude::*;
+use game_library::{Attribute, Stat, StatEnum};
 
-#[derive(Component, Default, Debug)]
+#[derive(Component, Default, Debug, Reflect, InspectorOptions)]
+#[reflect(InspectorOptions)]
 pub struct Health {
     pub value: Attribute,
 }
@@ -14,7 +16,8 @@ impl Health {
     }
 }
 
-#[derive(Component, Default, Debug)]
+#[derive(Component, Default, Debug, Reflect, InspectorOptions)]
+#[reflect(InspectorOptions)]
 pub struct Mana {
     pub value: Attribute,
 }
@@ -28,78 +31,50 @@ impl Mana {
 }
 
 #[derive(Component, Default, Debug)]
-pub struct MoveSpeed {
-    pub value: Stat,
+pub struct StatBundle {
+    pub stats: HashMap<StatEnum, Stat>,
 }
 
-impl MoveSpeed {
-    pub fn new(value: f32) -> Self {
-        Self {
-            value: Stat::new(value),
+impl StatBundle {
+    /// Creates a new stats bundle with the given stats.
+    pub fn new(stats: Vec<(StatEnum, f32)>) -> Self {
+        let mut stats_map = HashMap::new();
+
+        for stat in stats {
+            stats_map.insert(stat.0, Stat::new(stat.1));
+        }
+
+        Self { stats: stats_map }
+    }
+    /// Add a new stat to the stats bundle. If the stat already exists, it will be overwritten.
+    pub fn add_stat(&mut self, stat: StatEnum) {
+        self.stats.insert(stat, Stat::default());
+    }
+    /// Get a specific stat from the stats bundle.
+    ///
+    /// If the stat does not exist, it will return None.
+    pub fn get_stat(&self, stat: StatEnum) -> Option<&Stat> {
+        self.stats.get(&stat)
+    }
+    /// Update the value of a specific stat.
+    ///
+    /// If the stat does not exist, it will be added.
+    pub fn update_stat(&mut self, stat: StatEnum, value: f32) {
+        if let Some(stat) = self.stats.get_mut(&stat) {
+            stat.set_base_value(value);
+        } else {
+            self.stats.insert(stat, Stat::new(value));
         }
     }
-}
-
-#[derive(Component, Default, Debug)]
-pub struct SpellSpeed {
-    pub value: Stat,
-}
-
-impl SpellSpeed {
-    pub fn new(value: f32) -> Self {
-        Self {
-            value: Stat::new(value),
-        }
-    }
-}
-
-#[derive(Component, Default, Debug)]
-pub struct SpellLifetime {
-    pub value: Stat,
-}
-
-impl SpellLifetime {
-    pub fn new(value: f32) -> Self {
-        Self {
-            value: Stat::new(value),
-        }
-    }
-}
-
-#[derive(Component, Debug)]
-pub struct SpellDamage {
-    pub value: HashMap<Spell, Stat>,
-}
-
-impl std::default::Default for SpellDamage {
-    fn default() -> Self {
-        let mut value = HashMap::default();
-        for spell in Spell::variants() {
-            value.insert(spell, Stat::default());
-        }
-        Self { value }
-    }
-}
-
-impl SpellDamage {
-    pub fn set(&mut self, spell: Spell, value: f32) {
-        self.value.insert(spell, Stat::new(value));
-    }
-
-    pub fn get(&self, spell: Spell) -> Option<&Stat> {
-        self.value.get(&spell)
-    }
-}
-
-#[derive(Component, Debug, Default)]
-pub struct CooldownModifier {
-    pub value: Stat,
-}
-
-impl CooldownModifier {
-    pub fn new(value: f32) -> Self {
-        Self {
-            value: Stat::new(value),
+    /// Update the bonus of a specific stat.
+    ///
+    /// If the stat does not exist, it will be added.
+    pub fn update_stat_bonus(&mut self, stat: StatEnum, value: f32) {
+        if let Some(stat) = self.stats.get_mut(&stat) {
+            stat.set_bonus_value(value);
+        } else {
+            self.stats.insert(stat.clone(), Stat::new(0.0));
+            self.update_stat_bonus(stat, value);
         }
     }
 }

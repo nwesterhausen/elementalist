@@ -16,4 +16,4 @@ data:
   magic: lightning
   spellTier: 1
   spriteTileset: tileset/spell_projectiles.png
-  spriteIndex: 3
+  spriteIndex: 10

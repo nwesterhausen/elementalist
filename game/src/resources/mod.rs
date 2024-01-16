@@ -5,8 +5,10 @@
 
 mod cursor_position;
 mod plugin;
+mod selections;
 mod spritesheet;
 
 pub use cursor_position::*;
 pub use plugin::ElementalistResourcesPlugin;
+pub use selections::*;
 pub use spritesheet::SpellAtlas;

@@ -16,3 +16,5 @@ data:
   magic: arcane
   spellTier: 0
   long_description: It takes mana to make mana.
+  spriteTileset: tileset/spell_projectiles.png
+  spriteIndex: 9

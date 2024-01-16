@@ -15,3 +15,5 @@ data:
   cooldown: 50
   magic: air
   spellTier: 0
+  spriteTileset: tileset/spell_projectiles.png
+  spriteIndex: 4

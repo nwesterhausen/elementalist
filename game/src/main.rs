@@ -36,7 +36,7 @@ use events::{MenuInteraction, PlayerAction};
 fn main() {
     App::new()
         // The clear color is the color the screen is cleared to before each frame is drawn
-        .insert_resource(ClearColor(Color::BLACK))
+        .insert_resource(ClearColor(Color::DARK_GREEN))
         // Set basic window properties
         .add_plugins(DefaultPlugins.set(WindowPlugin {
             primary_window: Some(Window {

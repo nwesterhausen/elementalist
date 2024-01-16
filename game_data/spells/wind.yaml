@@ -1,8 +1,8 @@
 header:
-  uniqueId: gust
+  uniqueId: gust-wind
   system: Spell
   author: Nick Westerhausen
-  description: Gust spell
+  description: Gust of wind spell
   internalVersion: 1
   displayVersion: v1.0
   validGameInternalVersion: 1

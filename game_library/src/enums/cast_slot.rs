@@ -19,3 +19,15 @@ pub enum CastSlot {
     /// while in the "primal realm." They are typically very powerful and have a long cooldown.
     Ultimate,
 }
+
+impl std::fmt::Display for CastSlot {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        use CastSlot::*;
+        match self {
+            Primary => write!(f, "Primary"),
+            Secondary => write!(f, "Secondary"),
+            Defensive => write!(f, "Defensive"),
+            Ultimate => write!(f, "Ultimate"),
+        }
+    }
+}

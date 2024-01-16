@@ -13,8 +13,8 @@ data:
     - projectile
   castCategory: projectile
   castType: instant
-  icon: panda.png
-  sprite: panda.png
+  spriteTileset: tileset/spell_projectiles.png
+  spriteIndex: 11
   debuff:
     duration: 250
     maxStacks: 1

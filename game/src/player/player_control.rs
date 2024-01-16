@@ -4,7 +4,6 @@ use leafwing_input_manager::action_state::ActionState;
 use crate::{
     events::PlayerAction, player::Player, resources::CursorPosition, spells::components::CastSpell,
 };
-use game_library::Spell;
 
 /// Handle player input
 pub fn player_control_system(
@@ -24,7 +23,7 @@ pub fn player_control_system(
     }
     if action_state.just_pressed(PlayerAction::CastPrimary) {
         // Cast a firebolt
-        ew_cast_spell.send(CastSpell(Spell::Firebolt));
+        ew_cast_spell.send(CastSpell(String::from("AgingBolt0TimePrimary")));
     }
     if action_state.just_pressed(PlayerAction::CastSecondary) {
         // Draw a sprite at the cursor position

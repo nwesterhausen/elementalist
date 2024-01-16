@@ -155,13 +155,23 @@
       "type": "string",
       "enum": ["touch", "projectile", "ground", "summon", "self"]
     },
-    "icon": {
-      "description": "The icon of the spell (path in the assets folder)",
+    "iconTileset": {
+      "description": "The tileset with the icon of the spell (path in the assets folder)",
       "type": "string"
     },
-    "sprite": {
+    "iconIndex": {
+      "description": "The index of the icon in the tileset",
+      "type": "integer",
+      "inclusiveMinimum": 0
+    },
+    "spriteTileset": {
       "description": "The sprite of the spell (path in the assets folder)",
       "type": "string"
+    },
+    "spriteIndex": {
+      "description": "The index of the sprite in the tileset",
+      "type": "integer",
+      "inclusiveMinimum": 0
     }
   },
   "required": [

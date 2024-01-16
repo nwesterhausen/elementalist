@@ -44,10 +44,16 @@ pub struct SpellData {
     // #### SPELL ICONS ####
     /// The path to the icon for the spell (relative to the game's asset directory).
     #[serde(default = "placeholder_png_path")]
-    pub icon: String,
-    /// The path to the sprite for the spell (relative to the game's asset directory).
+    pub icon_tileset: String,
+    /// The index of the spell's icon in the tileset.
+    #[serde(default = "default_usize::<0>")]
+    pub icon_index: usize,
+    /// The path to the sprite tileset for the spell (relative to the game's asset directory).
     #[serde(default = "placeholder_png_path")]
-    pub sprite: String,
+    pub sprite_tileset: String,
+    /// The index of the spell's sprite in the tileset.
+    #[serde(default = "default_usize::<0>")]
+    pub sprite_index: usize,
 
     // #### SPELL BASE STATS ####
     /// The cooldown of the spell in centiseconds (hundredths of a second, e.g. 2.05 would be 205).
@@ -106,14 +112,10 @@ pub struct SpellData {
 
 impl Hash for SpellData {
     fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
-        if let Some(internal_id) = &self.internal_id {
-            internal_id.hash(state);
-            return;
-        }
         self.name.hash(state);
-        self.description.hash(state);
         self.spell_tier.hash(state);
-        self.radius.hash(state);
+        self.magic.hash(state);
+        self.cast_slot.hash(state);
     }
 }
 
@@ -121,6 +123,31 @@ impl SpellData {
     /// Returns the skill that the spell uses.
     pub fn skill(&self) -> Skill {
         self.magic.into()
+    }
+    /// Get the spell's sprite as a texture atlas sprite.
+    pub fn texture_atlas_index(&self) -> bevy::sprite::TextureAtlasSprite {
+        bevy::sprite::TextureAtlasSprite::new(self.sprite_index)
+    }
+    /// Update the spell's internal ID.
+    pub fn update_internal_id(&mut self) {
+        self.internal_id = Some(self.get_internal_id());
+    }
+    /// Get the spell's internal ID.
+    pub fn get_internal_id(&self) -> String {
+        if self.internal_id.is_some() {
+            let id = self.internal_id.clone().unwrap_or_default();
+            if !id.is_empty() {
+                return id;
+            }
+        }
+
+        format!(
+            "{}{}{}{}",
+            self.name.replace(" ", ""),
+            self.spell_tier,
+            self.magic,
+            self.cast_slot
+        )
     }
 }
 

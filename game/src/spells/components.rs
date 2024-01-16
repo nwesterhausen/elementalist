@@ -1,13 +1,12 @@
 use bevy::prelude::*;
-use game_library::Spell;
+use game_library::SpellData;
 
 use crate::common::movement::MovementBundle;
 
 #[derive(Bundle)]
 pub struct SpellBundle {
     pub movement: MovementBundle,
-    pub spell: Spell,
-    pub sprite: SpriteBundle,
+    pub sprite: SpriteSheetBundle,
     pub lifetime: SpellLifetime,
 }
 
@@ -56,4 +55,4 @@ pub fn despawn_expired_spells(
 }
 
 #[derive(Event)]
-pub struct CastSpell(pub Spell);
+pub struct CastSpell(pub String);

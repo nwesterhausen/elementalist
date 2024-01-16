@@ -138,3 +138,29 @@ impl From<Skill> for MagicType {
         MagicType::from_skill(skill).unwrap_or(MagicType::Arcane)
     }
 }
+
+impl std::fmt::Display for MagicType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        use MagicType::*;
+        match self {
+            Fire => write!(f, "Fire"),
+            Lightning => write!(f, "Lightning"),
+            Water => write!(f, "Water"),
+            Earth => write!(f, "Earth"),
+            Air => write!(f, "Air"),
+            Ice => write!(f, "Ice"),
+            Force => write!(f, "Force"),
+            Light => write!(f, "Light"),
+            Dark => write!(f, "Dark"),
+            Arcane => write!(f, "Arcane"),
+            Life => write!(f, "Life"),
+            Death => write!(f, "Death"),
+            Enhancement => write!(f, "Enhancement"),
+            Reduction => write!(f, "Reduction"),
+            Summoning => write!(f, "Summoning"),
+            Necromancy => write!(f, "Necromancy"),
+            Polymorph => write!(f, "Polymorph"),
+            Time => write!(f, "Time"),
+        }
+    }
+}

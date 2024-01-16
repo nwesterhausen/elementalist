@@ -31,8 +31,10 @@
 )]
 #![deny(unsafe_code)]
 
-mod attribute;
+/// Contains the data loader for the game library, allows for loading in data files from disk.
 pub mod data_loader;
+
+mod attribute;
 mod enums;
 mod experience;
 mod skill;
@@ -53,6 +55,7 @@ pub use stat_bonus::StatBonus;
 pub use stat_effect::StatEffect;
 pub use volume::Volume;
 
+/// Temporary spell enum, will be replaced with a spell data file.
 #[derive(
     Debug,
     Clone,
@@ -65,10 +68,12 @@ pub use volume::Volume;
     bevy::ecs::component::Component,
 )]
 pub enum Spell {
+    /// Firebolt spell.
     Firebolt,
 }
 
 impl Spell {
+    /// Get a list of all the spells in the game.
     pub fn variants() -> Vec<Spell> {
         vec![Spell::Firebolt]
     }

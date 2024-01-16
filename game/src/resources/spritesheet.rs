@@ -1,4 +1,4 @@
-use bevy::{prelude::*, utils::HashMap};
+use bevy::prelude::*;
 
 #[derive(Resource, Debug)]
 pub struct SpellAtlas {

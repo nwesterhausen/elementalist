@@ -51,7 +51,7 @@ fs.readdirSync('./game_data/spells').forEach(file => {
   out_str += `\n## ${string_with_space_to_title_case(magic)}\n\n`;
   out_str += table_row_header + '\n';
   // Sort the spells by tier and then by name
-  for (spell of spell_data.filter(spell => spell.data.magic == magic).sort((a, b) => a.name.localeCompare(b.name)).sort((a, b) => a.data.spellTier - b.data.spellTier)) {
+  for (spell of spell_data.filter(spell => spell.data.magic == magic).sort((a, b) => a.data.name.localeCompare(b.data.name)).sort((a, b) => a.data.spellTier - b.data.spellTier)) {
     out_str += spell_to_table_row(spell) + '\n';
   }
 });

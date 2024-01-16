@@ -18,17 +18,17 @@
       "type": "number",
       "inclusiveMinimum": 0
     },
-    "max_stacks": {
+    "maxStacks": {
       "description": "The max number of stacks of the effect",
       "type": "integer",
       "inclusiveMinimum": 0
     },
-    "affected_entity": {
+    "affectedEntity": {
       "description": "The entities affected by the effect",
       "type": "string",
       "enum": ["any", "player", "enemy", "ally", "none"]
     },
-    "affected_stats": {
+    "affectedStats": {
       "description": "The stats affected by the effect",
       "type": "array",
       "items": {
@@ -76,7 +76,7 @@
             "description": "The amount the stat is affected by (can be negative)",
             "type": "number"
           },
-          "affect_type": {
+          "affectType": {
             "description": "The type of affect the debuff has on the stat",
             "type": "string",
             "enum": ["add", "multiply"]
@@ -85,5 +85,5 @@
       }
     }
   },
-  "required": ["affected_entity", "stat", "amount", "affect_type", "duration", "max_stacks"]
+  "required": ["affectedEntity", "stat", "amount", "affectType", "duration", "maxStacks"]
 }

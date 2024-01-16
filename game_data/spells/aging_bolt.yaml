@@ -1,23 +1,33 @@
-name: Aging Bolt
-description: Shoot a bolt of aging magic at a target.
-mana_cost: 1
-cast_slot: primary
-cast_time: 0
-cooldown: 0.25
-spell_type: time
-spell_tier: 0
-flags:
-  - debuff
-  - projectile
-cast_category: projectile
-cast_type: instant
-icon: panda.png
-sprite: panda.png
-debuff:
-  duration: 0.25
-  max_stacks: 1
-  affected_entity: enemies
-  affected_stats:
-    - affect_type: add
-      amount: -0.2
-      stat: healing
+data:
+  name: Aging Bolt
+  description: Shoot a bolt of aging magic at a target.
+  manaCost: 1
+  castSlot: primary
+  castTime: 0
+  cooldown: 250
+  magic: time
+  skill: chronomancy
+  spellTier: 0
+  flags:
+    - debuff
+    - projectile
+  castCategory: projectile
+  castType: instant
+  icon: panda.png
+  sprite: panda.png
+  debuff:
+    duration: 250
+    maxStacks: 1
+    affectedEntity: enemies
+    affectedStats:
+      - affectType: add
+        amount: -20
+        stat: healing
+header:
+  uniqueId: time_dart
+  system: Spell
+  author: Nick Westerhausen
+  description: Basic Time Spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1

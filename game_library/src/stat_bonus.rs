@@ -16,6 +16,7 @@ use serde::{Deserialize, Serialize};
 /// This does not support negative values, they don't make sense for a percentage based
 /// multiplier. If a value would become negative, it will be clamped to 0.0 instead.
 #[derive(Debug, Resource, Clone, Copy, PartialEq, Reflect, Component, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct StatBonus {
     /// The percentage bonus to apply to the stat.
     pub value: f32,

@@ -55,7 +55,13 @@ fn main() {
         .add_state::<AppState>()
         // Add all the general resources and their update systems (e.g. cursor position)
         .add_plugins(resources::ElementalistResourcesPlugin)
-        .add_systems(Startup, app_systems::add_game_descriptor)
+        .add_systems(
+            Startup,
+            (
+                app_systems::add_game_descriptor,
+                app_systems::load_data_file_dir,
+            ),
+        )
         // Add input processing
         .add_plugins((
             InputManagerPlugin::<PlayerAction>::default(),

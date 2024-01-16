@@ -1,8 +1,17 @@
-name: Magic Missile
-description: Shoot a magic missile at the target.
-mana_cost: 0
-cast_slot: primary
-cast_time: 0
-cooldown: 0.25
-spell_type: force
-spell_tier: 0
+header:
+  uniqueId: magic-missile
+  system: Spell
+  author: Nick Westerhausen
+  description: magic missile spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Magic Missile
+  description: Shoot a magic missile at the target.
+  manaCost: 0
+  castSlot: primary
+  castTime: 0
+  cooldown: 25
+  magic: force
+  spellTier: 0

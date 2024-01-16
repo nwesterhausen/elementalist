@@ -1,11 +1,20 @@
-name: Burning Touch
-description: Ignite a target by touch
-mana_cost: 0
-spell_tier: 0
-cast_slot: primary
-cast_time: 0
-cooldown: 2
-spell_type: fire
-flags:
-  - touch
-  - instant
+header:
+  uniqueId: burning_touch
+  system: Spell
+  author: Nick Westerhausen
+  description: Basic Touch-based Fire Spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Burning Touch
+  description: Ignite a target by touch
+  manaCost: 0
+  spellTier: 0
+  castSlot: primary
+  castTime: 0
+  cooldown: 200
+  magic: fire
+  flags:
+    - touch
+    - instant

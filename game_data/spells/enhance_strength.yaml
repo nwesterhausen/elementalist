@@ -1,8 +1,17 @@
-name: Enhance Strength
-description: Enhance the strength of the target (typically the caster).
-mana_cost: 2
-cast_slot: secondary
-cast_time: 0
-cooldown: 10
-spell_type: enhancement
-spell_tier: 0
+header:
+  uniqueId: enhance_str
+  system: Spell
+  author: Nick Westerhausen
+  description: Enhance strength spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Enhance Strength
+  description: Enhance the strength of the target (typically the caster).
+  manaCost: 2
+  castSlot: secondary
+  castTime: 0
+  cooldown: 10
+  magic: enhancement
+  spellTier: 0

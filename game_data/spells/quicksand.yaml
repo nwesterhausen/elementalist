@@ -1,8 +1,18 @@
-name: Quicksand
-description: Create an area of quicksand at the target location.
-mana_cost: 4
-cast_slot: secondary
-cast_time: 0.15
-cooldown: 8
-spell_type: earth
-spell_tier: 4
+header:
+  uniqueId: quicksand
+  system: Spell
+  author: Nick Westerhausen
+  description: quicksand spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Quicksand
+  description: Create an area of quicksand at the target location.
+  manaCost: 4
+  castSlot: secondary
+  castTime: 15
+  cooldown: 800
+  castType: cast
+  magic: earth
+  spellTier: 4

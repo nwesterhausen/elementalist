@@ -1,8 +1,17 @@
-name: Wind
-description: Sustain a gust of wind away from the caster.
-mana_cost: 1
-cast_slot: secondary
-cast_time: 0
-cooldown: 2.5
-spell_type: air
-spell_tier: 1
+header:
+  uniqueId: gust
+  system: Spell
+  author: Nick Westerhausen
+  description: Gust spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Wind
+  description: Sustain a gust of wind away from the caster.
+  manaCost: 1
+  castSlot: secondary
+  castTime: 0
+  cooldown: 250
+  magic: air
+  spellTier: 1

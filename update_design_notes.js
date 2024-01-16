@@ -28,7 +28,8 @@ const table_of_contents = `## Table of Contents
 | [Time](#time) | Chronomancy |`;
 
 function spell_to_table_row(spell) {
-  return `| ${spell.name} | ${spell.spell_tier} | ${spell.cast_slot} | ${spell.description} | ${spell.mana_cost} |`;
+  let spell_data = spell.data;
+  return `| ${spell_data.name} | ${spell_data.spellTier} | ${spell_data.castSlot} | ${spell_data.description} | ${spell_data.manaCost} |`;
 }
 
 function string_with_space_to_title_case(str) {
@@ -45,12 +46,12 @@ fs.readdirSync('./game_data/spells').forEach(file => {
 });
 
 // Uniq the spell types and iterate through each one
-[...new Set(spell_data.map(spell => spell.spell_type || ""))].forEach(spell_type => {
+[...new Set(spell_data.map(spell => spell.data.magic || ""))].forEach(magic => {
   // For each spell type, make a header and a table of the spells of that type
-  out_str += `\n## ${string_with_space_to_title_case(spell_type)}\n\n`;
+  out_str += `\n## ${string_with_space_to_title_case(magic)}\n\n`;
   out_str += table_row_header + '\n';
   // Sort the spells by tier and then by name
-  for (spell of spell_data.filter(spell => spell.spell_type == spell_type).sort((a, b) => a.name.localeCompare(b.name)).sort((a, b) => a.spell_tier - b.spell_tier)) {
+  for (spell of spell_data.filter(spell => spell.data.magic == magic).sort((a, b) => a.name.localeCompare(b.name)).sort((a, b) => a.data.spellTier - b.data.spellTier)) {
     out_str += spell_to_table_row(spell) + '\n';
   }
 });

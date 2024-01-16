@@ -1,8 +1,17 @@
-name: Flash
-description: Create a blinding flash of light.
-mana_cost: 0
-cast_slot: secondary
-cast_time: 0
-cooldown: 3.5
-spell_type: light
-spell_tier: 0
+header:
+  uniqueId: flash
+  system: Spell
+  author: Nick Westerhausen
+  description: Flash spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Flash
+  description: Create a blinding flash of light.
+  manaCost: 0
+  castSlot: secondary
+  castTime: 0
+  cooldown: 350
+  magic: light
+  spellTier: 0

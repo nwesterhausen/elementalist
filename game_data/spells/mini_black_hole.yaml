@@ -1,10 +1,19 @@
-name: Miniature Black Hole
-description: Launch a magically stable, miniature black hole towards a target.
-mana_cost: 2
-cast_slot: secondary
-cast_time: 0
-cooldown: 5.75
-spell_type: dark
-spell_tier: 3
-long_description:
-  As the black hole travels, the area it affects becomes larger and larger. Though magically stable, it can also affect the caster.
+header:
+  uniqueId: mini-black-hole
+  system: Spell
+  author: Nick Westerhausen
+  description: mini black hole spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Miniature Black Hole
+  description: Launch a magically stable, miniature black hole towards a target.
+  manaCost: 2
+  castSlot: secondary
+  castTime: 0
+  cooldown: 575
+  magic: dark
+  spellTier: 3
+  long_description:
+    As the black hole travels, the area it affects becomes larger and larger. Though magically stable, it can also affect the caster.

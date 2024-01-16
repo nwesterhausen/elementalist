@@ -1,8 +1,17 @@
-name: Summon Imp
-description: Summon an imp to fight for you.
-mana_cost: 1
-cast_slot: primary
-cast_time: 0
-cooldown: 2
-spell_type: summoning
-spell_tier: 0
+header:
+  uniqueId: summon-imp-0
+  system: Spell
+  author: Nick Westerhausen
+  description: Summon imp spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Summon Imp
+  description: Summon an imp to fight for you.
+  manaCost: 1
+  castSlot: primary
+  castTime: 0
+  cooldown: 2
+  magic: summoning
+  spellTier: 0

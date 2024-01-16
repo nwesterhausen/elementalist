@@ -10,6 +10,7 @@ use crate::MagicType;
 ///
 /// Skills are used to track a meta-progression of a player's abilities.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Component, Resource, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub enum Skill {
     /// Pyromancy is the school of fire magic.
     Pyromancy,

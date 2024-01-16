@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.nwest.one/games/elementalist/header.json",
+  "title": "Elementalist Data File Header",
+  "description": "Metadata about the data file",
+  "type": "object",
+  "properties": {
+    "uniqueId": {
+      "description": "Unique ID for the data file",
+      "type": "string"
+    },
+    "system": {
+      "description": "System the data file is for",
+      "type": "string",
+      "enum": ["Spell"]
+    },
+    "mustPrecede": {
+      "description": "List of data files that must be loaded before this one",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "mustFollow": {
+      "description": "List of data files that must be loaded after this one",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "author": {
+      "description": "Author of the data file",
+      "type": "string"
+    },
+    "description": {
+      "description": "Description of the data file",
+      "type": "string"
+    },
+    "internalVersion": {
+      "description": "Internal version of the data file (this needs to be incremented when the data file is changed). This must be an integer.",
+      "type": "integer"
+    },
+    "displayVersion": {
+      "description": "Version of the data file that could be displayed to the user.",
+      "type": "string"
+    },
+    "validGameInternalVersion": {
+      "description": "Internal version of the game that this data file is valid for. This is used to ensure that the data file is not loaded for an incompatible game version.",
+      "type": "integer",
+      "enum": [1]
+    }
+  },
+  "required": ["unique_id", "system", "author", "description", "display_version", "internal_version", "valid_game_internal_version"]
+}

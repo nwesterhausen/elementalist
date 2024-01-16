@@ -1,8 +1,17 @@
-name: Transform into Ogre
-description: Polymorph yourself into an ogre.
-mana_cost: 4
-cast_slot: secondary
-cast_time: 0
-cooldown: 20
-spell_type: polymorph
-spell_tier: 0
+header:
+  uniqueId: polymorph-ogre
+  system: Spell
+  author: Nick Westerhausen
+  description: Polymorph into ogre spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Transform into Ogre
+  description: Polymorph yourself into an ogre.
+  manaCost: 4
+  castSlot: secondary
+  castTime: 0
+  cooldown: 20
+  magic: polymorph
+  spellTier: 0

@@ -1,8 +1,18 @@
-name: Ice Patch
-description: Conjure a sheet of ice on the ground.
-mana_cost: 3
-cast_slot: secondary
-cast_time: 0.25
-cooldown: 6
-spell_type: ice
-spell_tier: 3
+header:
+  uniqueId: ice_patch
+  system: Spell
+  author: Nick Westerhausen
+  description: Ice Patch spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Ice Patch
+  description: Conjure a sheet of ice on the ground.
+  manaCost: 3
+  castSlot: secondary
+  castTime: 25
+  cooldown: 600
+  castType: cast
+  magic: ice
+  spellTier: 3

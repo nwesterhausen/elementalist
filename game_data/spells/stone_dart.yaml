@@ -1,8 +1,17 @@
-name: Stone Dart
-description: Shoot a dart of rock at your target.
-mana_cost: 0
-cast_slot: primary
-cast_time: 0
-cooldown: 0.33
-spell_type: earth
-spell_tier: 0
+header:
+  uniqueId: stone-dart
+  system: Spell
+  author: Nick Westerhausen
+  description: stone dart spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Stone Dart
+  description: Shoot a dart of rock at your target.
+  manaCost: 0
+  castSlot: primary
+  castTime: 0
+  cooldown: 33
+  magic: earth
+  spellTier: 0

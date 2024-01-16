@@ -1,8 +1,17 @@
-name: Freeze Ray
-description: Launch a ray of freezing magic towards your target.
-mana_cost: 2
-cast_slot: secondary
-cast_time: .5
-cooldown: 3
-spell_type: ice
-spell_tier: 2
+header:
+  uniqueId: freeze_ray
+  system: Spell
+  author: Nick Westerhausen
+  description: Freeze ray spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Freeze Ray
+  description: Launch a ray of freezing magic towards your target.
+  manaCost: 2
+  castSlot: secondary
+  castTime: 50
+  cooldown: 300
+  magic: ice
+  spellTier: 2

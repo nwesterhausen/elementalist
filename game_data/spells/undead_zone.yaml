@@ -1,8 +1,17 @@
-name: Zone of Undeath
-description: Create an area with a necrotic area. Enemies that die within have a chance to turn into your undead.
-mana_cost: 3
-cast_slot: secondary
-cast_time: 1
-cooldown: 7
-spell_type: necromancy
-spell_tier: 3
+header:
+  uniqueId: undeath-zone
+  system: Spell
+  author: Nick Westerhausen
+  description: Zone of undeath spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Zone of Undeath
+  description: Create an area with a necrotic area. Enemies that die within have a chance to turn into your undead.
+  manaCost: 3
+  castSlot: secondary
+  castTime: 1
+  cooldown: 7
+  magic: necromancy
+  spellTier: 3

@@ -1,12 +1,21 @@
-name: Flamethrower
-description: Sustain a fiery stream of flames.
-spell_type: fire
-spell_tier: 2
-cooldown: 5
-cast_time: 1.5
-mana_cost: 1
-cast_slot: secondary
-flags:
-  - sustained
-  - line
-  - aoe
+header:
+  uniqueId: flamethrower
+  system: Spell
+  author: Nick Westerhausen
+  description: Flamethrower spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Flamethrower
+  description: Sustain a fiery stream of flames.
+  magic: fire
+  spellTier: 2
+  cooldown: 500
+  castTime: 150
+  manaCost: 1
+  castSlot: secondary
+  flags:
+    - sustained
+    - line
+    - aoe

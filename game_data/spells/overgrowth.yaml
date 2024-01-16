@@ -1,8 +1,18 @@
-name: Overgrown
-description: Grow a wall of plants at the target location.
-mana_cost: 2
-cast_slot: secondary
-cast_time: 0.15
-cooldown: 4
-spell_type: life
-spell_tier: 0
+header:
+  uniqueId: overgrown
+  system: Spell
+  author: Nick Westerhausen
+  description: overgrowth spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Overgrown
+  description: Grow a wall of plants at the target location.
+  manaCost: 2
+  castSlot: secondary
+  castTime: 15
+  cooldown: 400
+  castType: cast
+  magic: life
+  spellTier: 0

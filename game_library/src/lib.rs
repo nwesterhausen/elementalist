@@ -32,6 +32,7 @@
 #![deny(unsafe_code)]
 
 mod attribute;
+pub mod data_loader;
 mod enums;
 mod experience;
 mod skill;
@@ -42,6 +43,7 @@ mod stat_effect;
 mod volume;
 
 pub use attribute::Attribute;
+pub use data_loader::events::*;
 pub use enums::*;
 pub use experience::Xp;
 pub use skill::SkillTrack;
@@ -50,3 +52,24 @@ pub use stat::Stat;
 pub use stat_bonus::StatBonus;
 pub use stat_effect::StatEffect;
 pub use volume::Volume;
+
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Hash,
+    serde::Serialize,
+    serde::Deserialize,
+    bevy::ecs::component::Component,
+)]
+pub enum Spell {
+    Firebolt,
+}
+
+impl Spell {
+    pub fn variants() -> Vec<Spell> {
+        vec![Spell::Firebolt]
+    }
+}

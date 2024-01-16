@@ -1,8 +1,17 @@
-name: Lightning Bolt
-description: Shoot a bolt of lightning at a target.
-mana_cost: 0
-cast_slot: primary
-cast_time: 0
-cooldown: 1
-spell_type: lightning
-spell_tier: 1
+header:
+  uniqueId: lightning-bolt
+  system: Spell
+  author: Nick Westerhausen
+  description: Lightning bolt spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Lightning Bolt
+  description: Shoot a bolt of lightning at a target.
+  manaCost: 0
+  castSlot: primary
+  castTime: 0
+  cooldown: 1
+  magic: lightning
+  spellTier: 1

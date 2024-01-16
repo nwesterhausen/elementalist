@@ -1,13 +1,22 @@
-name: Ice Spike
-description: Launch a spike of ice at your target.
-mana_cost: 2
-cast_slot: secondary
-cast_time: 0
-cooldown: 5
-spell_type: ice
-spell_tier: 3
-long_description: >-
-  Launch a wickedly sharp spike of ice towards your target. In practice, the spike has such momentum to be able to go straight through your
-  practice target.
+header:
+  uniqueId: ice_spike
+  system: Spell
+  author: Nick Westerhausen
+  description: Firebolt spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Ice Spike
+  description: Launch a spike of ice at your target.
+  manaCost: 2
+  castSlot: secondary
+  castTime: 0
+  cooldown: 5
+  magic: ice
+  spellTier: 3
+  long_description: >-
+    Launch a wickedly sharp spike of ice towards your target. In practice, the spike has such momentum to be able to go straight through your
+    practice target.
 
-  Tests in the field have been just as effective.
+    Tests in the field have been just as effective.

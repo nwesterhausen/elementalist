@@ -1,6 +1,7 @@
 /// Possible stats that a character can have. These are available for both the player
 /// and the enemies.
 #[derive(Debug, Clone, Hash, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub enum StatEnum {
     /// The maximum health of the character. (Health is measured as an integer.)
     Health,

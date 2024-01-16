@@ -1,8 +1,17 @@
-name: Summon Undead (Basic)
-description: Summon a random basic-tier undead at a location.
-mana_cost: 0
-cast_slot: primary
-cast_time: 0
-cooldown: 5
-spell_type: necromancy
-spell_tier: 0
+header:
+  uniqueId: summon-undead-basic
+  system: Spell
+  author: Nick Westerhausen
+  description: basic summon undead spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Summon Undead (Basic)
+  description: Summon a random basic-tier undead at a location.
+  manaCost: 0
+  castSlot: primary
+  castTime: 0
+  cooldown: 5
+  magic: necromancy
+  spellTier: 0

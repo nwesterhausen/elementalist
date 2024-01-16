@@ -1,10 +1,19 @@
-name: Fire Bolt
-description: Propel a mote of flame at your target.
-mana_cost: 0
-spell_tier: 0
-spell_type: fire
-cast_slot: primary
-cast_time: 0
-cooldown: 1.5
-flags:
-  - projectile
+header:
+  uniqueId: firebolt
+  system: Spell
+  author: Nick Westerhausen
+  description: Firebolt spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Fire Bolt
+  description: Propel a mote of flame at your target.
+  manaCost: 0
+  spellTier: 0
+  magic: fire
+  castSlot: primary
+  castTime: 0
+  cooldown: 150
+  flags:
+    - projectile

@@ -1,8 +1,17 @@
-name: Fire Pillar
-description: Create a pillar of flames at the target location.
-mana_cost: 2
-cast_slot: secondary
-cast_time: 0
-cooldown: 3.3
-spell_type: fire
-spell_tier: 2
+header:
+  uniqueId: fire_pillar
+  system: Spell
+  author: Nick Westerhausen
+  description: Fire Pillar spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Fire Pillar
+  description: Create a pillar of flames at the target location.
+  manaCost: 2
+  castSlot: secondary
+  castTime: 0
+  cooldown: 330
+  magic: fire
+  spellTier: 2

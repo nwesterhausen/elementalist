@@ -29,3 +29,6 @@ pub fn add_game_descriptor(mut commands: Commands, asset_server: Res<AssetServer
         ..default()
     });
 }
+
+/// Reads game_data and imports the data into the game
+pub use game_library::data_loader::load_data_file_dir;

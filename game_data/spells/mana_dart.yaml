@@ -1,9 +1,18 @@
-name: Mana Dart
-description: Shoot a dart of compressed mana at the target.
-mana_cost: 1
-cast_slot: primary
-cast_time: 0
-cooldown: 0.1
-spell_type: arcane
-spell_tier: 0
-long_description: It takes mana to make mana.
+header:
+  uniqueId: mana-dart
+  system: Spell
+  author: Nick Westerhausen
+  description: mana dart spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Mana Dart
+  description: Shoot a dart of compressed mana at the target.
+  manaCost: 1
+  castSlot: primary
+  castTime: 0
+  cooldown: 10
+  magic: arcane
+  spellTier: 0
+  long_description: It takes mana to make mana.

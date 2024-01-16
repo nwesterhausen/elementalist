@@ -1,0 +1,182 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.nwest.one/games/elementalist/spell_data.json",
+  "title": "Elementalist Spell Data",
+  "description": "The supporting spell data",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "The name of the spell",
+      "type": "string"
+    },
+    "description": {
+      "description": "A description of the spell",
+      "type": "string"
+    },
+    "longDescription": {
+      "description": "A longer, more thematic description of the spell that can be used in-game to add lore and flavor",
+      "type": "string"
+    },
+    "manaCost": {
+      "description": "The cost of the spell",
+      "type": "integer",
+      "enum": [0, 1, 2, 3, 4]
+    },
+    "castSlot": {
+      "description": "The slot the spell is cast in",
+      "type": "string",
+      "enum": ["primary", "secondary", "defensive", "ultimate"]
+    },
+    "castTime": {
+      "description": "The time it takes to cast the spell",
+      "type": "number",
+      "inclusiveMinimum": 0
+    },
+    "cooldown": {
+      "description": "The time it takes to cool down after casting the spell",
+      "type": "number",
+      "inclusiveMinimum": 0
+    },
+    "magic": {
+      "description": "The family of magic the spell belongs to",
+      "type": "string",
+      "enum": [
+        "fire",
+        "lightning",
+        "water",
+        "earth",
+        "air",
+        "ice",
+        "force",
+        "light",
+        "dark",
+        "arcane",
+        "life",
+        "death",
+        "enhancement",
+        "reduction",
+        "summoning",
+        "necromancy",
+        "polymorph",
+        "time"
+      ]
+    },
+    "flags": {
+      "description": "Flags to specify general behavior",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "aoe",
+          "self",
+          "target",
+          "projectile",
+          "instant",
+          "homing",
+          "cone",
+          "line",
+          "beam",
+          "wall",
+          "ground",
+          "summon",
+          "buff",
+          "debuff",
+          "heal",
+          "damage",
+          "movement",
+          "touch",
+          "sustained",
+          "dot",
+          "circle",
+          "square"
+        ]
+      }
+    },
+    "spellTier": {
+      "description": "The tier of the spell, used to indicate how soon it can be unlocked or learned. One of the tier 0 spells will be a free choice when learning a type of magic.",
+      "type": "integer",
+      "enum": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    },
+    "speed": {
+      "description": "The speed of the spell, used to determine how quickly it travels",
+      "type": "number",
+      "inclusiveMinimum": 0
+    },
+    "range": {
+      "description": "The range of the spell, used to determine how far it can travel",
+      "type": "number",
+      "inclusiveMinimum": 0
+    },
+    "duration": {
+      "description": "The duration of the spell, used to determine how long it lasts",
+      "type": "number",
+      "inclusiveMinimum": 0
+    },
+    "damage": {
+      "description": "The damage of the spell, used to determine how much damage it does",
+      "type": "number",
+      "inclusiveMinimum": 0
+    },
+    "healing": {
+      "description": "The healing of the spell, used to determine how much healing it does",
+      "type": "number",
+      "inclusiveMinimum": 0
+    },
+    "radius": {
+      "description": "The radius of the spell, used to determine how large the area of effect is",
+      "type": "number",
+      "inclusiveMinimum": 0
+    },
+    "angle": {
+      "description": "The angle of the spell, used to determine how wide the area of effect is",
+      "type": "number",
+      "inclusiveMinimum": 0
+    },
+    "collider": {
+      "description": "The collider of the spell, used to determine how it interacts with the world",
+      "type": "string",
+      "enum": ["circle", "square", "line", "cone", "point"]
+    },
+    "debuffs": {
+      "description": "The debuffs applied by the spell",
+      "$ref": "https://schemas.nwest.one/games/elementalist/stat_effect.json"
+    },
+    "buffs": {
+      "description": "The buffs applied by the spell",
+      "$ref": "https://schemas.nwest.one/games/elementalist/stat_effect.json"
+    },
+    "castType": {
+      "description": "The type of cast the spell uses",
+      "type": "string",
+      "enum": ["instant", "channeled", "cast"]
+    },
+    "castCategory": {
+      "description": "The broad category of the spell",
+      "type": "string",
+      "enum": ["touch", "projectile", "ground", "summon", "self"]
+    },
+    "icon": {
+      "description": "The icon of the spell (path in the assets folder)",
+      "type": "string"
+    },
+    "sprite": {
+      "description": "The sprite of the spell (path in the assets folder)",
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "description",
+    "manaCost",
+    "castSlot",
+    "spellType",
+    "castTime",
+    "cooldown",
+    "spellTier",
+    "flags",
+    "castType",
+    "castCategory",
+    "icon",
+    "sprite"
+  ]
+}

@@ -1,11 +1,20 @@
-name: Flame Burst
-description: Send a cloud of flame towards your target
-cast_slot: secondary
-spell_tier: 1
-mana_cost: 1
-cast_time: 0
-cooldown: 3
-spell_type: fire
-tags:
-  - cone
-  - aoe
+header:
+  uniqueId: flame_burst
+  system: Spell
+  author: Nick Westerhausen
+  description: Flame burst spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Flame Burst
+  description: Send a cloud of flame towards your target
+  castSlot: secondary
+  spellTier: 1
+  manaCost: 1
+  castTime: 0
+  cooldown: 3
+  magic: fire
+  tags:
+    - cone
+    - aoe

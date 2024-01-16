@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 #[derive(
     Debug, Default, Clone, Copy, PartialEq, Eq, Hash, Component, Resource, Serialize, Deserialize,
 )]
+#[serde(rename_all = "camelCase")]
 pub enum SpellCollision {
     /// The spell has no collision.
     #[default]

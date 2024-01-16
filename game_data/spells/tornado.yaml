@@ -1,8 +1,18 @@
-name: Tornado
-description: Summon a tornado at the target location.
-mana_cost: 2
-cast_slot: secondary
-cast_time: 0.5
-cooldown: 5
-spell_type: air
-spell_tier: 2
+header:
+  uniqueId: tornado
+  system: Spell
+  author: Nick Westerhausen
+  description: tornado spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Tornado
+  description: Summon a tornado at the target location.
+  manaCost: 2
+  castSlot: secondary
+  castTime: 50
+  cooldown: 500
+  castType: cast
+  magic: air
+  spellTier: 2

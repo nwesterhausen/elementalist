@@ -4,6 +4,7 @@ use crate::{enums::StatEnum, SpellTarget, StatBonus};
 ///
 /// Describes in detail how a this effect can be applied.
 #[derive(Debug, Clone, Default, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct StatEffect {
     /// An identifier for the effect.
     pub id: String,

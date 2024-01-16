@@ -1,8 +1,17 @@
-name: Charged Turf
-description: Create an area of electrically charged turf at the target location.
-mana_cost: 3
-cast_slot: secondary
-cast_time: 0
-cooldown: 6
-spell_type: lightning
-spell_tier: 3
+header:
+  uniqueId: charged_turf
+  system: Spell
+  author: Nick Westerhausen
+  description: lightning3
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Charged Turf
+  description: Create an area of electrically charged turf at the target location.
+  manaCost: 3
+  castSlot: secondary
+  castTime: 0
+  cooldown: 6
+  magic: lightning
+  spellTier: 3

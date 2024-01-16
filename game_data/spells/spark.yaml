@@ -1,13 +1,21 @@
-# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/spell.json
-name: Spark
-description: Shoot a spark of electricity at your target.
-spell_tier: 0
-spell_type: lightning
-cast_slot: primary
-mana_cost: 0
-cast_time: 0
-cooldown: 2.5
-flags:
-  - instant
-  - target
-  - homing
+header:
+  uniqueId: spark
+  system: Spell
+  author: Nick Westerhausen
+  description: spark spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Spark
+  description: Shoot a spark of electricity at your target.
+  spellTier: 0
+  magic: lightning
+  castSlot: primary
+  manaCost: 0
+  castTime: 0
+  cooldown: 250
+  flags:
+    - instant
+    - target
+    - homing

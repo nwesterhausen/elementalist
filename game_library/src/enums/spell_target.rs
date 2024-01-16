@@ -1,5 +1,6 @@
 /// The target of a spell; where the spell can be targeted at
 #[derive(Debug, Clone, Hash, Default, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub enum SpellTarget {
     /// The spell can be cast on any entity.
     Any,

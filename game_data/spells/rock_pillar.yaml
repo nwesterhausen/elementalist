@@ -1,8 +1,17 @@
-name: Rock Pillar
-description: Summon a pillar of rock at the target location.
-mana_cost: 2
-cast_slot: secondary
-cast_time: 0
-cooldown: 2.5
-spell_type: earth
-spell_tier: 2
+header:
+  uniqueId: rock-pillar
+  system: Spell
+  author: Nick Westerhausen
+  description: Rock pillar spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Rock Pillar
+  description: Summon a pillar of rock at the target location.
+  manaCost: 2
+  castSlot: secondary
+  castTime: 0
+  cooldown: 250
+  magic: earth
+  spellTier: 2

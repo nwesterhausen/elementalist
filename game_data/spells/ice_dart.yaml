@@ -1,8 +1,17 @@
-name: Ice Dart
-description: Shoot a dart of ice at your target.
-mana_cost: 0
-cast_slot: primary
-cast_time: 0
-cooldown: 0.33
-spell_type: ice
-spell_tier: 0
+header:
+  uniqueId: ice_dart
+  system: Spell
+  author: Nick Westerhausen
+  description: Ice Dart spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Ice Dart
+  description: Shoot a dart of ice at your target.
+  manaCost: 0
+  castSlot: primary
+  castTime: 0
+  cooldown: 33
+  magic: ice
+  spellTier: 0

@@ -1,8 +1,18 @@
-name: Snares
-description: Create an area of excellerated root growth, ensnaring entities that walk through.
-mana_cost: 3
-cast_slot: secondary
-cast_time: 0.15
-cooldown: 5
-spell_type: life
-spell_tier: 1
+header:
+  uniqueId: snares
+  system: Spell
+  author: Nick Westerhausen
+  description: snares spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Snares
+  description: Create an area of excellerated root growth, ensnaring entities that walk through.
+  manaCost: 3
+  castSlot: secondary
+  castTime: 15
+  cooldown: 500
+  castType: cast
+  magic: life
+  spellTier: 1

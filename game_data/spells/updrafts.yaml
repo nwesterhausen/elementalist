@@ -1,9 +1,18 @@
-name: Updraft
-description: Create an area with a strong updraft.
-mana_cost: 3
-cast_slot: secondary
-cast_time: 0
-cooldown: 6
-spell_type: air
-spell_tier: 3
-long_description: Entities entering the updraft area are buffeted upward and move slowly through it. Caster gets a speed boost.
+header:
+  uniqueId: updraft
+  system: Spell
+  author: Nick Westerhausen
+  description: updraft spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Updraft
+  description: Create an area with a strong updraft.
+  manaCost: 3
+  castSlot: secondary
+  castTime: 0
+  cooldown: 6
+  magic: air
+  spellTier: 3
+  long_description: Entities entering the updraft area are buffeted upward and move slowly through it. Caster gets a speed boost.

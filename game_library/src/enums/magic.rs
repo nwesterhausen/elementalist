@@ -7,6 +7,7 @@ use crate::Skill;
 ///
 /// Each school of magic has a corresponding [`Skill`].
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Component, Resource, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub enum MagicType {
     /// Fire magic, pyromancy
     Fire,
@@ -120,5 +121,20 @@ impl MagicType {
             Skill::Mutatiomancy => Some(Polymorph),
             Skill::Chronomancy => Some(Time),
         }
+    }
+}
+
+impl From<MagicType> for Skill {
+    fn from(magic: MagicType) -> Self {
+        magic.skill()
+    }
+}
+
+impl From<Skill> for MagicType {
+    /// Returns the corresponding [`MagicType`] for this [`Skill`] if it exists
+    ///
+    /// This will return [`MagicType::Arcane`] if the [`Skill`] is not a magic skill
+    fn from(skill: Skill) -> Self {
+        MagicType::from_skill(skill).unwrap_or(MagicType::Arcane)
     }
 }

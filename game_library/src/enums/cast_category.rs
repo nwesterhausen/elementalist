@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 
 /// How the spell is targeted when casting.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Component, Resource, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub enum CastCategory {
     /// The spell is cast by physically touching the target.
     Touch,

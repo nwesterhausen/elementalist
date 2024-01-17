@@ -242,13 +242,18 @@ impl std::ops::Neg for StatBonus {
 
 impl std::cmp::PartialOrd for StatBonus {
     fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
-        self.value.partial_cmp(&other.value)
+        Some(self.cmp(other))
     }
 }
 
 impl std::cmp::Ord for StatBonus {
+    #[doc = "We are comparing floats, but we aren't so worried about precision because these are just"]
+    #[doc = "percentages. So we multiply by 100, convert to u32, and compare those."]
     fn cmp(&self, other: &Self) -> std::cmp::Ordering {
-        self.value.partial_cmp(&other.value).unwrap()
+        let self_value = self.value * 100.0;
+        let other_value = other.value * 100.0;
+
+        (self_value as u32).cmp(&(other_value as u32))
     }
 }
 

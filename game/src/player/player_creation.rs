@@ -1,11 +1,9 @@
 use bevy::prelude::*;
-use game_library::LoadedSpellData;
 use leafwing_input_manager::{action_state::ActionState, InputManagerBundle};
 
 use crate::{
     events::{MenuInteraction, PlayerAction},
     player::Player,
-    resources::SpellChoices,
 };
 
 /// Spawn a player controller (sets up input processing)

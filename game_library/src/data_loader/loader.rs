@@ -104,13 +104,12 @@ pub fn load_data_file_dir(mut ew_df: EventWriter<LoadedSpellData>) {
                     };
                     ew_df.send(LoadedSpellData { spell_data });
                     spells_read += 1;
-                }
-                _ => {
-                    tracing::warn!(
-                        "load_data_file_dir: no system match for {:?}",
-                        header.system
-                    );
-                }
+                } // _ => {
+                  //     tracing::warn!(
+                  //         "load_data_file_dir: no system match for {:?}",
+                  //         header.system
+                  //     );
+                  // }
             }
         }
     }

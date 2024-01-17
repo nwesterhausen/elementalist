@@ -444,7 +444,7 @@ impl std::ops::DivAssign<Attribute> for Attribute {
 
 impl std::cmp::PartialOrd<Attribute> for Attribute {
     fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
-        self.current.partial_cmp(&other.current)
+        Some(self.cmp(other))
     }
 }
 
@@ -490,7 +490,7 @@ impl From<Attribute> for f64 {
 
 impl std::fmt::Display for Attribute {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}/{}", self.current.to_string(), self.max.to_string())
+        write!(f, "{}/{}", self.current.to_string(), self.max)
     }
 }
 

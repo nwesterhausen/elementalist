@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use game_library::{LoadedSpellData, StatEnum};
+use game_library::StatEnum;
 
 use crate::{
     common::{

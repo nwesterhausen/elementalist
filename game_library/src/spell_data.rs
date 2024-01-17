@@ -143,7 +143,7 @@ impl SpellData {
 
         format!(
             "{}{}{}{}",
-            self.name.replace(" ", ""),
+            self.name.replace(' ', ""),
             self.spell_tier,
             self.magic,
             self.cast_slot

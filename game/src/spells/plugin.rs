@@ -1,16 +1,16 @@
 use bevy::prelude::*;
-use game_library::{LoadedSpellData, SpellData};
+use game_library::{
+    events::CastSpell, LoadedSpellData, MovementBundle, SpellBundle, SpellData, SpellLifetime,
+    Velocity,
+};
 
 use crate::{
-    common::{
-        self,
-        movement::{MovementBundle, Velocity},
-    },
+    common,
     player::Player,
     resources::{CursorPosition, SpellAtlas},
 };
 
-use super::components::{despawn_expired_spells, CastSpell, SpellBundle, SpellLifetime};
+use super::components::despawn_expired_spells;
 
 /// Spells are fired using the `CastSpell` event.
 ///

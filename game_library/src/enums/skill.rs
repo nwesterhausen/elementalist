@@ -5,7 +5,7 @@ use bevy::{
 use bevy_inspector_egui::InspectorOptions;
 use serde::{Deserialize, Serialize};
 
-use crate::MagicType;
+use crate::enums::MagicType;
 
 /// The different skills. Each skill is a school of magic.
 ///
@@ -31,8 +31,8 @@ use crate::MagicType;
 pub enum Skill {
     /// Pyromancy is the school of fire magic.
     Pyromancy,
-    /// Fulgamancy is the school of lightning magic.
-    Fulgamancy,
+    /// Fulgomancy is the school of lightning magic.
+    Fulgomancy,
     /// Hydromancy is the school of water magic.
     Hydromancy,
     /// Geomancy is the school of earth magic.
@@ -73,7 +73,7 @@ impl Skill {
         use Skill::*;
         [
             Pyromancy,
-            Fulgamancy,
+            Fulgomancy,
             Hydromancy,
             Geomancy,
             Aeromancy,
@@ -99,7 +99,7 @@ impl Skill {
         use Skill::*;
         match self {
             Pyromancy => MagicType::Fire,
-            Fulgamancy => MagicType::Lightning,
+            Fulgomancy => MagicType::Lightning,
             Hydromancy => MagicType::Water,
             Geomancy => MagicType::Earth,
             Aeromancy => MagicType::Air,

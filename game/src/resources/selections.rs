@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 use bevy_inspector_egui::prelude::*;
-use game_library::{CastSlot, SpellData};
+use game_library::{enums::CastSlot, SpellData};
 use serde::{Deserialize, Serialize};
 
 #[derive(

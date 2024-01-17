@@ -1,12 +1,8 @@
 use bevy::prelude::*;
-use game_library::StatEnum;
+use game_library::{enums::StatEnum, StatBundle, Velocity};
 use leafwing_input_manager::action_state::ActionState;
 
-use crate::{
-    common::{movement::Velocity, stats::StatBundle},
-    events::PlayerAction,
-    player::Player,
-};
+use crate::{events::PlayerAction, player::Player};
 
 /// Handle player input for movement
 pub fn player_movement_controls(

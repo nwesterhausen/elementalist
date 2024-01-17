@@ -3,7 +3,7 @@ use serde_yaml;
 use std::hash::Hash;
 use walkdir::WalkDir;
 
-use crate::{data_loader::DATA_FILE_DIR, GameSystem, SpellData};
+use crate::{data_loader::DATA_FILE_DIR, enums::GameSystem, SpellData};
 
 use super::{
     events::LoadedSpellData,

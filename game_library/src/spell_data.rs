@@ -8,7 +8,10 @@
 use serde_default_utils::*;
 use std::hash::Hash;
 
-use crate::{CastCategory, CastSlot, CastType, MagicType, Skill, SpellCollision, StatEffect};
+use crate::{
+    enums::{CastCategory, CastSlot, CastType, MagicType, Skill, SpellCollision},
+    StatEffect,
+};
 
 /// Details about a spell.
 ///

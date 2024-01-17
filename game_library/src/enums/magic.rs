@@ -1,7 +1,7 @@
 use bevy::ecs::{component::Component, system::Resource};
 use serde::{Deserialize, Serialize};
 
-use crate::Skill;
+use crate::enums::Skill;
 
 /// The different types of magic.
 ///
@@ -11,7 +11,7 @@ use crate::Skill;
 pub enum MagicType {
     /// Fire magic, pyromancy
     Fire,
-    /// Lightning magic, fulgamancy
+    /// Lightning magic, fulgomancy
     Lightning,
     /// Water magic, hydromancy
     Water,
@@ -79,7 +79,7 @@ impl MagicType {
         use MagicType::*;
         match self {
             Fire => Skill::Pyromancy,
-            Lightning => Skill::Fulgamancy,
+            Lightning => Skill::Fulgomancy,
             Water => Skill::Hydromancy,
             Earth => Skill::Geomancy,
             Air => Skill::Aeromancy,
@@ -103,7 +103,7 @@ impl MagicType {
         use MagicType::*;
         match skill {
             Skill::Pyromancy => Some(Fire),
-            Skill::Fulgamancy => Some(Lightning),
+            Skill::Fulgomancy => Some(Lightning),
             Skill::Hydromancy => Some(Water),
             Skill::Geomancy => Some(Earth),
             Skill::Aeromancy => Some(Air),

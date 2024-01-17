@@ -1,0 +1,68 @@
+name: Rust
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Rust Cache
+      uses: Swatinem/rust-cache@23bce251a8cd2ffc3c1075eaa2367cf899916d84 #2.7.3
+      with:
+        # A cache key that is used instead of the automatic `job`-based key, and is stable over multiple jobs.
+        shared-key: shared
+        # Cache even if the build fails. Defaults to false.
+        cache-on-failure: true # optional
+        # Determines which crates are cached. If `true` all crates will be cached, otherwise only dependent crates will be cached.
+        cache-all-crates: true # optional, default is false          
+    - name: Build
+      run: cargo build --verbose
+  clippy:
+    name: Clippy Check
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - uses: actions/checkout@v3
+    - name: Rust Cache
+      uses: Swatinem/rust-cache@23bce251a8cd2ffc3c1075eaa2367cf899916d84 #2.7.3
+      with:
+        # A cache key that is used instead of the automatic `job`-based key, and is stable over multiple jobs.
+        shared-key: shared
+        # Cache even if the build fails. Defaults to false.
+        cache-on-failure: true # optional
+        # Determines which crates are cached. If `true` all crates will be cached, otherwise only dependent crates will be cached.
+        cache-all-crates: true # optional, default is false  
+    - uses: nwesterhausen/clippy-check@v1
+      name: Clippy
+      with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          allow: >
+            nonstandard_macro_braces
+            mutex_atomic
+          deny: warnings  
+  test:
+    name: Test
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Rust Cache
+      uses: Swatinem/rust-cache@23bce251a8cd2ffc3c1075eaa2367cf899916d84 #2.7.3
+      with:
+        # A cache key that is used instead of the automatic `job`-based key, and is stable over multiple jobs.
+        shared-key: shared
+        # Cache even if the build fails. Defaults to false.
+        cache-on-failure: true # optional
+        # Determines which crates are cached. If `true` all crates will be cached, otherwise only dependent crates will be cached.
+        cache-all-crates: true # optional, default is false         
+    - name: Run tests
+      run: cargo test --verbose

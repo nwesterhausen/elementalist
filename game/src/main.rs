@@ -52,6 +52,7 @@ fn main() {
             }),
             ..Default::default()
         }))
+        .add_systems(Startup, app_systems::set_window_icon)
         // Add our dev-mode systems (they disable themselves in release mode)
         .add_plugins(dev_systems::DevSystemsPlugin)
         // Add state

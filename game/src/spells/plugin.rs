@@ -54,7 +54,7 @@ fn load_spells(mut events: EventReader<LoadedSpellData>, mut spells: ResMut<Exis
         spell.update_internal_id();
         spells.ids.push(spell.get_internal_id());
         spells.data.push(spell);
-        tracing::info!(
+        tracing::debug!(
             "load_spells: Loaded spell {} as {}",
             event.spell_data.data.name,
             event.spell_data.data.get_internal_id()

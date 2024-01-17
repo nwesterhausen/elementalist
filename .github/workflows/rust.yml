@@ -15,15 +15,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Rust Cache
-      uses: Swatinem/rust-cache@23bce251a8cd2ffc3c1075eaa2367cf899916d84 #2.7.3
+    - name: Install Dependencies
+      run: sudo apt-get update; sudo apt-get install --no-install-recommends libasound2-dev libudev-dev
+    - name: Cache
+      uses: actions/cache@v3
       with:
-        # A cache key that is used instead of the automatic `job`-based key, and is stable over multiple jobs.
-        shared-key: shared
-        # Cache even if the build fails. Defaults to false.
-        cache-on-failure: true # optional
-        # Determines which crates are cached. If `true` all crates will be cached, otherwise only dependent crates will be cached.
-        cache-all-crates: true # optional, default is false          
+        path: |
+          ~/.cargo/bin/
+          ~/.cargo/registry/index/
+          ~/.cargo/registry/cache/
+          ~/.cargo/git/db/
+          target/
+        key: ${{ runner.os }}-cargo-clippy-${{ hashFiles('**/Cargo.toml') }}     
     - name: Build
       run: cargo build --verbose
   clippy:
@@ -32,15 +35,18 @@ jobs:
     needs: build
     steps:
     - uses: actions/checkout@v3
-    - name: Rust Cache
-      uses: Swatinem/rust-cache@23bce251a8cd2ffc3c1075eaa2367cf899916d84 #2.7.3
+    - name: Install Dependencies
+      run: sudo apt-get update; sudo apt-get install --no-install-recommends libasound2-dev libudev-dev
+    - name: Cache
+      uses: actions/cache@v3
       with:
-        # A cache key that is used instead of the automatic `job`-based key, and is stable over multiple jobs.
-        shared-key: shared
-        # Cache even if the build fails. Defaults to false.
-        cache-on-failure: true # optional
-        # Determines which crates are cached. If `true` all crates will be cached, otherwise only dependent crates will be cached.
-        cache-all-crates: true # optional, default is false  
+        path: |
+          ~/.cargo/bin/
+          ~/.cargo/registry/index/
+          ~/.cargo/registry/cache/
+          ~/.cargo/git/db/
+          target/
+        key: ${{ runner.os }}-cargo-clippy-${{ hashFiles('**/Cargo.toml') }}
     - uses: nwesterhausen/clippy-check@v1
       name: Clippy
       with:
@@ -55,14 +61,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Rust Cache
-      uses: Swatinem/rust-cache@23bce251a8cd2ffc3c1075eaa2367cf899916d84 #2.7.3
+    - name: Install Dependencies
+      run: sudo apt-get update; sudo apt-get install --no-install-recommends libasound2-dev libudev-dev
+    - name: Cache
+      uses: actions/cache@v3
       with:
-        # A cache key that is used instead of the automatic `job`-based key, and is stable over multiple jobs.
-        shared-key: shared
-        # Cache even if the build fails. Defaults to false.
-        cache-on-failure: true # optional
-        # Determines which crates are cached. If `true` all crates will be cached, otherwise only dependent crates will be cached.
-        cache-all-crates: true # optional, default is false         
+        path: |
+          ~/.cargo/bin/
+          ~/.cargo/registry/index/
+          ~/.cargo/registry/cache/
+          ~/.cargo/git/db/
+          target/
+        key: ${{ runner.os }}-cargo-clippy-${{ hashFiles('**/Cargo.toml') }}      
     - name: Run tests
       run: cargo test --verbose

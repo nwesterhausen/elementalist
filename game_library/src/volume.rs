@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 
 /// A volume setting, which should be an integer between 0 and 100.
 ///
-/// Can be called with .into() to convert from any integer type, or from a float.
+/// Can be called with .`into()` to convert from any integer type, or from a float.
 ///
 /// Can be converted into a `u32` (representing the volume as a percentage) or a `f32` (representing
 /// the volume as a decimal; i.e. 50% volume would be 0.5 as `f32`).

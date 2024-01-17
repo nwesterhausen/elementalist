@@ -31,7 +31,7 @@ pub enum PlayerAction {
 
 impl PlayerAction {
     /// Returns the default keybinds for this action on keyboard & mouse.
-    pub fn default_keyboard_mouse_input(&self) -> UserInput {
+    pub fn default_keyboard_mouse_input(self) -> UserInput {
         match self {
             PlayerAction::Move => UserInput::VirtualDPad(VirtualDPad::wasd()),
             PlayerAction::Look => UserInput::VirtualDPad(VirtualDPad::arrow_keys()),
@@ -45,7 +45,7 @@ impl PlayerAction {
         }
     }
     /// Returns the default gamepad input for this action.
-    pub fn default_gamepad_input(&self) -> UserInput {
+    pub fn default_gamepad_input(self) -> UserInput {
         match self {
             PlayerAction::Move => UserInput::Single(InputKind::DualAxis(DualAxis::left_stick())),
             PlayerAction::Look => UserInput::Single(InputKind::DualAxis(DualAxis::right_stick())),
@@ -78,7 +78,7 @@ impl PlayerAction {
         let mut input_map = InputMap::default();
 
         for variant in PlayerAction::variants() {
-            input_map.insert(variant.default_keyboard_mouse_input(), variant.clone());
+            input_map.insert(variant.default_keyboard_mouse_input(), variant);
             input_map.insert(variant.default_gamepad_input(), variant);
         }
 

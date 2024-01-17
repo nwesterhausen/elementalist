@@ -2,14 +2,15 @@ use bevy::{app::AppExit, prelude::*};
 
 use crate::AppState;
 
-use super::{button_actions::ButtonAction, components::*, state::MenuState};
+use super::{button_actions::ButtonAction, components::SelectedOption, state::MenuState};
 
 /// System for changing button colors when hovered, etc
 ///
-/// interaction_query: grabs all the buttons that have been interacted with, with the components
+/// * `interaction_query`: grabs all the buttons that have been interacted with, with the components
 ///   Interaction, children, and if they are a selected option (e.g. part of a radio group). It grabs
 ///   what has changed about the interaction (i.e. if it has changed at all)
-/// text_query: let's us grab the text component of the button
+/// * `text_query`: let's us grab the text component of the button
+#[allow(clippy::type_complexity)]
 pub fn button_system(
     mut interaction_query: Query<
         (&Interaction, &Children, Option<&SelectedOption>),
@@ -40,12 +41,13 @@ pub fn button_system(
 
 /// System to handle the main menu button actions
 ///
-/// interaction_query: grabs all the buttons that have been interacted with, with the components
-///    Interaction and ButtonAction that have a changed interaction value (i.e. the button has been
+/// * `interaction_query`: grabs all the buttons that have been interacted with, with the components
+///    Interaction and `ButtonAction` that have a changed interaction value (i.e. the button has been
 ///   pressed)
-/// app_exit_events: can be used to send an AppExit event to exit the game
-/// menu_state(next): lets us change the menu state for the next frame
-/// game_state(next): lets us change the game state for the next frame
+/// * `app_exit_events`: can be used to send an `AppExit` event to exit the game
+/// * `menu_state(next)`: lets us change the menu state for the next frame
+/// * `game_state(next)`: lets us change the game state for the next frame
+#[allow(clippy::type_complexity)]
 pub fn menu_actions(
     interaction_query: Query<(&Interaction, &ButtonAction), (Changed<Interaction>, With<Button>)>,
     mut app_exit_events: EventWriter<AppExit>,
@@ -63,9 +65,10 @@ pub fn menu_actions(
                     game_state.set(AppState::InGame);
                     menu_state.set(MenuState::Disabled);
                 }
-                ButtonAction::Settings => menu_state.set(MenuState::Settings),
+                ButtonAction::Settings | ButtonAction::BackToSettings => {
+                    menu_state.set(MenuState::Settings);
+                }
                 ButtonAction::BackToMenu => menu_state.set(MenuState::Main),
-                ButtonAction::BackToSettings => menu_state.set(MenuState::Settings),
                 ButtonAction::SettingsAudio => menu_state.set(MenuState::SettingsAudio),
                 ButtonAction::SettingsVideo => menu_state.set(MenuState::SettingsVideo),
                 ButtonAction::SettingsControls => menu_state.set(MenuState::SettingsControls),

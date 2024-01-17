@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use super::{components::*, resources::SplashTimer};
+use super::{components::OnSplashScreen, resources::SplashTimer};
 
 /// System that draws the splash screen
 pub fn splash_setup(mut commands: Commands, asset_server: Res<AssetServer>) {

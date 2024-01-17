@@ -18,7 +18,6 @@ pub fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
         font_size: 40.0,
         color: Color::WHITE,
         font: asset_server.load("ui/fonts/AlmendraDisplay-Regular.ttf"),
-        ..default()
     };
 
     commands

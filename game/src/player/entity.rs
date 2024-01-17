@@ -29,17 +29,17 @@ pub fn spawn_player(
     // Load spells (forced right now)
     for spell_id in &loaded_spells.ids {
         if spell_id.contains("WaterBolt") {
-            spell_choices.set_primary_by_id(spell_id.clone())
+            spell_choices.set_primary_by_id(spell_id.clone());
         }
         if spell_id.contains("Spark") {
-            spell_choices.set_secondary_by_id(spell_id.clone())
+            spell_choices.set_secondary_by_id(spell_id.clone());
         }
     }
 
     commands.spawn(PlayerBundle {
         movement: MovementBundle::default(),
         sprite: SpriteBundle {
-            texture: asset_server.load("sprite/wizard.png").into(),
+            texture: asset_server.load("sprite/wizard.png"),
             transform: Transform::from_xyz(0.0, 0.0, 0.0),
             ..Default::default()
         },

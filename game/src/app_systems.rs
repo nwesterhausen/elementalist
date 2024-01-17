@@ -11,7 +11,7 @@ pub fn despawn_screen<T: Component>(to_despawn: Query<Entity, With<T>>, mut comm
     }
 }
 
-/// Adds a TextBundle which draws the game descriptor in the top right
+/// Adds a `TextBundle` which draws the game descriptor in the top right
 pub fn add_game_descriptor(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn(TextBundle {
         text: Text::from_section(
@@ -45,14 +45,19 @@ pub fn set_window_icon(
     // here we use the `image` crate to load our icon data from a png file
     // this is not a very bevy-native solution, but it will do
     let (icon_rgba, icon_width, icon_height) = {
-        let image = image::open(icon_path)
-            .expect("Failed to open icon path")
-            .into_rgba8();
+        let Ok(image) = image::open(icon_path) else {
+            tracing::warn!("set_window_icon: failed to open icon");
+            return;
+        };
+        let image = image.into_rgba8();
         let (width, height) = image.dimensions();
         let rgba = image.into_raw();
         (rgba, width, height)
     };
-    let icon = Icon::from_rgba(icon_rgba, icon_width, icon_height).unwrap();
+    let Ok(icon) = Icon::from_rgba(icon_rgba, icon_width, icon_height) else {
+        tracing::warn!("set_window_icon: failed to create icon");
+        return;
+    };
 
     // do it for all windows
     for window in windows.windows.values() {
@@ -60,5 +65,5 @@ pub fn set_window_icon(
     }
 }
 
-/// Reads game_data and imports the data into the game
+/// Reads `game_data` and imports the data into the game
 pub use game_library::data_loader::load_data_file_dir;

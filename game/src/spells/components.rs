@@ -7,7 +7,7 @@ pub fn despawn_expired_spells(
     time: Res<Time>,
     mut query: Query<(Entity, &mut SpellLifetime)>,
 ) {
-    for (entity, mut lifetime) in query.iter_mut() {
+    for (entity, mut lifetime) in &mut query {
         lifetime.update(time.delta_seconds());
         if lifetime.is_expired() {
             commands.entity(entity).despawn();

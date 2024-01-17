@@ -39,19 +39,23 @@ fn main() {
         // The clear color is the color the screen is cleared to before each frame is drawn
         .insert_resource(ClearColor(Color::DARK_GREEN))
         // Set basic window properties
-        .add_plugins(DefaultPlugins.set(WindowPlugin {
-            primary_window: Some(Window {
-                title: app_info::game_name_and_version().to_string(),
-                resolution: (1280.0, 720.0).into(),
-                present_mode: bevy::window::PresentMode::AutoVsync,
-                enabled_buttons: bevy::window::EnabledButtons {
-                    maximize: false,
+        .add_plugins(
+            DefaultPlugins
+                .set(WindowPlugin {
+                    primary_window: Some(Window {
+                        title: app_info::game_name_and_version().to_string(),
+                        resolution: (1280.0, 720.0).into(),
+                        present_mode: bevy::window::PresentMode::AutoVsync,
+                        enabled_buttons: bevy::window::EnabledButtons {
+                            maximize: false,
+                            ..Default::default()
+                        },
+                        ..Default::default()
+                    }),
                     ..Default::default()
-                },
-                ..Default::default()
-            }),
-            ..Default::default()
-        }))
+                })
+                .set(ImagePlugin::default_nearest()),
+        )
         .add_systems(Startup, app_systems::set_window_icon)
         // Add our dev-mode systems (they disable themselves in release mode)
         .add_plugins(dev_systems::DevSystemsPlugin)

@@ -24,7 +24,7 @@ pub fn splash_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
             parent.spawn(ImageBundle {
                 style: Style {
                     // This will set the logo to be 32px wide, and auto adjust its height
-                    width: Val::Px(32.0),
+                    width: Val::Px(128.0),
                     ..default()
                 },
                 image: UiImage::new(icon),

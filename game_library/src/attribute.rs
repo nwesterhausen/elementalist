@@ -490,7 +490,7 @@ impl From<Attribute> for f64 {
 
 impl std::fmt::Display for Attribute {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}/{}", self.current.to_string(), self.max)
+        write!(f, "{}/{}", self.current, self.max)
     }
 }
 

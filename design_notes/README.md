@@ -2,6 +2,12 @@
 
 These are design notes but also more of a reference. (As of now) they are all generated automatically from the files in [game_data](../game_data).
 
+## Design Tools
+
+I use [Goodnotes](https://www.goodnotes.com/) to jot down design ideas while on the go, and the desktop apps make reviewing the information easy.
+
+For managing my backlog I am using [ClickUp](https://app.clickup.com).
+
 ## Spell Details
 
 - [Spells by Magic school](./spells.md)

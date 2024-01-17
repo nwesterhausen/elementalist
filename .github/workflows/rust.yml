@@ -49,6 +49,10 @@ jobs:
           ~/.cargo/git/db/
           target/
         key: ${{ runner.os }}-cargo-clippy-${{ hashFiles('**/Cargo.toml') }}
+    - name: Install stable toolchain
+      uses: dtolnay/rust-toolchain@stable
+      with:
+        components: clippy
     - name: Run clippy
       run: cargo clippy -- -D warnings
   test:

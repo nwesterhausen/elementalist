@@ -1,9 +1,13 @@
 use bevy::prelude::*;
-use game_library::StatEnum;
+use game_library::{LoadedSpellData, StatEnum};
 
-use crate::common::{
-    movement::MovementBundle,
-    stats::{Health, Mana, StatBundle},
+use crate::{
+    common::{
+        movement::MovementBundle,
+        stats::{Health, Mana, StatBundle},
+    },
+    resources::SpellChoices,
+    spells::ExistingSpells,
 };
 
 const BASE_SPEED: f32 = 100.0;
@@ -23,7 +27,22 @@ pub struct PlayerBundle {
     pub stats: StatBundle,
 }
 
-pub fn spawn_player(mut commands: Commands, asset_server: Res<AssetServer>) {
+pub fn spawn_player(
+    mut commands: Commands,
+    asset_server: Res<AssetServer>,
+    mut spell_choices: ResMut<SpellChoices>,
+    loaded_spells: Res<ExistingSpells>,
+) {
+    // Load spells (forced right now)
+    for spell_id in &loaded_spells.ids {
+        if spell_id.contains("WaterBolt") {
+            spell_choices.set_primary_by_id(spell_id.clone())
+        }
+        if spell_id.contains("Spark") {
+            spell_choices.set_secondary_by_id(spell_id.clone())
+        }
+    }
+
     commands.spawn(PlayerBundle {
         movement: MovementBundle::default(),
         sprite: SpriteBundle {

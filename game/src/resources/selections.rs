@@ -35,4 +35,16 @@ impl SpellChoices {
             self.ultimate = Some(spell.get_internal_id());
         }
     }
+    pub fn set_primary_by_id(&mut self, spell_id: String) {
+        self.primary = Some(spell_id);
+    }
+    pub fn set_secondary_by_id(&mut self, spell_id: String) {
+        self.secondary = Some(spell_id);
+    }
+    pub fn set_defensive_by_id(&mut self, spell_id: String) {
+        self.defensive = Some(spell_id);
+    }
+    pub fn set_ultimate_by_id(&mut self, spell_id: String) {
+        self.ultimate = Some(spell_id);
+    }
 }

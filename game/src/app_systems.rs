@@ -32,14 +32,20 @@ pub fn add_game_descriptor(mut commands: Commands, asset_server: Res<AssetServer
     });
 }
 
+/// Taken directly from the bevy cheat book.
 pub fn set_window_icon(
     // we have to use `NonSend` here
     windows: NonSend<WinitWindows>,
 ) {
+    #[cfg(not(debug_assertions))]
+    let icon_path = "./assets/icon.png";
+    #[cfg(debug_assertions)]
+    let icon_path = "./game/assets/icon.png";
+
     // here we use the `image` crate to load our icon data from a png file
     // this is not a very bevy-native solution, but it will do
     let (icon_rgba, icon_width, icon_height) = {
-        let image = image::open("./game/assets/icon.png")
+        let image = image::open(icon_path)
             .expect("Failed to open icon path")
             .into_rgba8();
         let (width, height) = image.dimensions();

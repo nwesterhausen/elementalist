@@ -16,6 +16,7 @@ use bevy_inspector_egui::inspector_options::{InspectorOptions, ReflectInspectorO
 )]
 #[reflect(InspectorOptions)]
 #[serde(rename_all = "camelCase")]
+#[allow(clippy::module_name_repetitions)]
 pub enum StatEnum {
     /// The maximum health of the character. (Health is measured as an integer.)
     Health,

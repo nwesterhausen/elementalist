@@ -38,11 +38,13 @@ pub struct StatBonus {
 
 impl StatBonus {
     /// Creates a new stat bonus with the given value.
+    #[must_use]
     pub fn new(value: f32) -> Self {
         Self { value }
     }
 
     /// Returns the value of the stat bonus.
+    #[must_use]
     pub fn value(&self) -> f32 {
         self.value
     }
@@ -102,8 +104,8 @@ impl StatBonus {
     /// will be 1.5.
     ///
     /// This is to provide a more convenient way to add percentages to the stat bonus.
-    pub fn add_percent(&mut self, percent: impl Into<u32>) {
-        let percentage = percent.into() as f32 / 100.0;
+    pub fn add_percent(&mut self, percent: impl Into<f32>) {
+        let percentage = percent.into() / 100.0;
         self.add_value(percentage);
     }
 
@@ -112,8 +114,8 @@ impl StatBonus {
     /// result will be 0.5.
     ///
     /// This is to provide a more convenient way to subtract percentages from the stat bonus.
-    pub fn subtract_percent(&mut self, percent: impl Into<u32>) {
-        let percentage = percent.into() as f32 / 100.0;
+    pub fn subtract_percent(&mut self, percent: impl Into<f32>) {
+        let percentage = percent.into() / 100.0;
         self.subtract_value(percentage);
     }
 
@@ -122,8 +124,8 @@ impl StatBonus {
     /// the result will be 0.75.
     ///
     /// This is to provide a more convenient way to multiply percentages to the stat bonus.
-    pub fn multiply_percent(&mut self, percent: impl Into<u32>) {
-        let percentage = percent.into() as f32 / 100.0;
+    pub fn multiply_percent(&mut self, percent: impl Into<f32>) {
+        let percentage = percent.into() / 100.0;
         self.multiply_value(percentage);
     }
 
@@ -132,8 +134,8 @@ impl StatBonus {
     /// result will be 2.0.
     ///
     /// This is to provide a more convenient way to divide percentages from the stat bonus.
-    pub fn divide_percent(&mut self, percent: impl Into<u32>) {
-        let percentage = percent.into() as f32 / 100.0;
+    pub fn divide_percent(&mut self, percent: impl Into<f32>) {
+        let percentage = percent.into() / 100.0;
         self.divide_value(percentage);
     }
 }
@@ -253,6 +255,7 @@ impl std::cmp::Ord for StatBonus {
         let self_value = self.value * 100.0;
         let other_value = other.value * 100.0;
 
+        #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
         (self_value as u32).cmp(&(other_value as u32))
     }
 }

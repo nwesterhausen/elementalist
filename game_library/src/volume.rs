@@ -55,6 +55,7 @@ impl Volume {
     }
 
     /// Returns the volume, regardless of whether or not the volume is muted.
+    #[must_use]
     pub fn raw_volume<T>(&self) -> T
     where
         T: std::convert::From<u32>,
@@ -63,6 +64,7 @@ impl Volume {
     }
 
     /// Returns the volume or 0 if the volume is muted.
+    #[must_use]
     pub fn volume<T>(&self) -> T
     where
         T: std::convert::From<u32>,
@@ -75,6 +77,7 @@ impl Volume {
     }
 
     /// Returns whether or not the volume is muted.
+    #[must_use]
     pub fn is_muted(&self) -> bool {
         self.muted
     }
@@ -111,7 +114,13 @@ impl std::fmt::Display for Volume {
 
 impl From<u64> for Volume {
     fn from(value: u64) -> Self {
-        let clamped_value = (value as u32).min(Self::MAX).max(Self::MIN);
+        let Ok(clamped_value) = u32::try_from(value) else {
+            return Self {
+                value: Self::MAX,
+                muted: false,
+            };
+        };
+        let clamped_value = clamped_value.min(Self::MAX).max(Self::MIN);
         Self {
             value: clamped_value,
             muted: false,
@@ -131,7 +140,7 @@ impl From<u32> for Volume {
 
 impl From<u16> for Volume {
     fn from(value: u16) -> Self {
-        let clamped_value = (value as u32).min(Self::MAX).max(Self::MIN);
+        let clamped_value = u32::from(value).min(Self::MAX).max(Self::MIN);
         Self {
             value: clamped_value,
             muted: false,
@@ -141,7 +150,7 @@ impl From<u16> for Volume {
 
 impl From<u8> for Volume {
     fn from(value: u8) -> Self {
-        let clamped_value = (value as u32).min(Self::MAX).max(Self::MIN);
+        let clamped_value = u32::from(value).min(Self::MAX).max(Self::MIN);
         Self {
             value: clamped_value,
             muted: false,
@@ -151,9 +160,22 @@ impl From<u8> for Volume {
 
 impl From<i64> for Volume {
     fn from(value: i64) -> Self {
-        let clamped_value = value.min(Self::MAX as i64).max(Self::MIN as i64);
+        if value < 0 {
+            return Self {
+                value: 0,
+                muted: false,
+            };
+        }
+        #[allow(clippy::cast_sign_loss)]
+        let Ok(clamped_value) = u32::try_from(value) else {
+            return Self {
+                value: Self::MAX,
+                muted: false,
+            };
+        };
+        let clamped_value = clamped_value.min(Self::MAX).max(Self::MIN);
         Self {
-            value: clamped_value as u32,
+            value: clamped_value,
             muted: false,
         }
     }
@@ -161,9 +183,16 @@ impl From<i64> for Volume {
 
 impl From<i32> for Volume {
     fn from(value: i32) -> Self {
-        let clamped_value = value.min(Self::MAX as i32).max(Self::MIN as i32);
+        if value < 0 {
+            return Self {
+                value: 0,
+                muted: false,
+            };
+        }
+        #[allow(clippy::cast_sign_loss)]
+        let clamped_value = (value as u32).min(Self::MAX);
         Self {
-            value: clamped_value as u32,
+            value: clamped_value,
             muted: false,
         }
     }
@@ -171,9 +200,16 @@ impl From<i32> for Volume {
 
 impl From<i16> for Volume {
     fn from(value: i16) -> Self {
-        let clamped_value = value.min(Self::MAX as i16).max(Self::MIN as i16);
+        if value < 0 {
+            return Self {
+                value: 0,
+                muted: false,
+            };
+        }
+        #[allow(clippy::cast_sign_loss)]
+        let clamped_value = (value as u32).min(Self::MAX);
         Self {
-            value: clamped_value as u32,
+            value: clamped_value,
             muted: false,
         }
     }
@@ -181,9 +217,16 @@ impl From<i16> for Volume {
 
 impl From<i8> for Volume {
     fn from(value: i8) -> Self {
-        let clamped_value = value.min(Self::MAX as i8).max(Self::MIN as i8);
+        if value < 0 {
+            return Self {
+                value: 0,
+                muted: false,
+            };
+        }
+        #[allow(clippy::cast_sign_loss)]
+        let clamped_value = (value as u32).min(Self::MAX);
         Self {
-            value: clamped_value as u32,
+            value: clamped_value,
             muted: false,
         }
     }
@@ -191,11 +234,15 @@ impl From<i8> for Volume {
 
 impl From<f32> for Volume {
     fn from(value: f32) -> Self {
-        let clamped_value = ((value * 100.0) as i32)
-            .min(Self::MAX as i32)
-            .max(Self::MIN as i32);
+        #[allow(clippy::cast_possible_truncation)]
+        let mut clamped_value = (value * 100.0) as i32;
+        if clamped_value < 0 {
+            clamped_value = 0;
+        }
+        #[allow(clippy::cast_sign_loss)]
+        let clamped_value = (clamped_value as u32).min(Self::MAX);
         Self {
-            value: clamped_value as u32,
+            value: clamped_value,
             muted: false,
         }
     }
@@ -203,11 +250,15 @@ impl From<f32> for Volume {
 
 impl From<f64> for Volume {
     fn from(value: f64) -> Self {
-        let clamped_value = ((value * 100.0) as i32)
-            .min(Self::MAX as i32)
-            .max(Self::MIN as i32);
+        #[allow(clippy::cast_possible_truncation)]
+        let mut clamped_value = (value * 100.0) as i32;
+        if clamped_value < 0 {
+            clamped_value = 0;
+        }
+        #[allow(clippy::cast_sign_loss)]
+        let clamped_value = (clamped_value as u32).min(Self::MAX);
         Self {
-            value: clamped_value as u32,
+            value: clamped_value,
             muted: false,
         }
     }

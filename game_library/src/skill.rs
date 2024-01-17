@@ -34,6 +34,7 @@ use crate::{enums::Skill, Xp};
     InspectorOptions,
 )]
 #[reflect(InspectorOptions)]
+#[allow(clippy::module_name_repetitions)]
 pub struct SkillTrack {
     /// The skill the this is tracking
     pub skill: Skill,

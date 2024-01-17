@@ -13,7 +13,7 @@ use super::{
 
 /// Read in an ingestible file and return the header information from it.
 /// This will return None if the file is un-readable or ill-formatted.
-/// What this does return on success is the FileHeader, mainly the unique ID for the file,
+/// What this does return on success is the `FileHeader`, mainly the unique ID for the file,
 /// the version info, the system it has data for, author, and description.
 pub fn read_file_header(path: &str) -> Option<DataFileHeader> {
     // Attempt to open the file passed in
@@ -72,7 +72,7 @@ pub fn load_data_file_dir(mut ew_df: EventWriter<LoadedSpellData>) {
 
     let mut possible_ingests: Vec<String> = WalkDir::new(DATA_FILE_DIR)
         .into_iter()
-        .filter_map(|file| file.ok())
+        .filter_map(std::result::Result::ok)
         .filter(|entry| {
             entry.file_type().is_file() && entry.path().extension().is_some_and(|ext| ext == "yaml")
         })
@@ -81,7 +81,7 @@ pub fn load_data_file_dir(mut ew_df: EventWriter<LoadedSpellData>) {
 
     let mut spells_read: usize = 0;
 
-    for d in possible_ingests.iter_mut() {
+    for d in &mut possible_ingests {
         let filepath = d.as_str();
         let h = read_file_header(filepath);
         if let Some(header) = h {
@@ -92,15 +92,15 @@ pub fn load_data_file_dir(mut ew_df: EventWriter<LoadedSpellData>) {
             );
             match header.system {
                 GameSystem::Spell => {
-                    let spell_data: DataFile<SpellData> = match read_data_file(filepath) {
-                        Some(f) => f,
-                        None => {
-                            tracing::debug!(
-                                "load_data_file_dir: failed to read spell data from {}",
-                                header.unique_id
-                            );
-                            continue;
-                        }
+                    let spell_data: DataFile<SpellData> = if let Some(f) = read_data_file(filepath)
+                    {
+                        f
+                    } else {
+                        tracing::debug!(
+                            "load_data_file_dir: failed to read spell data from {}",
+                            header.unique_id
+                        );
+                        continue;
                     };
                     ew_df.send(LoadedSpellData { spell_data });
                     spells_read += 1;

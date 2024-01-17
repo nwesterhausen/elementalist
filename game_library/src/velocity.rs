@@ -3,7 +3,7 @@ use bevy_inspector_egui::prelude::*;
 
 /// Simple velocity component containing a 2D vector
 ///
-/// Defaults to Vec2::ZERO
+/// Defaults to `Vec2::ZERO`
 #[derive(Component, Debug, Reflect, InspectorOptions)]
 #[reflect(InspectorOptions)]
 pub struct Velocity {
@@ -19,6 +19,7 @@ impl Default for Velocity {
 
 impl Velocity {
     /// Creates a new velocity component with the given value
+    #[must_use]
     pub fn new(value: Vec2) -> Self {
         Self { value }
     }

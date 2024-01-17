@@ -108,36 +108,64 @@ impl Xp {
     /// assert_eq!(xp.xp_required(5), 13);
     /// assert_eq!(xp.xp_required(6), 15);
     /// ```
+    #[must_use]
     pub fn xp_required(&self, level: u32) -> u32 {
-        let level = level - 1;
-        let level = level as f32;
-        let factor_a = self.factor_a as f32;
-        let factor_b = self.factor_b as f32;
-        let factor_c = self.factor_c as f32;
-        let base_xp = self.base_xp as f32;
+        let level = if level == 0 { 0 } else { level - 1 };
+
+        #[allow(clippy::cast_precision_loss)]
+        let level = f64::from(level);
+        #[allow(clippy::cast_precision_loss)]
+        let factor_a = f64::from(self.factor_a);
+        #[allow(clippy::cast_precision_loss)]
+        let factor_b = f64::from(self.factor_b);
+        #[allow(clippy::cast_precision_loss)]
+        let factor_c = f64::from(self.factor_c);
+        #[allow(clippy::cast_precision_loss)]
+        let base_xp = f64::from(self.base_xp);
 
         let result = level.powf(factor_a / factor_b) / factor_c + base_xp;
-        result.floor() as u32
+
+        let result = result.floor();
+
+        if result < 0. {
+            return 0;
+        }
+
+        #[allow(
+            clippy::cast_precision_loss,
+            clippy::cast_possible_truncation,
+            clippy::cast_sign_loss
+        )]
+        let result = result as u32;
+
+        result
     }
 
     /// Total amount of xp required to reach the next level.
+    #[must_use]
     pub fn total_xp_to_next_level(&self) -> u32 {
         self.xp_required(self.current_level)
     }
 
     /// Remaining amount of xp required to reach the next level.
+    #[must_use]
     pub fn remaining_xp_to_next_level(&self) -> u32 {
-        let remaining = self.total_xp_to_next_level() as i64 - self.value as i64;
-        if remaining < 0 {
-            0
-        } else {
-            remaining as u32
+        if self.total_xp_to_next_level() == 0 {
+            return 0;
         }
+        if self.value > self.total_xp_to_next_level() {
+            return 0;
+        }
+
+        self.total_xp_to_next_level() - self.value
     }
 
     /// Progress towards the next level as a percentage.
+    #[must_use]
     pub fn next_level_progress(&self) -> f32 {
+        #[allow(clippy::cast_precision_loss)]
         let total = self.total_xp_to_next_level() as f32;
+        #[allow(clippy::cast_precision_loss)]
         let remaining = self.remaining_xp_to_next_level() as f32;
         if remaining == 0. {
             1.
@@ -147,6 +175,7 @@ impl Xp {
     }
 
     /// Can the entity level up?
+    #[must_use]
     pub fn can_level_up(&self) -> bool {
         self.remaining_xp_to_next_level() == 0
     }

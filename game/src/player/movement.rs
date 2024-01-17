@@ -25,7 +25,7 @@ pub fn player_movement_controls(
         return;
     };
 
-    let Some(speed) = stat_bundle.get_stat(StatEnum::MovementSpeed) else {
+    let Some(speed) = stat_bundle.get_stat(&StatEnum::MovementSpeed) else {
         tracing::error!("player_movement_controls: failed to get speed stat");
         return;
     };

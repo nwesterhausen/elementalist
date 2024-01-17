@@ -27,7 +27,8 @@
     unreachable_code,
     unreachable_patterns,
     clippy::unwrap_used,
-    clippy::expect_used
+    clippy::expect_used,
+    clippy::pedantic
 )]
 #![deny(unsafe_code)]
 

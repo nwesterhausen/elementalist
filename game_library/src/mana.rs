@@ -13,6 +13,7 @@ pub struct Mana {
 
 impl Mana {
     /// Creates a new mana component with the given max value.
+    #[must_use]
     pub fn new(value: u32) -> Self {
         Self {
             value: Attribute::new(value),

@@ -15,7 +15,7 @@ use serde::{Deserialize, Serialize};
 /// integers, floats, and other `Attribute` components.
 ///
 /// We use positive integers for attribute, and negative integers for damage. There's no reason
-/// to support negative attribute and negative max_attribute, so we don't. We also won't allow
+/// to support negative attribute and negative `max_attribute`, so we don't. We also won't allow
 /// `current_attribute` to be greater than `max_attribute`.
 ///
 /// Because we use integers, we can't represent fractional attribute. It's a bit of a tradeoff,
@@ -65,6 +65,7 @@ impl Attribute {
     pub const MIN: u32 = 0;
 
     /// Returns true if the current attribute is equal to 0
+    #[must_use]
     pub fn is_empty(&self) -> bool {
         self.current == 0
     }
@@ -75,6 +76,7 @@ impl Attribute {
     ///
     /// If max attribute is 0, this will always return true (because current attribute will always be 0
     /// if max attribute is 0)
+    #[must_use]
     pub fn is_full(&self) -> bool {
         self.current == self.max
     }
@@ -85,13 +87,16 @@ impl Attribute {
     ///
     /// This will always return 1.00 if max attribute is 0 (because current attribute will always be 0
     /// if max attribute is 0)
+    #[must_use]
     pub fn remaining(&self) -> f64 {
         // Avoid division by zero
         if self.max == 0 {
             return 1.0;
         }
         // Get percentage but round to 2 decimal places
-        (self.current as f64 / self.max as f64 * 100.0).round() / 100.0
+        #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
+        let result = (f64::from(self.current) / f64::from(self.max) * 100.0).floor() / 100.0;
+        result
     }
 
     /// Returns the percentage of attribute remaining as an integer between 0% and 100%
@@ -100,13 +105,16 @@ impl Attribute {
     ///
     /// This will always return 100% if max attribute is 0 (because current attribute will always be 0
     /// if max attribute is 0)
+    #[must_use]
     pub fn percentage_remaining(&self) -> u32 {
         // Avoid division by zero
         if self.max == 0 {
             return 100;
         }
         // Percentage but floored and as an integer between 0 and 100
-        (self.current as f64 / self.max as f64 * 100.0).floor() as u32
+        #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
+        let result = (f64::from(self.current) / f64::from(self.max) * 100.0).floor() as u32;
+        result
     }
 
     /// Creates a new `Attribute` component with the given `max_attribute` and `current_attribute`.
@@ -153,8 +161,18 @@ impl Attribute {
     /// will increase or decrease the max attribute respectively.
     pub fn add_to_max(&mut self, amount: impl Into<i64>) {
         let amount = amount.into();
-        let new_max_attribute = self.max as i64 + amount;
-        self.max = new_max_attribute.max(Self::MIN as i64).min(u32::MAX as i64) as u32;
+        let new_max_attribute = i64::from(self.max) + amount;
+
+        if let Ok(value) = u32::try_from(
+            new_max_attribute
+                .max(i64::from(Self::MIN))
+                .min(i64::from(u32::MAX)),
+        ) {
+            self.max = value;
+        } else {
+            tracing::warn!("attribute value {} too big for u32", new_max_attribute);
+            self.max = u32::MAX;
+        }
         self.current = self.current.min(self.max);
     }
 
@@ -182,10 +200,20 @@ impl Attribute {
         }
 
         let amount = amount.into();
-        let new_max_attribute = self.max as f64 * amount;
+        let new_max_attribute = f64::from(self.max) * amount;
 
-        self.max = new_max_attribute.max(Self::MIN as f64).min(u32::MAX as f64) as u32;
-        self.current = self.current.min(self.max);
+        let float_value = new_max_attribute
+            .max(f64::from(Self::MIN))
+            .min(f64::from(u32::MAX));
+
+        #[allow(
+            clippy::cast_possible_truncation,
+            clippy::cast_lossless,
+            clippy::cast_sign_loss
+        )]
+        let value = float_value.floor() as u32;
+
+        self.max = value;
     }
 
     /// Scales the max attribute by the given percentage, while clamping max attribute within acceptable bounds. Also
@@ -203,7 +231,7 @@ impl Attribute {
     /// - Negative numbers will cause max attribute to be set to 0.
     /// - This is a sister function to `scale_max_attribute` which takes a float value instead of a percentage.
     pub fn scale_max_by_percentage(&mut self, amount: impl Into<i32>) {
-        self.scale_max(amount.into() as f64 / 100.0);
+        self.scale_max(f64::from(amount.into()) / 100.0);
     }
 
     /// Adds the given amount to the current attribute, while clamping current attribute within acceptable bounds.
@@ -215,10 +243,18 @@ impl Attribute {
     /// will increase or decrease the current attribute respectively.
     pub fn add_to_current(&mut self, amount: impl Into<i64>) {
         let amount = amount.into();
-        let new_current_attribute = self.current as i64 + amount;
-        self.current = new_current_attribute
-            .max(Self::MIN as i64)
-            .min(self.max as i64) as u32;
+        let new_current_attribute = i64::from(self.current) + amount;
+        #[allow(clippy::cast_sign_loss)]
+        if let Ok(value) = u32::try_from(
+            new_current_attribute
+                .max(i64::from(Self::MIN))
+                .min(i64::from(self.max)),
+        ) {
+            self.current = value;
+        } else {
+            tracing::warn!("attribute value {} too big for u32", new_current_attribute);
+            self.current = u32::MAX;
+        }
     }
 
     /// Scales the current attribute by the given amount, while clamping current attribute within acceptable bounds.
@@ -244,11 +280,20 @@ impl Attribute {
         }
 
         let amount = amount.into();
-        let new_current_attribute = self.current as f64 * amount;
+        let new_current_attribute = f64::from(self.current) * amount;
 
-        self.current = new_current_attribute
-            .max(Self::MIN as f64)
-            .min(self.max as f64) as u32;
+        let float_value = new_current_attribute
+            .max(f64::from(Self::MIN))
+            .min(f64::from(self.max));
+
+        #[allow(
+            clippy::cast_possible_truncation,
+            clippy::cast_lossless,
+            clippy::cast_sign_loss
+        )]
+        let value = float_value.floor() as u32;
+
+        self.current = value;
     }
 
     /// Scales the current attribute by the given percentage, while clamping current attribute within acceptable bounds.
@@ -261,7 +306,7 @@ impl Attribute {
     /// * `amount` - The percentage to scale the current attribute by. This should be a positive number. Really large numbers
     /// will just cause current attribute to be set to `u32::MAX`.
     pub fn scale_current_by_percentage(&mut self, amount: impl Into<i32>) {
-        self.scale_current(amount.into() as f64 / 100.0);
+        self.scale_current(f64::from(amount.into()) / 100.0);
     }
 
     /// Adds to current attribute by scaling the `max_attribute` by the given amount, while clamping current attribute within
@@ -281,7 +326,8 @@ impl Attribute {
         amount: impl Into<f64> + std::cmp::PartialOrd<f64>,
     ) {
         // Turn the amount into an i64 so we can easily affect the current attribute
-        let amount = amount.into() * self.max as f64;
+        let amount = amount.into() * f64::from(self.max);
+        #[allow(clippy::cast_possible_truncation)]
         self.add_to_current(amount as i64);
     }
 
@@ -298,7 +344,7 @@ impl Attribute {
     /// * `amount` - The percentage to scale the max attribute by. If this is positive, the current attribute will increase. If
     /// this is negative, the current attribute will decrease.
     pub fn add_to_current_by_scale_max_percentage(&mut self, amount: impl Into<i32>) {
-        self.add_to_current_by_scale_max(amount.into() as f64 / 100.0);
+        self.add_to_current_by_scale_max(f64::from(amount.into()) / 100.0);
     }
 }
 
@@ -316,12 +362,14 @@ impl std::ops::AddAssign<i32> for Attribute {
 
 impl std::ops::AddAssign<f32> for Attribute {
     fn add_assign(&mut self, rhs: f32) {
+        #[allow(clippy::cast_possible_truncation)]
         self.add_to_current(rhs as i32);
     }
 }
 
 impl std::ops::AddAssign<f64> for Attribute {
     fn add_assign(&mut self, rhs: f64) {
+        #[allow(clippy::cast_possible_truncation)]
         self.add_to_current(rhs as i32);
     }
 }
@@ -334,49 +382,59 @@ impl std::ops::AddAssign<Attribute> for Attribute {
 
 impl std::ops::SubAssign<u32> for Attribute {
     fn sub_assign(&mut self, rhs: u32) {
-        self.add_to_current(-(rhs as i64));
+        let sub = i64::from(rhs);
+        self.add_to_current(-sub);
     }
 }
 
 impl std::ops::SubAssign<i32> for Attribute {
     fn sub_assign(&mut self, rhs: i32) {
-        self.add_to_current(-rhs as i64);
+        let sub = i64::from(rhs);
+        self.add_to_current(-sub);
     }
 }
 
 impl std::ops::SubAssign<f32> for Attribute {
     fn sub_assign(&mut self, rhs: f32) {
-        self.add_to_current(-rhs as i64);
+        #[allow(clippy::cast_possible_truncation)]
+        let sub = rhs.floor() as i64;
+        self.add_to_current(-sub);
     }
 }
 
 impl std::ops::SubAssign<f64> for Attribute {
     fn sub_assign(&mut self, rhs: f64) {
-        self.add_to_current(-rhs as i64);
+        #[allow(clippy::cast_possible_truncation)]
+        let sub = rhs.floor() as i64;
+        self.add_to_current(-sub);
     }
 }
 
 impl std::ops::SubAssign<Attribute> for Attribute {
     fn sub_assign(&mut self, rhs: Self) {
-        self.add_to_current(-(rhs.current as i64));
+        let sub = i64::from(rhs.current);
+        self.add_to_current(-sub);
     }
 }
 
 impl std::ops::MulAssign<u32> for Attribute {
     fn mul_assign(&mut self, rhs: u32) {
-        self.scale_current(rhs as f64);
+        let mul = f64::from(rhs);
+        self.scale_current(mul);
     }
 }
 
 impl std::ops::MulAssign<i32> for Attribute {
     fn mul_assign(&mut self, rhs: i32) {
-        self.scale_current(rhs as f64);
+        let mul = f64::from(rhs);
+        self.scale_current(mul);
     }
 }
 
 impl std::ops::MulAssign<f32> for Attribute {
     fn mul_assign(&mut self, rhs: f32) {
-        self.scale_current(rhs as f64);
+        let mul = f64::from(rhs);
+        self.scale_current(mul);
     }
 }
 
@@ -388,7 +446,8 @@ impl std::ops::MulAssign<f64> for Attribute {
 
 impl std::ops::MulAssign<Attribute> for Attribute {
     fn mul_assign(&mut self, rhs: Self) {
-        self.scale_current(rhs.current as f64);
+        let mul = f64::from(rhs.current);
+        self.scale_current(mul);
     }
 }
 
@@ -398,7 +457,8 @@ impl std::ops::DivAssign<u32> for Attribute {
             tracing::error!("avoided division by zero; set current_attribute to 0 instead");
             self.current = 0;
         }
-        self.scale_current(1.0 / rhs as f64);
+        let div = f64::from(rhs);
+        self.scale_current(1.0 / div);
     }
 }
 
@@ -408,7 +468,8 @@ impl std::ops::DivAssign<i32> for Attribute {
             tracing::error!("avoided division by zero; set current_attribute to 0 instead");
             self.current = 0;
         }
-        self.scale_current(1.0 / rhs as f64);
+        let div = f64::from(rhs);
+        self.scale_current(1.0 / div);
     }
 }
 
@@ -418,7 +479,8 @@ impl std::ops::DivAssign<f32> for Attribute {
             tracing::error!("avoided division by zero; set current_attribute to 0 instead");
             self.current = 0;
         }
-        self.scale_current(1.0 / rhs as f64);
+        let div = f64::from(rhs);
+        self.scale_current(1.0 / div);
     }
 }
 
@@ -438,7 +500,8 @@ impl std::ops::DivAssign<Attribute> for Attribute {
             tracing::error!("avoided division by zero; set current_attribute to 0 instead");
             self.current = 0;
         }
-        self.scale_current(1.0 / rhs.current as f64);
+        let div = f64::from(rhs.current);
+        self.scale_current(1.0 / div);
     }
 }
 
@@ -460,6 +523,7 @@ impl From<f32> for Attribute {
             tracing::warn!("refused to create Attribute with negative value; set to 0 instead");
             return Self::new(0_u32);
         }
+        #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
         let value = value.floor() as i32;
         Self::from(value)
     }
@@ -471,6 +535,7 @@ impl From<f64> for Attribute {
             tracing::warn!("refused to create Attribute with negative value; set to 0 instead");
             return Self::new(0_u32);
         }
+        #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
         let value = value.floor() as i32;
         Self::from(value)
     }
@@ -478,13 +543,15 @@ impl From<f64> for Attribute {
 
 impl From<Attribute> for f32 {
     fn from(value: Attribute) -> Self {
-        value.current as f32
+        #[allow(clippy::cast_possible_truncation, clippy::cast_precision_loss)]
+        let result = value.current as f32;
+        result
     }
 }
 
 impl From<Attribute> for f64 {
     fn from(value: Attribute) -> Self {
-        value.current as f64
+        f64::from(value.current)
     }
 }
 
@@ -496,7 +563,12 @@ impl std::fmt::Display for Attribute {
 
 impl From<u64> for Attribute {
     fn from(value: u64) -> Self {
-        Self::new(value as u32)
+        if let Ok(value) = u32::try_from(value) {
+            Self::new(value)
+        } else {
+            tracing::warn!("attribute value {} too big for u32", value);
+            Self::new(u32::MAX)
+        }
     }
 }
 
@@ -524,7 +596,12 @@ impl From<i64> for Attribute {
             tracing::warn!("refused to create Attribute with negative value; set to 0 instead");
             return Self::new(0_u32);
         }
-        Self::new(value as u32)
+        if let Ok(value) = u32::try_from(value) {
+            Self::new(value)
+        } else {
+            tracing::warn!("attribute value {} too big for u32", value);
+            Self::new(u32::MAX)
+        }
     }
 }
 
@@ -534,6 +611,7 @@ impl From<i32> for Attribute {
             tracing::warn!("refused to create Attribute with negative value; set to 0 instead");
             return Self::new(0_u32);
         }
+        #[allow(clippy::cast_sign_loss)]
         Self::new(value as u32)
     }
 }
@@ -544,6 +622,7 @@ impl From<i16> for Attribute {
             tracing::warn!("refused to create Attribute with negative value; set to 0 instead");
             return Self::new(0_u32);
         }
+        #[allow(clippy::cast_sign_loss)]
         Self::new(value as u32)
     }
 }
@@ -554,13 +633,14 @@ impl From<i8> for Attribute {
             tracing::warn!("refused to create Attribute with negative value; set to 0 instead");
             return Self::new(0_u32);
         }
+        #[allow(clippy::cast_sign_loss)]
         Self::new(value as u32)
     }
 }
 
 impl From<Attribute> for u64 {
     fn from(value: Attribute) -> Self {
-        value.current as u64
+        u64::from(value.current)
     }
 }
 
@@ -572,36 +652,61 @@ impl From<Attribute> for u32 {
 
 impl From<Attribute> for u16 {
     fn from(value: Attribute) -> Self {
-        value.current as u16
+        if let Ok(value) = u16::try_from(value.current) {
+            value
+        } else {
+            tracing::warn!("attribute value {} too big for u16", value.current);
+            u16::MAX
+        }
     }
 }
 
 impl From<Attribute> for u8 {
     fn from(value: Attribute) -> Self {
-        value.current as u8
+        if let Ok(value) = u8::try_from(value.current) {
+            value
+        } else {
+            tracing::warn!("attribute value {} too big for u8", value.current);
+            u8::MAX
+        }
     }
 }
 
 impl From<Attribute> for i64 {
     fn from(value: Attribute) -> Self {
-        value.current as i64
+        i64::from(value.current)
     }
 }
 
 impl From<Attribute> for i32 {
     fn from(value: Attribute) -> Self {
-        value.current as i32
+        if let Ok(value) = i32::try_from(value.current) {
+            value
+        } else {
+            tracing::warn!("attribute value {} too big for i32", value.current);
+            i32::MAX
+        }
     }
 }
 
 impl From<Attribute> for i16 {
     fn from(value: Attribute) -> Self {
-        value.current as i16
+        if let Ok(value) = i16::try_from(value.current) {
+            value
+        } else {
+            tracing::warn!("attribute value {} too big for i16", value.current);
+            i16::MAX
+        }
     }
 }
 
 impl From<Attribute> for i8 {
     fn from(value: Attribute) -> Self {
-        value.current as i8
+        if let Ok(value) = i8::try_from(value.current) {
+            value
+        } else {
+            tracing::warn!("attribute value {} too big for i8", value.current);
+            i8::MAX
+        }
     }
 }

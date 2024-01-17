@@ -14,6 +14,7 @@ pub struct SpellLifetime {
 
 impl SpellLifetime {
     /// Creates a new spell lifetime with the given maximum lifetime
+    #[must_use]
     pub fn new(max: f32) -> Self {
         Self {
             remaining: max,
@@ -25,6 +26,7 @@ impl SpellLifetime {
         self.remaining -= delta;
     }
     /// Returns true if the spell is expired
+    #[must_use]
     pub fn is_expired(&self) -> bool {
         self.remaining <= 0.0
     }

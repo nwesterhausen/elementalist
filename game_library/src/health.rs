@@ -15,6 +15,7 @@ impl Health {
     /// Creates a new health component with the given max value.
     ///
     /// Health will be set to the max value.
+    #[must_use]
     pub fn new(value: u32) -> Self {
         Self {
             value: Attribute::new(value),

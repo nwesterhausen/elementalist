@@ -11,6 +11,7 @@ pub struct StatBundle {
 
 impl StatBundle {
     /// Creates a new stats bundle with the given stats.
+    #[must_use]
     pub fn new(stats: Vec<(StatEnum, f32)>) -> Self {
         let mut stats_map = HashMap::new();
 
@@ -27,8 +28,9 @@ impl StatBundle {
     /// Get a specific stat from the stats bundle.
     ///
     /// If the stat does not exist, it will return None.
-    pub fn get_stat(&self, stat: StatEnum) -> Option<&Stat> {
-        self.stats.get(&stat)
+    #[must_use]
+    pub fn get_stat(&self, stat: &StatEnum) -> Option<&Stat> {
+        self.stats.get(stat)
     }
     /// Update the value of a specific stat.
     ///

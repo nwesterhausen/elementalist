@@ -49,6 +49,7 @@ impl Default for Stat {
 
 impl Stat {
     /// Creates a new stat bundle with the given base value.
+    #[must_use]
     pub fn new(base_value: f32) -> Self {
         Self {
             base_value,
@@ -58,16 +59,19 @@ impl Stat {
     }
 
     /// Returns the current value of the stat.
+    #[must_use]
     pub fn value(&self) -> f32 {
         self.value
     }
 
     /// Returns the current bonus of the stat.
+    #[must_use]
     pub fn bonus(&self) -> f32 {
         self.bonus.value()
     }
 
     /// Returns the base value of the stat.
+    #[must_use]
     pub fn base_value(&self) -> f32 {
         self.base_value
     }

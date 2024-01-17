@@ -98,7 +98,7 @@ fn divide_by_zero() {
 fn add_percent() {
     let mut stat_bonus = StatBonus::new(1.0);
     assert_eq!(stat_bonus.value(), 1.0);
-    stat_bonus.add_percent(50_u32);
+    stat_bonus.add_percent(50.);
     assert_eq!(stat_bonus.value(), 1.5);
 }
 
@@ -106,7 +106,7 @@ fn add_percent() {
 fn subtract_percent() {
     let mut stat_bonus = StatBonus::new(1.0);
     assert_eq!(stat_bonus.value(), 1.0);
-    stat_bonus.subtract_percent(50_u32);
+    stat_bonus.subtract_percent(50.);
     assert_eq!(stat_bonus.value(), 0.5);
 }
 
@@ -114,7 +114,7 @@ fn subtract_percent() {
 fn multiply_percent() {
     let mut stat_bonus = StatBonus::new(1.0);
     assert_eq!(stat_bonus.value(), 1.0);
-    stat_bonus.multiply_percent(12_u32);
+    stat_bonus.multiply_percent(12.);
     assert_eq!(stat_bonus.value(), 0.12);
 }
 
@@ -122,6 +122,6 @@ fn multiply_percent() {
 fn divide_percent() {
     let mut stat_bonus = StatBonus::new(1.0);
     assert_eq!(stat_bonus.value(), 1.0);
-    stat_bonus.divide_percent(30_u32);
+    stat_bonus.divide_percent(30.);
     assert_eq!(stat_bonus.value(), 3.3333333);
 }

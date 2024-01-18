@@ -21,4 +21,13 @@ impl Health {
             value: Attribute::new(value),
         }
     }
+    /// Instantly kill the entity, setting health to 0.
+    pub fn kill(&mut self) {
+        self.value.set(0_u32);
+    }
+
+    /// Check if dead (passes through to `Attribute::is_empty`)
+    pub fn is_dead(&self) -> bool {
+        self.value.is_empty()
+    }
 }

@@ -42,8 +42,6 @@ use serde::{Deserialize, Serialize};
     Resource,
     Debug,
     Component,
-    PartialEq,
-    Eq,
     Clone,
     Copy,
     Serialize,
@@ -345,6 +343,24 @@ impl Attribute {
     /// this is negative, the current attribute will decrease.
     pub fn add_to_current_by_scale_max_percentage(&mut self, amount: impl Into<i32>) {
         self.add_to_current_by_scale_max(f64::from(amount.into()) / 100.0);
+    }
+
+    /// Set the current value directly.
+    pub fn set(&mut self, value: impl Into<u32>) {
+        let Ok(value) = u32::try_from(value) else {
+            tracing::warn!("set: value won't turn into u32");
+            return;
+        };
+        self.current = value.min(self.max);
+    }
+
+    /// Set the max value directly.
+    pub fn set_max(&mut self, value: impl Into<u32>) {
+        let Ok(value) = u32::try_from(value) else {
+            tracing::warn!("set_max: value won't turn into u32");
+            return;
+        };
+        self.max = value.max(self.current);
     }
 }
 
@@ -710,3 +726,17 @@ impl From<Attribute> for i8 {
         }
     }
 }
+
+impl std::cmp::PartialEq<u32> for Attribute {
+    fn eq(&self, other: &u32) -> bool {
+        self.current == *other
+    }
+}
+
+impl std::cmp::PartialEq for Attribute {
+    fn eq(&self, other: &Self) -> bool {
+        self.current == other.current
+    }
+}
+
+impl std::cmp::Eq for Attribute {}

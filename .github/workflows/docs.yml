@@ -48,7 +48,7 @@ jobs:
         run: |
           cargo doc --no-deps
           mkdir -p docs
-          echo "<meta http-equiv=\"refresh\" content=\"0; url=game_library\">" > target/doc/index.html
+          echo "<meta http-equiv=\"refresh\" content=\"0; url=game_library/index.html\">" > target/doc/index.html
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact

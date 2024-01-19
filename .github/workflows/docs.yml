@@ -49,6 +49,11 @@ jobs:
         run: |
           cargo doc --workspace --no-deps --document-private-items
           cp -r target/doc _site
+      - name: Fix permissions
+        run: |
+          chmod -c -R +rX "_site/" | while read line; do
+            echo "::warning title=Invalid file permissions automatically fixed::$line"
+          done
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
@@ -63,4 +68,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@main

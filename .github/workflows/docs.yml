@@ -31,9 +31,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@master
+      - name: Cache
+        uses: actions/cache@v3
         with:
-          toolchain: nightly
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: ${{ runner.os }}-rust-${{ hashFiles('**/Cargo.toml') }}
       - name: Build Docs
         run: |
           cargo doc --no-deps

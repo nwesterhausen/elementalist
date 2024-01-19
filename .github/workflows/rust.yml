@@ -6,9 +6,9 @@ permissions:
 
 on:
   push:
-    branches: ['main']
+    branches: [main]
   pull_request:
-    branches: ['main']
+    branches: [main]
 
 env:
   CARGO_TERM_COLOR: always
@@ -16,7 +16,7 @@ env:
   # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
-  group: 'rust'
+  group: rust
   cancel-in-progress: false
 
 jobs:

@@ -38,7 +38,11 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            target/doc
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target
           key: ${{ runner.os }}-docs-${{ hashFiles('**/Cargo.toml') }}
       - name: Build Docs
         run: |

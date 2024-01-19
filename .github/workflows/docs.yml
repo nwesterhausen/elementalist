@@ -23,7 +23,7 @@ concurrency:
 
 env:
   CARGO_TERM_COLOR: always
-  RUSTDOCFLAGS: --index-page /home/runner/work/elementalist/elementalist/docs/rustdoc/index.md -Zunstable-options
+  RUSTDOCFLAGS: --markdown-no-toc --index-page /home/runner/work/elementalist/elementalist/docs/rustdoc/index.md -Zunstable-options
 
 jobs:
   # Single deploy job since we're just deploying

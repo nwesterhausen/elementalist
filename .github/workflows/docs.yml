@@ -23,6 +23,7 @@ concurrency:
 
 env:
   CARGO_TERM_COLOR: always
+  RUSTDOCFLAGS: --enable-index-page -Zunstable-options
 
 jobs:
   # Single deploy job since we're just deploying
@@ -46,9 +47,7 @@ jobs:
           key: ${{ runner.os }}-docs-${{ hashFiles('**/Cargo.toml') }}
       - name: Build Docs
         run: |
-          cargo doc --no-deps
-          mkdir -p docs
-          echo "<meta http-equiv=\"refresh\" content=\"0; url=game_library/index.html\">" > target/doc/index.html
+          cargo doc --workspace --no-deps --document-private-items
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact

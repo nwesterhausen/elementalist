@@ -6,6 +6,7 @@ use crate::main_menu::{button_actions::ButtonAction, components::OnSettingsMenuS
 ///
 /// When the main menu screen is entered, we spawn the main menu entities. This includes the
 /// background, the title, and the buttons.
+#[allow(clippy::too_many_lines)]
 pub fn settings_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     // Common style for all buttons on the screen
     let button_style = Style {
@@ -18,7 +19,6 @@ pub fn settings_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
         font_size: 40.0,
         color: Color::WHITE,
         font: asset_server.load("ui/fonts/AlmendraDisplay-Regular.ttf"),
-        ..default()
     };
 
     commands

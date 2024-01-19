@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use std::hash::Hash;
 
-use crate::GameSystem;
+use crate::enums::GameSystem;
 
 /// Each data file includes header information about the data in the file.
 #[derive(Debug, Serialize, Deserialize)]

@@ -32,7 +32,7 @@ pub enum MenuInteraction {
 
 impl MenuInteraction {
     /// Returns the default keybinds for this action on keyboard & mouse.
-    pub fn default_keyboard_mouse_input(&self) -> UserInput {
+    pub fn default_keyboard_mouse_input(self) -> UserInput {
         match self {
             MenuInteraction::Up => UserInput::Single(InputKind::Keyboard(KeyCode::W)),
             MenuInteraction::Down => UserInput::Single(InputKind::Keyboard(KeyCode::S)),
@@ -41,7 +41,7 @@ impl MenuInteraction {
         }
     }
     /// Returns the default gamepad input for this action.
-    pub fn default_gamepad_input(&self) -> UserInput {
+    pub fn default_gamepad_input(self) -> UserInput {
         match self {
             MenuInteraction::Up => {
                 UserInput::Single(InputKind::GamepadButton(GamepadButtonType::DPadUp))
@@ -63,7 +63,7 @@ impl MenuInteraction {
         let mut input_map = InputMap::default();
 
         for variant in MenuInteraction::variants() {
-            input_map.insert(variant.default_keyboard_mouse_input(), variant.clone());
+            input_map.insert(variant.default_keyboard_mouse_input(), variant);
             input_map.insert(variant.default_gamepad_input(), variant);
         }
 

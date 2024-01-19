@@ -5,10 +5,13 @@
 //! ```yaml
 //! # $schema: "https://schemas.nwest.one/games/elementalist/spell.json"
 //! ```
-use serde_default_utils::*;
+use serde_default_utils::{default_u32, default_u8, default_usize};
 use std::hash::Hash;
 
-use crate::{CastCategory, CastSlot, CastType, MagicType, Skill, SpellCollision, StatEffect};
+use crate::{
+    enums::{CastCategory, CastSlot, CastType, MagicType, Skill, SpellCollision},
+    StatEffect,
+};
 
 /// Details about a spell.
 ///
@@ -121,10 +124,12 @@ impl Hash for SpellData {
 
 impl SpellData {
     /// Returns the skill that the spell uses.
+    #[must_use]
     pub fn skill(&self) -> Skill {
         self.magic.into()
     }
     /// Get the spell's sprite as a texture atlas sprite.
+    #[must_use]
     pub fn texture_atlas_index(&self) -> bevy::sprite::TextureAtlasSprite {
         bevy::sprite::TextureAtlasSprite::new(self.sprite_index)
     }
@@ -133,6 +138,7 @@ impl SpellData {
         self.internal_id = Some(self.get_internal_id());
     }
     /// Get the spell's internal ID.
+    #[must_use]
     pub fn get_internal_id(&self) -> String {
         if self.internal_id.is_some() {
             let id = self.internal_id.clone().unwrap_or_default();

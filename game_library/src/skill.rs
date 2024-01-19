@@ -5,7 +5,7 @@ use bevy::{
 use bevy_inspector_egui::inspector_options::{InspectorOptions, ReflectInspectorOptions};
 use serde::{Deserialize, Serialize};
 
-use crate::{Skill, Xp};
+use crate::{enums::Skill, Xp};
 
 /// Skills are used to track a meta-progression of a player's abilities.
 ///
@@ -34,6 +34,7 @@ use crate::{Skill, Xp};
     InspectorOptions,
 )]
 #[reflect(InspectorOptions)]
+#[allow(clippy::module_name_repetitions)]
 pub struct SkillTrack {
     /// The skill the this is tracking
     pub skill: Skill,

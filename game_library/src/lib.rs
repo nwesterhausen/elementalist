@@ -27,54 +27,49 @@
     unreachable_code,
     unreachable_patterns,
     clippy::unwrap_used,
-    clippy::expect_used
+    clippy::expect_used,
+    clippy::pedantic
 )]
 #![deny(unsafe_code)]
 
 /// Contains the data loader for the game library, allows for loading in data files from disk.
 pub mod data_loader;
+/// Enums with associated data used in the game library.
+pub mod enums;
+/// Events used in the game.
+pub mod events;
 
+mod acceleration;
 mod attribute;
-mod enums;
 mod experience;
+mod health;
+mod mana;
+mod movement_bundle;
 mod skill;
+mod spell_bundle;
 mod spell_data;
+mod spell_lifetime;
 mod stat;
 mod stat_bonus;
+mod stat_bundle;
 mod stat_effect;
+mod velocity;
 mod volume;
 
+pub use acceleration::Acceleration;
 pub use attribute::Attribute;
 pub use data_loader::events::*;
-pub use enums::*;
 pub use experience::Xp;
+pub use health::Health;
+pub use mana::Mana;
+pub use movement_bundle::MovementBundle;
 pub use skill::SkillTrack;
+pub use spell_bundle::SpellBundle;
 pub use spell_data::SpellData;
+pub use spell_lifetime::SpellLifetime;
 pub use stat::Stat;
 pub use stat_bonus::StatBonus;
+pub use stat_bundle::StatBundle;
 pub use stat_effect::StatEffect;
+pub use velocity::Velocity;
 pub use volume::Volume;
-
-/// Temporary spell enum, will be replaced with a spell data file.
-#[derive(
-    Debug,
-    Clone,
-    Copy,
-    PartialEq,
-    Eq,
-    Hash,
-    serde::Serialize,
-    serde::Deserialize,
-    bevy::ecs::component::Component,
-)]
-pub enum Spell {
-    /// Firebolt spell.
-    Firebolt,
-}
-
-impl Spell {
-    /// Get a list of all the spells in the game.
-    pub fn variants() -> Vec<Spell> {
-        vec![Spell::Firebolt]
-    }
-}

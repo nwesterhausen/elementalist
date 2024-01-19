@@ -57,7 +57,7 @@ pub fn setup_camera(mut commands: Commands) {
 pub fn zoom_camera(
     mut query: Query<(&mut OrthographicProjection, &CameraScaleLevel), With<MainCamera>>,
 ) {
-    for (mut projection, scale_level) in query.iter_mut() {
+    for (mut projection, scale_level) in &mut query {
         projection.scale = scale_level.value;
     }
 }

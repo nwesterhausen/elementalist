@@ -1,56 +1,5 @@
 use bevy::prelude::*;
-use bevy_inspector_egui::prelude::*;
-
-/// Simple velocity component containing a 2D vector
-///
-/// Defaults to Vec2::ZERO
-#[derive(Component, Debug, Reflect, InspectorOptions)]
-#[reflect(InspectorOptions)]
-pub struct Velocity {
-    pub value: Vec2,
-}
-
-impl Default for Velocity {
-    fn default() -> Self {
-        Self { value: Vec2::ZERO }
-    }
-}
-
-impl Velocity {
-    /// Creates a new velocity component with the given value
-    pub fn new(value: Vec2) -> Self {
-        Self { value }
-    }
-}
-
-/// Simple acceleration component containing a 2D vector
-///
-/// Defaults to Vec2::ZERO
-#[derive(Component, Debug, Reflect, InspectorOptions)]
-#[reflect(InspectorOptions)]
-pub struct Acceleration {
-    pub value: Vec2,
-}
-
-impl Default for Acceleration {
-    fn default() -> Self {
-        Self { value: Vec2::ZERO }
-    }
-}
-
-impl Acceleration {
-    /// Creates a new acceleration component with the given value
-    pub fn new(value: Vec2) -> Self {
-        Self { value }
-    }
-}
-
-/// Bundle that contains all components needed for moving things
-#[derive(Bundle, Debug, Default)]
-pub struct MovementBundle {
-    pub velocity: Velocity,
-    pub acceleration: Acceleration,
-}
+use game_library::{Acceleration, Velocity};
 
 /// Plugin that makes moving things move
 pub struct MovementPlugin;

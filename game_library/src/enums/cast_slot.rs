@@ -22,12 +22,11 @@ pub enum CastSlot {
 
 impl std::fmt::Display for CastSlot {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        use CastSlot::*;
         match self {
-            Primary => write!(f, "Primary"),
-            Secondary => write!(f, "Secondary"),
-            Defensive => write!(f, "Defensive"),
-            Ultimate => write!(f, "Ultimate"),
+            CastSlot::Primary => write!(f, "Primary"),
+            CastSlot::Secondary => write!(f, "Secondary"),
+            CastSlot::Defensive => write!(f, "Defensive"),
+            CastSlot::Ultimate => write!(f, "Ultimate"),
         }
     }
 }

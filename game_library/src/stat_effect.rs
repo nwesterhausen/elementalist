@@ -1,4 +1,4 @@
-use crate::{enums::StatEnum, SpellTarget, StatBonus};
+use crate::{enums::SpellTarget, enums::StatEnum, StatBonus};
 
 /// Effects from a spell or other item.
 ///

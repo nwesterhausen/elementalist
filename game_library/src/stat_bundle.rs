@@ -1,42 +1,17 @@
-use bevy::{prelude::*, reflect::Reflect, utils::hashbrown::HashMap};
-use bevy_inspector_egui::prelude::*;
-use game_library::{Attribute, Stat, StatEnum};
+use bevy::{prelude::*, utils::hashbrown::HashMap};
 
-#[derive(Component, Default, Debug, Reflect, InspectorOptions)]
-#[reflect(InspectorOptions)]
-pub struct Health {
-    pub value: Attribute,
-}
+use crate::{enums::StatEnum, Stat};
 
-impl Health {
-    pub fn new(value: u32) -> Self {
-        Self {
-            value: Attribute::new(value),
-        }
-    }
-}
-
-#[derive(Component, Default, Debug, Reflect, InspectorOptions)]
-#[reflect(InspectorOptions)]
-pub struct Mana {
-    pub value: Attribute,
-}
-
-impl Mana {
-    pub fn new(value: u32) -> Self {
-        Self {
-            value: Attribute::new(value),
-        }
-    }
-}
-
+/// Bundle that contains data for all stats an entity might have.
 #[derive(Component, Default, Debug)]
 pub struct StatBundle {
+    /// A mapping of stat to stat value.
     pub stats: HashMap<StatEnum, Stat>,
 }
 
 impl StatBundle {
     /// Creates a new stats bundle with the given stats.
+    #[must_use]
     pub fn new(stats: Vec<(StatEnum, f32)>) -> Self {
         let mut stats_map = HashMap::new();
 
@@ -53,8 +28,9 @@ impl StatBundle {
     /// Get a specific stat from the stats bundle.
     ///
     /// If the stat does not exist, it will return None.
-    pub fn get_stat(&self, stat: StatEnum) -> Option<&Stat> {
-        self.stats.get(&stat)
+    #[must_use]
+    pub fn get_stat(&self, stat: &StatEnum) -> Option<&Stat> {
+        self.stats.get(stat)
     }
     /// Update the value of a specific stat.
     ///

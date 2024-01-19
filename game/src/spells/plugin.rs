@@ -1,16 +1,16 @@
 use bevy::prelude::*;
-use game_library::{LoadedSpellData, SpellData};
+use game_library::{
+    events::CastSpell, LoadedSpellData, MovementBundle, SpellBundle, SpellData, SpellLifetime,
+    Velocity,
+};
 
 use crate::{
-    common::{
-        self,
-        movement::{MovementBundle, Velocity},
-    },
+    common,
     player::Player,
     resources::{CursorPosition, SpellAtlas},
 };
 
-use super::components::{despawn_expired_spells, CastSpell, SpellBundle, SpellLifetime};
+use super::components::despawn_expired_spells;
 
 /// Spells are fired using the `CastSpell` event.
 ///
@@ -78,28 +78,27 @@ pub fn cast_spells(
 
         // Todo: maybe check if the rest of the resources are ready?
 
-        let spell = match existing_spells
+        let Some(spell) = existing_spells
             .data
             .iter()
             .find(|s| &s.get_internal_id() == spell_identifier)
-        {
-            Some(spell) => spell,
-            None => {
-                tracing::error!("cast_spells: 404 {spell_identifier} not found");
-                continue;
-            }
+        else {
+            tracing::error!("cast_spells: 404 {spell_identifier} not found");
+            continue;
         };
 
-        let slope_vec = common::math::slope_vec(&player_transform, &cursor_position);
+        let slope_vec = common::math::slope_vec(player_transform, &cursor_position);
 
         // Todo: include the player's velocity in the spell's velocity
         // Todo: include the player's stats to effect the spell (damage, speed, etc)
         // Todo: figure out how we will track cooldowns. Maybe a resource?
 
         commands.spawn(SpellBundle {
+            #[allow(clippy::cast_precision_loss)]
             lifetime: SpellLifetime::new(spell.duration as f32 / 100.0),
             movement: MovementBundle {
-                velocity: Velocity::new(slope_vec * spell.speed as f32),
+                #[allow(clippy::cast_precision_loss)]
+                velocity: Velocity::new(slope_vec * (spell.speed as f32)),
                 ..Default::default()
             },
             sprite: SpriteSheetBundle {

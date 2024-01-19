@@ -5,7 +5,7 @@ use bevy::{
 use bevy_inspector_egui::InspectorOptions;
 use serde::{Deserialize, Serialize};
 
-use crate::MagicType;
+use crate::enums::MagicType;
 
 /// The different skills. Each skill is a school of magic.
 ///
@@ -31,8 +31,8 @@ use crate::MagicType;
 pub enum Skill {
     /// Pyromancy is the school of fire magic.
     Pyromancy,
-    /// Fulgamancy is the school of lightning magic.
-    Fulgamancy,
+    /// Fulgomancy is the school of lightning magic.
+    Fulgomancy,
     /// Hydromancy is the school of water magic.
     Hydromancy,
     /// Geomancy is the school of earth magic.
@@ -70,52 +70,51 @@ pub enum Skill {
 impl Skill {
     /// Returns an iterator over all the variants of `Skill`
     pub fn variants() -> impl Iterator<Item = Self> {
-        use Skill::*;
         [
-            Pyromancy,
-            Fulgamancy,
-            Hydromancy,
-            Geomancy,
-            Aeromancy,
-            Cryomancy,
-            Trudomancy,
-            Photomancy,
-            Umbramancy,
-            Arcanomancy,
-            Vitomancy,
-            Mortomancy,
-            Ampiliomancy,
-            Diminiomancy,
-            Citomancy,
-            Necromancy,
-            Mutatiomancy,
-            Chronomancy,
+            Skill::Pyromancy,
+            Skill::Fulgomancy,
+            Skill::Hydromancy,
+            Skill::Geomancy,
+            Skill::Aeromancy,
+            Skill::Cryomancy,
+            Skill::Trudomancy,
+            Skill::Photomancy,
+            Skill::Umbramancy,
+            Skill::Arcanomancy,
+            Skill::Vitomancy,
+            Skill::Mortomancy,
+            Skill::Ampiliomancy,
+            Skill::Diminiomancy,
+            Skill::Citomancy,
+            Skill::Necromancy,
+            Skill::Mutatiomancy,
+            Skill::Chronomancy,
         ]
         .iter()
         .copied()
     }
     /// Returns the corresponding [`MagicType`] for this [`Skill`]
+    #[must_use]
     pub fn magic_type(self) -> MagicType {
-        use Skill::*;
         match self {
-            Pyromancy => MagicType::Fire,
-            Fulgamancy => MagicType::Lightning,
-            Hydromancy => MagicType::Water,
-            Geomancy => MagicType::Earth,
-            Aeromancy => MagicType::Air,
-            Cryomancy => MagicType::Ice,
-            Trudomancy => MagicType::Force,
-            Photomancy => MagicType::Light,
-            Umbramancy => MagicType::Dark,
-            Arcanomancy => MagicType::Arcane,
-            Vitomancy => MagicType::Life,
-            Mortomancy => MagicType::Death,
-            Ampiliomancy => MagicType::Enhancement,
-            Diminiomancy => MagicType::Reduction,
-            Citomancy => MagicType::Summoning,
-            Necromancy => MagicType::Necromancy,
-            Mutatiomancy => MagicType::Polymorph,
-            Chronomancy => MagicType::Time,
+            Skill::Pyromancy => MagicType::Fire,
+            Skill::Fulgomancy => MagicType::Lightning,
+            Skill::Hydromancy => MagicType::Water,
+            Skill::Geomancy => MagicType::Earth,
+            Skill::Aeromancy => MagicType::Air,
+            Skill::Cryomancy => MagicType::Ice,
+            Skill::Trudomancy => MagicType::Force,
+            Skill::Photomancy => MagicType::Light,
+            Skill::Umbramancy => MagicType::Dark,
+            Skill::Arcanomancy => MagicType::Arcane,
+            Skill::Vitomancy => MagicType::Life,
+            Skill::Mortomancy => MagicType::Death,
+            Skill::Ampiliomancy => MagicType::Enhancement,
+            Skill::Diminiomancy => MagicType::Reduction,
+            Skill::Citomancy => MagicType::Summoning,
+            Skill::Necromancy => MagicType::Necromancy,
+            Skill::Mutatiomancy => MagicType::Polymorph,
+            Skill::Chronomancy => MagicType::Time,
         }
     }
 }

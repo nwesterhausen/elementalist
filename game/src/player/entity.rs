@@ -1,14 +1,7 @@
 use bevy::prelude::*;
-use game_library::StatEnum;
+use game_library::{enums::StatEnum, Health, Mana, MovementBundle, StatBundle};
 
-use crate::{
-    common::{
-        movement::MovementBundle,
-        stats::{Health, Mana, StatBundle},
-    },
-    resources::SpellChoices,
-    spells::ExistingSpells,
-};
+use crate::{resources::SpellChoices, spells::ExistingSpells};
 
 const BASE_SPEED: f32 = 100.0;
 const BASE_HEALTH: u32 = 10;
@@ -36,17 +29,17 @@ pub fn spawn_player(
     // Load spells (forced right now)
     for spell_id in &loaded_spells.ids {
         if spell_id.contains("WaterBolt") {
-            spell_choices.set_primary_by_id(spell_id.clone())
+            spell_choices.set_primary_by_id(spell_id.clone());
         }
         if spell_id.contains("Spark") {
-            spell_choices.set_secondary_by_id(spell_id.clone())
+            spell_choices.set_secondary_by_id(spell_id.clone());
         }
     }
 
     commands.spawn(PlayerBundle {
         movement: MovementBundle::default(),
         sprite: SpriteBundle {
-            texture: asset_server.load("sprite/wizard.png").into(),
+            texture: asset_server.load("sprite/wizard.png"),
             transform: Transform::from_xyz(0.0, 0.0, 0.0),
             ..Default::default()
         },

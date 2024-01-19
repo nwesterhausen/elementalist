@@ -1,13 +1,12 @@
 use bevy::prelude::*;
 use bevy_inspector_egui::quick::{ResourceInspectorPlugin, WorldInspectorPlugin};
-use game_library::{Attribute, Skill, Stat, StatBonus, Volume};
+use game_library::{
+    enums::Skill, Acceleration, Attribute, Health, Mana, MovementBundle, Stat, StatBonus, Velocity,
+    Volume,
+};
 
 use crate::{
     camera::CameraScaleLevel,
-    common::{
-        movement::{Acceleration, Velocity},
-        stats::{Health, Mana},
-    },
     resources::{CursorPosition, SpellChoices},
 };
 
@@ -29,6 +28,7 @@ impl Plugin for DevSystemsPlugin {
             .register_type::<SpellChoices>()
             .register_type::<CursorPosition>()
             .register_type::<CameraScaleLevel>()
+            .register_type::<MovementBundle>()
             // Add a window for the SpellChoices resource.
             .add_plugins(ResourceInspectorPlugin::<SpellChoices>::default());
     }

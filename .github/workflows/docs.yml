@@ -48,13 +48,11 @@ jobs:
       - name: Build Docs
         run: |
           cargo doc --workspace --no-deps --document-private-items
+          cp -r target/doc _site
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
-        with:
-          # Upload only the created docs
-          path: './target/doc'
   deploy:
     needs: build
     name: Deploy to GitHub Pages

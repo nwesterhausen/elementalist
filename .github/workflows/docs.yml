@@ -57,6 +57,7 @@ jobs:
           # Upload only the created docs
           path: './target/doc'
   deploy:
+    needs: build
     name: Deploy to GitHub Pages
     environment:
       name: github-pages

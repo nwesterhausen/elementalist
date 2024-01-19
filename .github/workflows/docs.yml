@@ -26,10 +26,8 @@ env:
 
 jobs:
   # Single deploy job since we're just deploying
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build:
+    name: Build Documentation
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -50,7 +48,7 @@ jobs:
         run: |
           cargo doc --no-deps
           mkdir -p docs
-          echo "<meta http-equiv=\"refresh\" content=\"0; url=build_wheel\">" > target/doc/index.html
+          echo "<meta http-equiv=\"refresh\" content=\"0; url=game_library\">" > target/doc/index.html
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
@@ -58,6 +56,13 @@ jobs:
         with:
           # Upload only the created docs
           path: './target/doc'
+  deploy:
+    name: Deploy to GitHub Pages
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

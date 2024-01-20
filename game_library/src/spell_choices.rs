@@ -22,25 +22,25 @@ pub struct SpellChoices {
 
 impl SpellChoices {
     /// Set the primary spell choice.
-    pub fn set_primary(&mut self, spell: SpellData) {
+    pub fn set_primary(&mut self, spell: &SpellData) {
         if spell.cast_slot == CastSlot::Primary {
             self.primary = Some(spell.get_internal_id());
         }
     }
     /// Set the secondary spell choice.
-    pub fn set_secondary(&mut self, spell: SpellData) {
+    pub fn set_secondary(&mut self, spell: &SpellData) {
         if spell.cast_slot == CastSlot::Secondary {
             self.secondary = Some(spell.get_internal_id());
         }
     }
     /// Set the defensive spell choice.
-    pub fn set_defensive(&mut self, spell: SpellData) {
+    pub fn set_defensive(&mut self, spell: &SpellData) {
         if spell.cast_slot == CastSlot::Defensive {
             self.defensive = Some(spell.get_internal_id());
         }
     }
     /// Set the ultimate spell choice.
-    pub fn set_ultimate(&mut self, spell: SpellData) {
+    pub fn set_ultimate(&mut self, spell: &SpellData) {
         if spell.cast_slot == CastSlot::Ultimate {
             self.ultimate = Some(spell.get_internal_id());
         }

@@ -13,6 +13,7 @@ use crate::CursorPosition;
 ///
 /// * `Vec2` - The slope vector (normalized)
 #[allow(clippy::trivially_copy_pass_by_ref)]
+#[must_use]
 pub fn slope_vec(player_transform: &Transform, cursor_position: &CursorPosition) -> Vec2 {
     let player_xy = Vec2::new(
         player_transform.translation.x,

@@ -1,8 +1,8 @@
 use bevy::prelude::*;
-use game_library::events::CastSpell;
+use game_library::{events::CastSpell, SpellChoices};
 use leafwing_input_manager::action_state::ActionState;
 
-use crate::{events::PlayerAction, player::Player, resources::SpellChoices};
+use crate::{events::PlayerAction, player::Player};
 
 /// Handle player input
 pub fn player_control_system(

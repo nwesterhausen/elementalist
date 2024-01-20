@@ -1,7 +1,7 @@
 use bevy::prelude::*;
-use game_library::{enums::StatEnum, Health, Mana, MovementBundle, StatBundle};
+use game_library::{enums::StatEnum, Health, Mana, MovementBundle, SpellChoices, StatBundle};
 
-use crate::{resources::SpellChoices, spells::ExistingSpells};
+use crate::spells::ExistingSpells;
 
 const BASE_SPEED: f32 = 100.0;
 const BASE_HEALTH: u32 = 10;

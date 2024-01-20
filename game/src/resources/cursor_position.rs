@@ -1,13 +1,7 @@
-use bevy::{prelude::*, reflect::Reflect, window::PrimaryWindow};
-use bevy_inspector_egui::prelude::*;
+use bevy::{prelude::*, window::PrimaryWindow};
+use game_library::CursorPosition;
 
 use crate::camera::MainCamera;
-
-#[derive(Resource, Debug, Copy, Clone, Default, Reflect, InspectorOptions)]
-#[reflect(InspectorOptions)]
-pub struct CursorPosition {
-    pub position: Vec2,
-}
 
 pub fn update_cursor_position(
     windows: Query<&Window, With<PrimaryWindow>>,

@@ -1,14 +1,11 @@
 use bevy::prelude::*;
 use bevy_inspector_egui::quick::{ResourceInspectorPlugin, WorldInspectorPlugin};
 use game_library::{
-    enums::Skill, Acceleration, Attribute, Health, Mana, MovementBundle, Stat, StatBonus, Velocity,
-    Volume,
+    enums::Skill, Acceleration, Attribute, CursorPosition, Health, Mana, MovementBundle,
+    SpellChoices, Stat, StatBonus, Velocity, Volume,
 };
 
-use crate::{
-    camera::CameraScaleLevel,
-    resources::{CursorPosition, SpellChoices},
-};
+use crate::camera::CameraScaleLevel;
 
 pub struct DevSystemsPlugin;
 

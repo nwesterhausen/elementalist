@@ -1,14 +1,10 @@
 use bevy::prelude::*;
 use game_library::{
-    events::CastSpell, LoadedSpellData, MovementBundle, SpellBundle, SpellData, SpellLifetime,
-    Velocity,
+    events::CastSpell, math, CursorPosition, LoadedSpellData, MovementBundle, SpellBundle,
+    SpellData, SpellLifetime, Velocity,
 };
 
-use crate::{
-    common,
-    player::Player,
-    resources::{CursorPosition, SpellAtlas},
-};
+use crate::{player::Player, resources::SpellAtlas};
 
 use super::components::despawn_expired_spells;
 
@@ -87,7 +83,7 @@ pub fn cast_spells(
             continue;
         };
 
-        let slope_vec = common::math::slope_vec(player_transform, &cursor_position);
+        let slope_vec = math::slope_vec(player_transform, &cursor_position);
 
         // Todo: include the player's velocity in the spell's velocity
         // Todo: include the player's stats to effect the spell (damage, speed, etc)

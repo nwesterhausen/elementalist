@@ -38,15 +38,19 @@ pub mod data_loader;
 pub mod enums;
 /// Events used in the game.
 pub mod events;
+/// Math operations that can be re-used in the game.
+pub mod math;
 
 mod acceleration;
 mod attribute;
+mod cursor_position;
 mod experience;
 mod health;
 mod mana;
 mod movement_bundle;
 mod skill;
 mod spell_bundle;
+mod spell_choices;
 mod spell_data;
 mod spell_lifetime;
 mod stat;
@@ -58,6 +62,7 @@ mod volume;
 
 pub use acceleration::Acceleration;
 pub use attribute::Attribute;
+pub use cursor_position::CursorPosition;
 pub use data_loader::events::*;
 pub use experience::Xp;
 pub use health::Health;
@@ -65,6 +70,7 @@ pub use mana::Mana;
 pub use movement_bundle::MovementBundle;
 pub use skill::SkillTrack;
 pub use spell_bundle::SpellBundle;
+pub use spell_choices::SpellChoices;
 pub use spell_data::SpellData;
 pub use spell_lifetime::SpellLifetime;
 pub use stat::Stat;

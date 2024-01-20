@@ -1,6 +1,6 @@
 use bevy::{math::Vec2, transform::components::Transform};
 
-use crate::resources::CursorPosition;
+use crate::CursorPosition;
 
 /// Returns a vector representing the slope between the player and the cursor
 ///

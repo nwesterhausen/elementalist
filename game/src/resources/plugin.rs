@@ -1,11 +1,9 @@
 use bevy::prelude::*;
 use bevy_pkv::PkvStore;
 
-use super::{
-    cursor_position::{update_cursor_position, CursorPosition},
-    selections::SpellChoices,
-    spritesheet::load_spell_atlas,
-};
+use game_library::{CursorPosition, SpellChoices};
+
+use super::{cursor_position::update_cursor_position, spritesheet::load_spell_atlas};
 
 pub struct ElementalistResourcesPlugin;
 

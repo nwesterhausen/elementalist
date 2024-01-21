@@ -1,3 +1,9 @@
+//! Acceleration component
+//!
+//! Contains the acceleration component and its implementations. The acceleration component is part of
+//! the [`game_library::MovementBundle`]. It is used to store the acceleration value of an entity.
+//! (Acceleration is the change in velocity over time).
+
 use bevy::prelude::*;
 use bevy_inspector_egui::prelude::*;
 
@@ -19,6 +25,23 @@ impl Default for Acceleration {
 
 impl Acceleration {
     /// Creates a new acceleration component with the given value
+    ///
+    /// # Arguments
+    ///
+    /// * `value` - The acceleration value
+    ///
+    /// # Returns
+    ///
+    /// * Self - The new acceleration component
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use game_library::Acceleration;
+    /// use bevy::math::Vec2;
+    ///
+    /// let acceleration = Acceleration::new(Vec2::new(1.0, 1.0));
+    /// ```
     #[must_use]
     pub fn new(value: Vec2) -> Self {
         Self { value }

@@ -15,11 +15,9 @@
 //! * [`Xp`] - Experience component with a level and experience points, uses a custom
 //! experience curve.
 //!
-//! ## Elementalist Game Components
+//! ## Elementalist Game Components/Resources/Events/Enums
 //!
-//! These components are specific to the Elementalist game, and are used by at least
-//! two different systems. (If any component would only be used by one system, it is likely
-//! just in that system's module, and not in this library.)
+//! The remaining items are specific to the Elementalist game.
 //!
 
 #![warn(

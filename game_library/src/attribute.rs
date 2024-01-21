@@ -63,6 +63,18 @@ impl Attribute {
     pub const MIN: u32 = 0;
 
     /// Returns true if the current attribute is equal to 0
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use game_library::Attribute;
+    ///
+    /// let mut attribute = Attribute::new(10_u32);
+    /// assert_eq!(attribute.is_empty(), false);
+    ///
+    /// attribute.set(0_u32);
+    /// assert_eq!(attribute.is_empty(), true);
+    /// ```
     #[must_use]
     pub fn is_empty(&self) -> bool {
         self.current == 0
@@ -74,6 +86,21 @@ impl Attribute {
     ///
     /// If max attribute is 0, this will always return true (because current attribute will always be 0
     /// if max attribute is 0)
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use game_library::Attribute;
+    ///
+    /// let mut attribute = Attribute::new(10_u32);
+    /// assert_eq!(attribute.is_full(), true);
+    ///
+    /// attribute.set(0_u32);
+    /// assert_eq!(attribute.is_full(), false);
+    ///
+    /// attribute.set_max(0_u32);
+    /// assert_eq!(attribute.is_full(), true);
+    /// ```
     #[must_use]
     pub fn is_full(&self) -> bool {
         self.current == self.max
@@ -85,6 +112,24 @@ impl Attribute {
     ///
     /// This will always return 1.00 if max attribute is 0 (because current attribute will always be 0
     /// if max attribute is 0)
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use game_library::Attribute;
+    ///
+    /// let mut attribute = Attribute::new(10_u32);
+    /// assert_eq!(attribute.remaining(), 1.0);
+    ///
+    /// attribute.set(5_u32);
+    /// assert_eq!(attribute.remaining(), 0.5);
+    ///
+    /// attribute.set(0_u32);
+    /// assert_eq!(attribute.remaining(), 0.0);
+    ///
+    /// attribute.set_max(0_u32);
+    /// assert_eq!(attribute.remaining(), 1.0);
+    /// ```
     #[must_use]
     pub fn remaining(&self) -> f64 {
         // Avoid division by zero
@@ -103,6 +148,24 @@ impl Attribute {
     ///
     /// This will always return 100% if max attribute is 0 (because current attribute will always be 0
     /// if max attribute is 0)
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use game_library::Attribute;
+    ///
+    /// let mut attribute = Attribute::new(10_u32);
+    /// assert_eq!(attribute.percentage_remaining(), 100);
+    ///
+    /// attribute.set(5_u32);
+    /// assert_eq!(attribute.percentage_remaining(), 50);
+    ///
+    /// attribute.set(0_u32);
+    /// assert_eq!(attribute.percentage_remaining(), 0);
+    ///
+    /// attribute.set_max(0_u32);
+    /// assert_eq!(attribute.percentage_remaining(), 100);
+    /// ```
     #[must_use]
     pub fn percentage_remaining(&self) -> u32 {
         // Avoid division by zero
@@ -120,6 +183,18 @@ impl Attribute {
     /// ## Arguments
     ///
     /// * `max_attribute` - The maximum attribute of the entity. This will be converted into a `u32` and clamped
+    ///
+    /// ## Returns
+    ///
+    /// * Self - The new `Attribute` component
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use game_library::Attribute;
+    ///
+    /// let attribute = Attribute::new(10_u32);
+    /// ```
     pub fn new(max_attribute: impl Into<u32>) -> Self {
         let clamped_max_attribute = max_attribute.into().max(Self::MIN);
         Self {
@@ -134,6 +209,21 @@ impl Attribute {
     ///
     /// * `current_attribute` - The current attribute of the entity. This will be converted into a `u32` and clamped
     /// * `max_attribute` - The maximum attribute of the entity. This will be converted into a `u32` and clamped
+    ///
+    /// ## Returns
+    ///
+    /// * Self - The new `Attribute` component
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use game_library::Attribute;
+    ///
+    /// let attribute = Attribute::new_with_current(5_u32, 10_u32);
+    ///
+    /// assert_eq!(attribute.current, 5_u32);
+    /// assert_eq!(attribute.max, 10_u32);
+    /// ```
     pub fn new_with_current(
         current_attribute: impl Into<u32>,
         max_attribute: impl Into<u32>,
@@ -157,6 +247,27 @@ impl Attribute {
     ///
     /// * `amount` - The amount to add to the max attribute. This can be a positive or negative number, which
     /// will increase or decrease the max attribute respectively.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use game_library::Attribute;
+    ///
+    /// let mut attribute = Attribute::new(10_u32);
+    ///
+    /// attribute.add_to_max(5);
+    /// assert_eq!(attribute.max, 15_u32);
+    /// assert_eq!(attribute.current, 10_u32);
+    ///
+    /// attribute.add_to_max(-5);
+    /// assert_eq!(attribute.max, 10_u32);
+    /// assert_eq!(attribute.current, 10_u32);
+    ///
+    /// attribute.set(15_u32);
+    /// attribute.add_to_max(25);
+    /// assert_eq!(attribute.max, 35_u32);
+    /// assert_eq!(attribute.current, 10_u32);
+    /// ```
     pub fn add_to_max(&mut self, amount: impl Into<i64>) {
         let amount = amount.into();
         let new_max_attribute = i64::from(self.max) + amount;
@@ -188,6 +299,22 @@ impl Attribute {
     /// - Really large numbers will just cause max attribute to be set to `Attribute::MAX`.
     /// - Negative numbers will cause max attribute to be set to 0.
     /// - This is a sister function to `scale_max_attribute_by_percentage` which takes a percentage value instead
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use game_library::Attribute;
+    ///
+    /// let mut attribute = Attribute::new(10_u32);
+    ///
+    /// attribute.scale_max(2.0);
+    /// assert_eq!(attribute.max, 20_u32);
+    /// assert_eq!(attribute.current, 10_u32);
+    ///
+    /// attribute.scale_max(0.5);
+    /// assert_eq!(attribute.max, 10_u32);
+    /// assert_eq!(attribute.current, 10_u32);
+    /// ```
     pub fn scale_max(&mut self, amount: impl Into<f64> + std::cmp::PartialOrd<f64>) {
         // Guard against negative numbers (which would cause the max attribute to be negative)
         if amount < 0.0 {
@@ -228,6 +355,22 @@ impl Attribute {
     /// - Really large numbers will just cause max attribute to be set to `Attribute::MAX`.
     /// - Negative numbers will cause max attribute to be set to 0.
     /// - This is a sister function to `scale_max_attribute` which takes a float value instead of a percentage.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use game_library::Attribute;
+    ///
+    /// let mut attribute = Attribute::new(10_u32);
+    ///
+    /// attribute.scale_max_by_percentage(200);
+    /// assert_eq!(attribute.max, 20_u32);
+    /// assert_eq!(attribute.current, 10_u32);
+    ///
+    /// attribute.scale_max_by_percentage(50);
+    /// assert_eq!(attribute.max, 10_u32);
+    /// assert_eq!(attribute.current, 10_u32);
+    /// ```
     pub fn scale_max_by_percentage(&mut self, amount: impl Into<i32>) {
         self.scale_max(f64::from(amount.into()) / 100.0);
     }
@@ -239,6 +382,20 @@ impl Attribute {
     ///
     /// * `amount` - The amount to add to the current attribute. This can be a positive or negative number, which
     /// will increase or decrease the current attribute respectively.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use game_library::Attribute;
+    ///
+    /// let mut attribute = Attribute::new_with_current(5_u32, 10_u32);
+    ///
+    /// assert_eq!(attribute.current, 5_u32);
+    ///
+    /// attribute.add_to_current(5);
+    ///
+    /// assert_eq!(attribute.current, 10_u32);
+    /// ```
     pub fn add_to_current(&mut self, amount: impl Into<i64>) {
         let amount = amount.into();
         let new_current_attribute = i64::from(self.current) + amount;
@@ -267,6 +424,20 @@ impl Attribute {
     ///
     /// * `amount` - The amount to scale the current attribute by. This should be a positive number. See the sister
     /// function `scale_current_attribute_by_percentage` for a function that takes a percentage (integer value).
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use game_library::Attribute;
+    ///
+    /// let mut attribute = Attribute::new_with_current(5_u32, 10_u32);
+    ///
+    /// assert_eq!(attribute.current, 5_u32);
+    ///
+    /// attribute.scale_current(2.0);
+    ///
+    /// assert_eq!(attribute.current, 10_u32);
+    /// ```
     pub fn scale_current(&mut self, amount: impl Into<f64> + std::cmp::PartialOrd<f64>) {
         // Guard against negative numbers (which would cause the current attribute to be negative)
         if amount < 0.0 {
@@ -303,6 +474,20 @@ impl Attribute {
     ///
     /// * `amount` - The percentage to scale the current attribute by. This should be a positive number. Really large numbers
     /// will just cause current attribute to be set to `u32::MAX`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use game_library::Attribute;
+    ///
+    /// let mut attribute = Attribute::new_with_current(5_u32, 10_u32);
+    ///
+    /// assert_eq!(attribute.current, 5_u32);
+    ///
+    /// attribute.scale_current_by_percentage(200);
+    ///
+    /// assert_eq!(attribute.current, 10_u32);
+    /// ```
     pub fn scale_current_by_percentage(&mut self, amount: impl Into<i32>) {
         self.scale_current(f64::from(amount.into()) / 100.0);
     }
@@ -319,6 +504,22 @@ impl Attribute {
     ///
     /// * `amount` - The amount to scale the max attribute by. If this is positive, the current attribute will increase. If
     /// this is negative, the current attribute will decrease.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use game_library::Attribute;
+    ///
+    /// let mut attribute = Attribute::new_with_current(5_u32, 100_u32);
+    ///
+    /// assert_eq!(attribute.current, 5_u32);
+    /// assert_eq!(attribute.max, 100_u32);
+    ///
+    /// attribute.add_to_current_by_scale_max(0.05);
+    ///
+    /// assert_eq!(attribute.current, 10_u32);
+    /// assert_eq!(attribute.max, 100_u32);
+    /// ```
     pub fn add_to_current_by_scale_max(
         &mut self,
         amount: impl Into<f64> + std::cmp::PartialOrd<f64>,
@@ -341,11 +542,46 @@ impl Attribute {
     ///
     /// * `amount` - The percentage to scale the max attribute by. If this is positive, the current attribute will increase. If
     /// this is negative, the current attribute will decrease.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use game_library::Attribute;
+    ///
+    /// let mut attribute = Attribute::new_with_current(5_u32, 100_u32);
+    ///
+    /// assert_eq!(attribute.current, 5_u32);
+    /// assert_eq!(attribute.max, 100_u32);
+    ///
+    /// attribute.add_to_current_by_scale_max_percentage(20);
+    ///
+    /// assert_eq!(attribute.current, 25_u32);
+    /// assert_eq!(attribute.max, 100_u32);
+    /// ```
     pub fn add_to_current_by_scale_max_percentage(&mut self, amount: impl Into<i32>) {
         self.add_to_current_by_scale_max(f64::from(amount.into()) / 100.0);
     }
 
     /// Set the current value directly.
+    ///
+    /// # Arguments
+    ///
+    /// * `value` - The value to set the current attribute to. This will be clamped between 0 and `max_attribute`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use game_library::Attribute;
+    ///
+    /// let mut attribute = Attribute::new(10_u32);
+    ///
+    /// assert_eq!(attribute.current, 10_u32);
+    /// assert_eq!(attribute.max, 10_u32);
+    ///
+    /// attribute.set(5_u32);
+    /// assert_eq!(attribute.current, 5_u32);
+    /// assert_eq!(attribute.max, 10_u32);
+    /// ```
     pub fn set(&mut self, value: impl Into<u32>) {
         let Ok(value) = u32::try_from(value) else {
             tracing::warn!("set: value won't turn into u32");
@@ -355,12 +591,40 @@ impl Attribute {
     }
 
     /// Set the max value directly.
+    ///
+    /// # Arguments
+    ///
+    /// * `value` - The value to set the max attribute to. This will be clamped between 0 and `u32::MAX`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use game_library::Attribute;
+    ///
+    /// let mut attribute = Attribute::new(10_u32);
+    ///
+    /// assert_eq!(attribute.current, 10_u32);
+    /// assert_eq!(attribute.max, 10_u32);
+    ///
+    /// attribute.set_max(5_u32);
+    ///
+    /// assert_eq!(attribute.current, 5_u32);
+    /// assert_eq!(attribute.max, 5_u32);
+    ///
+    /// attribute.set_max(10_u32);
+    ///
+    /// assert_eq!(attribute.current, 5_u32);
+    /// assert_eq!(attribute.max, 10_u32);
+    /// ```
     pub fn set_max(&mut self, value: impl Into<u32>) {
         let Ok(value) = u32::try_from(value) else {
             tracing::warn!("set_max: value won't turn into u32");
             return;
         };
-        self.max = value.max(self.current);
+        self.max = value.max(0_u32);
+
+        // Ensure current is not greater than max
+        self.current = self.current.min(self.max);
     }
 }
 

@@ -1,3 +1,5 @@
+//! A resource that stores the cursor position in world coordinates.
+
 use bevy::{prelude::*, reflect::Reflect};
 use bevy_inspector_egui::prelude::*;
 

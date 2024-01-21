@@ -47,7 +47,7 @@ jobs:
           key: ${{ runner.os }}-docs-${{ hashFiles('**/Cargo.toml') }}
       - name: Build Docs
         run: |
-          cargo doc --workspace --no-deps --document-private-items
+          cargo doc --workspace --no-deps
           cp -r target/doc _site
       - name: Fix permissions
         run: |

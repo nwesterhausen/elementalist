@@ -24,8 +24,8 @@ concurrency:
 env:
   CARGO_TERM_COLOR: always
   RUSTDOCFLAGS:
-    --markdown-css /home/runner/work/elementalist/elementalist/docs/rustdoc/github-markdown.css --markdown-no-toc --index-page
-    /home/runner/work/elementalist/elementalist/docs/rustdoc/index.md -Zunstable-options
+    --markdown-css github-markdown.css --markdown-no-toc --index-page /home/runner/work/elementalist/elementalist/docs/rustdoc/index.md
+    -Zunstable-options
 
 jobs:
   # Single deploy job since we're just deploying
@@ -51,6 +51,7 @@ jobs:
         run: |
           cargo doc --workspace --no-deps
           cp -r target/doc _site
+          cp docs/rustdoc/rust.css _site/github-markdown.css
       - name: Fix permissions
         run: |
           chmod -c -R +rX "_site/" | while read line; do

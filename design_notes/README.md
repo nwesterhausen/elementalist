@@ -8,6 +8,10 @@ I use [Goodnotes](https://www.goodnotes.com/) to jot down design ideas while on 
 
 For managing my backlog I am using [ClickUp](https://app.clickup.com).
 
+## General Details
+
+- [Leveling Up](./level-ups.md)
+
 ## Spell Details
 
 - [Spells by Magic school](./spells.md)

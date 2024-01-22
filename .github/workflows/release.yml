@@ -26,6 +26,7 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
         with:
           targets: wasm32-unknown-unknown
+          toolchain: nightly-2024-01-17
       - name: install wasm-bindgen-cli
         run: |
           cargo install wasm-bindgen-cli
@@ -73,6 +74,7 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
         with:
           targets: x86_64-unknown-linux-gnu
+          toolchain: nightly-2024-01-17
       - name: install dependencies
         run: |
           sudo apt-get update; sudo apt-get install pkg-config libx11-dev libasound2-dev libudev-dev libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev
@@ -85,7 +87,7 @@ jobs:
         run: |
           mkdir linux
           cp target/x86_64-unknown-linux-gnu/release/${{ env.binary }} linux/
-          cp -r assets linux/
+          cp -r game/assets linux/
           cp -r game_data linux/
 
       - name: Package as a zip
@@ -121,6 +123,7 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
         with:
           targets: x86_64-pc-windows-msvc
+          toolchain: nightly-2024-01-17
 
       - name: Build
         run: |
@@ -130,7 +133,7 @@ jobs:
         run: |
           mkdir windows
           cp target/x86_64-pc-windows-msvc/release/${{ env.binary }}.exe windows/
-          cp -r assets windows/
+          cp -r game/assets windows/
           cp -r game_data windows/
 
       - name: Package as a zip
@@ -165,6 +168,7 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
         with:
           targets: x86_64-apple-darwin
+          toolchain: nightly-2024-01-17
       - name: Environment Setup
         run: |
           export CFLAGS="-fno-stack-check"
@@ -178,7 +182,7 @@ jobs:
         run: |
           mkdir -p ${{ env.binary }}.app/Contents/MacOS
           cp target/x86_64-apple-darwin/release/${{ env.binary }} ${{ env.binary }}.app/Contents/MacOS/
-          cp -r assets ${{ env.binary }}.app/Contents/MacOS/
+          cp -r game/assets ${{ env.binary }}.app/Contents/MacOS/
           cp -r game_data ${{ env.binary }}.app/Contents/MacOS/
           hdiutil create -fs HFS+ -volname "${{ env.binary }}" -srcfolder ${{ env.binary }}.app ${{ env.binary }}-macOS-intel.dmg
 
@@ -210,6 +214,7 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
         with:
           targets: aarch64-apple-darwin
+          toolchain: nightly-2024-01-17
       - name: Environment
         # macOS 11 was the first version to support ARM
         run: |
@@ -223,7 +228,7 @@ jobs:
         run: |
           mkdir -p ${{ env.binary }}.app/Contents/MacOS
           cp target/aarch64-apple-darwin/release/${{ env.binary }} ${{ env.binary }}.app/Contents/MacOS/
-          cp -r assets ${{ env.binary }}.app/Contents/MacOS/
+          cp -r game/assets ${{ env.binary }}.app/Contents/MacOS/
           cp -r game_data ${{ env.binary }}.app/Contents/MacOS/
           hdiutil create -fs HFS+ -volname "${{ env.binary }}-macOS-apple-silicon" -srcfolder ${{ env.binary }}.app ${{ env.binary }}-macOS-apple-silicon.dmg
 

@@ -219,7 +219,7 @@ jobs:
       - name: Environment
         # macOS 11 was the first version to support ARM
         run: |
-          export MACOSX_DEPLOYMENT_TARGET="11"
+          export MACOSX_DEPLOYMENT_TARGET="13"
       - name: Setup LLVM
         run: |
           # seems to be we need to install LLVM via brew. Brew suggests a couple other exports

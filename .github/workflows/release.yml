@@ -1,7 +1,6 @@
 name: Release
 
 on:
-  workflow_dispatch: {}
   push:
     tags:
       - '*'
@@ -13,7 +12,7 @@ env:
   itch_target: nwesterhausen/elementalist
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   # Build for wasm

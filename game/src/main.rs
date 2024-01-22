@@ -1,11 +1,11 @@
 //! # Elementalist
 //!
-//! A rogue-lite game where you play as an elementalist.,
+//! A rogue-lite game where you play as an elementalist.
 
 // Hide the console window on Windows when not in debug mode
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use bevy::prelude::*;
+use bevy::{asset::AssetMetaCheck, prelude::*};
 use leafwing_input_manager::plugin::InputManagerPlugin;
 
 mod app_info;
@@ -82,10 +82,15 @@ fn main() {
         .run();
 }
 
+/// Elementalist defaults for the "insert this resource" type of thing.
+///
+/// This also handles adding the debug plugin _only_ when in debug mode.
 struct ElementalistDefaultPlugins;
 
 impl Plugin for ElementalistDefaultPlugins {
     fn build(&self, app: &mut App) {
+        // Never attempts to look up meta files. The default meta configuration will be used for each asset.
+        app.insert_resource(AssetMetaCheck::Never);
         // The clear color is the color the screen is cleared to before each frame is drawn
         app.insert_resource(ClearColor(Color::DARK_GREEN));
         // Add the window icon

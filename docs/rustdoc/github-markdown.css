@@ -1,6 +1,6 @@
 @media (prefers-color-scheme: dark) {
 
-  .markdown-body,
+  .rustdoc,
   [data-theme="dark"] {
     /*dark*/
     color-scheme: dark;
@@ -58,7 +58,7 @@
 
 @media (prefers-color-scheme: light) {
 
-  .markdown-body,
+  .rustdoc,
   [data-theme="light"] {
     /*light*/
     color-scheme: light;
@@ -114,7 +114,7 @@
   }
 }
 
-.markdown-body {
+.rustdoc {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   margin: 0;
@@ -126,18 +126,18 @@
   word-wrap: break-word;
 }
 
-.markdown-body .octicon {
+.rustdoc .octicon {
   display: inline-block;
   fill: currentColor;
   vertical-align: text-bottom;
 }
 
-.markdown-body h1:hover .anchor .octicon-link:before,
-.markdown-body h2:hover .anchor .octicon-link:before,
-.markdown-body h3:hover .anchor .octicon-link:before,
-.markdown-body h4:hover .anchor .octicon-link:before,
-.markdown-body h5:hover .anchor .octicon-link:before,
-.markdown-body h6:hover .anchor .octicon-link:before {
+.rustdoc h1:hover .anchor .octicon-link:before,
+.rustdoc h2:hover .anchor .octicon-link:before,
+.rustdoc h3:hover .anchor .octicon-link:before,
+.rustdoc h4:hover .anchor .octicon-link:before,
+.rustdoc h5:hover .anchor .octicon-link:before,
+.rustdoc h6:hover .anchor .octicon-link:before {
   width: 16px;
   height: 16px;
   content: ' ';
@@ -147,42 +147,42 @@
   mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' version='1.1' aria-hidden='true'><path fill-rule='evenodd' d='M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z'></path></svg>");
 }
 
-.markdown-body details,
-.markdown-body figcaption,
-.markdown-body figure {
+.rustdoc details,
+.rustdoc figcaption,
+.rustdoc figure {
   display: block;
 }
 
-.markdown-body summary {
+.rustdoc summary {
   display: list-item;
 }
 
-.markdown-body [hidden] {
+.rustdoc [hidden] {
   display: none !important;
 }
 
-.markdown-body a {
+.rustdoc a {
   background-color: transparent;
   color: var(--color-accent-fg);
   text-decoration: none;
 }
 
-.markdown-body abbr[title] {
+.rustdoc abbr[title] {
   border-bottom: none;
   -webkit-text-decoration: underline dotted;
   text-decoration: underline dotted;
 }
 
-.markdown-body b,
-.markdown-body strong {
+.rustdoc b,
+.rustdoc strong {
   font-weight: var(--base-text-weight-semibold, 600);
 }
 
-.markdown-body dfn {
+.rustdoc dfn {
   font-style: italic;
 }
 
-.markdown-body h1 {
+.rustdoc h1 {
   margin: .67em 0;
   font-weight: var(--base-text-weight-semibold, 600);
   padding-bottom: .3em;
@@ -190,51 +190,51 @@
   border-bottom: 1px solid var(--color-border-muted);
 }
 
-.markdown-body mark {
+.rustdoc mark {
   background-color: var(--color-attention-subtle);
   color: var(--color-fg-default);
 }
 
-.markdown-body small {
+.rustdoc small {
   font-size: 90%;
 }
 
-.markdown-body sub,
-.markdown-body sup {
+.rustdoc sub,
+.rustdoc sup {
   font-size: 75%;
   line-height: 0;
   position: relative;
   vertical-align: baseline;
 }
 
-.markdown-body sub {
+.rustdoc sub {
   bottom: -0.25em;
 }
 
-.markdown-body sup {
+.rustdoc sup {
   top: -0.5em;
 }
 
-.markdown-body img {
+.rustdoc img {
   border-style: none;
   max-width: 100%;
   box-sizing: content-box;
   background-color: var(--color-canvas-default);
 }
 
-.markdown-body code,
-.markdown-body kbd,
-.markdown-body pre,
-.markdown-body samp {
+.rustdoc code,
+.rustdoc kbd,
+.rustdoc pre,
+.rustdoc samp {
   font-family: monospace;
   font-size: 1em;
 }
 
-.markdown-body figure {
+.rustdoc figure {
   margin: 1em 40px;
 }
 
-.markdown-body hr {
+.rustdoc hr {
   box-sizing: content-box;
   overflow: hidden;
   background: transparent;
@@ -246,7 +246,7 @@
   border: 0;
 }
 
-.markdown-body input {
+.rustdoc input {
   font: inherit;
   margin: 0;
   overflow: visible;
@@ -255,62 +255,62 @@
   line-height: inherit;
 }
 
-.markdown-body [type=button],
-.markdown-body [type=reset],
-.markdown-body [type=submit] {
+.rustdoc [type=button],
+.rustdoc [type=reset],
+.rustdoc [type=submit] {
   -webkit-appearance: button;
   appearance: button;
 }
 
-.markdown-body [type=checkbox],
-.markdown-body [type=radio] {
+.rustdoc [type=checkbox],
+.rustdoc [type=radio] {
   box-sizing: border-box;
   padding: 0;
 }
 
-.markdown-body [type=number]::-webkit-inner-spin-button,
-.markdown-body [type=number]::-webkit-outer-spin-button {
+.rustdoc [type=number]::-webkit-inner-spin-button,
+.rustdoc [type=number]::-webkit-outer-spin-button {
   height: auto;
 }
 
-.markdown-body [type=search]::-webkit-search-cancel-button,
-.markdown-body [type=search]::-webkit-search-decoration {
+.rustdoc [type=search]::-webkit-search-cancel-button,
+.rustdoc [type=search]::-webkit-search-decoration {
   -webkit-appearance: none;
   appearance: none;
 }
 
-.markdown-body ::-webkit-input-placeholder {
+.rustdoc ::-webkit-input-placeholder {
   color: inherit;
   opacity: .54;
 }
 
-.markdown-body ::-webkit-file-upload-button {
+.rustdoc ::-webkit-file-upload-button {
   -webkit-appearance: button;
   appearance: button;
   font: inherit;
 }
 
-.markdown-body a:hover {
+.rustdoc a:hover {
   text-decoration: underline;
 }
 
-.markdown-body ::placeholder {
+.rustdoc ::placeholder {
   color: var(--color-fg-subtle);
   opacity: 1;
 }
 
-.markdown-body hr::before {
+.rustdoc hr::before {
   display: table;
   content: "";
 }
 
-.markdown-body hr::after {
+.rustdoc hr::after {
   display: table;
   clear: both;
   content: "";
 }
 
-.markdown-body table {
+.rustdoc table {
   border-spacing: 0;
   border-collapse: collapse;
   display: block;
@@ -319,54 +319,54 @@
   overflow: auto;
 }
 
-.markdown-body td,
-.markdown-body th {
+.rustdoc td,
+.rustdoc th {
   padding: 0;
 }
 
-.markdown-body details summary {
+.rustdoc details summary {
   cursor: pointer;
 }
 
-.markdown-body details:not([open])>*:not(summary) {
+.rustdoc details:not([open])>*:not(summary) {
   display: none !important;
 }
 
-.markdown-body a:focus,
-.markdown-body [role=button]:focus,
-.markdown-body input[type=radio]:focus,
-.markdown-body input[type=checkbox]:focus {
+.rustdoc a:focus,
+.rustdoc [role=button]:focus,
+.rustdoc input[type=radio]:focus,
+.rustdoc input[type=checkbox]:focus {
   outline: 2px solid var(--color-accent-fg);
   outline-offset: -2px;
   box-shadow: none;
 }
 
-.markdown-body a:focus:not(:focus-visible),
-.markdown-body [role=button]:focus:not(:focus-visible),
-.markdown-body input[type=radio]:focus:not(:focus-visible),
-.markdown-body input[type=checkbox]:focus:not(:focus-visible) {
+.rustdoc a:focus:not(:focus-visible),
+.rustdoc [role=button]:focus:not(:focus-visible),
+.rustdoc input[type=radio]:focus:not(:focus-visible),
+.rustdoc input[type=checkbox]:focus:not(:focus-visible) {
   outline: solid 1px transparent;
 }
 
-.markdown-body a:focus-visible,
-.markdown-body [role=button]:focus-visible,
-.markdown-body input[type=radio]:focus-visible,
-.markdown-body input[type=checkbox]:focus-visible {
+.rustdoc a:focus-visible,
+.rustdoc [role=button]:focus-visible,
+.rustdoc input[type=radio]:focus-visible,
+.rustdoc input[type=checkbox]:focus-visible {
   outline: 2px solid var(--color-accent-fg);
   outline-offset: -2px;
   box-shadow: none;
 }
 
-.markdown-body a:not([class]):focus,
-.markdown-body a:not([class]):focus-visible,
-.markdown-body input[type=radio]:focus,
-.markdown-body input[type=radio]:focus-visible,
-.markdown-body input[type=checkbox]:focus,
-.markdown-body input[type=checkbox]:focus-visible {
+.rustdoc a:not([class]):focus,
+.rustdoc a:not([class]):focus-visible,
+.rustdoc input[type=radio]:focus,
+.rustdoc input[type=radio]:focus-visible,
+.rustdoc input[type=checkbox]:focus,
+.rustdoc input[type=checkbox]:focus-visible {
   outline-offset: 0;
 }
 
-.markdown-body kbd {
+.rustdoc kbd {
   display: inline-block;
   padding: 3px 5px;
   font: 11px ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
@@ -380,89 +380,89 @@
   box-shadow: inset 0 -1px 0 var(--color-neutral-muted);
 }
 
-.markdown-body h1,
-.markdown-body h2,
-.markdown-body h3,
-.markdown-body h4,
-.markdown-body h5,
-.markdown-body h6 {
+.rustdoc h1,
+.rustdoc h2,
+.rustdoc h3,
+.rustdoc h4,
+.rustdoc h5,
+.rustdoc h6 {
   margin-top: 24px;
   margin-bottom: 16px;
   font-weight: var(--base-text-weight-semibold, 600);
   line-height: 1.25;
 }
 
-.markdown-body h2 {
+.rustdoc h2 {
   font-weight: var(--base-text-weight-semibold, 600);
   padding-bottom: .3em;
   font-size: 1.5em;
   border-bottom: 1px solid var(--color-border-muted);
 }
 
-.markdown-body h3 {
+.rustdoc h3 {
   font-weight: var(--base-text-weight-semibold, 600);
   font-size: 1.25em;
 }
 
-.markdown-body h4 {
+.rustdoc h4 {
   font-weight: var(--base-text-weight-semibold, 600);
   font-size: 1em;
 }
 
-.markdown-body h5 {
+.rustdoc h5 {
   font-weight: var(--base-text-weight-semibold, 600);
   font-size: .875em;
 }
 
-.markdown-body h6 {
+.rustdoc h6 {
   font-weight: var(--base-text-weight-semibold, 600);
   font-size: .85em;
   color: var(--color-fg-muted);
 }
 
-.markdown-body p {
+.rustdoc p {
   margin-top: 0;
   margin-bottom: 10px;
 }
 
-.markdown-body blockquote {
+.rustdoc blockquote {
   margin: 0;
   padding: 0 1em;
   color: var(--color-fg-muted);
   border-left: .25em solid var(--color-border-default);
 }
 
-.markdown-body ul,
-.markdown-body ol {
+.rustdoc ul,
+.rustdoc ol {
   margin-top: 0;
   margin-bottom: 0;
   padding-left: 2em;
 }
 
-.markdown-body ol ol,
-.markdown-body ul ol {
+.rustdoc ol ol,
+.rustdoc ul ol {
   list-style-type: lower-roman;
 }
 
-.markdown-body ul ul ol,
-.markdown-body ul ol ol,
-.markdown-body ol ul ol,
-.markdown-body ol ol ol {
+.rustdoc ul ul ol,
+.rustdoc ul ol ol,
+.rustdoc ol ul ol,
+.rustdoc ol ol ol {
   list-style-type: lower-alpha;
 }
 
-.markdown-body dd {
+.rustdoc dd {
   margin-left: 0;
 }
 
-.markdown-body tt,
-.markdown-body code,
-.markdown-body samp {
+.rustdoc tt,
+.rustdoc code,
+.rustdoc samp {
   font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
   font-size: 12px;
 }
 
-.markdown-body pre {
+.rustdoc pre {
   margin-top: 0;
   margin-bottom: 0;
   font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
@@ -470,203 +470,203 @@
   word-wrap: normal;
 }
 
-.markdown-body .octicon {
+.rustdoc .octicon {
   display: inline-block;
   overflow: visible !important;
   vertical-align: text-bottom;
   fill: currentColor;
 }
 
-.markdown-body input::-webkit-outer-spin-button,
-.markdown-body input::-webkit-inner-spin-button {
+.rustdoc input::-webkit-outer-spin-button,
+.rustdoc input::-webkit-inner-spin-button {
   margin: 0;
   -webkit-appearance: none;
   appearance: none;
 }
 
-.markdown-body .mr-2 {
+.rustdoc .mr-2 {
   margin-right: var(--base-size-8, 8px) !important;
 }
 
-.markdown-body::before {
+.rustdoc::before {
   display: table;
   content: "";
 }
 
-.markdown-body::after {
+.rustdoc::after {
   display: table;
   clear: both;
   content: "";
 }
 
-.markdown-body>*:first-child {
+.rustdoc>*:first-child {
   margin-top: 0 !important;
 }
 
-.markdown-body>*:last-child {
+.rustdoc>*:last-child {
   margin-bottom: 0 !important;
 }
 
-.markdown-body a:not([href]) {
+.rustdoc a:not([href]) {
   color: inherit;
   text-decoration: none;
 }
 
-.markdown-body .absent {
+.rustdoc .absent {
   color: var(--color-danger-fg);
 }
 
-.markdown-body .anchor {
+.rustdoc .anchor {
   float: left;
   padding-right: 4px;
   margin-left: -20px;
   line-height: 1;
 }
 
-.markdown-body .anchor:focus {
+.rustdoc .anchor:focus {
   outline: none;
 }
 
-.markdown-body p,
-.markdown-body blockquote,
-.markdown-body ul,
-.markdown-body ol,
-.markdown-body dl,
-.markdown-body table,
-.markdown-body pre,
-.markdown-body details {
+.rustdoc p,
+.rustdoc blockquote,
+.rustdoc ul,
+.rustdoc ol,
+.rustdoc dl,
+.rustdoc table,
+.rustdoc pre,
+.rustdoc details {
   margin-top: 0;
   margin-bottom: 16px;
 }
 
-.markdown-body blockquote>:first-child {
+.rustdoc blockquote>:first-child {
   margin-top: 0;
 }
 
-.markdown-body blockquote>:last-child {
+.rustdoc blockquote>:last-child {
   margin-bottom: 0;
 }
 
-.markdown-body h1 .octicon-link,
-.markdown-body h2 .octicon-link,
-.markdown-body h3 .octicon-link,
-.markdown-body h4 .octicon-link,
-.markdown-body h5 .octicon-link,
-.markdown-body h6 .octicon-link {
+.rustdoc h1 .octicon-link,
+.rustdoc h2 .octicon-link,
+.rustdoc h3 .octicon-link,
+.rustdoc h4 .octicon-link,
+.rustdoc h5 .octicon-link,
+.rustdoc h6 .octicon-link {
   color: var(--color-fg-default);
   vertical-align: middle;
   visibility: hidden;
 }
 
-.markdown-body h1:hover .anchor,
-.markdown-body h2:hover .anchor,
-.markdown-body h3:hover .anchor,
-.markdown-body h4:hover .anchor,
-.markdown-body h5:hover .anchor,
-.markdown-body h6:hover .anchor {
+.rustdoc h1:hover .anchor,
+.rustdoc h2:hover .anchor,
+.rustdoc h3:hover .anchor,
+.rustdoc h4:hover .anchor,
+.rustdoc h5:hover .anchor,
+.rustdoc h6:hover .anchor {
   text-decoration: none;
 }
 
-.markdown-body h1:hover .anchor .octicon-link,
-.markdown-body h2:hover .anchor .octicon-link,
-.markdown-body h3:hover .anchor .octicon-link,
-.markdown-body h4:hover .anchor .octicon-link,
-.markdown-body h5:hover .anchor .octicon-link,
-.markdown-body h6:hover .anchor .octicon-link {
+.rustdoc h1:hover .anchor .octicon-link,
+.rustdoc h2:hover .anchor .octicon-link,
+.rustdoc h3:hover .anchor .octicon-link,
+.rustdoc h4:hover .anchor .octicon-link,
+.rustdoc h5:hover .anchor .octicon-link,
+.rustdoc h6:hover .anchor .octicon-link {
   visibility: visible;
 }
 
-.markdown-body h1 tt,
-.markdown-body h1 code,
-.markdown-body h2 tt,
-.markdown-body h2 code,
-.markdown-body h3 tt,
-.markdown-body h3 code,
-.markdown-body h4 tt,
-.markdown-body h4 code,
-.markdown-body h5 tt,
-.markdown-body h5 code,
-.markdown-body h6 tt,
-.markdown-body h6 code {
+.rustdoc h1 tt,
+.rustdoc h1 code,
+.rustdoc h2 tt,
+.rustdoc h2 code,
+.rustdoc h3 tt,
+.rustdoc h3 code,
+.rustdoc h4 tt,
+.rustdoc h4 code,
+.rustdoc h5 tt,
+.rustdoc h5 code,
+.rustdoc h6 tt,
+.rustdoc h6 code {
   padding: 0 .2em;
   font-size: inherit;
 }
 
-.markdown-body summary h1,
-.markdown-body summary h2,
-.markdown-body summary h3,
-.markdown-body summary h4,
-.markdown-body summary h5,
-.markdown-body summary h6 {
+.rustdoc summary h1,
+.rustdoc summary h2,
+.rustdoc summary h3,
+.rustdoc summary h4,
+.rustdoc summary h5,
+.rustdoc summary h6 {
   display: inline-block;
 }
 
-.markdown-body summary h1 .anchor,
-.markdown-body summary h2 .anchor,
-.markdown-body summary h3 .anchor,
-.markdown-body summary h4 .anchor,
-.markdown-body summary h5 .anchor,
-.markdown-body summary h6 .anchor {
+.rustdoc summary h1 .anchor,
+.rustdoc summary h2 .anchor,
+.rustdoc summary h3 .anchor,
+.rustdoc summary h4 .anchor,
+.rustdoc summary h5 .anchor,
+.rustdoc summary h6 .anchor {
   margin-left: -40px;
 }
 
-.markdown-body summary h1,
-.markdown-body summary h2 {
+.rustdoc summary h1,
+.rustdoc summary h2 {
   padding-bottom: 0;
   border-bottom: 0;
 }
 
-.markdown-body ul.no-list,
-.markdown-body ol.no-list {
+.rustdoc ul.no-list,
+.rustdoc ol.no-list {
   padding: 0;
   list-style-type: none;
 }
 
-.markdown-body ol[type="a s"] {
+.rustdoc ol[type="a s"] {
   list-style-type: lower-alpha;
 }
 
-.markdown-body ol[type="A s"] {
+.rustdoc ol[type="A s"] {
   list-style-type: upper-alpha;
 }
 
-.markdown-body ol[type="i s"] {
+.rustdoc ol[type="i s"] {
   list-style-type: lower-roman;
 }
 
-.markdown-body ol[type="I s"] {
+.rustdoc ol[type="I s"] {
   list-style-type: upper-roman;
 }
 
-.markdown-body ol[type="1"] {
+.rustdoc ol[type="1"] {
   list-style-type: decimal;
 }
 
-.markdown-body div>ol:not([type]) {
+.rustdoc div>ol:not([type]) {
   list-style-type: decimal;
 }
 
-.markdown-body ul ul,
-.markdown-body ul ol,
-.markdown-body ol ol,
-.markdown-body ol ul {
+.rustdoc ul ul,
+.rustdoc ul ol,
+.rustdoc ol ol,
+.rustdoc ol ul {
   margin-top: 0;
   margin-bottom: 0;
 }
 
-.markdown-body li>p {
+.rustdoc li>p {
   margin-top: 16px;
 }
 
-.markdown-body li+li {
+.rustdoc li+li {
   margin-top: .25em;
 }
 
-.markdown-body dl {
+.rustdoc dl {
   padding: 0;
 }
 
-.markdown-body dl dt {
+.rustdoc dl dt {
   padding: 0;
   margin-top: 16px;
   font-size: 1em;
@@ -674,58 +674,58 @@
   font-weight: var(--base-text-weight-semibold, 600);
 }
 
-.markdown-body dl dd {
+.rustdoc dl dd {
   padding: 0 16px;
   margin-bottom: 16px;
 }
 
-.markdown-body table th {
+.rustdoc table th {
   font-weight: var(--base-text-weight-semibold, 600);
 }
 
-.markdown-body table th,
-.markdown-body table td {
+.rustdoc table th,
+.rustdoc table td {
   padding: 6px 13px;
   border: 1px solid var(--color-border-default);
 }
 
-.markdown-body table td>:last-child {
+.rustdoc table td>:last-child {
   margin-bottom: 0;
 }
 
-.markdown-body table tr {
+.rustdoc table tr {
   background-color: var(--color-canvas-default);
   border-top: 1px solid var(--color-border-muted);
 }
 
-.markdown-body table tr:nth-child(2n) {
+.rustdoc table tr:nth-child(2n) {
   background-color: var(--color-canvas-subtle);
 }
 
-.markdown-body table img {
+.rustdoc table img {
   background-color: transparent;
 }
 
-.markdown-body img[align=right] {
+.rustdoc img[align=right] {
   padding-left: 20px;
 }
 
-.markdown-body img[align=left] {
+.rustdoc img[align=left] {
   padding-right: 20px;
 }
 
-.markdown-body .emoji {
+.rustdoc .emoji {
   max-width: none;
   vertical-align: text-top;
   background-color: transparent;
 }
 
-.markdown-body span.frame {
+.rustdoc span.frame {
   display: block;
   overflow: hidden;
 }
 
-.markdown-body span.frame>span {
+.rustdoc span.frame>span {
   display: block;
   float: left;
   width: auto;
@@ -735,81 +735,81 @@
   border: 1px solid var(--color-border-default);
 }
 
-.markdown-body span.frame span img {
+.rustdoc span.frame span img {
   display: block;
   float: left;
 }
 
-.markdown-body span.frame span span {
+.rustdoc span.frame span span {
   display: block;
   padding: 5px 0 0;
   clear: both;
   color: var(--color-fg-default);
 }
 
-.markdown-body span.align-center {
+.rustdoc span.align-center {
   display: block;
   overflow: hidden;
   clear: both;
 }
 
-.markdown-body span.align-center>span {
+.rustdoc span.align-center>span {
   display: block;
   margin: 13px auto 0;
   overflow: hidden;
   text-align: center;
 }
 
-.markdown-body span.align-center span img {
+.rustdoc span.align-center span img {
   margin: 0 auto;
   text-align: center;
 }
 
-.markdown-body span.align-right {
+.rustdoc span.align-right {
   display: block;
   overflow: hidden;
   clear: both;
 }
 
-.markdown-body span.align-right>span {
+.rustdoc span.align-right>span {
   display: block;
   margin: 13px 0 0;
   overflow: hidden;
   text-align: right;
 }
 
-.markdown-body span.align-right span img {
+.rustdoc span.align-right span img {
   margin: 0;
   text-align: right;
 }
 
-.markdown-body span.float-left {
+.rustdoc span.float-left {
   display: block;
   float: left;
   margin-right: 13px;
   overflow: hidden;
 }
 
-.markdown-body span.float-left span {
+.rustdoc span.float-left span {
   margin: 13px 0 0;
 }
 
-.markdown-body span.float-right {
+.rustdoc span.float-right {
   display: block;
   float: right;
   margin-left: 13px;
   overflow: hidden;
 }
 
-.markdown-body span.float-right>span {
+.rustdoc span.float-right>span {
   display: block;
   margin: 13px auto 0;
   overflow: hidden;
   text-align: right;
 }
 
-.markdown-body code,
-.markdown-body tt {
+.rustdoc code,
+.rustdoc tt {
   padding: .2em .4em;
   margin: 0;
   font-size: 85%;
@@ -818,24 +818,24 @@
   border-radius: 6px;
 }
 
-.markdown-body code br,
-.markdown-body tt br {
+.rustdoc code br,
+.rustdoc tt br {
   display: none;
 }
 
-.markdown-body del code {
+.rustdoc del code {
   text-decoration: inherit;
 }
 
-.markdown-body samp {
+.rustdoc samp {
   font-size: 85%;
 }
 
-.markdown-body pre code {
+.rustdoc pre code {
   font-size: 100%;
 }
 
-.markdown-body pre>code {
+.rustdoc pre>code {
   padding: 0;
   margin: 0;
   word-break: normal;
@@ -844,17 +844,17 @@
   border: 0;
 }
 
-.markdown-body .highlight {
+.rustdoc .highlight {
   margin-bottom: 16px;
 }
 
-.markdown-body .highlight pre {
+.rustdoc .highlight pre {
   margin-bottom: 0;
   word-break: normal;
 }
 
-.markdown-body .highlight pre,
-.markdown-body pre {
+.rustdoc .highlight pre,
+.rustdoc pre {
   padding: 16px;
   overflow: auto;
   font-size: 85%;
@@ -864,8 +864,8 @@
   border-radius: 6px;
 }
 
-.markdown-body pre code,
-.markdown-body pre tt {
+.rustdoc pre code,
+.rustdoc pre tt {
   display: inline;
   max-width: auto;
   padding: 0;
@@ -877,8 +877,8 @@
   border: 0;
 }
 
-.markdown-body .csv-data td,
-.markdown-body .csv-data th {
+.rustdoc .csv-data td,
+.rustdoc .csv-data th {
   padding: 5px;
   overflow: hidden;
   font-size: 12px;
@@ -887,52 +887,52 @@
   white-space: nowrap;
 }
 
-.markdown-body .csv-data .blob-num {
+.rustdoc .csv-data .blob-num {
   padding: 10px 8px 9px;
   text-align: right;
   background: var(--color-canvas-default);
   border: 0;
 }
 
-.markdown-body .csv-data tr {
+.rustdoc .csv-data tr {
   border-top: 0;
 }
 
-.markdown-body .csv-data th {
+.rustdoc .csv-data th {
   font-weight: var(--base-text-weight-semibold, 600);
   background: var(--color-canvas-subtle);
   border-top: 0;
 }
 
-.markdown-body [data-footnote-ref]::before {
+.rustdoc [data-footnote-ref]::before {
   content: "[";
 }
 
-.markdown-body [data-footnote-ref]::after {
+.rustdoc [data-footnote-ref]::after {
   content: "]";
 }
 
-.markdown-body .footnotes {
+.rustdoc .footnotes {
   font-size: 12px;
   color: var(--color-fg-muted);
   border-top: 1px solid var(--color-border-default);
 }
 
-.markdown-body .footnotes ol {
+.rustdoc .footnotes ol {
   padding-left: 16px;
 }
 
-.markdown-body .footnotes ol ul {
+.rustdoc .footnotes ol ul {
   display: inline-block;
   padding-left: 16px;
   margin-top: 16px;
 }
 
-.markdown-body .footnotes li {
+.rustdoc .footnotes li {
   position: relative;
 }
 
-.markdown-body .footnotes li:target::before {
+.rustdoc .footnotes li:target::before {
   position: absolute;
   top: -8px;
   right: -8px;
@@ -944,135 +944,135 @@
   border-radius: 6px;
 }
 
-.markdown-body .footnotes li:target {
+.rustdoc .footnotes li:target {
   color: var(--color-fg-default);
 }
 
-.markdown-body .footnotes .data-footnote-backref g-emoji {
+.rustdoc .footnotes .data-footnote-backref g-emoji {
   font-family: monospace;
 }
 
-.markdown-body .pl-c {
+.rustdoc .pl-c {
   color: var(--color-prettylights-syntax-comment);
 }
 
-.markdown-body .pl-c1,
-.markdown-body .pl-s .pl-v {
+.rustdoc .pl-c1,
+.rustdoc .pl-s .pl-v {
   color: var(--color-prettylights-syntax-constant);
 }
 
-.markdown-body .pl-e,
-.markdown-body .pl-en {
+.rustdoc .pl-e,
+.rustdoc .pl-en {
   color: var(--color-prettylights-syntax-entity);
 }
 
-.markdown-body .pl-smi,
-.markdown-body .pl-s .pl-s1 {
+.rustdoc .pl-smi,
+.rustdoc .pl-s .pl-s1 {
   color: var(--color-prettylights-syntax-storage-modifier-import);
 }
 
-.markdown-body .pl-ent {
+.rustdoc .pl-ent {
   color: var(--color-prettylights-syntax-entity-tag);
 }
 
-.markdown-body .pl-k {
+.rustdoc .pl-k {
   color: var(--color-prettylights-syntax-keyword);
 }
 
-.markdown-body .pl-s,
-.markdown-body .pl-pds,
-.markdown-body .pl-s .pl-pse .pl-s1,
-.markdown-body .pl-sr,
-.markdown-body .pl-sr .pl-cce,
-.markdown-body .pl-sr .pl-sre,
-.markdown-body .pl-sr .pl-sra {
+.rustdoc .pl-s,
+.rustdoc .pl-pds,
+.rustdoc .pl-s .pl-pse .pl-s1,
+.rustdoc .pl-sr,
+.rustdoc .pl-sr .pl-cce,
+.rustdoc .pl-sr .pl-sre,
+.rustdoc .pl-sr .pl-sra {
   color: var(--color-prettylights-syntax-string);
 }
 
-.markdown-body .pl-v,
-.markdown-body .pl-smw {
+.rustdoc .pl-v,
+.rustdoc .pl-smw {
   color: var(--color-prettylights-syntax-variable);
 }
 
-.markdown-body .pl-bu {
+.rustdoc .pl-bu {
   color: var(--color-prettylights-syntax-brackethighlighter-unmatched);
 }
 
-.markdown-body .pl-ii {
+.rustdoc .pl-ii {
   color: var(--color-prettylights-syntax-invalid-illegal-text);
   background-color: var(--color-prettylights-syntax-invalid-illegal-bg);
 }
 
-.markdown-body .pl-c2 {
+.rustdoc .pl-c2 {
   color: var(--color-prettylights-syntax-carriage-return-text);
   background-color: var(--color-prettylights-syntax-carriage-return-bg);
 }
 
-.markdown-body .pl-sr .pl-cce {
+.rustdoc .pl-sr .pl-cce {
   font-weight: bold;
   color: var(--color-prettylights-syntax-string-regexp);
 }
 
-.markdown-body .pl-ml {
+.rustdoc .pl-ml {
   color: var(--color-prettylights-syntax-markup-list);
 }
 
-.markdown-body .pl-mh,
-.markdown-body .pl-mh .pl-en,
-.markdown-body .pl-ms {
+.rustdoc .pl-mh,
+.rustdoc .pl-mh .pl-en,
+.rustdoc .pl-ms {
   font-weight: bold;
   color: var(--color-prettylights-syntax-markup-heading);
 }
 
-.markdown-body .pl-mi {
+.rustdoc .pl-mi {
   font-style: italic;
   color: var(--color-prettylights-syntax-markup-italic);
 }
 
-.markdown-body .pl-mb {
+.rustdoc .pl-mb {
   font-weight: bold;
   color: var(--color-prettylights-syntax-markup-bold);
 }
 
-.markdown-body .pl-md {
+.rustdoc .pl-md {
   color: var(--color-prettylights-syntax-markup-deleted-text);
   background-color: var(--color-prettylights-syntax-markup-deleted-bg);
 }
 
-.markdown-body .pl-mi1 {
+.rustdoc .pl-mi1 {
   color: var(--color-prettylights-syntax-markup-inserted-text);
   background-color: var(--color-prettylights-syntax-markup-inserted-bg);
 }
 
-.markdown-body .pl-mc {
+.rustdoc .pl-mc {
   color: var(--color-prettylights-syntax-markup-changed-text);
   background-color: var(--color-prettylights-syntax-markup-changed-bg);
 }
 
-.markdown-body .pl-mi2 {
+.rustdoc .pl-mi2 {
   color: var(--color-prettylights-syntax-markup-ignored-text);
   background-color: var(--color-prettylights-syntax-markup-ignored-bg);
 }
 
-.markdown-body .pl-mdr {
+.rustdoc .pl-mdr {
   font-weight: bold;
   color: var(--color-prettylights-syntax-meta-diff-range);
 }
 
-.markdown-body .pl-ba {
+.rustdoc .pl-ba {
   color: var(--color-prettylights-syntax-brackethighlighter-angle);
 }
 
-.markdown-body .pl-sg {
+.rustdoc .pl-sg {
   color: var(--color-prettylights-syntax-sublimelinter-gutter-mark);
 }
 
-.markdown-body .pl-corl {
+.rustdoc .pl-corl {
   text-decoration: underline;
   color: var(--color-prettylights-syntax-constant-other-reference-link);
 }
 
-.markdown-body g-emoji {
+.rustdoc g-emoji {
   display: inline-block;
   min-width: 1ch;
   font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
@@ -1083,46 +1083,46 @@
   vertical-align: -0.075em;
 }
 
-.markdown-body g-emoji img {
+.rustdoc g-emoji img {
   width: 1em;
   height: 1em;
 }
 
-.markdown-body .task-list-item {
+.rustdoc .task-list-item {
   list-style-type: none;
 }
 
-.markdown-body .task-list-item label {
+.rustdoc .task-list-item label {
   font-weight: var(--base-text-weight-normal, 400);
 }
 
-.markdown-body .task-list-item.enabled label {
+.rustdoc .task-list-item.enabled label {
   cursor: pointer;
 }
 
-.markdown-body .task-list-item+.task-list-item {
+.rustdoc .task-list-item+.task-list-item {
   margin-top: 4px;
 }
 
-.markdown-body .task-list-item .handle {
+.rustdoc .task-list-item .handle {
   display: none;
 }
 
-.markdown-body .task-list-item-checkbox {
+.rustdoc .task-list-item-checkbox {
   margin: 0 .2em .25em -1.4em;
   vertical-align: middle;
 }
 
-.markdown-body .contains-task-list:dir(rtl) .task-list-item-checkbox {
+.rustdoc .contains-task-list:dir(rtl) .task-list-item-checkbox {
   margin: 0 -1.6em .25em .2em;
 }
 
-.markdown-body .contains-task-list {
+.rustdoc .contains-task-list {
   position: relative;
 }
 
-.markdown-body .contains-task-list:hover .task-list-item-convert-container,
-.markdown-body .contains-task-list:focus-within .task-list-item-convert-container {
+.rustdoc .contains-task-list:hover .task-list-item-convert-container,
+.rustdoc .contains-task-list:focus-within .task-list-item-convert-container {
   display: block;
   width: auto;
   height: 24px;
@@ -1130,68 +1130,68 @@
   clip: auto;
 }
 
-.markdown-body ::-webkit-calendar-picker-indicator {
+.rustdoc ::-webkit-calendar-picker-indicator {
   filter: invert(50%);
 }
 
-.markdown-body .markdown-alert {
+.rustdoc .markdown-alert {
   padding: var(--base-size-8) var(--base-size-16);
   margin-bottom: 16px;
   color: inherit;
   border-left: .25em solid var(--color-border-default);
 }
 
-.markdown-body .markdown-alert>:first-child {
+.rustdoc .markdown-alert>:first-child {
   margin-top: 0;
 }
 
-.markdown-body .markdown-alert>:last-child {
+.rustdoc .markdown-alert>:last-child {
   margin-bottom: 0;
 }
 
-.markdown-body .markdown-alert .markdown-alert-title {
+.rustdoc .markdown-alert .markdown-alert-title {
   display: flex;
   font-weight: var(--base-text-weight-medium, 500);
   align-items: center;
   line-height: 1;
 }
 
-.markdown-body .markdown-alert.markdown-alert-note {
+.rustdoc .markdown-alert.markdown-alert-note {
   border-left-color: var(--color-accent-emphasis);
 }
 
-.markdown-body .markdown-alert.markdown-alert-note .markdown-alert-title {
+.rustdoc .markdown-alert.markdown-alert-note .markdown-alert-title {
   color: var(--color-accent-fg);
 }
 
-.markdown-body .markdown-alert.markdown-alert-important {
+.rustdoc .markdown-alert.markdown-alert-important {
   border-left-color: var(--color-done-emphasis);
 }
 
-.markdown-body .markdown-alert.markdown-alert-important .markdown-alert-title {
+.rustdoc .markdown-alert.markdown-alert-important .markdown-alert-title {
   color: var(--color-done-fg);
 }
 
-.markdown-body .markdown-alert.markdown-alert-warning {
+.rustdoc .markdown-alert.markdown-alert-warning {
   border-left-color: var(--color-attention-emphasis);
 }
 
-.markdown-body .markdown-alert.markdown-alert-warning .markdown-alert-title {
+.rustdoc .markdown-alert.markdown-alert-warning .markdown-alert-title {
   color: var(--color-attention-fg);
 }
 
-.markdown-body .markdown-alert.markdown-alert-tip {
+.rustdoc .markdown-alert.markdown-alert-tip {
   border-left-color: var(--color-success-emphasis);
 }
 
-.markdown-body .markdown-alert.markdown-alert-tip .markdown-alert-title {
+.rustdoc .markdown-alert.markdown-alert-tip .markdown-alert-title {
   color: var(--color-success-fg);
 }
 
-.markdown-body .markdown-alert.markdown-alert-caution {
+.rustdoc .markdown-alert.markdown-alert-caution {
   border-left-color: var(--color-danger-emphasis);
 }
 
-.markdown-body .markdown-alert.markdown-alert-caution .markdown-alert-title {
+.rustdoc .markdown-alert.markdown-alert-caution .markdown-alert-title {
   color: var(--color-danger-fg);
 }

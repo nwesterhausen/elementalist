@@ -50,6 +50,8 @@ fn main() {
                 })
                 .set(ImagePlugin::default_nearest()),
         )
+        // Add the debug plugin if in debug mode
+        .add_plugins(ElementalistDebugPlugin)
         // Add state
         .add_state::<AppState>()
         // Add all the general resources and their update systems (e.g. cursor position)
@@ -95,6 +97,14 @@ impl Plugin for ElementalistDefaultPlugins {
         app.insert_resource(ClearColor(Color::DARK_GREEN));
         // Add the window icon
         app.add_systems(Startup, app_systems::set_window_icon);
+    }
+}
+
+/// Debug plugin loader.
+struct ElementalistDebugPlugin;
+
+impl Plugin for ElementalistDebugPlugin {
+    fn build(&self, app: &mut App) {
         // When in debug mode, add the debug plugin.
         #[cfg(debug_assertions)]
         {

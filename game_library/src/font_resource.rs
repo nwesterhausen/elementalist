@@ -18,6 +18,8 @@ pub struct FontResource {
     pub interface_font: Handle<Font>,
     /// The font face used for the main text in the game.
     pub main_font: Handle<Font>,
+    /// The font face used for the console.
+    pub console_font: Handle<Font>,
 }
 
 /// A choice of font to change.
@@ -30,6 +32,8 @@ pub enum FontChoice {
     Interface,
     /// The font face used for the main text in the game.
     Main,
+    /// The font face used for the console.
+    Console,
 }
 
 /// Change a font choice. Sending this event will update the specified font
@@ -64,6 +68,9 @@ pub fn change_font(
             }
             FontChoice::Main => {
                 font_resource.main_font = change_font_event.new_font.clone();
+            }
+            FontChoice::Console => {
+                font_resource.console_font = change_font_event.new_font.clone();
             }
         }
     }

@@ -1,5 +1,6 @@
 use bevy::prelude::*;
 use bevy::winit::WinitWindows;
+use game_library::font_resource::FontResource;
 use winit::window::Icon;
 
 use crate::app_info;
@@ -12,12 +13,12 @@ pub fn despawn_screen<T: Component>(to_despawn: Query<Entity, With<T>>, mut comm
 }
 
 /// Adds a `TextBundle` which draws the game descriptor in the top right
-pub fn add_game_descriptor(mut commands: Commands, asset_server: Res<AssetServer>) {
+pub fn add_game_descriptor(mut commands: Commands, fonts: Res<FontResource>) {
     commands.spawn(TextBundle {
         text: Text::from_section(
             app_info::game_descriptor().as_str(),
             TextStyle {
-                font: asset_server.load("ui/fonts/NanumGothicCoding-Regular.ttf"),
+                font: fonts.console_font.clone(),
                 font_size: 12.0,
                 color: Color::rgba(1.0, 1.0, 1.0, 0.25),
             },

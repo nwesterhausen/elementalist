@@ -1,4 +1,5 @@
 use bevy::prelude::*;
+use game_library::font_resource::FontResource;
 
 use crate::main_menu::{button_actions::ButtonAction, components::OnSettingsMenuScreen};
 
@@ -7,7 +8,7 @@ use crate::main_menu::{button_actions::ButtonAction, components::OnSettingsMenuS
 /// When the main menu screen is entered, we spawn the main menu entities. This includes the
 /// background, the title, and the buttons.
 #[allow(clippy::too_many_lines)]
-pub fn settings_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
+pub fn settings_setup(mut commands: Commands, fonts: Res<FontResource>) {
     // Common style for all buttons on the screen
     let button_style = Style {
         margin: UiRect::px(10., 10., 0., 20.),
@@ -18,7 +19,7 @@ pub fn settings_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     let button_text_style = TextStyle {
         font_size: 40.0,
         color: Color::WHITE,
-        font: asset_server.load("ui/fonts/AlmendraDisplay-Regular.ttf"),
+        font: fonts.display_font.clone(),
     };
 
     commands
@@ -42,7 +43,7 @@ pub fn settings_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                 text: Text::from_section(
                     "Settings",
                     TextStyle {
-                        font: asset_server.load("ui/fonts/AlmendraDisplay-Regular.ttf"),
+                        font: fonts.display_font.clone(),
                         font_size: 72.0,
                         color: Color::WHITE,
                     },

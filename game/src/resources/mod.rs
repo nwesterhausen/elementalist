@@ -4,6 +4,7 @@
 //! All resources can be added with default values to the game using the `ElementalistResourcesPlugin`.
 
 mod cursor_position;
+mod fonts;
 mod plugin;
 mod spritesheet;
 

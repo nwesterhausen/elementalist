@@ -1,4 +1,5 @@
 use bevy::prelude::*;
+use game_library::font_resource::FontResource;
 
 use crate::main_menu::{button_actions::ButtonAction, components::OnMainMenuScreen};
 
@@ -6,7 +7,7 @@ use crate::main_menu::{button_actions::ButtonAction, components::OnMainMenuScree
 ///
 /// When the main menu screen is entered, we spawn the main menu entities. This includes the
 /// background, the title, and the buttons.
-pub fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
+pub fn main_menu_setup(mut commands: Commands, fonts: Res<FontResource>) {
     // Common style for all buttons on the screen
     let button_style = Style {
         margin: UiRect::px(10., 10., 0., 20.),
@@ -17,7 +18,7 @@ pub fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     let button_text_style = TextStyle {
         font_size: 40.0,
         color: Color::WHITE,
-        font: asset_server.load("ui/fonts/AlmendraDisplay-Regular.ttf"),
+        font: fonts.display_font.clone(),
     };
 
     commands
@@ -41,7 +42,7 @@ pub fn main_menu_setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                 text: Text::from_section(
                     "Elementalist",
                     TextStyle {
-                        font: asset_server.load("ui/fonts/Almendra-Bold.ttf"),
+                        font: fonts.interface_font.clone(),
                         font_size: 112.0,
                         color: Color::WHITE,
                     },

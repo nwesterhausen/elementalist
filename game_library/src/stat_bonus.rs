@@ -1,3 +1,6 @@
+//! Stat bonuses are values that can be increased or decreased. These are not used directly but
+//! are multiplied against a stat's base value to get the final value.
+
 use bevy::{
     ecs::{component::Component, system::Resource},
     reflect::Reflect,

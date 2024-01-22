@@ -1,3 +1,5 @@
+//! Contains the `StatBundle` struct, which is a bundle of all stats an entity might have.
+
 use bevy::{prelude::*, utils::hashbrown::HashMap};
 
 use crate::{enums::StatEnum, Stat};

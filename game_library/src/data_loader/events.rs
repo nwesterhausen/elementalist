@@ -1,3 +1,11 @@
+//! Events that are fired when data is loaded.
+//!
+//! For every type of data loaded, there is a separate event.
+//!
+//! Currently, the following events are available:
+//!
+//! * [`LoadedSpellData`] - Fired when spell data is loaded.
+
 use bevy::ecs::event::Event;
 
 use crate::SpellData;

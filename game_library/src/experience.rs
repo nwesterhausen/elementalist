@@ -1,4 +1,39 @@
-use std::ops::AddAssign;
+//! Experience component for tracking xp and levels of an entity.
+//!
+//! # Experience Curve
+//!
+//! The experience required for a given level is defined by the following formula:
+//!
+//! `(level - 1) ^ (factor_a / factor_b) / factor_c + base_xp`
+//!
+//! ## Default Curve
+//!
+//! The default curve is defined by the following values:
+//!
+//! - `base_xp`: 10
+//! - `factor_a`: 10
+//! - `factor_b`: 5
+//! - `factor_c`: 5
+//!
+//! Current level will start at 1 and xp will start at 0.
+//!
+//! If you want to define a custom curve, you should create the component with the desired values:
+//!
+//! ```no_run
+//! use game_library::Xp;
+//!
+//! let xp = Xp {
+//!   value: 0,
+//!   total_xp: 0,
+//!   current_level: 1,
+//!   factor_a: 50,
+//!   factor_b: 20,
+//!   factor_c: 5,
+//!   base_xp: 10,
+//! };
+//! ```
+
+use std::ops::{AddAssign, SubAssign};
 
 use bevy::prelude::*;
 use bevy_inspector_egui::prelude::*;
@@ -21,31 +56,37 @@ use serde::{Deserialize, Serialize};
 /// to 0. Total xp will continue to accumulate, and if there was extra xp accumulated, it will
 /// be rolled over to the next level.
 ///
-/// # Default Curve
-///
-/// The default curve is defined by the following values:
-///
-/// - `base_xp`: 10
-/// - `factor_a`: 10
-/// - `factor_b`: 5
-/// - `factor_c`: 5
-///
-/// Current level will start at 1 and xp will start at 0.
-///
-/// If you want to define a custom curve, you should create the component with the desired values:
+/// # Example
 ///
 /// ```
+/// use bevy::prelude::*;
 /// use game_library::Xp;
 ///
-/// let xp = Xp {
-///   value: 0,
-///   total_xp: 0,
-///   current_level: 1,
-///   factor_a: 50,
-///   factor_b: 20,
-///   factor_c: 5,
-///   base_xp: 10,
-/// };
+/// #[derive(Component)]
+/// struct Player;
+///
+/// /// A system to run on [KeyboardInput] which adds xp to the player
+/// pub fn add_xp_system(
+///    mut query: Query<&mut Xp, With<Player>>,
+///   keyboard_input: Res<Input<KeyCode>>,
+/// ) {
+///   for mut xp in &mut query {
+///      if keyboard_input.just_pressed(KeyCode::Equals) {
+///        xp.add(10);
+///       // Or you can use the += operator: xp += 10;
+///     }
+///  }
+/// }
+///
+/// /// A system to run on [Update] which checks if the player can level up
+/// pub fn level_up_system(mut query: Query<&mut Xp, With<Player>>) {
+///  for mut xp in &mut query {
+///    if xp.can_level_up() {
+///     xp.level_up();
+///     println!("Player leveled up to level {}", xp.current_level);
+///    }
+///  }
+/// }
 /// ```
 #[derive(
     Resource,
@@ -206,6 +247,61 @@ impl AddAssign<u32> for Xp {
     #[doc = "Add some amount to the xp value"]
     fn add_assign(&mut self, rhs: u32) {
         self.add(rhs);
+    }
+}
+
+impl AddAssign<i32> for Xp {
+    #[doc = "Add some amount to the xp value."]
+    #[doc = "(Subtracting can only subtract xp from the current level's total, not from the overall total xp)"]
+    fn add_assign(&mut self, rhs: i32) {
+        if rhs < 0 {
+            if rhs.unsigned_abs() > self.value {
+                tracing::warn!(
+                    "subtracting more xp than available (need: {}, have: {})",
+                    rhs.abs(),
+                    self.value
+                );
+                if self.value <= self.total_xp {
+                    self.total_xp -= self.value;
+                }
+                self.value = 0;
+            } else {
+                self.value -= rhs.unsigned_abs();
+                self.total_xp -= rhs.unsigned_abs();
+            }
+        } else {
+            self.value += rhs.unsigned_abs();
+            self.total_xp += rhs.unsigned_abs();
+        }
+    }
+}
+
+impl SubAssign<u32> for Xp {
+    #[doc = "Subtract some amount from the xp value."]
+    #[doc = "(Subtracting can only subtract xp from the current level's total, not from the overall total xp)"]
+    fn sub_assign(&mut self, rhs: u32) {
+        if rhs > self.value {
+            tracing::warn!(
+                "subtracting more xp than available (need: {}, have: {})",
+                rhs,
+                self.value
+            );
+            if self.value <= self.total_xp {
+                self.total_xp -= self.value;
+            }
+            self.value = 0;
+        } else {
+            self.value -= rhs;
+            self.total_xp -= rhs;
+        }
+    }
+}
+
+impl SubAssign<i32> for Xp {
+    #[doc = "Subtract some amount from the xp value."]
+    #[doc = "(Subtracting can only subtract xp from the current level's total, not from the overall total xp)"]
+    fn sub_assign(&mut self, rhs: i32) {
+        self.add_assign(-rhs);
     }
 }
 

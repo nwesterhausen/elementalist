@@ -1,3 +1,9 @@
+//! A stat is a value that should be used to represent some entity's speed, strength or other statistic.
+//!
+//! The [`Stat`] struct is a bundle of the base value, the current value and the current bonus. Any sort of
+//! access to `value()` always returns the final computed value. Use `base_value()` and `bonus()` to get
+//! the individual values.
+
 use bevy::{
     ecs::{component::Component, system::Resource},
     reflect::Reflect,

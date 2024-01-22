@@ -1,4 +1,8 @@
-/// Data loading events
+//! Data loading module
+//!
+//! This module contains all of the data loading code for the game. This includes
+//! loading the game data files and sending events with the loaded data.
+
 pub mod events;
 mod header_def;
 mod loader;

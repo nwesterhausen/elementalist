@@ -1,3 +1,7 @@
+//! Stat effects from a spell or other item.
+//!
+//! If a spell causes entities to move slower, this would have an effect that reduces the movement speed stat.
+
 use crate::{enums::SpellTarget, enums::StatEnum, StatBonus};
 
 /// Effects from a spell or other item.

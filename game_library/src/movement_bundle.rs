@@ -1,3 +1,8 @@
+//! Bundle that contains all components needed for moving things
+//!
+//! This bundle contains the velocity and acceleration components. This simplifies requiring
+//! both components in a system/entity.
+
 use bevy::prelude::*;
 use bevy_inspector_egui::prelude::*;
 

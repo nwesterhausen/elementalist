@@ -1,3 +1,5 @@
+//! A resource that stores the player's spell choices.
+
 use bevy::prelude::*;
 use bevy_inspector_egui::prelude::*;
 use serde::{Deserialize, Serialize};

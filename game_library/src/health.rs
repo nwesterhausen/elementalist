@@ -1,3 +1,5 @@
+//! Health component used in the game
+
 use bevy::{prelude::*, reflect::Reflect};
 use bevy_inspector_egui::prelude::*;
 

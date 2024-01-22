@@ -1,3 +1,64 @@
+//! Camera scale level component.
+//!
+//! This component stores the current camera scale level. This is used to zoom the camera in and out.
+//!
+//! Typical usage would be to add this component to the main camera entity, and then use the
+//! [`CameraScaleLevel::zoom_in`] and [`CameraScaleLevel::zoom_out`] methods to change the scale
+//! level.
+//!
+//! # Default Value
+//!
+//! The default value is `0.3`. This is the default zoom level for the game.
+//!
+//! # Possible Values
+//!
+//! The possible values are `0.1`, `0.25`, `0.3`, `0.5`, and `1.0`.
+//!
+//! These are available as constants on the struct: [`CameraScaleLevel::LEVELS`].
+//!
+//! # Example
+//!
+//! ```no_run
+//! use bevy::prelude::*;
+//! use game_library::CameraScaleLevel;
+//!
+//! #[derive(Component)]
+//! struct MainCamera;
+//!
+//! /// Spawns a basic camera
+//! pub fn setup_camera(mut commands: Commands) {
+//!   commands.spawn((
+//!       Camera2dBundle::default(),
+//!       MainCamera,
+//!       CameraScaleLevel::default(),
+//!   ));
+//! }
+//!
+//! /// A system to run on [Update] which zooms the camera based on the current scale level
+//! pub fn zoom_camera(
+//!   mut query: Query<(&mut OrthographicProjection, &CameraScaleLevel), With<MainCamera>>,
+//! ) {
+//!   for (mut projection, scale_level) in &mut query {
+//!       projection.scale = scale_level.value();
+//!   }
+//! }
+//!
+//! /// A system to run on [KeyboardInput] which zooms the camera in or out
+//! pub fn zoom_camera_system(
+//!  mut query: Query<&mut CameraScaleLevel, With<MainCamera>>,
+//!  keyboard_input: Res<Input<KeyCode>>,
+//! ) {
+//!  for mut scale_level in &mut query {
+//!     if keyboard_input.just_pressed(KeyCode::Equals) {
+//!        scale_level.zoom_out();
+//!    }
+//!   if keyboard_input.just_pressed(KeyCode::Minus) {
+//!       scale_level.zoom_in();
+//!    }
+//!   }
+//! }
+//! ```
+
 use bevy::prelude::*;
 use bevy_inspector_egui::prelude::*;
 

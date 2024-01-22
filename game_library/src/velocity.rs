@@ -1,3 +1,7 @@
+//! Velocity component
+//!
+//! This component contains a 2D vector that represents the velocity of an entity.
+
 use bevy::prelude::*;
 use bevy_inspector_egui::prelude::*;
 

@@ -3,6 +3,30 @@
 //! Has properties like `max_attribute` and `current_attribute`. And you can perform math
 //! operations with integers, floats, and other `Attribute` components directly to influence
 //! the `current_attribute` value.
+//!
+//! # Examples
+//!
+//! ```no_run
+//! use bevy::prelude::*;
+//! use game_library::Attribute;
+//!
+//! #[derive(Component)]
+//! struct Health(Attribute);
+//!
+//! /// Spawns a basic entity with health
+//! pub fn setup_health(mut commands: Commands) {
+//!    commands.spawn((Health(Attribute::new(10_u32)),));
+//! }
+//!
+//! /// A system to run on [Update] which checks if the entity is dead
+//! pub fn check_dead(mut query: Query<&mut Health>) {
+//!   for mut health in &mut query {
+//!      if health.0.is_empty() {
+//!        // Do something here
+//!     }
+//!  }
+//! }
+//! ```
 use bevy::{
     ecs::{component::Component, system::Resource},
     reflect::Reflect,

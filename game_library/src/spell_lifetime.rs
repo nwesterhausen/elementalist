@@ -1,3 +1,5 @@
+//! Spell lifetime component (or how long a spell will last)
+
 use bevy::prelude::*;
 
 /// The lifetime of a spell

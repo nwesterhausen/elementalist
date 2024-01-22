@@ -1,3 +1,8 @@
+//! Game volume component.
+//!
+//! This component simplifies handing a volume setting. It keeps track of whether or not the volume
+//! is muted and the volume as a percentage.
+
 use bevy::{
     ecs::{component::Component, system::Resource},
     reflect::Reflect,

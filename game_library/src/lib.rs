@@ -20,13 +20,9 @@
 //! The remaining items are specific to the Elementalist game.
 //!
 
-/// Contains the data loader for the game library, allows for loading in data files from disk.
 pub mod data_loader;
-/// Enums with associated data used in the game library.
 pub mod enums;
-/// Events used in the game.
 pub mod events;
-/// Math operations that can be re-used in the game.
 pub mod math;
 
 mod acceleration;

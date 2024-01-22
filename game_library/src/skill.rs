@@ -1,3 +1,11 @@
+//! Skills are used to track a meta-progression of a player's abilities.
+//!
+//! Skills keep track of both the experience points and the level of the skill.
+//!
+//! Skills are able to be leveled up, and have no level cap but do have a
+//! soft cap that makes it harder to level up the higher the skill is (this is
+//! automatically handled by the `[game_library::Xp]` component).
+
 use bevy::{
     ecs::{component::Component, system::Resource},
     reflect::Reflect,

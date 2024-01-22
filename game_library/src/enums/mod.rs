@@ -1,3 +1,5 @@
+//! Enums used in the game library and Elementalist game.
+
 mod cast_category;
 mod cast_slot;
 mod cast_type;

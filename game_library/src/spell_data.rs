@@ -16,7 +16,7 @@ use crate::{
 /// Details about a spell.
 ///
 /// Describes in detail how a spell works and how it should be displayed.
-#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SpellData {
     /// The internal ID of the spell.
@@ -158,13 +158,13 @@ impl SpellData {
 }
 
 // #### DEFAULTS FOR SERDE ####
-fn default_spell_collision() -> SpellCollision {
+const fn default_spell_collision() -> SpellCollision {
     SpellCollision::Point
 }
-fn default_cast_type() -> CastType {
+const fn default_cast_type() -> CastType {
     CastType::Instant
 }
-fn default_cast_category() -> CastCategory {
+const fn default_cast_category() -> CastCategory {
     CastCategory::Projectile
 }
 fn placeholder_png_path() -> String {

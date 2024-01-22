@@ -43,7 +43,7 @@ impl Acceleration {
     /// let acceleration = Acceleration::new(Vec2::new(1.0, 1.0));
     /// ```
     #[must_use]
-    pub fn new(value: Vec2) -> Self {
+    pub const fn new(value: Vec2) -> Self {
         Self { value }
     }
 }

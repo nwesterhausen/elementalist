@@ -3,7 +3,7 @@ use crate::{enums::SpellTarget, enums::StatEnum, StatBonus};
 /// Effects from a spell or other item.
 ///
 /// Describes in detail how a this effect can be applied.
-#[derive(Debug, Clone, Default, PartialEq, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, Default, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct StatEffect {
     /// An identifier for the effect.

@@ -6,7 +6,16 @@ use crate::{enums::CastSlot, SpellData};
 
 /// A resource that stores the player's spell choices.
 #[derive(
-    Resource, Default, Debug, Reflect, Clone, PartialEq, Serialize, Deserialize, InspectorOptions,
+    Resource,
+    Default,
+    Debug,
+    Reflect,
+    Clone,
+    PartialEq,
+    Eq,
+    Serialize,
+    Deserialize,
+    InspectorOptions,
 )]
 #[reflect(InspectorOptions)]
 pub struct SpellChoices {

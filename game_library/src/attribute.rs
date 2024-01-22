@@ -76,7 +76,7 @@ impl Attribute {
     /// assert_eq!(attribute.is_empty(), true);
     /// ```
     #[must_use]
-    pub fn is_empty(&self) -> bool {
+    pub const fn is_empty(&self) -> bool {
         self.current == 0
     }
 
@@ -102,7 +102,7 @@ impl Attribute {
     /// assert_eq!(attribute.is_full(), true);
     /// ```
     #[must_use]
-    pub fn is_full(&self) -> bool {
+    pub const fn is_full(&self) -> bool {
         self.current == self.max
     }
 
@@ -231,8 +231,7 @@ impl Attribute {
         let clamped_max_attribute = max_attribute.into().max(Self::MIN);
         let clamped_current_attribute = current_attribute
             .into()
-            .max(Self::MIN)
-            .min(clamped_max_attribute);
+            .clamp(Self::MIN, clamped_max_attribute);
         Self {
             max: clamped_max_attribute,
             current: clamped_current_attribute,
@@ -272,11 +271,9 @@ impl Attribute {
         let amount = amount.into();
         let new_max_attribute = i64::from(self.max) + amount;
 
-        if let Ok(value) = u32::try_from(
-            new_max_attribute
-                .max(i64::from(Self::MIN))
-                .min(i64::from(u32::MAX)),
-        ) {
+        if let Ok(value) =
+            u32::try_from(new_max_attribute.clamp(i64::from(Self::MIN), i64::from(u32::MAX)))
+        {
             self.max = value;
         } else {
             tracing::warn!("attribute value {} too big for u32", new_max_attribute);
@@ -327,9 +324,7 @@ impl Attribute {
         let amount = amount.into();
         let new_max_attribute = f64::from(self.max) * amount;
 
-        let float_value = new_max_attribute
-            .max(f64::from(Self::MIN))
-            .min(f64::from(u32::MAX));
+        let float_value = new_max_attribute.clamp(f64::from(Self::MIN), f64::from(u32::MAX));
 
         #[allow(
             clippy::cast_possible_truncation,
@@ -400,11 +395,9 @@ impl Attribute {
         let amount = amount.into();
         let new_current_attribute = i64::from(self.current) + amount;
         #[allow(clippy::cast_sign_loss)]
-        if let Ok(value) = u32::try_from(
-            new_current_attribute
-                .max(i64::from(Self::MIN))
-                .min(i64::from(self.max)),
-        ) {
+        if let Ok(value) =
+            u32::try_from(new_current_attribute.clamp(i64::from(Self::MIN), i64::from(self.max)))
+        {
             self.current = value;
         } else {
             tracing::warn!("attribute value {} too big for u32", new_current_attribute);
@@ -451,9 +444,7 @@ impl Attribute {
         let amount = amount.into();
         let new_current_attribute = f64::from(self.current) * amount;
 
-        let float_value = new_current_attribute
-            .max(f64::from(Self::MIN))
-            .min(f64::from(self.max));
+        let float_value = new_current_attribute.clamp(f64::from(Self::MIN), f64::from(u32::MAX));
 
         #[allow(
             clippy::cast_possible_truncation,
@@ -654,7 +645,7 @@ impl std::ops::AddAssign<f64> for Attribute {
     }
 }
 
-impl std::ops::AddAssign<Attribute> for Attribute {
+impl std::ops::AddAssign<Self> for Attribute {
     fn add_assign(&mut self, rhs: Self) {
         self.add_to_current(rhs.current);
     }
@@ -690,7 +681,7 @@ impl std::ops::SubAssign<f64> for Attribute {
     }
 }
 
-impl std::ops::SubAssign<Attribute> for Attribute {
+impl std::ops::SubAssign<Self> for Attribute {
     fn sub_assign(&mut self, rhs: Self) {
         let sub = i64::from(rhs.current);
         self.add_to_current(-sub);
@@ -724,7 +715,7 @@ impl std::ops::MulAssign<f64> for Attribute {
     }
 }
 
-impl std::ops::MulAssign<Attribute> for Attribute {
+impl std::ops::MulAssign<Self> for Attribute {
     fn mul_assign(&mut self, rhs: Self) {
         let mul = f64::from(rhs.current);
         self.scale_current(mul);
@@ -774,7 +765,7 @@ impl std::ops::DivAssign<f64> for Attribute {
     }
 }
 
-impl std::ops::DivAssign<Attribute> for Attribute {
+impl std::ops::DivAssign<Self> for Attribute {
     fn div_assign(&mut self, rhs: Self) {
         if rhs.current == 0 {
             tracing::error!("avoided division by zero; set current_attribute to 0 instead");
@@ -785,7 +776,7 @@ impl std::ops::DivAssign<Attribute> for Attribute {
     }
 }
 
-impl std::cmp::PartialOrd<Attribute> for Attribute {
+impl std::cmp::PartialOrd<Self> for Attribute {
     fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
         Some(self.cmp(other))
     }
@@ -824,14 +815,14 @@ impl From<f64> for Attribute {
 impl From<Attribute> for f32 {
     fn from(value: Attribute) -> Self {
         #[allow(clippy::cast_possible_truncation, clippy::cast_precision_loss)]
-        let result = value.current as f32;
+        let result = value.current as Self;
         result
     }
 }
 
 impl From<Attribute> for f64 {
     fn from(value: Attribute) -> Self {
-        f64::from(value.current)
+        Self::from(value.current)
     }
 }
 
@@ -843,12 +834,13 @@ impl std::fmt::Display for Attribute {
 
 impl From<u64> for Attribute {
     fn from(value: u64) -> Self {
-        if let Ok(value) = u32::try_from(value) {
-            Self::new(value)
-        } else {
-            tracing::warn!("attribute value {} too big for u32", value);
-            Self::new(u32::MAX)
-        }
+        u32::try_from(value).map_or_else(
+            |_| {
+                tracing::warn!("attribute value {} too big for u32", value);
+                Self::new(u32::MAX)
+            },
+            Self::new,
+        )
     }
 }
 
@@ -876,12 +868,13 @@ impl From<i64> for Attribute {
             tracing::warn!("refused to create Attribute with negative value; set to 0 instead");
             return Self::new(0_u32);
         }
-        if let Ok(value) = u32::try_from(value) {
-            Self::new(value)
-        } else {
-            tracing::warn!("attribute value {} too big for u32", value);
-            Self::new(u32::MAX)
-        }
+        u32::try_from(value).map_or_else(
+            |_| {
+                tracing::warn!("attribute value {} too big for u32", value);
+                Self::new(u32::MAX)
+            },
+            Self::new,
+        )
     }
 }
 
@@ -920,7 +913,7 @@ impl From<i8> for Attribute {
 
 impl From<Attribute> for u64 {
     fn from(value: Attribute) -> Self {
-        u64::from(value.current)
+        Self::from(value.current)
     }
 }
 
@@ -932,62 +925,67 @@ impl From<Attribute> for u32 {
 
 impl From<Attribute> for u16 {
     fn from(value: Attribute) -> Self {
-        if let Ok(value) = u16::try_from(value.current) {
-            value
-        } else {
-            tracing::warn!("attribute value {} too big for u16", value.current);
-            u16::MAX
-        }
+        Self::try_from(value.current).map_or_else(
+            |_| {
+                tracing::warn!("attribute value {} too big for u16", value.current);
+                Self::MAX
+            },
+            |value| value,
+        )
     }
 }
 
 impl From<Attribute> for u8 {
     fn from(value: Attribute) -> Self {
-        if let Ok(value) = u8::try_from(value.current) {
-            value
-        } else {
-            tracing::warn!("attribute value {} too big for u8", value.current);
-            u8::MAX
-        }
+        Self::try_from(value.current).map_or_else(
+            |_| {
+                tracing::warn!("attribute value {} too big for u8", value.current);
+                Self::MAX
+            },
+            |value| value,
+        )
     }
 }
 
 impl From<Attribute> for i64 {
     fn from(value: Attribute) -> Self {
-        i64::from(value.current)
+        Self::from(value.current)
     }
 }
 
 impl From<Attribute> for i32 {
     fn from(value: Attribute) -> Self {
-        if let Ok(value) = i32::try_from(value.current) {
-            value
-        } else {
-            tracing::warn!("attribute value {} too big for i32", value.current);
-            i32::MAX
-        }
+        Self::try_from(value.current).map_or_else(
+            |_| {
+                tracing::warn!("attribute value {} too big for i32", value.current);
+                Self::MAX
+            },
+            |value| value,
+        )
     }
 }
 
 impl From<Attribute> for i16 {
     fn from(value: Attribute) -> Self {
-        if let Ok(value) = i16::try_from(value.current) {
-            value
-        } else {
-            tracing::warn!("attribute value {} too big for i16", value.current);
-            i16::MAX
-        }
+        Self::try_from(value.current).map_or_else(
+            |_| {
+                tracing::warn!("attribute value {} too big for i16", value.current);
+                Self::MAX
+            },
+            |value| value,
+        )
     }
 }
 
 impl From<Attribute> for i8 {
     fn from(value: Attribute) -> Self {
-        if let Ok(value) = i8::try_from(value.current) {
-            value
-        } else {
-            tracing::warn!("attribute value {} too big for i8", value.current);
-            i8::MAX
-        }
+        Self::try_from(value.current).map_or_else(
+            |_| {
+                tracing::warn!("attribute value {} too big for i8", value.current);
+                Self::MAX
+            },
+            |value| value,
+        )
     }
 }
 

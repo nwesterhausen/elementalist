@@ -1,17 +1,7 @@
 //! # Elementalist
 //!
-//! A rogue-lite game where you play as an elementalist.
+//! A rogue-lite game where you play as an elementalist.,
 
-#![warn(
-    missing_docs,
-    unreachable_code,
-    unreachable_patterns,
-    clippy::unwrap_used,
-    clippy::expect_used,
-    clippy::pedantic
-)]
-#![deny(unsafe_code)]
-#![allow(clippy::module_name_repetitions, clippy::needless_pass_by_value)]
 // Hide the console window on Windows when not in debug mode
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
@@ -45,7 +35,7 @@ fn main() {
             DefaultPlugins
                 .set(WindowPlugin {
                     primary_window: Some(Window {
-                        title: app_info::game_name_and_version().to_string(),
+                        title: app_info::game_name_and_version(),
                         resolution: (1280.0, 720.0).into(),
                         present_mode: bevy::window::PresentMode::AutoVsync,
                         enabled_buttons: bevy::window::EnabledButtons {

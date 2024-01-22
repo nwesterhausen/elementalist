@@ -20,7 +20,7 @@ impl Default for Velocity {
 impl Velocity {
     /// Creates a new velocity component with the given value
     #[must_use]
-    pub fn new(value: Vec2) -> Self {
+    pub const fn new(value: Vec2) -> Self {
         Self { value }
     }
 }

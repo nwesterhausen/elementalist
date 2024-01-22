@@ -28,7 +28,7 @@ impl Health {
 
     /// Check if dead (passes through to `Attribute::is_empty`)
     #[must_use]
-    pub fn is_dead(&self) -> bool {
+    pub const fn is_dead(&self) -> bool {
         self.value.is_empty()
     }
 }

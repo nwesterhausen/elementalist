@@ -15,7 +15,7 @@ pub struct SpellLifetime {
 impl SpellLifetime {
     /// Creates a new spell lifetime with the given maximum lifetime
     #[must_use]
-    pub fn new(max: f32) -> Self {
+    pub const fn new(max: f32) -> Self {
         Self {
             remaining: max,
             max,

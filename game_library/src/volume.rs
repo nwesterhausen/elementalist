@@ -51,7 +51,7 @@ impl Volume {
     ///
     /// This converts the value into a `u32` before clamping it.
     pub fn set(&mut self, value: impl Into<u32>) {
-        self.value = value.into().min(Self::MAX).max(Self::MIN);
+        self.value = value.into().clamp(Self::MIN, Self::MAX);
     }
 
     /// Returns the volume, regardless of whether or not the volume is muted.
@@ -78,7 +78,7 @@ impl Volume {
 
     /// Returns whether or not the volume is muted.
     #[must_use]
-    pub fn is_muted(&self) -> bool {
+    pub const fn is_muted(&self) -> bool {
         self.muted
     }
 
@@ -120,7 +120,7 @@ impl From<u64> for Volume {
                 muted: false,
             };
         };
-        let clamped_value = clamped_value.min(Self::MAX).max(Self::MIN);
+        let clamped_value = clamped_value.clamp(Self::MIN, Self::MAX);
         Self {
             value: clamped_value,
             muted: false,
@@ -130,7 +130,7 @@ impl From<u64> for Volume {
 
 impl From<u32> for Volume {
     fn from(value: u32) -> Self {
-        let clamped_value = value.min(Self::MAX).max(Self::MIN);
+        let clamped_value = value.clamp(Self::MIN, Self::MAX);
         Self {
             value: clamped_value,
             muted: false,
@@ -140,7 +140,7 @@ impl From<u32> for Volume {
 
 impl From<u16> for Volume {
     fn from(value: u16) -> Self {
-        let clamped_value = u32::from(value).min(Self::MAX).max(Self::MIN);
+        let clamped_value = u32::from(value).clamp(Self::MIN, Self::MAX);
         Self {
             value: clamped_value,
             muted: false,
@@ -150,7 +150,7 @@ impl From<u16> for Volume {
 
 impl From<u8> for Volume {
     fn from(value: u8) -> Self {
-        let clamped_value = u32::from(value).min(Self::MAX).max(Self::MIN);
+        let clamped_value = u32::from(value).clamp(Self::MIN, Self::MAX);
         Self {
             value: clamped_value,
             muted: false,
@@ -173,7 +173,7 @@ impl From<i64> for Volume {
                 muted: false,
             };
         };
-        let clamped_value = clamped_value.min(Self::MAX).max(Self::MIN);
+        let clamped_value = clamped_value.clamp(Self::MIN, Self::MAX);
         Self {
             value: clamped_value,
             muted: false,

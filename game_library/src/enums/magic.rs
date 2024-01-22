@@ -52,74 +52,74 @@ impl MagicType {
     /// Returns an iterator over all the variants of `MagicType`
     pub fn variants() -> impl Iterator<Item = Self> {
         [
-            MagicType::Fire,
-            MagicType::Lightning,
-            MagicType::Water,
-            MagicType::Earth,
-            MagicType::Air,
-            MagicType::Ice,
-            MagicType::Force,
-            MagicType::Light,
-            MagicType::Dark,
-            MagicType::Arcane,
-            MagicType::Life,
-            MagicType::Death,
-            MagicType::Enhancement,
-            MagicType::Reduction,
-            MagicType::Summoning,
-            MagicType::Necromancy,
-            MagicType::Polymorph,
-            MagicType::Time,
+            Self::Fire,
+            Self::Lightning,
+            Self::Water,
+            Self::Earth,
+            Self::Air,
+            Self::Ice,
+            Self::Force,
+            Self::Light,
+            Self::Dark,
+            Self::Arcane,
+            Self::Life,
+            Self::Death,
+            Self::Enhancement,
+            Self::Reduction,
+            Self::Summoning,
+            Self::Necromancy,
+            Self::Polymorph,
+            Self::Time,
         ]
         .iter()
         .copied()
     }
     /// Returns the corresponding [`Skill`] for this [`MagicType`]
     #[must_use]
-    pub fn skill(self) -> Skill {
+    pub const fn skill(self) -> Skill {
         match self {
-            MagicType::Fire => Skill::Pyromancy,
-            MagicType::Lightning => Skill::Fulgomancy,
-            MagicType::Water => Skill::Hydromancy,
-            MagicType::Earth => Skill::Geomancy,
-            MagicType::Air => Skill::Aeromancy,
-            MagicType::Ice => Skill::Cryomancy,
-            MagicType::Force => Skill::Trudomancy,
-            MagicType::Light => Skill::Photomancy,
-            MagicType::Dark => Skill::Umbramancy,
-            MagicType::Arcane => Skill::Arcanomancy,
-            MagicType::Life => Skill::Vitomancy,
-            MagicType::Death => Skill::Mortomancy,
-            MagicType::Enhancement => Skill::Ampiliomancy,
-            MagicType::Reduction => Skill::Diminiomancy,
-            MagicType::Summoning => Skill::Citomancy,
-            MagicType::Necromancy => Skill::Necromancy,
-            MagicType::Polymorph => Skill::Mutatiomancy,
-            MagicType::Time => Skill::Chronomancy,
+            Self::Fire => Skill::Pyromancy,
+            Self::Lightning => Skill::Fulgomancy,
+            Self::Water => Skill::Hydromancy,
+            Self::Earth => Skill::Geomancy,
+            Self::Air => Skill::Aeromancy,
+            Self::Ice => Skill::Cryomancy,
+            Self::Force => Skill::Trudomancy,
+            Self::Light => Skill::Photomancy,
+            Self::Dark => Skill::Umbramancy,
+            Self::Arcane => Skill::Arcanomancy,
+            Self::Life => Skill::Vitomancy,
+            Self::Death => Skill::Mortomancy,
+            Self::Enhancement => Skill::Ampiliomancy,
+            Self::Reduction => Skill::Diminiomancy,
+            Self::Summoning => Skill::Citomancy,
+            Self::Necromancy => Skill::Necromancy,
+            Self::Polymorph => Skill::Mutatiomancy,
+            Self::Time => Skill::Chronomancy,
         }
     }
     /// Returns the corresponding [`MagicType`] for this [`Skill`] if it exists
     #[must_use]
-    pub fn from_skill(skill: Skill) -> Option<Self> {
+    pub const fn from_skill(skill: Skill) -> Option<Self> {
         match skill {
-            Skill::Pyromancy => Some(MagicType::Fire),
-            Skill::Fulgomancy => Some(MagicType::Lightning),
-            Skill::Hydromancy => Some(MagicType::Water),
-            Skill::Geomancy => Some(MagicType::Earth),
-            Skill::Aeromancy => Some(MagicType::Air),
-            Skill::Cryomancy => Some(MagicType::Ice),
-            Skill::Trudomancy => Some(MagicType::Force),
-            Skill::Photomancy => Some(MagicType::Light),
-            Skill::Umbramancy => Some(MagicType::Dark),
-            Skill::Arcanomancy => Some(MagicType::Arcane),
-            Skill::Vitomancy => Some(MagicType::Life),
-            Skill::Mortomancy => Some(MagicType::Death),
-            Skill::Ampiliomancy => Some(MagicType::Enhancement),
-            Skill::Diminiomancy => Some(MagicType::Reduction),
-            Skill::Citomancy => Some(MagicType::Summoning),
-            Skill::Necromancy => Some(MagicType::Necromancy),
-            Skill::Mutatiomancy => Some(MagicType::Polymorph),
-            Skill::Chronomancy => Some(MagicType::Time),
+            Skill::Pyromancy => Some(Self::Fire),
+            Skill::Fulgomancy => Some(Self::Lightning),
+            Skill::Hydromancy => Some(Self::Water),
+            Skill::Geomancy => Some(Self::Earth),
+            Skill::Aeromancy => Some(Self::Air),
+            Skill::Cryomancy => Some(Self::Ice),
+            Skill::Trudomancy => Some(Self::Force),
+            Skill::Photomancy => Some(Self::Light),
+            Skill::Umbramancy => Some(Self::Dark),
+            Skill::Arcanomancy => Some(Self::Arcane),
+            Skill::Vitomancy => Some(Self::Life),
+            Skill::Mortomancy => Some(Self::Death),
+            Skill::Ampiliomancy => Some(Self::Enhancement),
+            Skill::Diminiomancy => Some(Self::Reduction),
+            Skill::Citomancy => Some(Self::Summoning),
+            Skill::Necromancy => Some(Self::Necromancy),
+            Skill::Mutatiomancy => Some(Self::Polymorph),
+            Skill::Chronomancy => Some(Self::Time),
         }
     }
 }
@@ -135,31 +135,31 @@ impl From<Skill> for MagicType {
     ///
     /// This will return [`MagicType::Arcane`] if the [`Skill`] is not a magic skill
     fn from(skill: Skill) -> Self {
-        MagicType::from_skill(skill).unwrap_or(MagicType::Arcane)
+        Self::from_skill(skill).unwrap_or(Self::Arcane)
     }
 }
 
 impl std::fmt::Display for MagicType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            MagicType::Fire => write!(f, "Fire"),
-            MagicType::Lightning => write!(f, "Lightning"),
-            MagicType::Water => write!(f, "Water"),
-            MagicType::Earth => write!(f, "Earth"),
-            MagicType::Air => write!(f, "Air"),
-            MagicType::Ice => write!(f, "Ice"),
-            MagicType::Force => write!(f, "Force"),
-            MagicType::Light => write!(f, "Light"),
-            MagicType::Dark => write!(f, "Dark"),
-            MagicType::Arcane => write!(f, "Arcane"),
-            MagicType::Life => write!(f, "Life"),
-            MagicType::Death => write!(f, "Death"),
-            MagicType::Enhancement => write!(f, "Enhancement"),
-            MagicType::Reduction => write!(f, "Reduction"),
-            MagicType::Summoning => write!(f, "Summoning"),
-            MagicType::Necromancy => write!(f, "Necromancy"),
-            MagicType::Polymorph => write!(f, "Polymorph"),
-            MagicType::Time => write!(f, "Time"),
+            Self::Fire => write!(f, "Fire"),
+            Self::Lightning => write!(f, "Lightning"),
+            Self::Water => write!(f, "Water"),
+            Self::Earth => write!(f, "Earth"),
+            Self::Air => write!(f, "Air"),
+            Self::Ice => write!(f, "Ice"),
+            Self::Force => write!(f, "Force"),
+            Self::Light => write!(f, "Light"),
+            Self::Dark => write!(f, "Dark"),
+            Self::Arcane => write!(f, "Arcane"),
+            Self::Life => write!(f, "Life"),
+            Self::Death => write!(f, "Death"),
+            Self::Enhancement => write!(f, "Enhancement"),
+            Self::Reduction => write!(f, "Reduction"),
+            Self::Summoning => write!(f, "Summoning"),
+            Self::Necromancy => write!(f, "Necromancy"),
+            Self::Polymorph => write!(f, "Polymorph"),
+            Self::Time => write!(f, "Time"),
         }
     }
 }

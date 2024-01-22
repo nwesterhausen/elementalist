@@ -39,13 +39,13 @@ pub struct StatBonus {
 impl StatBonus {
     /// Creates a new stat bonus with the given value.
     #[must_use]
-    pub fn new(value: f32) -> Self {
+    pub const fn new(value: f32) -> Self {
         Self { value }
     }
 
     /// Returns the value of the stat bonus.
     #[must_use]
-    pub fn value(&self) -> f32 {
+    pub const fn value(&self) -> f32 {
         self.value
     }
 

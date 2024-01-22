@@ -92,7 +92,7 @@ impl Stat {
     /// assert_eq!(stat.value(), 9.0);
     /// ```
     #[must_use]
-    pub fn value(&self) -> f32 {
+    pub const fn value(&self) -> f32 {
         self.value
     }
 
@@ -109,7 +109,7 @@ impl Stat {
     /// assert_eq!(stat.bonus(), 1.5);
     /// ```
     #[must_use]
-    pub fn bonus(&self) -> f32 {
+    pub const fn bonus(&self) -> f32 {
         self.bonus.value()
     }
 
@@ -128,7 +128,7 @@ impl Stat {
     /// assert_eq!(stat.base_value(), 7.0);
     /// ```
     #[must_use]
-    pub fn base_value(&self) -> f32 {
+    pub const fn base_value(&self) -> f32 {
         self.base_value
     }
 

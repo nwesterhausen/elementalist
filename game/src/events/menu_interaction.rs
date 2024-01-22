@@ -32,37 +32,29 @@ pub enum MenuInteraction {
 
 impl MenuInteraction {
     /// Returns the default keybinds for this action on keyboard & mouse.
-    pub fn default_keyboard_mouse_input(self) -> UserInput {
+    pub const fn default_keyboard_mouse_input(self) -> UserInput {
         match self {
-            MenuInteraction::Up => UserInput::Single(InputKind::Keyboard(KeyCode::W)),
-            MenuInteraction::Down => UserInput::Single(InputKind::Keyboard(KeyCode::S)),
-            MenuInteraction::Select => UserInput::Single(InputKind::Keyboard(KeyCode::F)),
-            MenuInteraction::Back => UserInput::Single(InputKind::Keyboard(KeyCode::X)),
+            Self::Up => UserInput::Single(InputKind::Keyboard(KeyCode::W)),
+            Self::Down => UserInput::Single(InputKind::Keyboard(KeyCode::S)),
+            Self::Select => UserInput::Single(InputKind::Keyboard(KeyCode::F)),
+            Self::Back => UserInput::Single(InputKind::Keyboard(KeyCode::X)),
         }
     }
     /// Returns the default gamepad input for this action.
-    pub fn default_gamepad_input(self) -> UserInput {
+    pub const fn default_gamepad_input(self) -> UserInput {
         match self {
-            MenuInteraction::Up => {
-                UserInput::Single(InputKind::GamepadButton(GamepadButtonType::DPadUp))
-            }
-            MenuInteraction::Down => {
-                UserInput::Single(InputKind::GamepadButton(GamepadButtonType::DPadDown))
-            }
-            MenuInteraction::Select => {
-                UserInput::Single(InputKind::GamepadButton(GamepadButtonType::East))
-            }
-            MenuInteraction::Back => {
-                UserInput::Single(InputKind::GamepadButton(GamepadButtonType::South))
-            }
+            Self::Up => UserInput::Single(InputKind::GamepadButton(GamepadButtonType::DPadUp)),
+            Self::Down => UserInput::Single(InputKind::GamepadButton(GamepadButtonType::DPadDown)),
+            Self::Select => UserInput::Single(InputKind::GamepadButton(GamepadButtonType::East)),
+            Self::Back => UserInput::Single(InputKind::GamepadButton(GamepadButtonType::South)),
         }
     }
 
     /// Returns the default input mapping for this action.
-    pub fn default_input_map() -> InputMap<MenuInteraction> {
+    pub fn default_input_map() -> InputMap<Self> {
         let mut input_map = InputMap::default();
 
-        for variant in MenuInteraction::variants() {
+        for variant in Self::variants() {
             input_map.insert(variant.default_keyboard_mouse_input(), variant);
             input_map.insert(variant.default_gamepad_input(), variant);
         }

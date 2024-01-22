@@ -33,51 +33,49 @@ impl PlayerAction {
     /// Returns the default keybinds for this action on keyboard & mouse.
     pub fn default_keyboard_mouse_input(self) -> UserInput {
         match self {
-            PlayerAction::Move => UserInput::VirtualDPad(VirtualDPad::wasd()),
-            PlayerAction::Look => UserInput::VirtualDPad(VirtualDPad::arrow_keys()),
-            PlayerAction::CastPrimary => UserInput::Single(InputKind::Mouse(MouseButton::Left)),
-            PlayerAction::CastSecondary => UserInput::Single(InputKind::Mouse(MouseButton::Right)),
-            PlayerAction::CastDefensive => UserInput::Single(InputKind::Keyboard(KeyCode::Space)),
-            PlayerAction::CastUltimate => UserInput::Single(InputKind::Keyboard(KeyCode::E)),
-            PlayerAction::ToggleAutoCast => UserInput::Single(InputKind::Keyboard(KeyCode::Q)),
-            PlayerAction::ToggleAutoAim => UserInput::Single(InputKind::Keyboard(KeyCode::T)),
-            PlayerAction::Interact => UserInput::Single(InputKind::Keyboard(KeyCode::F)),
+            Self::Move => UserInput::VirtualDPad(VirtualDPad::wasd()),
+            Self::Look => UserInput::VirtualDPad(VirtualDPad::arrow_keys()),
+            Self::CastPrimary => UserInput::Single(InputKind::Mouse(MouseButton::Left)),
+            Self::CastSecondary => UserInput::Single(InputKind::Mouse(MouseButton::Right)),
+            Self::CastDefensive => UserInput::Single(InputKind::Keyboard(KeyCode::Space)),
+            Self::CastUltimate => UserInput::Single(InputKind::Keyboard(KeyCode::E)),
+            Self::ToggleAutoCast => UserInput::Single(InputKind::Keyboard(KeyCode::Q)),
+            Self::ToggleAutoAim => UserInput::Single(InputKind::Keyboard(KeyCode::T)),
+            Self::Interact => UserInput::Single(InputKind::Keyboard(KeyCode::F)),
         }
     }
     /// Returns the default gamepad input for this action.
     pub fn default_gamepad_input(self) -> UserInput {
         match self {
-            PlayerAction::Move => UserInput::Single(InputKind::DualAxis(DualAxis::left_stick())),
-            PlayerAction::Look => UserInput::Single(InputKind::DualAxis(DualAxis::right_stick())),
-            PlayerAction::CastPrimary => {
+            Self::Move => UserInput::Single(InputKind::DualAxis(DualAxis::left_stick())),
+            Self::Look => UserInput::Single(InputKind::DualAxis(DualAxis::right_stick())),
+            Self::CastPrimary => {
                 UserInput::Single(InputKind::GamepadButton(GamepadButtonType::RightTrigger))
             }
-            PlayerAction::CastSecondary => {
+            Self::CastSecondary => {
                 UserInput::Single(InputKind::GamepadButton(GamepadButtonType::LeftTrigger))
             }
-            PlayerAction::CastDefensive => {
+            Self::CastDefensive => {
                 UserInput::Single(InputKind::GamepadButton(GamepadButtonType::South))
             }
-            PlayerAction::CastUltimate => {
+            Self::CastUltimate => {
                 UserInput::Single(InputKind::GamepadButton(GamepadButtonType::North))
             }
-            PlayerAction::ToggleAutoCast => {
+            Self::ToggleAutoCast => {
                 UserInput::Single(InputKind::GamepadButton(GamepadButtonType::LeftTrigger2))
             }
-            PlayerAction::ToggleAutoAim => {
+            Self::ToggleAutoAim => {
                 UserInput::Single(InputKind::GamepadButton(GamepadButtonType::RightTrigger2))
             }
-            PlayerAction::Interact => {
-                UserInput::Single(InputKind::GamepadButton(GamepadButtonType::East))
-            }
+            Self::Interact => UserInput::Single(InputKind::GamepadButton(GamepadButtonType::East)),
         }
     }
 
     /// Returns the default input map for this action.
-    pub fn default_input_map() -> InputMap<PlayerAction> {
+    pub fn default_input_map() -> InputMap<Self> {
         let mut input_map = InputMap::default();
 
-        for variant in PlayerAction::variants() {
+        for variant in Self::variants() {
             input_map.insert(variant.default_keyboard_mouse_input(), variant);
             input_map.insert(variant.default_gamepad_input(), variant);
         }

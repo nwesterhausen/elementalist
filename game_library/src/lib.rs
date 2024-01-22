@@ -20,16 +20,6 @@
 //! The remaining items are specific to the Elementalist game.
 //!
 
-#![warn(
-    missing_docs,
-    unreachable_code,
-    unreachable_patterns,
-    clippy::unwrap_used,
-    clippy::expect_used,
-    clippy::pedantic
-)]
-#![deny(unsafe_code)]
-
 /// Contains the data loader for the game library, allows for loading in data files from disk.
 pub mod data_loader;
 /// Enums with associated data used in the game library.

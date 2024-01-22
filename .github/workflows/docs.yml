@@ -51,7 +51,7 @@ jobs:
         run: |
           cargo doc --workspace --no-deps
           cp -r target/doc _site
-          cp docs/rustdoc/rust.css _site/github-markdown.css
+          cp docs/rustdoc/github-markdown.css _site/github-markdown.css
       - name: Fix permissions
         run: |
           chmod -c -R +rX "_site/" | while read line; do

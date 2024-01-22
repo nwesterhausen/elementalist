@@ -444,7 +444,7 @@ impl Attribute {
         let amount = amount.into();
         let new_current_attribute = f64::from(self.current) * amount;
 
-        let float_value = new_current_attribute.clamp(f64::from(Self::MIN), f64::from(u32::MAX));
+        let float_value = new_current_attribute.clamp(f64::from(Self::MIN), f64::from(self.max));
 
         #[allow(
             clippy::cast_possible_truncation,

@@ -17,7 +17,6 @@ For managing my backlog I am using [ClickUp](https://app.clickup.com).
 - [Spells by Magic school](./spells.md)
 - [Spells by Tier](./spells_by_tier.md)
 - [Spells by Mana Cost](./spells_by_mana_cost.md)
-- [Spell Sprite & Icon Progress](./spell_sprite_progress.md)
 
 ## Skill Details
 

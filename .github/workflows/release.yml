@@ -220,10 +220,14 @@ jobs:
         # macOS 11 was the first version to support ARM
         run: |
           export MACOSX_DEPLOYMENT_TARGET="11"
-
+      - name: Setup LLVM
+        run: |
+          # seems to be we need to install LLVM via brew. Brew suggests a couple other exports
+          brew install llvm
+          export LDFLAGS="-L/usr/local/opt/llvm/lib"
+          export CPPFLAGS="-I/usr/local/opt/llvm/include"
       - name: Build
         run: |
-          brew install llvm
           cargo build --release --target aarch64-apple-darwin
 
       - name: Prepare Package

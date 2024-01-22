@@ -23,6 +23,7 @@
 pub mod data_loader;
 pub mod enums;
 pub mod events;
+pub mod font_resource;
 pub mod math;
 
 mod acceleration;

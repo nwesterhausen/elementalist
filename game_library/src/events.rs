@@ -1,7 +1,8 @@
 //! Events that can be sent to the game state machine.
 //!
 //! These are available here inside the game library for ease of reference
-//! in the game code.
+//! in the game code. Events inside this module didn't really have a good
+//! spot to live in the game library, so they were placed here.
 
 use bevy::prelude::*;
 

@@ -1,12 +1,15 @@
 # Elementalist
 
-Documentation is automatically build from the main branch. It can provide an overview of the supporting **`game_library`** used by **Elementalist**.
+Documentation is automatically built from the main branch. It can provide an overview of the supporting **`game_library`** used by **Elementalist**.
 
 ## Documentation
 
 The following generated documentation is available:
 
-- [Elementalist](elementalist/index.html) - the game built with `bevy`, fully documented
+- [Elementalist](elementalist/index.html) - the game built with `bevy`
+  - Plugins and systems that make the game a game
+  - Input set up from `leafwing_input_manager`
+  - Heavily relies on the `game_library` definitions
 - [game_library](game_library/index.html) - the supporting library behind the game:
   - Shared components or components which are used for queries
   - Resource structs
@@ -22,3 +25,5 @@ A listing of the open source libraries and resources used in this project:
 
 - [github-markdown-css](https://github.com/sindresorhus/github-markdown-css) (MIT) - CSS file for this page.
 - fonts
+- some bevy libraries
+- yaml library

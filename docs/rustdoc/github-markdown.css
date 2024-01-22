@@ -124,6 +124,9 @@
   font-size: 16px;
   line-height: 1.5;
   word-wrap: break-word;
+
+  /* Padding to make things look a bit nicer */
+  padding: 4rem;
 }
 
 .rustdoc .octicon {

@@ -176,6 +176,7 @@ jobs:
 
       - name: Build
         run: |
+          brew install llvm
           cargo build --release --target x86_64-apple-darwin
 
       - name: Prepare Package
@@ -222,6 +223,7 @@ jobs:
 
       - name: Build
         run: |
+          brew install llvm
           cargo build --release --target aarch64-apple-darwin
 
       - name: Prepare Package

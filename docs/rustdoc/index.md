@@ -15,3 +15,10 @@ The following generated documentation is available:
   - Shared library of functions for reuse in the game (e.g. one to calculate slope from player to mouse)
   - Unit tests for all the `impl` of components, resources, etc.
   - The data file import library
+
+## Open Source Libraries and Resources
+
+A listing of the open source libraries and resources used in this project:
+
+- [github-markdown-css](https://github.com/sindresorhus/github-markdown-css) (MIT) - CSS file for this page.
+- fonts

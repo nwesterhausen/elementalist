@@ -31,6 +31,7 @@ pub mod math;
 
 mod acceleration;
 mod attribute;
+mod camera_scale;
 mod cursor_position;
 mod experience;
 mod health;
@@ -50,6 +51,7 @@ mod volume;
 
 pub use acceleration::Acceleration;
 pub use attribute::Attribute;
+pub use camera_scale::CameraScaleLevel;
 pub use cursor_position::CursorPosition;
 pub use data_loader::events::*;
 pub use experience::Xp;

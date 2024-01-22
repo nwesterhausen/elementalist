@@ -13,6 +13,7 @@ mod app_state;
 mod app_systems;
 mod camera;
 mod common;
+#[cfg(debug_assertions)]
 mod dev_systems;
 mod events;
 mod game;
@@ -28,11 +29,12 @@ use events::{MenuInteraction, PlayerAction};
 
 fn main() {
     App::new()
-        // The clear color is the color the screen is cleared to before each frame is drawn
-        .insert_resource(ClearColor(Color::DARK_GREEN))
-        // Set basic window properties
+        // Add our custom default plugins
+        .add_plugins(ElementalistDefaultPlugins)
+        // Add the default plugins
         .add_plugins(
             DefaultPlugins
+                // Set basic window properties
                 .set(WindowPlugin {
                     primary_window: Some(Window {
                         title: app_info::game_name_and_version(),
@@ -48,9 +50,6 @@ fn main() {
                 })
                 .set(ImagePlugin::default_nearest()),
         )
-        .add_systems(Startup, app_systems::set_window_icon)
-        // Add our dev-mode systems (they disable themselves in release mode)
-        .add_plugins(dev_systems::DevSystemsPlugin)
         // Add state
         .add_state::<AppState>()
         // Add all the general resources and their update systems (e.g. cursor position)
@@ -81,4 +80,20 @@ fn main() {
         .add_plugins(common::movement::MovementPlugin)
         // Launch
         .run();
+}
+
+struct ElementalistDefaultPlugins;
+
+impl Plugin for ElementalistDefaultPlugins {
+    fn build(&self, app: &mut App) {
+        // The clear color is the color the screen is cleared to before each frame is drawn
+        app.insert_resource(ClearColor(Color::DARK_GREEN));
+        // Add the window icon
+        app.add_systems(Startup, app_systems::set_window_icon);
+        // When in debug mode, add the debug plugin.
+        #[cfg(debug_assertions)]
+        {
+            app.add_plugins(dev_systems::DevSystemsPlugin);
+        }
+    }
 }

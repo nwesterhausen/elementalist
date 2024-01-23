@@ -1,5 +1,4 @@
 use bevy::prelude::*;
-use bevy_pkv::PkvStore;
 
 use game_library::{
     font_resource::{change_font, ChangeFont, FontResource},
@@ -22,8 +21,6 @@ impl Plugin for ElementalistResourcesPlugin {
         app.insert_resource(CursorPosition::default());
         app.insert_resource(SpellChoices::default());
         app.insert_resource(FontResource::default());
-        // Add a persistent key-value store for settings, etc.
-        app.insert_resource(PkvStore::new("nwest.games", "elementalist"));
 
         // ### GRAPHICS RESOURCES ###
         app.add_systems(Startup, load_spell_atlas);

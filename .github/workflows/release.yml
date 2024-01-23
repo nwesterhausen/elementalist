@@ -228,7 +228,7 @@ jobs:
           export CPPFLAGS="-I/usr/local/opt/llvm/include"
       - name: Build
         run: |
-          cargo build --release --target aarch64-apple-darwin
+          SDKROOT=$(xcrun -sdk macosx --show-sdk-path) cargo build --release --target=aarch64-apple-darwin
 
       - name: Prepare Package
         run: |

@@ -66,6 +66,22 @@ pub fn video_settings_setup(mut commands: Commands, fonts: Res<FontResource>) {
                     ..default()
                 })
                 .with_children(|menu_buttons| {
+                    // Change font settings button
+                    menu_buttons
+                        .spawn((
+                            ButtonBundle {
+                                style: button_style.clone(),
+                                background_color: Color::NONE.into(),
+                                ..default()
+                            },
+                            ButtonAction::ChangeFont,
+                        ))
+                        .with_children(|button| {
+                            button.spawn(TextBundle::from_section(
+                                "Change Font Settings",
+                                button_text_style.clone(),
+                            ));
+                        });
                     // Back button (=> settings)
                     menu_buttons
                         .spawn((

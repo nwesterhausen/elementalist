@@ -28,7 +28,9 @@ impl Plugin for DevSystemsPlugin {
             .register_type::<MovementBundle>()
             .register_type::<FontResource>()
             .register_type::<FontChoice>()
-            // Add a window for the SpellChoices resource.
-            .add_plugins(ResourceInspectorPlugin::<SpellChoices>::default());
+            .add_plugins(
+                // Add a window for the SpellChoices resource.
+                ResourceInspectorPlugin::<SpellChoices>::default(),
+            );
     }
 }

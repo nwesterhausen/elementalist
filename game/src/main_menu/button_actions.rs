@@ -12,4 +12,6 @@ pub enum ButtonAction {
     SettingsVideo,
     SettingsControls,
     SettingsGameplay,
+    // ChangeFont .. maybe we have to include internal values too..
+    ChangeFont,
 }

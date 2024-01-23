@@ -26,6 +26,7 @@ egui_dock = "0.10.0"
 bevy-inspector-egui = "0.22.1"
 winit = "0.28"
 image = "0.24"
+rand = "0.8.5"
 
 [lints.rust]
 unsafe_code = "forbid"

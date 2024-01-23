@@ -1,4 +1,6 @@
 use bevy::{app::AppExit, prelude::*};
+use game_library::font_resource::FontResource;
+use rand::seq::SliceRandom;
 
 use crate::AppState;
 
@@ -53,6 +55,8 @@ pub fn menu_actions(
     mut app_exit_events: EventWriter<AppExit>,
     mut menu_state: ResMut<NextState<MenuState>>,
     mut game_state: ResMut<NextState<AppState>>,
+    mut font_resource: ResMut<FontResource>,
+    asset_server: Res<AssetServer>,
 ) {
     // Loop through all the buttons that have been interacted with
     for (interaction, menu_button_action) in &interaction_query {
@@ -73,8 +77,21 @@ pub fn menu_actions(
                 ButtonAction::SettingsVideo => menu_state.set(MenuState::SettingsVideo),
                 ButtonAction::SettingsControls => menu_state.set(MenuState::SettingsControls),
                 ButtonAction::SettingsGameplay => menu_state.set(MenuState::SettingsGameplay),
-                // A catch-all for any button actions we haven't handled (yet)
-                // _ => tracing::error!("Unhandled button action: {:?}", menu_button_action),
+                ButtonAction::ChangeFont => {
+                    // For now, choose a random font and then load the handle into display
+                    let font_choices = [
+                        "ui/fonts/AlmendraDisplay-Regular.ttf".to_string(),
+                        "ui/fonts/OpenDyslexic-Regular.otf".to_string(),
+                        "ui/fonts/RedHatDisplay-Regular.ttf".to_string(),
+                    ];
+                    let Some(font_choice) = font_choices.choose(&mut rand::thread_rng()) else {
+                        tracing::error!("Failed to choose a random font");
+                        continue;
+                    };
+                    tracing::info!("Changing font to: {}", font_choice);
+                    font_resource.display_font = asset_server.load(font_choice);
+                } // A catch-all for any button actions we haven't handled (yet)
+                  // _ => tracing::error!("Unhandled button action: {:?}", menu_button_action),
             }
         }
     }

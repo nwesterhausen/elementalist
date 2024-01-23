@@ -207,7 +207,9 @@ jobs:
   # Build for MacOS Apple Silicon
   release-macOS-apple-silicon:
     runs-on: macOS-latest
-
+    env:
+      # macOS 11 was the first version to support ARM
+      MACOSX_DEPLOYMENT_TARGET: 11
     steps:
       - uses: olegtarasov/get-tag@v2.1.2
         id: get_version
@@ -216,20 +218,19 @@ jobs:
         with:
           targets: aarch64-apple-darwin
           toolchain: nightly-2024-01-17
-      - name: Environment
-        # macOS 11 was the first version to support ARM
-        run: |
-          export MACOSX_DEPLOYMENT_TARGET="13"
       - name: Setup LLVM
         run: |
-          # seems to be we need to install LLVM via brew. Brew suggests a couple other exports
+          # seems to be we need to install LLVM via brew. 
           brew install llvm
-          export LDFLAGS="-L/usr/local/opt/llvm/lib"
-          export CPPFLAGS="-I/usr/local/opt/llvm/include"
+          # Brew suggests a couple other exports during the LLVM install
+          export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+          export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
+          export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
       - name: Build
         run: |
-          SDKROOT=$(xcrun -sdk macosx --show-sdk-path) cargo build --release --target=aarch64-apple-darwin
-
+          # This fails the final linking step with error:
+          # "note: clang: error: invalid linker name in argument '-fuse-ld=/opt/homebrew/opt/llvm/bin/ld64.lld'"
+          cargo build --release --target aarch64-apple-darwin
       - name: Prepare Package
         run: |
           mkdir -p ${{ env.binary }}.app/Contents/MacOS

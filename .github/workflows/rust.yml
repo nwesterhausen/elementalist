@@ -2,7 +2,6 @@ name: Build & Test
 
 permissions:
   contents: read
-  checks: write
 
 on:
   push:
@@ -13,7 +12,7 @@ on:
 env:
   CARGO_TERM_COLOR: always
 
-  # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
   group: rust

@@ -20,10 +20,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: olegtarasov/get-tag@v2.1.2
+      - uses: olegtarasov/get-tag@14deb5cb39a98e81adb64f8ac8b27aefab278784 # v2.1.2
         id: get_version
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+      - uses: dtolnay/rust-toolchain@78c6b5541adb5849f5d72d15da722aedb26327ca # stable
         with:
           targets: wasm32-unknown-unknown
           toolchain: nightly-2024-01-17
@@ -47,7 +47,7 @@ jobs:
           zip --recurse-paths ../${{ env.binary }}.zip .
 
       - name: Upload binaries to artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8 # v4
         with:
           path: ${{ env.binary }}.zip
           name: wasm
@@ -55,7 +55,7 @@ jobs:
 
       - name: Upload binaries to release
         if: ${{ env.add_binaries_to_github_release == 'true' }}
-        uses: svenstaro/upload-release-action@v2
+        uses: svenstaro/upload-release-action@1beeb572c19a9242f4361f4cee78f8e0d9aec5df # v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ env.binary }}.zip
@@ -68,10 +68,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: olegtarasov/get-tag@v2.1.2
+      - uses: olegtarasov/get-tag@14deb5cb39a98e81adb64f8ac8b27aefab278784 # v2.1.2
         id: get_version
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+      - uses: dtolnay/rust-toolchain@78c6b5541adb5849f5d72d15da722aedb26327ca # stable
         with:
           targets: x86_64-unknown-linux-gnu
           toolchain: nightly-2024-01-17
@@ -96,7 +96,7 @@ jobs:
           zip --recurse-paths ../${{ env.binary }}.zip .
 
       - name: Upload binaries to artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8 # v4
         with:
           path: ${{ env.binary }}.zip
           name: linux
@@ -104,7 +104,7 @@ jobs:
 
       - name: Upload binaries to release
         if: ${{ env.add_binaries_to_github_release == 'true' }}
-        uses: svenstaro/upload-release-action@v2
+        uses: svenstaro/upload-release-action@1beeb572c19a9242f4361f4cee78f8e0d9aec5df # v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ env.binary }}.zip
@@ -117,10 +117,10 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - uses: olegtarasov/get-tag@v2.1.2
+      - uses: olegtarasov/get-tag@14deb5cb39a98e81adb64f8ac8b27aefab278784 # v2.1.2
         id: get_version
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+      - uses: dtolnay/rust-toolchain@78c6b5541adb5849f5d72d15da722aedb26327ca # stable
         with:
           targets: x86_64-pc-windows-msvc
           toolchain: nightly-2024-01-17
@@ -141,7 +141,7 @@ jobs:
           Compress-Archive -Path windows/* -DestinationPath ${{ env.binary }}.zip
 
       - name: Upload binaries to artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8 # v4
         with:
           path: ${{ env.binary }}.zip
           name: windows
@@ -149,7 +149,7 @@ jobs:
 
       - name: Upload binaries to release
         if: ${{ env.add_binaries_to_github_release == 'true' }}
-        uses: svenstaro/upload-release-action@v2
+        uses: svenstaro/upload-release-action@1beeb572c19a9242f4361f4cee78f8e0d9aec5df # v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ env.binary }}.zip
@@ -162,10 +162,10 @@ jobs:
     runs-on: macOS-latest
 
     steps:
-      - uses: olegtarasov/get-tag@v2.1.2
+      - uses: olegtarasov/get-tag@14deb5cb39a98e81adb64f8ac8b27aefab278784 # v2.1.2
         id: get_version
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+      - uses: dtolnay/rust-toolchain@78c6b5541adb5849f5d72d15da722aedb26327ca # stable
         with:
           targets: x86_64-apple-darwin
           toolchain: nightly-2024-01-17
@@ -188,7 +188,7 @@ jobs:
           hdiutil create -fs HFS+ -volname "${{ env.binary }}" -srcfolder ${{ env.binary }}.app ${{ env.binary }}-macOS-intel.dmg
 
       - name: Upload binaries to artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8 # v4
         with:
           path: ${{ env.binary }}-macOS-intel.dmg
           name: macOS-intel
@@ -196,7 +196,7 @@ jobs:
 
       - name: Upload binaries to release
         if: ${{ env.add_binaries_to_github_release == 'true' }}
-        uses: svenstaro/upload-release-action@v2
+        uses: svenstaro/upload-release-action@1beeb572c19a9242f4361f4cee78f8e0d9aec5df # v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ env.binary }}-macOS-intel.dmg
@@ -211,16 +211,16 @@ jobs:
       # macOS 11 was the first version to support ARM
       MACOSX_DEPLOYMENT_TARGET: 11
     steps:
-      - uses: olegtarasov/get-tag@v2.1.2
+      - uses: olegtarasov/get-tag@14deb5cb39a98e81adb64f8ac8b27aefab278784 # v2.1.2
         id: get_version
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+      - uses: dtolnay/rust-toolchain@78c6b5541adb5849f5d72d15da722aedb26327ca # stable
         with:
           targets: aarch64-apple-darwin
           toolchain: nightly-2024-01-17
       - name: Setup LLVM
         run: |
-          # seems to be we need to install LLVM via brew. 
+          # seems to be we need to install LLVM via brew.
           brew install llvm
           # Brew suggests a couple other exports during the LLVM install
           export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
@@ -240,7 +240,7 @@ jobs:
           hdiutil create -fs HFS+ -volname "${{ env.binary }}-macOS-apple-silicon" -srcfolder ${{ env.binary }}.app ${{ env.binary }}-macOS-apple-silicon.dmg
 
       - name: Upload binaries to artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8 # v4
         with:
           path: ${{ env.binary }}-macOS-apple-silicon.dmg
           name: macOS-apple-silicon
@@ -248,7 +248,7 @@ jobs:
 
       - name: Upload binaries to release
         if: ${{ env.add_binaries_to_github_release == 'true' }}
-        uses: svenstaro/upload-release-action@v2
+        uses: svenstaro/upload-release-action@1beeb572c19a9242f4361f4cee78f8e0d9aec5df # v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ env.binary }}-macOS-apple-silicon.dmg
@@ -282,7 +282,7 @@ jobs:
 
     steps:
       - name: Download artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@6b208ae046db98c579e8a3aa621ab581ff575935 # v4
         with:
           path: ./builds
 
@@ -292,7 +292,7 @@ jobs:
           unzip butler.zip
           chmod +x butler
           ./butler -V
-      - uses: olegtarasov/get-tag@v2.1.2
+      - uses: olegtarasov/get-tag@14deb5cb39a98e81adb64f8ac8b27aefab278784 # v2.1.2
         id: get_version
       - name: Upload to itch.io
         env:

@@ -2,6 +2,7 @@
 
 [![Documentation](https://github.com/nwesterhausen/elementalist/actions/workflows/docs.yml/badge.svg)](https://nwesterhausen.github.io/elementalist/)
 [![Build & Test](https://github.com/nwesterhausen/elementalist/actions/workflows/rust.yml/badge.svg)](https://github.com/nwesterhausen/elementalist/actions/workflows/rust.yml)
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/8337/badge)](https://www.bestpractices.dev/projects/8337)
 
 |                                                  |                        |
 | ------------------------------------------------ | ---------------------- |

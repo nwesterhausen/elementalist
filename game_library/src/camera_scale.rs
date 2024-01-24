@@ -61,6 +61,7 @@
 
 use bevy::prelude::*;
 use bevy_inspector_egui::prelude::*;
+use serde::{Deserialize, Serialize};
 
 /// Component that stores the current camera scale level.
 ///
@@ -77,7 +78,7 @@ use bevy_inspector_egui::prelude::*;
 /// These are available as constants on the struct:
 ///
 /// * [`CameraScaleLevel::LEVELS`]
-#[derive(Component, Reflect, InspectorOptions, Clone, Copy)]
+#[derive(Component, Reflect, InspectorOptions, Clone, Copy, Debug, Serialize, Deserialize)]
 #[reflect(Component, InspectorOptions)]
 #[allow(clippy::module_name_repetitions)]
 pub struct CameraScaleLevel {

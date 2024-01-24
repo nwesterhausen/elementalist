@@ -25,6 +25,7 @@ pub mod enums;
 pub mod events;
 pub mod font_resource;
 pub mod math;
+pub mod settings;
 
 mod acceleration;
 mod attribute;

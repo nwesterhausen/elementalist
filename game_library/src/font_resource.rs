@@ -7,6 +7,7 @@
 
 use bevy::prelude::*;
 use bevy_inspector_egui::prelude::*;
+use serde::{Deserialize, Serialize};
 
 /// A resource to hold handles for the fonts used in the game.
 #[derive(Resource, Debug, Clone, Default, Reflect, InspectorOptions)]
@@ -34,6 +35,33 @@ pub enum FontChoice {
     Main,
     /// The font face used for the console.
     Console,
+}
+
+/// The generic font-family options. This is used in [`crate::settings::AccessibilitySettings`]
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Hash,
+    Reflect,
+    InspectorOptions,
+    Serialize,
+    Deserialize,
+    Default,
+)]
+#[reflect(InspectorOptions)]
+pub enum FontFamily {
+    /// "Fancy" display text.
+    #[default]
+    Display,
+    /// OpenDyslexic
+    Dyslexic,
+    /// Sans-serif
+    SansSerif,
+    /// Monospace
+    Monospace,
 }
 
 /// Change a font choice. Sending this event will update the specified font

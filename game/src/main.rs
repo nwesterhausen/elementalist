@@ -6,6 +6,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use bevy::{asset::AssetMetaCheck, prelude::*};
+use game_library::settings::SettingsPlugin;
 use leafwing_input_manager::plugin::InputManagerPlugin;
 
 mod app_info;
@@ -20,6 +21,7 @@ mod game;
 mod main_menu;
 mod player;
 mod resources;
+mod settings_menu;
 mod spells;
 mod splash_screen;
 
@@ -48,6 +50,7 @@ fn main() {
                     }),
                     ..Default::default()
                 })
+                // Nearest neighbor scaling (pixel art)
                 .set(ImagePlugin::default_nearest()),
         )
         // Add the debug plugin if in debug mode
@@ -97,6 +100,8 @@ impl Plugin for ElementalistDefaultPlugins {
         app.insert_resource(ClearColor(Color::DARK_GREEN));
         // Add the window icon
         app.add_systems(Startup, app_systems::set_window_icon);
+        // Add the settings plugin
+        app.add_plugins(SettingsPlugin);
     }
 }
 

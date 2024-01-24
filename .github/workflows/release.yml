@@ -12,12 +12,15 @@ env:
   itch_target: nwesterhausen/elementalist
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   # Build for wasm
   release-wasm:
     runs-on: ubuntu-latest
+    # To upload artifacts, contents write permission is required
+    permissions:
+      contents: write
 
     steps:
       - uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
@@ -69,6 +72,9 @@ jobs:
   # Build for Linux
   release-linux:
     runs-on: ubuntu-latest
+    # To upload artifacts, contents write permission is required
+    permissions:
+      contents: write
 
     steps:
       - uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
@@ -121,6 +127,9 @@ jobs:
   # Build for Windows
   release-windows:
     runs-on: windows-latest
+    # To upload artifacts, contents write permission is required
+    permissions:
+      contents: write
 
     steps:
       - uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
@@ -169,6 +178,9 @@ jobs:
   # Build for MacOS x86_64
   release-macOS-intel:
     runs-on: macOS-latest
+    # To upload artifacts, contents write permission is required
+    permissions:
+      contents: write
 
     steps:
       - uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
@@ -219,6 +231,9 @@ jobs:
   # Build for MacOS Apple Silicon
   release-macOS-apple-silicon:
     runs-on: macOS-latest
+    # To upload artifacts, contents write permission is required
+    permissions:
+      contents: write
     env:
       # macOS 11 was the first version to support ARM
       MACOSX_DEPLOYMENT_TARGET: 11

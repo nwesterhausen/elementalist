@@ -20,6 +20,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
+        with:
+          egress-policy: audit
       - uses: olegtarasov/get-tag@14deb5cb39a98e81adb64f8ac8b27aefab278784 # v2.1.2
         id: get_version
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
@@ -68,6 +71,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
+        with:
+          egress-policy: audit
       - uses: olegtarasov/get-tag@14deb5cb39a98e81adb64f8ac8b27aefab278784 # v2.1.2
         id: get_version
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
@@ -117,6 +123,9 @@ jobs:
     runs-on: windows-latest
 
     steps:
+      - uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
+        with:
+          egress-policy: audit
       - uses: olegtarasov/get-tag@14deb5cb39a98e81adb64f8ac8b27aefab278784 # v2.1.2
         id: get_version
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
@@ -162,6 +171,9 @@ jobs:
     runs-on: macOS-latest
 
     steps:
+      - uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
+        with:
+          egress-policy: audit
       - uses: olegtarasov/get-tag@14deb5cb39a98e81adb64f8ac8b27aefab278784 # v2.1.2
         id: get_version
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
@@ -211,6 +223,9 @@ jobs:
       # macOS 11 was the first version to support ARM
       MACOSX_DEPLOYMENT_TARGET: 11
     steps:
+      - uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
+        with:
+          egress-policy: audit
       - uses: olegtarasov/get-tag@14deb5cb39a98e81adb64f8ac8b27aefab278784 # v2.1.2
         id: get_version
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
@@ -281,6 +296,9 @@ jobs:
     if: ${{ needs.check-if-upload-to-itch-is-configured.outputs.should-upload == 'yes' }}
 
     steps:
+      - uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
+        with:
+          egress-policy: audit
       - name: Download artifacts
         uses: actions/download-artifact@6b208ae046db98c579e8a3aa621ab581ff575935 # v4
         with:

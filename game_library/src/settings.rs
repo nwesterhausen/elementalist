@@ -137,7 +137,7 @@ impl SettingCategory {
     /// # Example
     ///
     /// ```
-    /// use game_library::SettingCategory;
+    /// use game_library::settings::SettingCategory;
     ///
     /// assert_eq!(SettingCategory::Volume.name(), "Volume");
     /// ```

@@ -102,6 +102,8 @@ impl Plugin for ElementalistDefaultPlugins {
         app.add_systems(Startup, app_systems::set_window_icon);
         // Add the settings plugin
         app.add_plugins(SettingsPlugin);
+        // Add the menu plugin
+        app.add_plugins(settings_menu::SettingsMenuPlugin);
     }
 }
 

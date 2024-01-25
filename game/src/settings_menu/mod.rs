@@ -11,3 +11,10 @@
 //!
 //! This module will have to handle drawing things to the screen and sending the appropriate
 //! events on setting changes.
+
+mod base;
+mod plugin;
+mod state;
+
+pub use plugin::SettingsMenuPlugin;
+pub use state::MenuState;

@@ -2,7 +2,7 @@ use bevy::{app::AppExit, prelude::*};
 use game_library::font_resource::FontResource;
 use rand::seq::SliceRandom;
 
-use crate::AppState;
+use crate::{settings_menu, AppState};
 
 use super::{button_actions::ButtonAction, components::SelectedOption, state::MenuState};
 
@@ -57,6 +57,7 @@ pub fn menu_actions(
     mut game_state: ResMut<NextState<AppState>>,
     mut font_resource: ResMut<FontResource>,
     asset_server: Res<AssetServer>,
+    mut settings_state: ResMut<NextState<settings_menu::MenuState>>,
 ) {
     // Loop through all the buttons that have been interacted with
     for (interaction, menu_button_action) in &interaction_query {
@@ -71,6 +72,7 @@ pub fn menu_actions(
                 }
                 ButtonAction::Settings | ButtonAction::BackToSettings => {
                     menu_state.set(MenuState::Settings);
+                    settings_state.set(settings_menu::MenuState::Main);
                 }
                 ButtonAction::BackToMenu => menu_state.set(MenuState::Main),
                 ButtonAction::SettingsAudio => menu_state.set(MenuState::SettingsAudio),

@@ -2,6 +2,9 @@ use bevy::{prelude::*, window::PrimaryWindow};
 use bevy_inspector_egui::bevy_egui::{EguiContext, EguiPlugin};
 use bevy_inspector_egui::egui::{self, Align2};
 
+use game_library::settings::{
+    AccessibilitySettings, GameplaySettings, VideoSettings, VolumeSettings,
+};
 use game_library::{
     enums::Skill,
     font_resource::{FontChoice, FontResource},
@@ -30,6 +33,10 @@ impl Plugin for DevSystemsPlugin {
             .register_type::<MovementBundle>()
             .register_type::<FontResource>()
             .register_type::<FontChoice>()
+            .register_type::<VolumeSettings>()
+            .register_type::<VideoSettings>()
+            .register_type::<GameplaySettings>()
+            .register_type::<AccessibilitySettings>()
             .add_plugins(bevy_inspector_egui::DefaultInspectorConfigPlugin)
             .add_systems(Update, inspector_ui);
     }
@@ -58,6 +65,38 @@ fn inspector_ui(world: &mut World) {
                 .show(ui, |ui| {
                     // The resource inspector plugin
                     bevy_inspector_egui::bevy_inspector::ui_for_resource::<SpellChoices>(world, ui);
+                });
+            // Add collapsable sections for the settings resources.
+            egui::CollapsingHeader::new("Volume Settings")
+                .default_open(false)
+                .show(ui, |ui| {
+                    bevy_inspector_egui::bevy_inspector::ui_for_resource::<VolumeSettings>(
+                        world, ui,
+                    );
+                });
+            // Add collapsable sections for the settings resources.
+            egui::CollapsingHeader::new("Video Settings")
+                .default_open(false)
+                .show(ui, |ui| {
+                    bevy_inspector_egui::bevy_inspector::ui_for_resource::<VideoSettings>(
+                        world, ui,
+                    );
+                });
+            // Add collapsable sections for the settings resources.
+            egui::CollapsingHeader::new("Gameplay Settings")
+                .default_open(false)
+                .show(ui, |ui| {
+                    bevy_inspector_egui::bevy_inspector::ui_for_resource::<GameplaySettings>(
+                        world, ui,
+                    );
+                });
+            // Add collapsable sections for the settings resources.
+            egui::CollapsingHeader::new("Accessibility Settings")
+                .default_open(false)
+                .show(ui, |ui| {
+                    bevy_inspector_egui::bevy_inspector::ui_for_resource::<AccessibilitySettings>(
+                        world, ui,
+                    );
                 });
         });
 }

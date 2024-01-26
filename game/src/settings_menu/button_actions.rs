@@ -1,14 +1,13 @@
 //! Actions that can be performed by the buttons in the settings menu.
 
 use bevy::prelude::*;
-use game_library::{
-    font_resource::{ChangeFont, FontChoice, FontResource},
-    settings::{next_font_family, AccessibilitySettings, GameplaySettings},
-};
 
 use crate::{common::colors, resources::ReturnToState, AppState};
 
-use super::MenuState;
+use super::{
+    events::{ChangeSetting, IndividualSetting},
+    MenuState,
+};
 
 /// All of the various "buttons" that can be clicked in any of the main menu screens
 #[derive(Component, Debug, Eq, PartialEq, Hash, Clone, Copy)]
@@ -33,6 +32,12 @@ pub(super) enum ButtonAction {
     ToggleAutoAim,
     /// Change the font family
     RotateFontFamily,
+    /// Increment the main volume
+    IncrementMainVolume,
+    /// Increment the music volume
+    IncrementMusicVolume,
+    /// Increment the sound effects volume
+    IncrementSoundEffectsVolume,
 }
 
 /// Tag component used to mark which setting is currently selected
@@ -86,16 +91,13 @@ pub(super) fn button_system(
 /// * `app_exit_events`: can be used to send an `AppExit` event to exit the game
 /// * `menu_state(next)`: lets us change the menu state for the next frame
 /// * `game_state(next)`: lets us change the game state for the next frame
-#[allow(clippy::type_complexity, clippy::too_many_arguments)]
+#[allow(clippy::type_complexity)]
 pub fn menu_actions(
     interaction_query: Query<(&Interaction, &ButtonAction), (Changed<Interaction>, With<Button>)>,
     mut menu_state: ResMut<NextState<MenuState>>,
     mut game_state: ResMut<NextState<AppState>>,
     return_to_state: Res<ReturnToState>,
-    mut gameplay_settings: ResMut<GameplaySettings>,
-    mut accessibility_settings: ResMut<AccessibilitySettings>,
-    mut ew_change_font: EventWriter<ChangeFont>,
-    fonts: Res<FontResource>,
+    mut ew_change_setting: EventWriter<ChangeSetting>,
 ) {
     // Loop through all the buttons that have been interacted with
     for (interaction, menu_button_action) in &interaction_query {
@@ -114,18 +116,33 @@ pub fn menu_actions(
                 ButtonAction::SettingsGameplay => menu_state.set(MenuState::Gameplay),
                 ButtonAction::SettingsAccessibility => menu_state.set(MenuState::Accessibility),
                 ButtonAction::ToggleAutoCast => {
-                    gameplay_settings.auto_cast = !gameplay_settings.auto_cast;
+                    ew_change_setting.send(ChangeSetting {
+                        setting: IndividualSetting::AutoCast,
+                    });
                 }
                 ButtonAction::ToggleAutoAim => {
-                    gameplay_settings.auto_aim = !gameplay_settings.auto_aim;
+                    ew_change_setting.send(ChangeSetting {
+                        setting: IndividualSetting::AutoAim,
+                    });
                 }
                 ButtonAction::RotateFontFamily => {
-                    let new_font_family =
-                        next_font_family(accessibility_settings.interface_font_family);
-                    accessibility_settings.interface_font_family = new_font_family;
-                    ew_change_font.send(ChangeFont {
-                        font_choice: FontChoice::Interface,
-                        new_font: fonts.get_font_handle(new_font_family),
+                    ew_change_setting.send(ChangeSetting {
+                        setting: IndividualSetting::FontFamily,
+                    });
+                }
+                ButtonAction::IncrementMainVolume => {
+                    ew_change_setting.send(ChangeSetting {
+                        setting: IndividualSetting::MainVolume,
+                    });
+                }
+                ButtonAction::IncrementMusicVolume => {
+                    ew_change_setting.send(ChangeSetting {
+                        setting: IndividualSetting::MusicVolume,
+                    });
+                }
+                ButtonAction::IncrementSoundEffectsVolume => {
+                    ew_change_setting.send(ChangeSetting {
+                        setting: IndividualSetting::SoundEffectsVolume,
                     });
                 }
             }

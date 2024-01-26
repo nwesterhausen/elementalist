@@ -150,7 +150,7 @@ pub struct AccessibilitySettings {
 /// # Example
 ///
 /// ```
-/// use game_library::settings::{FontChoice, next_font_choice};
+/// use game_library::{font_resource::FontChoice, settings::next_font_choice};
 ///
 /// assert_eq!(next_font_choice(FontChoice::Display), FontChoice::Interface);
 /// assert_eq!(next_font_choice(FontChoice::Interface), FontChoice::Main);
@@ -174,7 +174,7 @@ pub const fn next_font_choice(font_choice: FontChoice) -> FontChoice {
 /// # Example
 ///
 /// ```
-/// use game_library::settings::{FontFamily, next_font_family};
+/// use game_library::{font_resource::FontFamily, settings::next_font_family};
 ///
 /// assert_eq!(next_font_family(FontFamily::Display), FontFamily::Dyslexic);
 /// assert_eq!(next_font_family(FontFamily::Fancy), FontFamily::Dyslexic);

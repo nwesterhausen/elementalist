@@ -6,13 +6,19 @@ use bevy::prelude::*;
 use crate::{despawn_with_tag, AppState};
 
 use super::{
-    accessibility::{show_accessibility_settings, AccessibilitySettingsMenuEntity},
-    audio::{show_audio_settings, AudioSettingsMenuEntity},
+    accessibility::{
+        handle_accessibility_setting_changes, show_accessibility_settings,
+        AccessibilitySettingsMenuEntity,
+    },
+    audio::{handle_audio_setting_changes, show_audio_settings, AudioSettingsMenuEntity},
     base::{clear_background, transition_to_base_menu, MenuBackground, MenuEntity},
     button_actions::{button_system, menu_actions},
     controls::{show_controls_settings, ControlsSettingsMenuEntity},
     display::{show_display_settings, DisplaySettingsMenuEntity},
-    gameplay::{show_gameplay_settings, GameplaySettingsMenuEntity},
+    events::ChangeSetting,
+    gameplay::{
+        handle_gameplay_setting_changes, show_gameplay_settings, GameplaySettingsMenuEntity,
+    },
     main::{show_main_menu, MainMenuEntity},
     state::MenuState,
 };
@@ -23,6 +29,7 @@ pub struct SettingsMenuPlugin;
 impl Plugin for SettingsMenuPlugin {
     fn build(&self, app: &mut App) {
         app.add_state::<MenuState>();
+        app.add_event::<ChangeSetting>();
         // Add system to setup the menu
         app.add_systems(OnEnter(AppState::SettingsMenu), transition_to_base_menu);
         app.add_systems(OnEnter(MenuState::Main), (clear_background, show_main_menu));
@@ -80,10 +87,17 @@ impl Plugin for SettingsMenuPlugin {
             OnExit(MenuState::Accessibility),
             despawn_with_tag::<AccessibilitySettingsMenuEntity>,
         );
-        // Add system to update the buttons on hover, etc
+        // Add system to update the buttons on hover, and respond to button presses
         app.add_systems(
             Update,
-            (button_system, menu_actions).run_if(in_state(AppState::SettingsMenu)),
+            (
+                button_system,
+                menu_actions,
+                handle_accessibility_setting_changes,
+                handle_gameplay_setting_changes,
+                handle_audio_setting_changes,
+            )
+                .run_if(in_state(AppState::SettingsMenu)),
         );
     }
 }

@@ -1,13 +1,17 @@
 //! Has systems for the display settings menu.
 
 use bevy::prelude::*;
-use game_library::{font_resource::FontResource, settings::GameplaySettings};
+use game_library::{
+    font_resource::FontResource,
+    settings::{GameplaySettings, SettingCategory, SettingChanged},
+};
 
 use crate::common::colors;
 
 use super::{
     base::{button_style, button_text},
     button_actions::ButtonAction,
+    events::{ChangeSetting, IndividualSetting},
 };
 
 /// Component for tagging entities that are part of the display settings menu.
@@ -122,4 +126,27 @@ pub(super) fn show_gameplay_settings(
                         });
                 });
         });
+}
+
+/// System to handle the gameplay menu button actions.
+pub(super) fn handle_gameplay_setting_changes(
+    mut er_change_setting: EventReader<ChangeSetting>,
+    mut gameplay_settings: ResMut<GameplaySettings>,
+    mut ew_setting_changed: EventWriter<SettingChanged>,
+) {
+    for change_setting in er_change_setting.read() {
+        match change_setting.setting {
+            IndividualSetting::AutoCast => {
+                gameplay_settings.auto_cast = !gameplay_settings.auto_cast;
+                // Alert the system that the font has changed (to flush settings to disk)
+                ew_setting_changed.send(SettingChanged(SettingCategory::Gameplay));
+            }
+            IndividualSetting::AutoAim => {
+                gameplay_settings.auto_aim = !gameplay_settings.auto_aim;
+                // Alert the system that the font has changed (to flush settings to disk)
+                ew_setting_changed.send(SettingChanged(SettingCategory::Gameplay));
+            }
+            _ => {}
+        }
+    }
 }

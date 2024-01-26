@@ -2,7 +2,9 @@
 
 use bevy::prelude::*;
 use game_library::{
-    font_resource::FontResource, menu_helper::make_text_bundle, settings::VolumeSettings,
+    font_resource::FontResource,
+    menu_helper::make_text_bundle,
+    settings::{SettingCategory, SettingChanged, VolumeSettings},
 };
 
 use crate::common::colors;
@@ -10,6 +12,7 @@ use crate::common::colors;
 use super::{
     base::{button_style, button_text, node_style, super_node_style},
     button_actions::ButtonAction,
+    events::{ChangeSetting, IndividualSetting},
 };
 
 /// Component for tagging entities that are part of the display settings menu.
@@ -48,7 +51,7 @@ pub(super) fn show_audio_settings(
                     })
                     .with_children(|row| {
                         // Button for main volume
-                        row.spawn((button_style(), ButtonAction::SettingsAudio))
+                        row.spawn((button_style(), ButtonAction::IncrementMainVolume))
                             .with_children(|button| {
                                 button.spawn(button_text("Main", fonts.interface_font.clone()));
                             });
@@ -74,7 +77,7 @@ pub(super) fn show_audio_settings(
                     })
                     .with_children(|row| {
                         // Button for music volume
-                        row.spawn((button_style(), ButtonAction::SettingsAudio))
+                        row.spawn((button_style(), ButtonAction::IncrementMusicVolume))
                             .with_children(|button| {
                                 button.spawn(button_text("Music", fonts.interface_font.clone()));
                             });
@@ -100,7 +103,7 @@ pub(super) fn show_audio_settings(
                     })
                     .with_children(|row| {
                         // Button for sound effects volume
-                        row.spawn((button_style(), ButtonAction::SettingsAudio))
+                        row.spawn((button_style(), ButtonAction::IncrementSoundEffectsVolume))
                             .with_children(|button| {
                                 button.spawn(button_text(
                                     "Sound Effects",
@@ -125,4 +128,29 @@ pub(super) fn show_audio_settings(
                     });
             });
         });
+}
+
+/// System to handle the audio menu button actions.
+pub(super) fn handle_audio_setting_changes(
+    mut er_change_setting: EventReader<ChangeSetting>,
+    mut gameplay_settings: ResMut<VolumeSettings>,
+    mut ew_setting_changed: EventWriter<SettingChanged>,
+) {
+    for change_setting in er_change_setting.read() {
+        match change_setting.setting {
+            IndividualSetting::MainVolume => {
+                gameplay_settings.main.increment();
+                ew_setting_changed.send(SettingChanged(SettingCategory::Volume));
+            }
+            IndividualSetting::MusicVolume => {
+                gameplay_settings.music.increment();
+                ew_setting_changed.send(SettingChanged(SettingCategory::Volume));
+            }
+            IndividualSetting::SoundEffectsVolume => {
+                gameplay_settings.sfx.increment();
+                ew_setting_changed.send(SettingChanged(SettingCategory::Volume));
+            }
+            _ => {}
+        }
+    }
 }

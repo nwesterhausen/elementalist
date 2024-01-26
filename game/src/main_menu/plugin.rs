@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::{despawn_screen, AppState};
+use crate::{despawn_with_tag, AppState};
 
 use super::{
     components, screens,
@@ -36,43 +36,7 @@ impl Plugin for MainMenuPlugin {
             .add_systems(OnEnter(MenuState::Main), screens::main_menu)
             .add_systems(
                 OnExit(MenuState::Main),
-                despawn_screen::<components::OnMainMenuScreen>,
-            )
-            // Settings screen
-            .add_systems(OnEnter(MenuState::Settings), screens::settings)
-            .add_systems(
-                OnExit(MenuState::Settings),
-                despawn_screen::<components::OnSettingsMenuScreen>,
-            )
-            // Audio settings screen
-            .add_systems(OnEnter(MenuState::SettingsAudio), screens::audio_settings)
-            .add_systems(
-                OnExit(MenuState::SettingsAudio),
-                despawn_screen::<components::OnAudioSettingsMenuScreen>,
-            )
-            // Video settings screen
-            .add_systems(OnEnter(MenuState::SettingsVideo), screens::video_settings)
-            .add_systems(
-                OnExit(MenuState::SettingsVideo),
-                despawn_screen::<components::OnVideoSettingsMenuScreen>,
-            )
-            // Controls settings screen
-            .add_systems(
-                OnEnter(MenuState::SettingsControls),
-                screens::controls_settings,
-            )
-            .add_systems(
-                OnExit(MenuState::SettingsControls),
-                despawn_screen::<components::OnControlsSettingsMenuScreen>,
-            )
-            // Gameplay settings screen
-            .add_systems(
-                OnEnter(MenuState::SettingsGameplay),
-                screens::gameplay_settings,
-            )
-            .add_systems(
-                OnExit(MenuState::SettingsGameplay),
-                despawn_screen::<components::OnGameplaySettingsMenuScreen>,
+                despawn_with_tag::<components::OnMainMenuScreen>,
             );
     }
 }

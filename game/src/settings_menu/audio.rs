@@ -1,13 +1,21 @@
+//! Has systems for the display settings menu.
+
 use bevy::prelude::*;
-use game_library::font_resource::FontResource;
+use game_library::{font_resource::FontResource, settings::VolumeSettings};
 
-use crate::main_menu::{button_actions::ButtonAction, components::OnVideoSettingsMenuScreen};
+use crate::common::colors;
 
-/// System to setup the main menu screen
-///
-/// When the main menu screen is entered, we spawn the main menu entities. This includes the
-/// background, the title, and the buttons.
-pub fn video_settings_setup(mut commands: Commands, fonts: Res<FontResource>) {
+use super::button_actions::ButtonAction;
+
+/// Component for tagging entities that are part of the display settings menu.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Component)]
+pub(super) struct AudioSettingsMenuEntity;
+
+pub(super) fn show_audio_settings(
+    mut commands: Commands,
+    fonts: Res<FontResource>,
+    mut volume_settings: ResMut<VolumeSettings>,
+) {
     // Common style for all buttons on the screen
     let button_style = Style {
         margin: UiRect::px(10., 10., 0., 20.),
@@ -17,7 +25,7 @@ pub fn video_settings_setup(mut commands: Commands, fonts: Res<FontResource>) {
     };
     let button_text_style = TextStyle {
         font_size: 40.0,
-        color: Color::WHITE,
+        color: colors::TEXT_COLOR,
         font: fonts.display_font.clone(),
     };
 
@@ -34,17 +42,17 @@ pub fn video_settings_setup(mut commands: Commands, fonts: Res<FontResource>) {
                 },
                 ..default()
             },
-            OnVideoSettingsMenuScreen,
+            AudioSettingsMenuEntity,
         ))
         .with_children(|parent| {
             // Game Title
             parent.spawn(TextBundle {
                 text: Text::from_section(
-                    "Video Settings",
+                    "Audio Settings",
                     TextStyle {
                         font: fonts.display_font.clone(),
                         font_size: 72.0,
-                        color: Color::WHITE,
+                        color: colors::TEXT_COLOR,
                     },
                 ),
                 style: Style {
@@ -66,22 +74,6 @@ pub fn video_settings_setup(mut commands: Commands, fonts: Res<FontResource>) {
                     ..default()
                 })
                 .with_children(|menu_buttons| {
-                    // Change font settings button
-                    menu_buttons
-                        .spawn((
-                            ButtonBundle {
-                                style: button_style.clone(),
-                                background_color: Color::NONE.into(),
-                                ..default()
-                            },
-                            ButtonAction::ChangeFont,
-                        ))
-                        .with_children(|button| {
-                            button.spawn(TextBundle::from_section(
-                                "Change Font Settings",
-                                button_text_style.clone(),
-                            ));
-                        });
                     // Back button (=> settings)
                     menu_buttons
                         .spawn((
@@ -90,7 +82,7 @@ pub fn video_settings_setup(mut commands: Commands, fonts: Res<FontResource>) {
                                 background_color: Color::NONE.into(),
                                 ..default()
                             },
-                            ButtonAction::BackToSettings,
+                            ButtonAction::BackToMenu,
                         ))
                         .with_children(|button| {
                             button

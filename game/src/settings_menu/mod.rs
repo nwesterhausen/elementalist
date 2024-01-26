@@ -12,7 +12,13 @@
 //! This module will have to handle drawing things to the screen and sending the appropriate
 //! events on setting changes.
 
+mod audio;
 mod base;
+mod button_actions;
+mod controls;
+mod display;
+mod gameplay;
+mod main;
 mod plugin;
 mod state;
 

@@ -23,7 +23,7 @@ pub(super) fn clear_background(
     existing_background_query: Query<Entity, With<MenuBackground>>,
 ) {
     // Check if the background already exists.
-    if let Ok(_) = existing_background_query.get_single() {
+    if existing_background_query.get_single().is_ok() {
         // If it does, just return.
         return;
     }

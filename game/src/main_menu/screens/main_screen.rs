@@ -18,7 +18,7 @@ pub fn main_menu_setup(mut commands: Commands, fonts: Res<FontResource>) {
     let button_text_style = TextStyle {
         font_size: 40.0,
         color: Color::WHITE,
-        font: fonts.display_font.clone(),
+        font: fonts.interface_font.clone(),
     };
 
     commands
@@ -42,7 +42,7 @@ pub fn main_menu_setup(mut commands: Commands, fonts: Res<FontResource>) {
                 text: Text::from_section(
                     "Elementalist",
                     TextStyle {
-                        font: fonts.interface_font.clone(),
+                        font: fonts.display_font.clone(),
                         font_size: 112.0,
                         color: Color::WHITE,
                     },

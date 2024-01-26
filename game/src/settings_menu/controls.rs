@@ -32,7 +32,7 @@ pub(super) fn show_controls_settings(mut commands: Commands, fonts: Res<FontReso
                 menu_buttons
                     .spawn((button_style(), ButtonAction::BackToMenu))
                     .with_children(|button| {
-                        button.spawn(button_text("Back", fonts.display_font.clone()));
+                        button.spawn(button_text("Back", fonts.interface_font.clone()));
                     });
             });
         });

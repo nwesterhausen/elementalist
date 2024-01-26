@@ -19,7 +19,7 @@ pub(super) struct DisplaySettingsMenuEntity;
 pub(super) fn show_display_settings(
     mut commands: Commands,
     fonts: Res<FontResource>,
-    mut video_settings: ResMut<VideoSettings>,
+    video_settings: Res<VideoSettings>,
 ) {
     commands
         .spawn((super_node_style(), DisplaySettingsMenuEntity))
@@ -34,15 +34,61 @@ pub(super) fn show_display_settings(
             ));
             // #### MENU BUTTONS #####
             parent.spawn(node_style()).with_children(|menu_buttons| {
-                // Change font settings button
-                menu_buttons.spawn(button_style()).with_children(|button| {
-                    button.spawn(button_text("Font", fonts.display_font.clone()));
-                });
+                // Button and label for the video settings property display_scale
+                menu_buttons
+                    .spawn(NodeBundle {
+                        style: Style {
+                            flex_direction: FlexDirection::Row,
+                            align_items: AlignItems::Start,
+                            ..default()
+                        },
+                        ..default()
+                    })
+                    .with_children(|row| {
+                        // Button for main volume
+                        row.spawn(button_style()).with_children(|button| {
+                            button.spawn(button_text("Game Scaling", fonts.interface_font.clone()));
+                        });
+                        // Text for main volume
+                        row.spawn(TextBundle::from_section(
+                            format!("{}", video_settings.display_scale),
+                            TextStyle {
+                                font_size: 40.0,
+                                color: colors::TEXT_COLOR,
+                                font: fonts.main_font.clone(),
+                            },
+                        ));
+                    });
+                // Button and label for the video settings property hud_scale
+                menu_buttons
+                    .spawn(NodeBundle {
+                        style: Style {
+                            flex_direction: FlexDirection::Row,
+                            align_items: AlignItems::Start,
+                            ..default()
+                        },
+                        ..default()
+                    })
+                    .with_children(|row| {
+                        // Button for main volume
+                        row.spawn(button_style()).with_children(|button| {
+                            button.spawn(button_text("HUD Scaling", fonts.interface_font.clone()));
+                        });
+                        // Text for main volume
+                        row.spawn(TextBundle::from_section(
+                            format!("{:.2}", video_settings.hud_scale),
+                            TextStyle {
+                                font_size: 40.0,
+                                color: colors::TEXT_COLOR,
+                                font: fonts.main_font.clone(),
+                            },
+                        ));
+                    });
                 // Back button (=> settings)
                 menu_buttons
                     .spawn((button_style(), ButtonAction::BackToMenu))
                     .with_children(|button| {
-                        button.spawn(button_text("Back", fonts.display_font.clone()));
+                        button.spawn(button_text("Back", fonts.interface_font.clone()));
                     });
             });
         });

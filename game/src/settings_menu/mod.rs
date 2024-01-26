@@ -12,6 +12,7 @@
 //! This module will have to handle drawing things to the screen and sending the appropriate
 //! events on setting changes.
 
+mod accessibility;
 mod audio;
 mod base;
 mod button_actions;

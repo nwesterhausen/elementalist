@@ -21,4 +21,6 @@ pub enum MenuState {
     Controls,
     /// The gameplay menu screen.
     Gameplay,
+    /// The accessibility menu screen.
+    Accessibility,
 }

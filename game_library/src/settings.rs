@@ -48,13 +48,30 @@
 //! - (Options for each menu interaction -- see [`crate::events::MenuInteraction`])
 //! - Back
 use bevy::prelude::*;
+use bevy_inspector_egui::prelude::*;
 use bevy_pkv::PkvStore;
 use serde::{Deserialize, Serialize};
 
-use crate::{font_resource::FontFamily, CameraScaleLevel, Volume};
+use crate::{
+    font_resource::{FontChoice, FontFamily},
+    CameraScaleLevel, Volume,
+};
 
 /// Volume settings.
-#[derive(Clone, Copy, Debug, Default, Deserialize, PartialEq, Eq, Serialize, Resource)]
+#[derive(
+    Clone,
+    Copy,
+    Debug,
+    Default,
+    Deserialize,
+    PartialEq,
+    Eq,
+    Serialize,
+    Resource,
+    Reflect,
+    InspectorOptions,
+)]
+#[reflect(InspectorOptions)]
 #[allow(clippy::module_name_repetitions)]
 pub struct VolumeSettings {
     /// Main volume.
@@ -66,7 +83,10 @@ pub struct VolumeSettings {
 }
 
 /// Video settings.
-#[derive(Clone, Copy, Debug, Default, Deserialize, Serialize, Resource)]
+#[derive(
+    Clone, Copy, Debug, Default, Deserialize, Serialize, Resource, Reflect, InspectorOptions,
+)]
+#[reflect(InspectorOptions)]
 #[allow(clippy::module_name_repetitions)]
 pub struct VideoSettings {
     /// Display scale.
@@ -76,7 +96,20 @@ pub struct VideoSettings {
 }
 
 /// Gameplay settings.
-#[derive(Clone, Copy, Debug, Default, Deserialize, PartialEq, Eq, Serialize, Resource)]
+#[derive(
+    Clone,
+    Copy,
+    Debug,
+    Default,
+    Deserialize,
+    PartialEq,
+    Eq,
+    Serialize,
+    Resource,
+    Reflect,
+    InspectorOptions,
+)]
+#[reflect(InspectorOptions)]
 #[allow(clippy::module_name_repetitions)]
 pub struct GameplaySettings {
     /// Auto-aim.
@@ -86,11 +119,77 @@ pub struct GameplaySettings {
 }
 
 /// Accessibility settings.
-#[derive(Clone, Copy, Debug, Default, Deserialize, PartialEq, Eq, Serialize, Resource)]
+#[derive(
+    Clone,
+    Copy,
+    Debug,
+    Default,
+    Deserialize,
+    PartialEq,
+    Eq,
+    Serialize,
+    Resource,
+    Reflect,
+    InspectorOptions,
+)]
+#[reflect(InspectorOptions)]
 #[allow(clippy::module_name_repetitions)]
 pub struct AccessibilitySettings {
-    /// Font choice (default, dyslexic, sans-serif).
-    pub font_family: FontFamily,
+    /// Display Font choice (default, dyslexic, sans-serif).
+    pub display_font_family: FontFamily,
+    /// Interface Font choice (default, dyslexic, sans-serif).
+    pub interface_font_family: FontFamily,
+    /// Main Font choice (default, dyslexic, sans-serif).
+    pub main_font_family: FontFamily,
+}
+
+/// Rotates through the font choices.
+///
+/// If given `FontChoice::All`, it will return `FontChoice::Display` (All is not a valid choice).
+///
+/// # Example
+///
+/// ```
+/// use game_library::settings::{FontChoice, next_font_choice};
+///
+/// assert_eq!(next_font_choice(FontChoice::Display), FontChoice::Interface);
+/// assert_eq!(next_font_choice(FontChoice::Interface), FontChoice::Main);
+/// assert_eq!(next_font_choice(FontChoice::Main), FontChoice::Console);
+/// assert_eq!(next_font_choice(FontChoice::Console), FontChoice::Display);
+/// assert_eq!(next_font_choice(FontChoice::All), FontChoice::Display);
+/// ```
+#[must_use]
+pub const fn next_font_choice(font_choice: FontChoice) -> FontChoice {
+    match font_choice {
+        FontChoice::Display => FontChoice::Interface,
+        FontChoice::Interface => FontChoice::Main,
+        FontChoice::Main => FontChoice::Console,
+        FontChoice::Console | FontChoice::All => FontChoice::Display,
+    }
+}
+
+/// Rotates through the font families. This will not return `FontFamily::Display` because
+/// that is a special font family used for the game logo.
+///
+/// # Example
+///
+/// ```
+/// use game_library::settings::{FontFamily, next_font_family};
+///
+/// assert_eq!(next_font_family(FontFamily::Display), FontFamily::Dyslexic);
+/// assert_eq!(next_font_family(FontFamily::Fancy), FontFamily::Dyslexic);
+/// assert_eq!(next_font_family(FontFamily::Dyslexic), FontFamily::SansSerif);
+/// assert_eq!(next_font_family(FontFamily::SansSerif), FontFamily::Monospace);
+/// assert_eq!(next_font_family(FontFamily::Monospace), FontFamily::Fancy);
+/// ```
+#[must_use]
+pub const fn next_font_family(font_family: FontFamily) -> FontFamily {
+    match font_family {
+        FontFamily::Display | FontFamily::Fancy => FontFamily::Dyslexic,
+        FontFamily::Dyslexic => FontFamily::SansSerif,
+        FontFamily::SansSerif => FontFamily::Monospace,
+        FontFamily::Monospace => FontFamily::Fancy,
+    }
 }
 
 /// Plugin for settings which will register the settings resources and run the `first_load` system.

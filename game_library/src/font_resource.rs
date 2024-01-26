@@ -14,13 +14,41 @@ use serde::{Deserialize, Serialize};
 #[reflect(InspectorOptions)]
 pub struct FontResource {
     /// The font face used for "display" text.
+    ///
+    /// This should probably never be changed, as it is used for the game logo.
     pub display_font: Handle<Font>,
     /// The font face used for menus and other interface elements.
     pub interface_font: Handle<Font>,
     /// The font face used for the main text in the game.
     pub main_font: Handle<Font>,
     /// The font face used for the console.
+    ///
+    /// This should probably never be changed, as it is used for the console.
     pub console_font: Handle<Font>,
+    /// The font handle for FontFamily::Display
+    pub display_font_handle: Handle<Font>,
+    /// The font handle for FontFamily::Fancy
+    pub fancy_font_handle: Handle<Font>,
+    /// The font handle for FontFamily::Dyslexic
+    pub dyslexic_font_handle: Handle<Font>,
+    /// The font handle for FontFamily::SansSerif
+    pub sans_serif_font_handle: Handle<Font>,
+    /// The font handle for FontFamily::Monospace
+    pub monospace_font_handle: Handle<Font>,
+}
+
+impl FontResource {
+    /// Get the font handle for the specified font family.
+    #[must_use]
+    pub fn get_font_handle(&self, font_family: FontFamily) -> Handle<Font> {
+        match font_family {
+            FontFamily::Display => self.display_font_handle.clone(),
+            FontFamily::Fancy => self.fancy_font_handle.clone(),
+            FontFamily::Dyslexic => self.dyslexic_font_handle.clone(),
+            FontFamily::SansSerif => self.sans_serif_font_handle.clone(),
+            FontFamily::Monospace => self.monospace_font_handle.clone(),
+        }
+    }
 }
 
 /// A choice of font to change.
@@ -35,6 +63,8 @@ pub enum FontChoice {
     Main,
     /// The font face used for the console.
     Console,
+    /// All of the font faces.
+    All,
 }
 
 /// The generic font-family options. This is used in [`crate::settings::AccessibilitySettings`]
@@ -53,15 +83,28 @@ pub enum FontChoice {
 )]
 #[reflect(InspectorOptions)]
 pub enum FontFamily {
+    /// The display font (for the game logo)
+    Display,
     /// "Fancy" display text.
     #[default]
-    Display,
+    Fancy,
     /// OpenDyslexic
     Dyslexic,
     /// Sans-serif
     SansSerif,
     /// Monospace
     Monospace,
+}
+
+impl std::fmt::Display for FontFamily {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Display | Self::Fancy => write!(f, "Fancy"),
+            Self::Dyslexic => write!(f, "OpenDyslexic"),
+            Self::SansSerif => write!(f, "Sans-Serif"),
+            Self::Monospace => write!(f, "Monospace"),
+        }
+    }
 }
 
 /// Change a font choice. Sending this event will update the specified font
@@ -99,6 +142,10 @@ pub fn change_font(
             }
             FontChoice::Console => {
                 font_resource.console_font = change_font_event.new_font.clone();
+            }
+            FontChoice::All => {
+                font_resource.interface_font = change_font_event.new_font.clone();
+                font_resource.main_font = change_font_event.new_font.clone();
             }
         }
     }

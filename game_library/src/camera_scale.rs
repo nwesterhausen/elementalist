@@ -186,3 +186,9 @@ impl From<CameraScaleLevel> for f32 {
         level.value
     }
 }
+
+impl std::fmt::Display for CameraScaleLevel {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:.2}", self.value)
+    }
+}

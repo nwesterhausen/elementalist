@@ -32,31 +32,37 @@ pub fn show_main_menu(mut commands: Commands, fonts: Res<FontResource>) {
                 menu_buttons
                     .spawn((button_style(), ButtonAction::SettingsAudio))
                     .with_children(|button| {
-                        button.spawn(button_text("Audio", fonts.display_font.clone()));
+                        button.spawn(button_text("Audio", fonts.interface_font.clone()));
                     });
                 // Video button
                 menu_buttons
                     .spawn((button_style(), ButtonAction::SettingsDisplay))
                     .with_children(|button| {
-                        button.spawn(button_text("Video", fonts.display_font.clone()));
+                        button.spawn(button_text("Video", fonts.interface_font.clone()));
                     });
                 // Controls button
                 menu_buttons
                     .spawn((button_style(), ButtonAction::SettingsControls))
                     .with_children(|button| {
-                        button.spawn(button_text("Controls", fonts.display_font.clone()));
+                        button.spawn(button_text("Controls", fonts.interface_font.clone()));
                     });
                 // Gameplay button
                 menu_buttons
                     .spawn((button_style(), ButtonAction::SettingsGameplay))
                     .with_children(|button| {
-                        button.spawn(button_text("Gameplay", fonts.display_font.clone()));
+                        button.spawn(button_text("Gameplay", fonts.interface_font.clone()));
+                    });
+                // Accessibility button
+                menu_buttons
+                    .spawn((button_style(), ButtonAction::SettingsAccessibility))
+                    .with_children(|button| {
+                        button.spawn(button_text("Accessibility", fonts.interface_font.clone()));
                     });
                 // Back button (=> main menu)
                 menu_buttons
                     .spawn((button_style(), ButtonAction::CloseMenu))
                     .with_children(|button| {
-                        button.spawn(button_text("Back", fonts.display_font.clone()));
+                        button.spawn(button_text("Back", fonts.interface_font.clone()));
                     });
             });
         });

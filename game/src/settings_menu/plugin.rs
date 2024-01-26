@@ -6,6 +6,7 @@ use bevy::prelude::*;
 use crate::{despawn_with_tag, AppState};
 
 use super::{
+    accessibility::{show_accessibility_settings, AccessibilitySettingsMenuEntity},
     audio::{show_audio_settings, AudioSettingsMenuEntity},
     base::{clear_background, transition_to_base_menu, MenuBackground, MenuEntity},
     button_actions::{button_system, menu_actions},
@@ -33,6 +34,7 @@ impl Plugin for SettingsMenuPlugin {
                 despawn_with_tag::<DisplaySettingsMenuEntity>,
                 despawn_with_tag::<ControlsSettingsMenuEntity>,
                 despawn_with_tag::<GameplaySettingsMenuEntity>,
+                despawn_with_tag::<AccessibilitySettingsMenuEntity>,
             ),
         );
         // When disabled, we should clean up all the entities that are part of the menu.
@@ -46,6 +48,7 @@ impl Plugin for SettingsMenuPlugin {
                 despawn_with_tag::<DisplaySettingsMenuEntity>,
                 despawn_with_tag::<ControlsSettingsMenuEntity>,
                 despawn_with_tag::<GameplaySettingsMenuEntity>,
+                despawn_with_tag::<AccessibilitySettingsMenuEntity>,
             ),
         );
         // Then we should have systems for each of the menu states (display, audio, controls, gameplay)
@@ -68,6 +71,14 @@ impl Plugin for SettingsMenuPlugin {
         app.add_systems(
             OnExit(MenuState::Gameplay),
             despawn_with_tag::<GameplaySettingsMenuEntity>,
+        );
+        app.add_systems(
+            OnEnter(MenuState::Accessibility),
+            show_accessibility_settings,
+        );
+        app.add_systems(
+            OnExit(MenuState::Accessibility),
+            despawn_with_tag::<AccessibilitySettingsMenuEntity>,
         );
         // Add system to update the buttons on hover, etc
         app.add_systems(

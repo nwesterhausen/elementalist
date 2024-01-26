@@ -1,7 +1,7 @@
 //! Has systems for the display settings menu.
 
 use bevy::prelude::*;
-use game_library::{font_resource::FontResource, settings::GameplaySettings};
+use game_library::{font_resource::FontResource, settings::AccessibilitySettings};
 
 use crate::common::colors;
 
@@ -12,12 +12,12 @@ use super::{
 
 /// Component for tagging entities that are part of the display settings menu.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Component)]
-pub(super) struct GameplaySettingsMenuEntity;
+pub(super) struct AccessibilitySettingsMenuEntity;
 
-pub(super) fn show_gameplay_settings(
+pub(super) fn show_accessibility_settings(
     mut commands: Commands,
     fonts: Res<FontResource>,
-    gameplay_settings: Res<GameplaySettings>,
+    accessibility_settings: Res<AccessibilitySettings>,
 ) {
     commands
         .spawn((
@@ -32,13 +32,13 @@ pub(super) fn show_gameplay_settings(
                 },
                 ..default()
             },
-            GameplaySettingsMenuEntity,
+            AccessibilitySettingsMenuEntity,
         ))
         .with_children(|parent| {
             // Game Title
             parent.spawn(TextBundle {
                 text: Text::from_section(
-                    "Gameplay Settings",
+                    "Accessibility Settings",
                     TextStyle {
                         font: fonts.display_font.clone(),
                         font_size: 72.0,
@@ -64,7 +64,7 @@ pub(super) fn show_gameplay_settings(
                     ..default()
                 })
                 .with_children(|menu_buttons| {
-                    // Auto-aim button (as a row with a label and a button)
+                    // font choice (as a row with a label and a button)
                     menu_buttons
                         .spawn(NodeBundle {
                             style: Style {
@@ -75,42 +75,18 @@ pub(super) fn show_gameplay_settings(
                             ..default()
                         })
                         .with_children(|row| {
-                            // Button for auto-aim
-                            row.spawn((button_style(), ButtonAction::ToggleAutoAim))
+                            // Button for rotating font family
+                            row.spawn((button_style(), ButtonAction::RotateFontFamily))
                                 .with_children(|button| {
                                     button.spawn(button_text(
-                                        "Auto-Aim",
+                                        "Interface Font",
                                         fonts.interface_font.clone(),
                                     ));
                                 });
-                            // Text for auto-aim
+                            // Text for current font family
                             row.spawn(button_text(
-                                format!("{}", gameplay_settings.auto_aim).as_str(),
-                                fonts.main_font.clone(),
-                            ));
-                        });
-                    // Auto-cast button (as a row with a label and a button)
-                    menu_buttons
-                        .spawn(NodeBundle {
-                            style: Style {
-                                flex_direction: FlexDirection::Row,
-                                align_items: AlignItems::Start,
-                                ..default()
-                            },
-                            ..default()
-                        })
-                        .with_children(|row| {
-                            // Button for auto-cast
-                            row.spawn((button_style(), ButtonAction::ToggleAutoCast))
-                                .with_children(|button| {
-                                    button.spawn(button_text(
-                                        "Auto-Cast",
-                                        fonts.interface_font.clone(),
-                                    ));
-                                });
-                            // Text for auto-cast
-                            row.spawn(button_text(
-                                format!("{}", gameplay_settings.auto_cast).as_str(),
+                                format!("{}", accessibility_settings.interface_font_family)
+                                    .as_str(),
                                 fonts.main_font.clone(),
                             ));
                         });

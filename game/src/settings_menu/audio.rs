@@ -50,7 +50,7 @@ pub(super) fn show_audio_settings(
                         // Button for main volume
                         row.spawn((button_style(), ButtonAction::SettingsAudio))
                             .with_children(|button| {
-                                button.spawn(button_text("Main", fonts.display_font.clone()));
+                                button.spawn(button_text("Main", fonts.interface_font.clone()));
                             });
                         // Text for main volume
                         row.spawn(TextBundle::from_section(
@@ -58,7 +58,7 @@ pub(super) fn show_audio_settings(
                             TextStyle {
                                 font_size: 40.0,
                                 color: colors::TEXT_COLOR,
-                                font: fonts.interface_font.clone(),
+                                font: fonts.main_font.clone(),
                             },
                         ));
                     });
@@ -76,7 +76,7 @@ pub(super) fn show_audio_settings(
                         // Button for music volume
                         row.spawn((button_style(), ButtonAction::SettingsAudio))
                             .with_children(|button| {
-                                button.spawn(button_text("Music", fonts.display_font.clone()));
+                                button.spawn(button_text("Music", fonts.interface_font.clone()));
                             });
                         // Text for music volume
                         row.spawn(TextBundle::from_section(
@@ -84,7 +84,7 @@ pub(super) fn show_audio_settings(
                             TextStyle {
                                 font_size: 40.0,
                                 color: colors::TEXT_COLOR,
-                                font: fonts.interface_font.clone(),
+                                font: fonts.main_font.clone(),
                             },
                         ));
                     });
@@ -104,7 +104,7 @@ pub(super) fn show_audio_settings(
                             .with_children(|button| {
                                 button.spawn(button_text(
                                     "Sound Effects",
-                                    fonts.display_font.clone(),
+                                    fonts.interface_font.clone(),
                                 ));
                             });
                         // Text for sound effects volume
@@ -113,7 +113,7 @@ pub(super) fn show_audio_settings(
                             TextStyle {
                                 font_size: 40.0,
                                 color: colors::TEXT_COLOR,
-                                font: fonts.interface_font.clone(),
+                                font: fonts.main_font.clone(),
                             },
                         ));
                     });
@@ -121,7 +121,7 @@ pub(super) fn show_audio_settings(
                 menu_buttons
                     .spawn((button_style(), ButtonAction::BackToMenu))
                     .with_children(|button| {
-                        button.spawn(button_text("Back", fonts.display_font.clone()));
+                        button.spawn(button_text("Back", fonts.interface_font.clone()));
                     });
             });
         });

@@ -6,8 +6,10 @@
 mod cursor_position;
 mod fonts;
 mod plugin;
+mod return_to_state;
 mod spritesheet;
 
 pub use cursor_position::*;
 pub use plugin::ElementalistResourcesPlugin;
+pub use return_to_state::ReturnToState;
 pub use spritesheet::SpellAtlas;

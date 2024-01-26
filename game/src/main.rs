@@ -9,11 +9,12 @@ use bevy::{asset::AssetMetaCheck, prelude::*};
 use game_library::settings::SettingsPlugin;
 use leafwing_input_manager::plugin::InputManagerPlugin;
 
+pub(crate) mod common;
+
 mod app_info;
 mod app_state;
 mod app_systems;
 mod camera;
-mod common;
 #[cfg(debug_assertions)]
 mod dev_systems;
 mod events;
@@ -26,7 +27,7 @@ mod spells;
 mod splash_screen;
 
 pub use app_state::AppState;
-pub use app_systems::despawn_screen;
+pub use app_systems::despawn_with_tag;
 use events::{MenuInteraction, PlayerAction};
 
 fn main() {
@@ -97,7 +98,7 @@ impl Plugin for ElementalistDefaultPlugins {
         // Never attempts to look up meta files. The default meta configuration will be used for each asset.
         app.insert_resource(AssetMetaCheck::Never);
         // The clear color is the color the screen is cleared to before each frame is drawn
-        app.insert_resource(ClearColor(Color::DARK_GREEN));
+        app.insert_resource(ClearColor(common::colors::CLEAR_COLOR));
         // Add the window icon
         app.add_systems(Startup, app_systems::set_window_icon);
         // Add the settings plugin

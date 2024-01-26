@@ -1,13 +1,17 @@
+//! Has systems for the display settings menu.
+
 use bevy::prelude::*;
 use game_library::font_resource::FontResource;
 
-use crate::main_menu::{button_actions::ButtonAction, components::OnControlsSettingsMenuScreen};
+use crate::common::colors;
 
-/// System to setup the main menu screen
-///
-/// When the main menu screen is entered, we spawn the main menu entities. This includes the
-/// background, the title, and the buttons.
-pub fn controls_settings_setup(mut commands: Commands, fonts: Res<FontResource>) {
+use super::button_actions::ButtonAction;
+
+/// Component for tagging entities that are part of the display settings menu.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Component)]
+pub(super) struct ControlsSettingsMenuEntity;
+
+pub(super) fn show_controls_settings(mut commands: Commands, fonts: Res<FontResource>) {
     // Common style for all buttons on the screen
     let button_style = Style {
         margin: UiRect::px(10., 10., 0., 20.),
@@ -17,7 +21,7 @@ pub fn controls_settings_setup(mut commands: Commands, fonts: Res<FontResource>)
     };
     let button_text_style = TextStyle {
         font_size: 40.0,
-        color: Color::WHITE,
+        color: colors::TEXT_COLOR,
         font: fonts.display_font.clone(),
     };
 
@@ -34,7 +38,7 @@ pub fn controls_settings_setup(mut commands: Commands, fonts: Res<FontResource>)
                 },
                 ..default()
             },
-            OnControlsSettingsMenuScreen,
+            ControlsSettingsMenuEntity,
         ))
         .with_children(|parent| {
             // Game Title
@@ -44,7 +48,7 @@ pub fn controls_settings_setup(mut commands: Commands, fonts: Res<FontResource>)
                     TextStyle {
                         font: fonts.display_font.clone(),
                         font_size: 72.0,
-                        color: Color::WHITE,
+                        color: colors::TEXT_COLOR,
                     },
                 ),
                 style: Style {
@@ -74,7 +78,7 @@ pub fn controls_settings_setup(mut commands: Commands, fonts: Res<FontResource>)
                                 background_color: Color::NONE.into(),
                                 ..default()
                             },
-                            ButtonAction::BackToSettings,
+                            ButtonAction::BackToMenu,
                         ))
                         .with_children(|button| {
                             button

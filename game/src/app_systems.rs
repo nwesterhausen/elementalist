@@ -6,7 +6,7 @@ use winit::window::Icon;
 use crate::app_info;
 
 /// Despawn all entities with the given tag (component)
-pub fn despawn_screen<T: Component>(to_despawn: Query<Entity, With<T>>, mut commands: Commands) {
+pub fn despawn_with_tag<T: Component>(to_despawn: Query<Entity, With<T>>, mut commands: Commands) {
     for entity in &to_despawn {
         commands.entity(entity).despawn_recursive();
     }

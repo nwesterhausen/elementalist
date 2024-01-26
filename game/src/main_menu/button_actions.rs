@@ -6,12 +6,4 @@ pub enum ButtonAction {
     StartGame,
     Settings,
     Quit,
-    BackToMenu,
-    BackToSettings,
-    SettingsAudio,
-    SettingsVideo,
-    SettingsControls,
-    SettingsGameplay,
-    // ChangeFont .. maybe we have to include internal values too..
-    ChangeFont,
 }

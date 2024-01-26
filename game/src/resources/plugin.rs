@@ -8,7 +8,7 @@ use game_library::{
 
 use super::{
     cursor_position::update_cursor_position, fonts::set_initial_fonts,
-    spritesheet::load_spell_atlas,
+    spritesheet::load_spell_atlas, ReturnToState,
 };
 
 pub struct ElementalistResourcesPlugin;
@@ -22,6 +22,7 @@ impl Plugin for ElementalistResourcesPlugin {
         app.insert_resource(CursorPosition::default());
         app.insert_resource(SpellChoices::default());
         app.insert_resource(FontResource::default());
+        app.init_resource::<ReturnToState>();
         app.insert_resource(PkvStore::new("games.nwest.one", "Elementalist"));
 
         // ### GRAPHICS RESOURCES ###

@@ -1,14 +1,18 @@
+//! Main menu systems.
 use bevy::prelude::*;
 use game_library::font_resource::FontResource;
 
-use crate::main_menu::{button_actions::ButtonAction, components::OnSettingsMenuScreen};
+use crate::common::colors;
 
-/// System to setup the main menu screen
-///
-/// When the main menu screen is entered, we spawn the main menu entities. This includes the
-/// background, the title, and the buttons.
+use super::button_actions::ButtonAction;
+
+/// Tags for the (main) menu buttons/text/etc.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Component)]
+pub struct MainMenuEntity;
+
+/// Show the main menu.
 #[allow(clippy::too_many_lines)]
-pub fn settings_setup(mut commands: Commands, fonts: Res<FontResource>) {
+pub fn show_main_menu(mut commands: Commands, fonts: Res<FontResource>) {
     // Common style for all buttons on the screen
     let button_style = Style {
         margin: UiRect::px(10., 10., 0., 20.),
@@ -18,7 +22,7 @@ pub fn settings_setup(mut commands: Commands, fonts: Res<FontResource>) {
     };
     let button_text_style = TextStyle {
         font_size: 40.0,
-        color: Color::WHITE,
+        color: colors::TEXT_COLOR,
         font: fonts.display_font.clone(),
     };
 
@@ -26,16 +30,15 @@ pub fn settings_setup(mut commands: Commands, fonts: Res<FontResource>) {
         .spawn((
             NodeBundle {
                 style: Style {
-                    align_items: AlignItems::Start,
+                    width: Val::Percent(100.0),
+                    align_items: AlignItems::Center,
                     flex_direction: FlexDirection::Column,
                     padding: UiRect::all(Val::Px(10.0)),
-                    width: Val::Percent(100.0),
-                    height: Val::Percent(100.0),
                     ..default()
                 },
                 ..default()
             },
-            OnSettingsMenuScreen,
+            MainMenuEntity,
         ))
         .with_children(|parent| {
             // Game Title
@@ -45,7 +48,7 @@ pub fn settings_setup(mut commands: Commands, fonts: Res<FontResource>) {
                     TextStyle {
                         font: fonts.display_font.clone(),
                         font_size: 72.0,
-                        color: Color::WHITE,
+                        color: colors::TEXT_COLOR,
                     },
                 ),
                 style: Style {
@@ -59,7 +62,7 @@ pub fn settings_setup(mut commands: Commands, fonts: Res<FontResource>) {
                 .spawn(NodeBundle {
                     style: Style {
                         flex_direction: FlexDirection::Column,
-                        align_items: AlignItems::Start,
+                        align_items: AlignItems::Center,
                         width: Val::Percent(100.0),
                         margin: UiRect::px(20., 0., 40., 0.),
                         ..default()
@@ -91,7 +94,7 @@ pub fn settings_setup(mut commands: Commands, fonts: Res<FontResource>) {
                                 background_color: Color::NONE.into(),
                                 ..default()
                             },
-                            ButtonAction::SettingsVideo,
+                            ButtonAction::SettingsDisplay,
                         ))
                         .with_children(|button| {
                             button.spawn(TextBundle::from_section(
@@ -139,7 +142,7 @@ pub fn settings_setup(mut commands: Commands, fonts: Res<FontResource>) {
                                 background_color: Color::NONE.into(),
                                 ..default()
                             },
-                            ButtonAction::BackToMenu,
+                            ButtonAction::CloseMenu,
                         ))
                         .with_children(|button| {
                             button

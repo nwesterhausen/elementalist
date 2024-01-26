@@ -6,7 +6,7 @@ use bevy::prelude::*;
 ///
 /// <div style="background-color:rgb(17%, 13%, 17%); width: 10px; padding: 10px; border: 1px solid;"></div>
 /// Hex code #2b222a
-pub const BACKGROUND_COLOR: Color = Color::rgba(0.169, 0.133, 0.165, 1.);
+/// pub const BACKGROUND_COLOR: Color = Color::rgba(0.169, 0.133, 0.165, 1.);
 /// The dark color used for the background at 50% opacity.
 pub const BACKGROUND_COLOR_50: Color = Color::rgba(0.169, 0.133, 0.165, 0.5);
 
@@ -15,8 +15,6 @@ pub const BACKGROUND_COLOR_50: Color = Color::rgba(0.169, 0.133, 0.165, 0.5);
 /// <div style="background-color:rgb(10%, 12%, 18%); width: 10px; padding: 10px; border: 1px solid;"></div>
 /// Hex code #1a1f2e
 pub const CLEAR_COLOR: Color = Color::rgba(0.102, 0.122, 0.18, 1.);
-/// The clear color used for the game at 50% opacity.
-pub const CLEAR_COLOR_50: Color = Color::rgba(0.102, 0.122, 0.18, 0.5);
 
 /// The color used for text.
 ///

@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 
 use super::resources::SplashTimer;
-use crate::AppState;
+use crate::resources::AppState;
 
 // Tick the timer, and change state when finished
 pub fn countdown(

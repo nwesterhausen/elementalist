@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 
 use super::{entity, menu_control, movement, player_control, player_creation};
-use crate::{resources, AppState};
+use crate::resources::{self, AppState};
 
 pub struct PlayerPlugin;
 

@@ -1,6 +1,6 @@
-use bevy::{app::AppExit, prelude::*};
+use bevy::prelude::*;
 
-use crate::{resources::ReturnToState, AppState};
+use crate::resources::{AppState, ReturnToState};
 
 use super::{button_actions::ButtonAction, components::SelectedOption, state::MenuState};
 
@@ -50,7 +50,6 @@ pub fn button_system(
 #[allow(clippy::type_complexity)]
 pub fn menu_actions(
     interaction_query: Query<(&Interaction, &ButtonAction), (Changed<Interaction>, With<Button>)>,
-    mut app_exit_events: EventWriter<AppExit>,
     mut menu_state: ResMut<NextState<MenuState>>,
     mut game_state: ResMut<NextState<AppState>>,
     mut return_to_state: ResMut<ReturnToState>,
@@ -61,7 +60,7 @@ pub fn menu_actions(
         if *interaction == Interaction::Pressed {
             // Check which button action has been pressed (i.e. what action we attached to the button)
             match menu_button_action {
-                ButtonAction::Quit => app_exit_events.send(AppExit),
+                ButtonAction::Quit => game_state.set(AppState::CleanUp),
                 ButtonAction::StartGame => {
                     game_state.set(AppState::InGame);
                     menu_state.set(MenuState::Disabled);

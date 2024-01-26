@@ -3,7 +3,7 @@
 
 use bevy::prelude::*;
 
-use crate::{despawn_with_tag, AppState};
+use crate::{despawn_with_tag, resources::AppState};
 
 use super::{
     accessibility::{

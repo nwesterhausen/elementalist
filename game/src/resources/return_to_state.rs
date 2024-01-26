@@ -2,7 +2,7 @@
 
 use bevy::prelude::*;
 
-use crate::AppState;
+use crate::resources::AppState;
 
 /// Helper to know what state of the app to return to when entering the menu.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Resource)]

@@ -59,6 +59,17 @@ impl Volume {
         self.value = value.into().clamp(Self::MIN, Self::MAX);
     }
 
+    /// Increments the volume by 10 or sets it to [`Self::MIN`].
+    ///
+    pub fn increment(&mut self) {
+        let new_value = self.value + 10;
+        if new_value > Self::MAX {
+            self.value = Self::MIN;
+        } else {
+            self.value = new_value;
+        }
+    }
+
     /// Returns the volume, regardless of whether or not the volume is muted.
     #[must_use]
     pub fn raw_volume<T>(&self) -> T

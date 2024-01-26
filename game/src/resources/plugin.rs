@@ -29,7 +29,7 @@ impl Plugin for ElementalistResourcesPlugin {
         app.add_systems(Startup, load_spell_atlas);
 
         // ### ADD SYSTEMS HERE ###
-        app.add_systems(Startup, set_initial_fonts);
+        app.add_systems(PostStartup, set_initial_fonts);
         app.add_systems(Update, (update_cursor_position, change_font));
     }
 }

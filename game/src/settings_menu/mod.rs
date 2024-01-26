@@ -18,6 +18,7 @@ mod base;
 mod button_actions;
 mod controls;
 mod display;
+mod events;
 mod gameplay;
 mod main;
 mod plugin;

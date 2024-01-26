@@ -12,7 +12,6 @@ use leafwing_input_manager::plugin::InputManagerPlugin;
 pub(crate) mod common;
 
 mod app_info;
-mod app_state;
 mod app_systems;
 mod camera;
 #[cfg(debug_assertions)]
@@ -26,7 +25,6 @@ mod settings_menu;
 mod spells;
 mod splash_screen;
 
-pub use app_state::AppState;
 pub use app_systems::despawn_with_tag;
 use events::{MenuInteraction, PlayerAction};
 
@@ -56,17 +54,8 @@ fn main() {
         )
         // Add the debug plugin if in debug mode
         .add_plugins(ElementalistDebugPlugin)
-        // Add state
-        .add_state::<AppState>()
         // Add all the general resources and their update systems (e.g. cursor position)
         .add_plugins(resources::ElementalistResourcesPlugin)
-        .add_systems(
-            Startup,
-            (
-                app_systems::add_game_descriptor,
-                app_systems::load_data_file_dir,
-            ),
-        )
         // Add input processing
         .add_plugins((
             InputManagerPlugin::<PlayerAction>::default(),

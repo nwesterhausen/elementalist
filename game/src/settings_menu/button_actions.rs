@@ -2,7 +2,10 @@
 
 use bevy::prelude::*;
 
-use crate::{common::colors, resources::ReturnToState, AppState};
+use crate::{
+    common::colors,
+    resources::{AppState, ReturnToState},
+};
 
 use super::{
     events::{ChangeSetting, IndividualSetting},

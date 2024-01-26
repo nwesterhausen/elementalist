@@ -62,7 +62,7 @@ impl Plugin for SettingsMenuPlugin {
         app.add_systems(OnEnter(MenuState::Controls), show_controls_settings);
         app.add_systems(
             OnExit(MenuState::Controls),
-            despawn_with_tag::<DisplaySettingsMenuEntity>,
+            despawn_with_tag::<ControlsSettingsMenuEntity>,
         );
         app.add_systems(OnEnter(MenuState::Gameplay), show_gameplay_settings);
         app.add_systems(

@@ -19,7 +19,7 @@
 //!
 //! The audio menu should have these options:
 //!
-//! - Master Volume
+//! - Main Volume
 //! - Music Volume
 //! - SFX Volume
 //! - Back
@@ -57,8 +57,8 @@ use crate::{font_resource::FontFamily, CameraScaleLevel, Volume};
 #[derive(Clone, Copy, Debug, Default, Deserialize, PartialEq, Eq, Serialize, Resource)]
 #[allow(clippy::module_name_repetitions)]
 pub struct VolumeSettings {
-    /// Master volume.
-    pub master: Volume,
+    /// Main volume.
+    pub main: Volume,
     /// Music volume.
     pub music: Volume,
     /// SFX volume.

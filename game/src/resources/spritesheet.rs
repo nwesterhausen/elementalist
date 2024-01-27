@@ -12,7 +12,7 @@ pub fn load_spell_atlas(
 ) {
     let texture_handle = asset_server.load("tileset/spell_projectiles.png");
     let texture_atlas =
-        TextureAtlas::from_grid(texture_handle, Vec2::new(16.0, 16.0), 5, 5, None, None);
+        TextureAtlas::from_grid(texture_handle, Vec2::new(16.0, 16.0), 5, 6, None, None);
     let atlas_handle = texture_atlases.add(texture_atlas);
 
     commands.insert_resource(SpellAtlas {

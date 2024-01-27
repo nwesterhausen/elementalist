@@ -38,6 +38,8 @@ pub(super) enum ButtonAction {
     IncrementMusicVolume,
     /// Increment the sound effects volume
     IncrementSoundEffectsVolume,
+    /// Go to the Main Menu of the game
+    GoToMainGameMenu,
 }
 
 #[derive(Component, Debug, Clone, PartialEq, Eq, Hash)]
@@ -71,6 +73,10 @@ pub fn menu_actions(
                 ButtonAction::CloseMenu => {
                     menu_state.set(MenuState::Disabled);
                     game_state.set(return_to_state.0);
+                }
+                ButtonAction::GoToMainGameMenu => {
+                    menu_state.set(MenuState::Disabled);
+                    game_state.set(AppState::MainMenu);
                 }
                 ButtonAction::BackToMenu => menu_state.set(MenuState::Main),
                 ButtonAction::SettingsAudio => menu_state.set(MenuState::Audio),

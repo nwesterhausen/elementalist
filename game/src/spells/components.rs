@@ -14,3 +14,6 @@ pub fn despawn_expired_spells(
         }
     }
 }
+
+#[derive(Component, Debug, Reflect)]
+pub struct SpellEntity;

@@ -26,8 +26,8 @@ impl Plugin for PlayerPlugin {
             )
             // Remove player when leaving game
             .add_systems(
-                OnExit(AppState::InGame),
-                despawn_with_tag::<PlayerAvatar>.run_if(not(in_state(AppState::SettingsMenu))),
+                OnEnter(AppState::MainMenu),
+                despawn_with_tag::<PlayerAvatar>,
             );
     }
 }

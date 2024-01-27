@@ -2,7 +2,10 @@
 use bevy::prelude::*;
 use game_library::font_resource::FontResource;
 
-use crate::common::buttons::style_prefab;
+use crate::{
+    common::buttons::style_prefab,
+    resources::{AppState, ReturnToState},
+};
 
 use super::{
     base::SettingsMenuEntity,
@@ -14,7 +17,12 @@ use super::{
 pub struct BaseSettingsMenuEntity;
 
 /// Show the main menu.
-pub fn show_main_menu(mut commands: Commands, fonts: Res<FontResource>) {
+#[allow(clippy::too_many_lines)]
+pub fn show_main_menu(
+    mut commands: Commands,
+    fonts: Res<FontResource>,
+    return_to_state: Res<ReturnToState>,
+) {
     commands
         .spawn((
             style_prefab::settings_menu_full_node_bundle(),
@@ -96,7 +104,7 @@ pub fn show_main_menu(mut commands: Commands, fonts: Res<FontResource>) {
                                 fonts.interface_font.clone(),
                             ));
                         });
-                    // Back button (=> main menu)
+                    // Back button (=> return to where we came from)
                     menu_buttons
                         .spawn((
                             style_prefab::menu_button_bundle(),
@@ -109,6 +117,21 @@ pub fn show_main_menu(mut commands: Commands, fonts: Res<FontResource>) {
                                 fonts.interface_font.clone(),
                             ));
                         });
+                    // Back to MainMenu (show when we came from InGame)
+                    if return_to_state.0 == AppState::InGame {
+                        menu_buttons
+                            .spawn((
+                                style_prefab::menu_button_bundle(),
+                                ButtonAction::GoToMainGameMenu,
+                                SettingsMenuButton,
+                            ))
+                            .with_children(|button| {
+                                button.spawn(style_prefab::menu_button_text(
+                                    "Quit to Main Menu",
+                                    fonts.interface_font.clone(),
+                                ));
+                            });
+                    }
                 });
         });
 }

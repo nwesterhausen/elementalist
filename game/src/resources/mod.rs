@@ -12,7 +12,6 @@ mod return_to_state;
 mod spritesheet;
 
 pub use app_state::AppState;
-pub use cursor_position::*;
 pub use plugin::ElementalistResourcesPlugin;
 pub use return_to_state::ReturnToState;
 pub use spritesheet::SpellAtlas;

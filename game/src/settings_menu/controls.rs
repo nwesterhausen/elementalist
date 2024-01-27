@@ -1,13 +1,13 @@
 //! Has systems for the display settings menu.
 
 use bevy::prelude::*;
-use game_library::{font_resource::FontResource, menu_helper::make_text_bundle};
+use game_library::font_resource::FontResource;
 
-use crate::common::colors;
+use crate::common::buttons::style_prefab;
 
 use super::{
-    base::{button_style, button_text, node_style, super_node_style},
-    button_actions::ButtonAction,
+    base::MenuEntity,
+    button_actions::{ButtonAction, SettingsMenuButton},
 };
 
 /// Component for tagging entities that are part of the display settings menu.
@@ -16,24 +16,34 @@ pub(super) struct ControlsSettingsMenuEntity;
 
 pub(super) fn show_controls_settings(mut commands: Commands, fonts: Res<FontResource>) {
     commands
-        .spawn((super_node_style(), ControlsSettingsMenuEntity))
+        .spawn((
+            style_prefab::settings_menu_full_node_bundle(),
+            ControlsSettingsMenuEntity,
+            MenuEntity,
+        ))
         .with_children(|parent| {
             // Menu Title
-            parent.spawn(make_text_bundle(
+            parent.spawn(style_prefab::settings_menu_title_bundle(
                 "Controls",
                 fonts.display_font.clone(),
-                72.0,
-                colors::TEXT_COLOR,
-                AlignSelf::Center,
             ));
             // #### MENU BUTTONS #####
-            parent.spawn(node_style()).with_children(|menu_buttons| {
-                // Back button (=> settings)
-                menu_buttons
-                    .spawn((button_style(), ButtonAction::BackToMenu))
-                    .with_children(|button| {
-                        button.spawn(button_text("Back", fonts.interface_font.clone()));
-                    });
-            });
+            parent
+                .spawn(style_prefab::settings_menu_column_node_bundle())
+                .with_children(|menu_buttons| {
+                    // Back button (=> settings)
+                    menu_buttons
+                        .spawn((
+                            style_prefab::menu_button_bundle(),
+                            ButtonAction::BackToMenu,
+                            SettingsMenuButton,
+                        ))
+                        .with_children(|button| {
+                            button.spawn(style_prefab::menu_button_text(
+                                "Back",
+                                fonts.interface_font.clone(),
+                            ));
+                        });
+                });
         });
 }

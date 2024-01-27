@@ -6,11 +6,11 @@ use game_library::{
     settings::{next_font_family, AccessibilitySettings, SettingCategory, SettingChanged},
 };
 
-use crate::common::colors;
+use crate::common::buttons::style_prefab;
 
 use super::{
-    base::{button_style, button_text},
-    button_actions::ButtonAction,
+    base::MenuEntity,
+    button_actions::{ButtonAction, SettingsMenuButton},
     events::{ChangeSetting, IndividualSetting},
 };
 
@@ -25,70 +25,38 @@ pub(super) fn show_accessibility_settings(
 ) {
     commands
         .spawn((
-            NodeBundle {
-                style: Style {
-                    align_items: AlignItems::Start,
-                    flex_direction: FlexDirection::Column,
-                    padding: UiRect::all(Val::Px(10.0)),
-                    width: Val::Percent(100.0),
-                    height: Val::Percent(100.0),
-                    ..default()
-                },
-                ..default()
-            },
+            style_prefab::settings_menu_full_node_bundle(),
             AccessibilitySettingsMenuEntity,
+            MenuEntity,
         ))
         .with_children(|parent| {
             // Game Title
-            parent.spawn(TextBundle {
-                text: Text::from_section(
-                    "Accessibility Settings",
-                    TextStyle {
-                        font: fonts.display_font.clone(),
-                        font_size: 72.0,
-                        color: colors::TEXT_COLOR,
-                    },
-                ),
-                style: Style {
-                    align_self: AlignSelf::Center,
-                    ..default()
-                },
-                ..default()
-            });
+            parent.spawn(style_prefab::settings_menu_title_bundle(
+                "Accessibility",
+                fonts.display_font.clone(),
+            ));
             // #### MENU BUTTONS #####
             parent
-                .spawn(NodeBundle {
-                    style: Style {
-                        flex_direction: FlexDirection::Column,
-                        align_items: AlignItems::Start,
-                        width: Val::Percent(100.0),
-                        margin: UiRect::px(20., 0., 40., 0.),
-                        ..default()
-                    },
-                    ..default()
-                })
+                .spawn(style_prefab::settings_menu_column_node_bundle())
                 .with_children(|menu_buttons| {
                     // font choice (as a row with a label and a button)
                     menu_buttons
-                        .spawn(NodeBundle {
-                            style: Style {
-                                flex_direction: FlexDirection::Row,
-                                align_items: AlignItems::Start,
-                                ..default()
-                            },
-                            ..default()
-                        })
+                        .spawn(style_prefab::settings_menu_button_row_node_bundle())
                         .with_children(|row| {
                             // Button for rotating font family
-                            row.spawn((button_style(), ButtonAction::RotateFontFamily))
-                                .with_children(|button| {
-                                    button.spawn(button_text(
-                                        "Interface Font",
-                                        fonts.interface_font.clone(),
-                                    ));
-                                });
+                            row.spawn((
+                                style_prefab::menu_button_bundle(),
+                                ButtonAction::RotateFontFamily,
+                                SettingsMenuButton,
+                            ))
+                            .with_children(|button| {
+                                button.spawn(style_prefab::menu_button_text(
+                                    "Interface Font",
+                                    fonts.interface_font.clone(),
+                                ));
+                            });
                             // Text for current font family
-                            row.spawn(button_text(
+                            row.spawn(style_prefab::menu_button_text(
                                 format!("{}", accessibility_settings.interface_font_family)
                                     .as_str(),
                                 fonts.main_font.clone(),
@@ -96,9 +64,16 @@ pub(super) fn show_accessibility_settings(
                         });
                     // Back button (=> settings)
                     menu_buttons
-                        .spawn((button_style(), ButtonAction::BackToMenu))
+                        .spawn((
+                            style_prefab::menu_button_bundle(),
+                            ButtonAction::BackToMenu,
+                            SettingsMenuButton,
+                        ))
                         .with_children(|button| {
-                            button.spawn(button_text("Back", fonts.interface_font.clone()));
+                            button.spawn(style_prefab::menu_button_text(
+                                "Back",
+                                fonts.interface_font.clone(),
+                            ));
                         });
                 });
         });

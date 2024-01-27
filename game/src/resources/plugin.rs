@@ -6,7 +6,7 @@ use game_library::{
     CursorPosition, SpellChoices,
 };
 
-use crate::app_systems;
+use crate::{app_systems, common::buttons};
 
 use super::{
     cleanup::cleanup_then_exit, cursor_position::update_cursor_position, fonts::set_initial_fonts,
@@ -56,7 +56,14 @@ impl Plugin for ElementalistResourcesPlugin {
                 app_systems::load_data_file_dir,
             ),
         )
-        .add_systems(Update, (update_cursor_position, change_font))
+        .add_systems(
+            Update,
+            (
+                update_cursor_position,
+                change_font,
+                buttons::interaction_system,
+            ),
+        )
         // This system is [`PostStartup`] because we need to load any font settings from
         // disk before assigning the initial fonts handles.
         .add_systems(PostStartup, set_initial_fonts)

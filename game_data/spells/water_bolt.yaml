@@ -16,4 +16,4 @@ data:
   magic: water
   spellTier: 0
   spriteTileset: tileset/spell_projectiles.png
-  spriteIndex: 13
+  spriteIndex: 12

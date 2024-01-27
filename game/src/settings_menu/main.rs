@@ -5,7 +5,7 @@ use game_library::font_resource::FontResource;
 use crate::common::buttons::style_prefab;
 
 use super::{
-    base::MenuEntity,
+    base::SettingsMenuEntity,
     button_actions::{ButtonAction, SettingsMenuButton},
 };
 
@@ -19,7 +19,7 @@ pub fn show_main_menu(mut commands: Commands, fonts: Res<FontResource>) {
         .spawn((
             style_prefab::settings_menu_full_node_bundle(),
             BaseSettingsMenuEntity,
-            MenuEntity,
+            SettingsMenuEntity,
         ))
         .with_children(|parent| {
             // Game Title

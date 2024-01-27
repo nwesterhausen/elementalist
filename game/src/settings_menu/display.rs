@@ -3,18 +3,19 @@
 use bevy::prelude::*;
 use game_library::{font_resource::FontResource, settings::VideoSettings};
 
-use crate::common::buttons::style_prefab;
+use crate::{common::buttons::style_prefab, despawn_with_tag};
 
 use super::{
-    base::MenuEntity,
+    base::SettingsMenuEntity,
     button_actions::{ButtonAction, SettingsMenuButton},
+    MenuState,
 };
 
 /// Component for tagging entities that are part of the display settings menu.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Component)]
-pub(super) struct DisplaySettingsMenuEntity;
+struct DisplaySettingsMenuEntity;
 
-pub(super) fn show_display_settings(
+fn show_display_settings(
     mut commands: Commands,
     fonts: Res<FontResource>,
     video_settings: Res<VideoSettings>,
@@ -23,7 +24,7 @@ pub(super) fn show_display_settings(
         .spawn((
             style_prefab::settings_menu_full_node_bundle(),
             DisplaySettingsMenuEntity,
-            MenuEntity,
+            SettingsMenuEntity,
         ))
         .with_children(|parent| {
             // Game Title
@@ -86,4 +87,20 @@ pub(super) fn show_display_settings(
                         });
                 });
         });
+}
+
+pub(super) struct DisplaySettingsMenuPlugin;
+
+impl Plugin for DisplaySettingsMenuPlugin {
+    fn build(&self, app: &mut App) {
+        app.add_systems(OnEnter(MenuState::Display), show_display_settings);
+        // app.add_systems(
+        //     Update,
+        //     (handle_display_settings_changes,).run_if(in_state(MenuState::Display)),
+        // );
+        app.add_systems(
+            OnExit(MenuState::Display),
+            despawn_with_tag::<DisplaySettingsMenuEntity>,
+        );
+    }
 }

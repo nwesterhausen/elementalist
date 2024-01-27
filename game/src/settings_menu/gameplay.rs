@@ -6,19 +6,20 @@ use game_library::{
     settings::{GameplaySettings, SettingCategory, SettingChanged},
 };
 
-use crate::common::buttons::style_prefab;
+use crate::{common::buttons::style_prefab, despawn_with_tag};
 
 use super::{
-    base::MenuEntity,
+    base::SettingsMenuEntity,
     button_actions::{ButtonAction, SettingsMenuButton},
     events::{ChangeSetting, IndividualSetting},
+    MenuState,
 };
 
 /// Component for tagging entities that are part of the display settings menu.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Component)]
-pub(super) struct GameplaySettingsMenuEntity;
+struct GameplaySettingsMenuEntity;
 
-pub(super) fn show_gameplay_settings(
+fn show_gameplay_settings(
     mut commands: Commands,
     fonts: Res<FontResource>,
     gameplay_settings: Res<GameplaySettings>,
@@ -27,7 +28,7 @@ pub(super) fn show_gameplay_settings(
         .spawn((
             style_prefab::settings_menu_full_node_bundle(),
             GameplaySettingsMenuEntity,
-            MenuEntity,
+            SettingsMenuEntity,
         ))
         .with_children(|parent| {
             // Game Title
@@ -56,9 +57,12 @@ pub(super) fn show_gameplay_settings(
                                 ));
                             });
                             // Text for auto-aim
-                            row.spawn(style_prefab::menu_button_text(
-                                format!("{}", gameplay_settings.auto_aim).as_str(),
-                                fonts.main_font.clone(),
+                            row.spawn((
+                                style_prefab::settings_menu_info_text_bundle(
+                                    format!("{}", gameplay_settings.auto_aim).as_str(),
+                                    fonts.main_font.clone(),
+                                ),
+                                CurrentAutoAimStateText,
                             ));
                         });
                     // Auto-cast button (as a row with a label and a button)
@@ -78,9 +82,12 @@ pub(super) fn show_gameplay_settings(
                                 ));
                             });
                             // Text for auto-cast
-                            row.spawn(style_prefab::menu_button_text(
-                                format!("{}", gameplay_settings.auto_cast).as_str(),
-                                fonts.main_font.clone(),
+                            row.spawn((
+                                style_prefab::settings_menu_info_text_bundle(
+                                    format!("{}", gameplay_settings.auto_cast).as_str(),
+                                    fonts.main_font.clone(),
+                                ),
+                                CurrentAutoCastStateText,
                             ));
                         });
                     // Back button (=> settings)
@@ -100,8 +107,31 @@ pub(super) fn show_gameplay_settings(
         });
 }
 
+pub(super) struct GameplaySettingsMenuPlugin;
+
+impl Plugin for GameplaySettingsMenuPlugin {
+    fn build(&self, app: &mut App) {
+        app.add_systems(OnEnter(MenuState::Gameplay), show_gameplay_settings);
+        app.add_systems(
+            Update,
+            (
+                handle_gameplay_setting_changes,
+                (
+                    update_current_auto_aim_state_text,
+                    update_current_auto_cast_state_text,
+                ),
+            )
+                .run_if(in_state(MenuState::Gameplay)),
+        );
+        app.add_systems(
+            OnExit(MenuState::Gameplay),
+            despawn_with_tag::<GameplaySettingsMenuEntity>,
+        );
+    }
+}
+
 /// System to handle the gameplay menu button actions.
-pub(super) fn handle_gameplay_setting_changes(
+fn handle_gameplay_setting_changes(
     mut er_change_setting: EventReader<ChangeSetting>,
     mut gameplay_settings: ResMut<GameplaySettings>,
     mut ew_setting_changed: EventWriter<SettingChanged>,
@@ -120,5 +150,31 @@ pub(super) fn handle_gameplay_setting_changes(
             }
             _ => {}
         }
+    }
+}
+
+#[derive(Component)]
+struct CurrentAutoAimStateText;
+
+#[derive(Component)]
+struct CurrentAutoCastStateText;
+
+/// System to update the text for the current auto-aim state.
+fn update_current_auto_aim_state_text(
+    mut text_query: Query<(&mut Text, &CurrentAutoAimStateText)>,
+    gameplay_settings: Res<GameplaySettings>,
+) {
+    for (mut text, _tag) in &mut text_query {
+        text.sections[0].value = format!("{}", gameplay_settings.auto_aim);
+    }
+}
+
+/// System to update the text for the current auto-cast state.
+fn update_current_auto_cast_state_text(
+    mut text_query: Query<(&mut Text, &CurrentAutoCastStateText)>,
+    gameplay_settings: Res<GameplaySettings>,
+) {
+    for (mut text, _tag) in &mut text_query {
+        text.sections[0].value = format!("{}", gameplay_settings.auto_cast);
     }
 }

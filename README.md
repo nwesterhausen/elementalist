@@ -1,4 +1,4 @@
-# ![game icon](./game_assets/icon.png) Elementalist
+# ![game icon](./game_assets/Icon.png) Elementalist
 
 [![Documentation](https://github.com/nwesterhausen/elementalist/actions/workflows/docs.yml/badge.svg)](https://nwesterhausen.github.io/elementalist/)
 [![Build & Test](https://github.com/nwesterhausen/elementalist/actions/workflows/rust.yml/badge.svg)](https://github.com/nwesterhausen/elementalist/actions/workflows/rust.yml)

@@ -6,19 +6,20 @@ use game_library::{
     settings::{SettingCategory, SettingChanged, VolumeSettings},
 };
 
-use crate::common::buttons::style_prefab;
+use crate::{common::buttons::style_prefab, despawn_with_tag};
 
 use super::{
-    base::MenuEntity,
+    base::SettingsMenuEntity,
     button_actions::{ButtonAction, SettingsMenuButton},
     events::{ChangeSetting, IndividualSetting},
+    MenuState,
 };
 
 /// Component for tagging entities that are part of the display settings menu.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Component)]
-pub(super) struct AudioSettingsMenuEntity;
+struct AudioSettingsMenuEntity;
 
-pub(super) fn show_audio_settings(
+fn show_audio_settings(
     mut commands: Commands,
     fonts: Res<FontResource>,
     volume_settings: Res<VolumeSettings>,
@@ -27,7 +28,7 @@ pub(super) fn show_audio_settings(
         .spawn((
             style_prefab::settings_menu_full_node_bundle(),
             AudioSettingsMenuEntity,
-            MenuEntity,
+            SettingsMenuEntity,
         ))
         .with_children(|parent| {
             // Menu Title
@@ -58,9 +59,12 @@ pub(super) fn show_audio_settings(
                                 ));
                             });
                             // Text for main volume
-                            row.spawn(style_prefab::settings_menu_info_text_bundle(
-                                format!("{:.2}", volume_settings.main),
-                                fonts.main_font.clone(),
+                            row.spawn((
+                                style_prefab::settings_menu_info_text_bundle(
+                                    volume_settings.main,
+                                    fonts.main_font.clone(),
+                                ),
+                                CurrentMainVolumeText,
                             ));
                         });
                     // Volume slider for music volume
@@ -80,9 +84,12 @@ pub(super) fn show_audio_settings(
                                 ));
                             });
                             // Text for music volume
-                            row.spawn(style_prefab::settings_menu_info_text_bundle(
-                                format!("{:.2}", volume_settings.music),
-                                fonts.main_font.clone(),
+                            row.spawn((
+                                style_prefab::settings_menu_info_text_bundle(
+                                    volume_settings.music,
+                                    fonts.main_font.clone(),
+                                ),
+                                CurrentMusicVolumeText,
                             ));
                         });
                     // Volume slider for sound effects volume
@@ -102,9 +109,12 @@ pub(super) fn show_audio_settings(
                                 ));
                             });
                             // Text for sound effects volume
-                            row.spawn(style_prefab::settings_menu_info_text_bundle(
-                                format!("{:.2}", volume_settings.sfx),
-                                fonts.main_font.clone(),
+                            row.spawn((
+                                style_prefab::settings_menu_info_text_bundle(
+                                    volume_settings.sfx,
+                                    fonts.main_font.clone(),
+                                ),
+                                CurrentSfxVolumeText,
                             ));
                         });
                     // Back button (=> settings)
@@ -125,7 +135,7 @@ pub(super) fn show_audio_settings(
 }
 
 /// System to handle the audio menu button actions.
-pub(super) fn handle_audio_setting_changes(
+fn handle_audio_setting_changes(
     mut er_change_setting: EventReader<ChangeSetting>,
     mut gameplay_settings: ResMut<VolumeSettings>,
     mut ew_setting_changed: EventWriter<SettingChanged>,
@@ -146,5 +156,66 @@ pub(super) fn handle_audio_setting_changes(
             }
             _ => {}
         }
+    }
+}
+
+pub(super) struct AudioSettingsMenuPlugin;
+
+impl Plugin for AudioSettingsMenuPlugin {
+    fn build(&self, app: &mut App) {
+        app.add_systems(OnEnter(MenuState::Audio), show_audio_settings);
+        app.add_systems(
+            Update,
+            (
+                handle_audio_setting_changes,
+                (
+                    update_current_main_volume_text,
+                    update_current_music_volume_text,
+                    update_current_sfx_volume_text,
+                ),
+            )
+                .run_if(in_state(MenuState::Audio)),
+        );
+        app.add_systems(
+            OnExit(MenuState::Audio),
+            despawn_with_tag::<AudioSettingsMenuEntity>,
+        );
+    }
+}
+
+#[derive(Component)]
+struct CurrentMainVolumeText;
+#[derive(Component)]
+struct CurrentMusicVolumeText;
+#[derive(Component)]
+struct CurrentSfxVolumeText;
+
+/// System to handle changing the value of the main volume text.
+fn update_current_main_volume_text(
+    volume_settings: Res<VolumeSettings>,
+    mut text_query: Query<&mut Text, With<CurrentMainVolumeText>>,
+) {
+    for mut text in &mut text_query {
+        text.sections[0].value = volume_settings.main.into();
+    }
+}
+
+/// System to handle changing the value of the music volume text.
+fn update_current_music_volume_text(
+    volume_settings: Res<VolumeSettings>,
+    mut text_query: Query<&mut Text, With<CurrentMusicVolumeText>>,
+) {
+    for mut text in &mut text_query {
+        text.sections[0].value = volume_settings.music.into();
+    }
+}
+
+/// System to handle changing the value of the sound effects volume text.
+fn update_current_sfx_volume_text(
+    volume_settings: Res<VolumeSettings>,
+    mut text_query: Query<&mut Text, With<CurrentSfxVolumeText>>,
+) {
+    for mut text in &mut text_query {
+        text.sections[0].value = volume_settings.sfx.into();
     }
 }

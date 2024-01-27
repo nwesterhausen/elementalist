@@ -107,6 +107,18 @@ impl std::fmt::Display for FontFamily {
     }
 }
 
+impl From<FontFamily> for String {
+    fn from(val: FontFamily) -> Self {
+        match val {
+            FontFamily::Display => "Display".to_string(),
+            FontFamily::Fancy => "Fancy".to_string(),
+            FontFamily::Dyslexic => "OpenDyslexic".to_string(),
+            FontFamily::SansSerif => "Sans-Serif".to_string(),
+            FontFamily::Monospace => "Monospace".to_string(),
+        }
+    }
+}
+
 /// Change a font choice. Sending this event will update the specified font
 /// choice to the specified font.
 #[derive(Event)]

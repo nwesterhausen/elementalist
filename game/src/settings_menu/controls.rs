@@ -3,23 +3,24 @@
 use bevy::prelude::*;
 use game_library::font_resource::FontResource;
 
-use crate::common::buttons::style_prefab;
+use crate::{common::buttons::style_prefab, despawn_with_tag};
 
 use super::{
-    base::MenuEntity,
+    base::SettingsMenuEntity,
     button_actions::{ButtonAction, SettingsMenuButton},
+    MenuState,
 };
 
 /// Component for tagging entities that are part of the display settings menu.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Component)]
-pub(super) struct ControlsSettingsMenuEntity;
+struct ControlsSettingsMenuEntity;
 
-pub(super) fn show_controls_settings(mut commands: Commands, fonts: Res<FontResource>) {
+fn show_controls_settings(mut commands: Commands, fonts: Res<FontResource>) {
     commands
         .spawn((
             style_prefab::settings_menu_full_node_bundle(),
             ControlsSettingsMenuEntity,
-            MenuEntity,
+            SettingsMenuEntity,
         ))
         .with_children(|parent| {
             // Menu Title
@@ -46,4 +47,20 @@ pub(super) fn show_controls_settings(mut commands: Commands, fonts: Res<FontReso
                         });
                 });
         });
+}
+
+pub(super) struct ControlsSettingsMenuPlugin;
+
+impl Plugin for ControlsSettingsMenuPlugin {
+    fn build(&self, app: &mut App) {
+        app.add_systems(OnEnter(MenuState::Controls), show_controls_settings);
+        // app.add_systems(
+        //     Update,
+        //     (handle_control_settings_changes,).run_if(in_state(MenuState::Controls)),
+        // );
+        app.add_systems(
+            OnExit(MenuState::Controls),
+            despawn_with_tag::<ControlsSettingsMenuEntity>,
+        );
+    }
 }

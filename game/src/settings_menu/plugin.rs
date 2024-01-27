@@ -6,19 +6,14 @@ use bevy::prelude::*;
 use crate::{despawn_with_tag, resources::AppState};
 
 use super::{
-    accessibility::{
-        handle_accessibility_setting_changes, show_accessibility_settings,
-        AccessibilitySettingsMenuEntity,
-    },
-    audio::{handle_audio_setting_changes, show_audio_settings, AudioSettingsMenuEntity},
-    base::{clear_background, transition_to_base_menu, MenuBackground, MenuEntity},
+    accessibility::AccessibilitySettingsMenuPlugin,
+    audio::AudioSettingsMenuPlugin,
+    base::{clear_background, transition_to_base_menu, SettingsMenuBackground, SettingsMenuEntity},
     button_actions::menu_actions,
-    controls::{show_controls_settings, ControlsSettingsMenuEntity},
-    display::{show_display_settings, DisplaySettingsMenuEntity},
+    controls::ControlsSettingsMenuPlugin,
+    display::DisplaySettingsMenuPlugin,
     events::ChangeSetting,
-    gameplay::{
-        handle_gameplay_setting_changes, show_gameplay_settings, GameplaySettingsMenuEntity,
-    },
+    gameplay::GameplaySettingsMenuPlugin,
     main::{show_main_menu, BaseSettingsMenuEntity},
     state::MenuState,
 };
@@ -35,68 +30,28 @@ impl Plugin for SettingsMenuPlugin {
         app.add_systems(OnEnter(MenuState::Main), (clear_background, show_main_menu));
         app.add_systems(
             OnExit(MenuState::Main),
-            (
-                despawn_with_tag::<BaseSettingsMenuEntity>,
-                despawn_with_tag::<AudioSettingsMenuEntity>,
-                despawn_with_tag::<DisplaySettingsMenuEntity>,
-                despawn_with_tag::<ControlsSettingsMenuEntity>,
-                despawn_with_tag::<GameplaySettingsMenuEntity>,
-                despawn_with_tag::<AccessibilitySettingsMenuEntity>,
-            ),
+            (despawn_with_tag::<BaseSettingsMenuEntity>,),
         );
         // When disabled, we should clean up all the entities that are part of the menu.
         app.add_systems(
             OnEnter(MenuState::Disabled),
             (
-                despawn_with_tag::<MenuEntity>,
-                despawn_with_tag::<MenuBackground>,
-                despawn_with_tag::<BaseSettingsMenuEntity>,
-                despawn_with_tag::<AudioSettingsMenuEntity>,
-                despawn_with_tag::<DisplaySettingsMenuEntity>,
-                despawn_with_tag::<ControlsSettingsMenuEntity>,
-                despawn_with_tag::<GameplaySettingsMenuEntity>,
-                despawn_with_tag::<AccessibilitySettingsMenuEntity>,
+                despawn_with_tag::<SettingsMenuEntity>,
+                despawn_with_tag::<SettingsMenuBackground>,
             ),
         );
-        // Then we should have systems for each of the menu states (display, audio, controls, gameplay)
-        app.add_systems(OnEnter(MenuState::Display), show_display_settings);
-        app.add_systems(
-            OnExit(MenuState::Display),
-            despawn_with_tag::<DisplaySettingsMenuEntity>,
-        );
-        app.add_systems(OnEnter(MenuState::Audio), show_audio_settings);
-        app.add_systems(
-            OnExit(MenuState::Audio),
-            despawn_with_tag::<AudioSettingsMenuEntity>,
-        );
-        app.add_systems(OnEnter(MenuState::Controls), show_controls_settings);
-        app.add_systems(
-            OnExit(MenuState::Controls),
-            despawn_with_tag::<ControlsSettingsMenuEntity>,
-        );
-        app.add_systems(OnEnter(MenuState::Gameplay), show_gameplay_settings);
-        app.add_systems(
-            OnExit(MenuState::Gameplay),
-            despawn_with_tag::<GameplaySettingsMenuEntity>,
-        );
-        app.add_systems(
-            OnEnter(MenuState::Accessibility),
-            show_accessibility_settings,
-        );
-        app.add_systems(
-            OnExit(MenuState::Accessibility),
-            despawn_with_tag::<AccessibilitySettingsMenuEntity>,
-        );
+        // Each "page" of the settings menu has its own plugin that adds the necessary systems
+        app.add_plugins((
+            AccessibilitySettingsMenuPlugin,
+            AudioSettingsMenuPlugin,
+            ControlsSettingsMenuPlugin,
+            DisplaySettingsMenuPlugin,
+            GameplaySettingsMenuPlugin,
+        ));
         // Add system to update the buttons on hover, and respond to button presses
         app.add_systems(
             Update,
-            (
-                menu_actions,
-                handle_accessibility_setting_changes,
-                handle_gameplay_setting_changes,
-                handle_audio_setting_changes,
-            )
-                .run_if(in_state(AppState::SettingsMenu)),
+            menu_actions.run_if(in_state(AppState::SettingsMenu)),
         );
     }
 }

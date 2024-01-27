@@ -8,11 +8,11 @@ use crate::common::colors::BACKGROUND_COLOR_50;
 
 /// An entity tag for ease of cleanup when the menu is disabled.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Component)]
-pub struct MenuEntity;
+pub struct SettingsMenuEntity;
 
 /// A tag specifically for the menu background.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Component)]
-pub struct MenuBackground;
+pub struct SettingsMenuBackground;
 
 /// Clear the background (draw a blur) only when the menu is not disabled.
 pub(super) fn clear_background(
@@ -20,7 +20,7 @@ pub(super) fn clear_background(
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<ColorMaterial>>,
     window_query: Query<&Window, With<PrimaryWindow>>,
-    existing_background_query: Query<Entity, With<MenuBackground>>,
+    existing_background_query: Query<Entity, With<SettingsMenuBackground>>,
 ) {
     // Check if the background already exists.
     if existing_background_query.get_single().is_ok() {
@@ -43,7 +43,7 @@ pub(super) fn clear_background(
             transform: Transform::from_xyz(0., 0., 10.),
             ..default()
         },
-        MenuEntity,
+        SettingsMenuBackground,
     ));
 }
 

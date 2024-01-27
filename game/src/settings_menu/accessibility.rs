@@ -6,19 +6,20 @@ use game_library::{
     settings::{next_font_family, AccessibilitySettings, SettingCategory, SettingChanged},
 };
 
-use crate::common::buttons::style_prefab;
+use crate::{common::buttons::style_prefab, despawn_with_tag};
 
 use super::{
-    base::MenuEntity,
+    base::SettingsMenuEntity,
     button_actions::{ButtonAction, SettingsMenuButton},
     events::{ChangeSetting, IndividualSetting},
+    MenuState,
 };
 
 /// Component for tagging entities that are part of the display settings menu.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Component)]
-pub(super) struct AccessibilitySettingsMenuEntity;
+struct AccessibilitySettingsMenuEntity;
 
-pub(super) fn show_accessibility_settings(
+fn show_accessibility_settings(
     mut commands: Commands,
     fonts: Res<FontResource>,
     accessibility_settings: Res<AccessibilitySettings>,
@@ -27,7 +28,7 @@ pub(super) fn show_accessibility_settings(
         .spawn((
             style_prefab::settings_menu_full_node_bundle(),
             AccessibilitySettingsMenuEntity,
-            MenuEntity,
+            SettingsMenuEntity,
         ))
         .with_children(|parent| {
             // Game Title
@@ -56,10 +57,12 @@ pub(super) fn show_accessibility_settings(
                                 ));
                             });
                             // Text for current font family
-                            row.spawn(style_prefab::menu_button_text(
-                                format!("{}", accessibility_settings.interface_font_family)
-                                    .as_str(),
-                                fonts.main_font.clone(),
+                            row.spawn((
+                                style_prefab::settings_menu_info_text_bundle(
+                                    accessibility_settings.interface_font_family,
+                                    fonts.main_font.clone(),
+                                ),
+                                CurrentFontFamilyText,
                             ));
                         });
                     // Back button (=> settings)
@@ -79,8 +82,34 @@ pub(super) fn show_accessibility_settings(
         });
 }
 
+#[derive(Component)]
+struct CurrentFontFamilyText;
+
+pub(super) struct AccessibilitySettingsMenuPlugin;
+
+impl Plugin for AccessibilitySettingsMenuPlugin {
+    fn build(&self, app: &mut App) {
+        app.add_systems(
+            OnEnter(MenuState::Accessibility),
+            show_accessibility_settings,
+        );
+        app.add_systems(
+            Update,
+            (
+                handle_accessibility_setting_changes,
+                (update_current_font_family_text),
+            )
+                .run_if(in_state(MenuState::Accessibility)),
+        );
+        app.add_systems(
+            OnExit(MenuState::Accessibility),
+            despawn_with_tag::<AccessibilitySettingsMenuEntity>,
+        );
+    }
+}
+
 /// System to handle the accessibility menu button actions.
-pub(super) fn handle_accessibility_setting_changes(
+fn handle_accessibility_setting_changes(
     mut er_change_setting: EventReader<ChangeSetting>,
     mut accessibility_settings: ResMut<AccessibilitySettings>,
     mut ew_setting_changed: EventWriter<SettingChanged>,
@@ -98,5 +127,19 @@ pub(super) fn handle_accessibility_setting_changes(
             // Alert the system that the font has changed (to flush settings to disk)
             ew_setting_changed.send(SettingChanged(SettingCategory::Accessibility));
         }
+    }
+}
+
+/// System to update the text of the current font family.
+fn update_current_font_family_text(
+    accessibility_settings: Res<AccessibilitySettings>,
+    fonts: Res<FontResource>,
+    mut text_query: Query<&mut Text, With<CurrentFontFamilyText>>,
+) {
+    for mut text in &mut text_query {
+        text.sections[0].value = accessibility_settings.interface_font_family.into();
+        // Set the font to reflect the new font family
+        text.sections[0].style.font =
+            fonts.get_font_handle(accessibility_settings.interface_font_family);
     }
 }

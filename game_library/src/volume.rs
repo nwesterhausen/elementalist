@@ -128,6 +128,16 @@ impl std::fmt::Display for Volume {
     }
 }
 
+impl From<Volume> for String {
+    fn from(val: Volume) -> Self {
+        if val.muted {
+            "muted".to_string()
+        } else {
+            format!("{}%", val.value)
+        }
+    }
+}
+
 impl From<u64> for Volume {
     fn from(value: u64) -> Self {
         let Ok(clamped_value) = u32::try_from(value) else {

@@ -30,13 +30,3 @@ updates:
         update-types:
           - minor
           - patch
-  - package-ecosystem: pnpm
-    directory: /
-    schedule:
-      interval: weekly
-    groups:
-      all:
-        update-types:
-          - patch
-          - minor
-          - major

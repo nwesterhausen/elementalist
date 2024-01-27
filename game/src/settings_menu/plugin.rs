@@ -12,14 +12,14 @@ use super::{
     },
     audio::{handle_audio_setting_changes, show_audio_settings, AudioSettingsMenuEntity},
     base::{clear_background, transition_to_base_menu, MenuBackground, MenuEntity},
-    button_actions::{button_system, menu_actions},
+    button_actions::menu_actions,
     controls::{show_controls_settings, ControlsSettingsMenuEntity},
     display::{show_display_settings, DisplaySettingsMenuEntity},
     events::ChangeSetting,
     gameplay::{
         handle_gameplay_setting_changes, show_gameplay_settings, GameplaySettingsMenuEntity,
     },
-    main::{show_main_menu, MainMenuEntity},
+    main::{show_main_menu, BaseSettingsMenuEntity},
     state::MenuState,
 };
 
@@ -36,7 +36,7 @@ impl Plugin for SettingsMenuPlugin {
         app.add_systems(
             OnExit(MenuState::Main),
             (
-                despawn_with_tag::<MainMenuEntity>,
+                despawn_with_tag::<BaseSettingsMenuEntity>,
                 despawn_with_tag::<AudioSettingsMenuEntity>,
                 despawn_with_tag::<DisplaySettingsMenuEntity>,
                 despawn_with_tag::<ControlsSettingsMenuEntity>,
@@ -50,7 +50,7 @@ impl Plugin for SettingsMenuPlugin {
             (
                 despawn_with_tag::<MenuEntity>,
                 despawn_with_tag::<MenuBackground>,
-                despawn_with_tag::<MainMenuEntity>,
+                despawn_with_tag::<BaseSettingsMenuEntity>,
                 despawn_with_tag::<AudioSettingsMenuEntity>,
                 despawn_with_tag::<DisplaySettingsMenuEntity>,
                 despawn_with_tag::<ControlsSettingsMenuEntity>,
@@ -91,7 +91,6 @@ impl Plugin for SettingsMenuPlugin {
         app.add_systems(
             Update,
             (
-                button_system,
                 menu_actions,
                 handle_accessibility_setting_changes,
                 handle_gameplay_setting_changes,

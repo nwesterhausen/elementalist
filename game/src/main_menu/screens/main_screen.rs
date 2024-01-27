@@ -1,7 +1,13 @@
 use bevy::prelude::*;
 use game_library::font_resource::FontResource;
 
-use crate::main_menu::{button_actions::ButtonAction, components::OnMainMenuScreen};
+use crate::{
+    common::buttons::style_prefab,
+    main_menu::{
+        button_actions::{ButtonAction, MainMenuButton},
+        plugin::OnMainMenuScreen,
+    },
+};
 
 /// System to setup the main menu screen
 ///
@@ -9,110 +15,58 @@ use crate::main_menu::{button_actions::ButtonAction, components::OnMainMenuScree
 /// background, the title, and the buttons.
 pub fn main_menu_setup(mut commands: Commands, fonts: Res<FontResource>) {
     // Common style for all buttons on the screen
-    let button_style = Style {
-        margin: UiRect::px(10., 10., 0., 20.),
-        justify_content: JustifyContent::Center,
-        align_items: AlignItems::Start,
-        ..default()
-    };
-    let button_text_style = TextStyle {
-        font_size: 40.0,
-        color: Color::WHITE,
-        font: fonts.interface_font.clone(),
-    };
-
     commands
-        .spawn((
-            NodeBundle {
-                style: Style {
-                    align_items: AlignItems::Start,
-                    flex_direction: FlexDirection::Column,
-                    padding: UiRect::all(Val::Px(10.0)),
-                    width: Val::Percent(100.0),
-                    height: Val::Percent(100.0),
-                    ..default()
-                },
-                ..default()
-            },
-            OnMainMenuScreen,
-        ))
+        .spawn((style_prefab::main_menu_full_node_bundle(), OnMainMenuScreen))
         .with_children(|parent| {
             // Game Title
-            parent.spawn(TextBundle {
-                text: Text::from_section(
-                    "Elementalist",
-                    TextStyle {
-                        font: fonts.display_font.clone(),
-                        font_size: 112.0,
-                        color: Color::WHITE,
-                    },
-                ),
-                style: Style {
-                    align_self: AlignSelf::Center,
-                    ..default()
-                },
-                ..default()
-            });
+            parent.spawn(style_prefab::main_menu_title_bundle(
+                "Elementalist",
+                fonts.display_font.clone(),
+            ));
             // #### MENU BUTTONS #####
             parent
-                .spawn(NodeBundle {
-                    style: Style {
-                        flex_direction: FlexDirection::Column,
-                        align_items: AlignItems::Start,
-                        width: Val::Percent(100.0),
-                        margin: UiRect::px(20., 0., 40., 0.),
-                        ..default()
-                    },
-                    ..default()
-                })
+                .spawn(style_prefab::main_menu_column_node_bundle())
                 .with_children(|menu_buttons| {
-                    // New Game Button
+                    // Start Game Button
                     menu_buttons
                         .spawn((
-                            ButtonBundle {
-                                style: button_style.clone(),
-                                background_color: Color::NONE.into(),
-                                ..default()
-                            },
+                            style_prefab::menu_button_bundle(),
                             ButtonAction::StartGame,
+                            MainMenuButton,
                         ))
                         .with_children(|button| {
-                            button.spawn(TextBundle::from_section(
+                            button.spawn(style_prefab::menu_button_text(
                                 "Start",
-                                button_text_style.clone(),
+                                fonts.interface_font.clone(),
                             ));
                         });
 
                     // Settings Button
                     menu_buttons
                         .spawn((
-                            ButtonBundle {
-                                style: button_style.clone(),
-                                background_color: Color::NONE.into(),
-                                ..default()
-                            },
+                            style_prefab::menu_button_bundle(),
                             ButtonAction::Settings,
+                            MainMenuButton,
                         ))
                         .with_children(|button| {
-                            button.spawn(TextBundle::from_section(
+                            button.spawn(style_prefab::menu_button_text(
                                 "Settings",
-                                button_text_style.clone(),
+                                fonts.interface_font.clone(),
                             ));
                         });
 
                     // Quit Button
                     menu_buttons
                         .spawn((
-                            ButtonBundle {
-                                style: button_style.clone(),
-                                background_color: Color::NONE.into(),
-                                ..default()
-                            },
+                            style_prefab::menu_button_bundle(),
                             ButtonAction::Quit,
+                            MainMenuButton,
                         ))
                         .with_children(|button| {
-                            button
-                                .spawn(TextBundle::from_section("Quit", button_text_style.clone()));
+                            button.spawn(style_prefab::menu_button_text(
+                                "Quit",
+                                fonts.interface_font.clone(),
+                            ));
                         });
                 });
         });

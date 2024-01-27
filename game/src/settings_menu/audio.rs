@@ -3,15 +3,14 @@
 use bevy::prelude::*;
 use game_library::{
     font_resource::FontResource,
-    menu_helper::make_text_bundle,
     settings::{SettingCategory, SettingChanged, VolumeSettings},
 };
 
-use crate::common::colors;
+use crate::common::buttons::style_prefab;
 
 use super::{
-    base::{button_style, button_text, node_style, super_node_style},
-    button_actions::ButtonAction,
+    base::MenuEntity,
+    button_actions::{ButtonAction, SettingsMenuButton},
     events::{ChangeSetting, IndividualSetting},
 };
 
@@ -25,108 +24,103 @@ pub(super) fn show_audio_settings(
     volume_settings: Res<VolumeSettings>,
 ) {
     commands
-        .spawn((super_node_style(), AudioSettingsMenuEntity))
+        .spawn((
+            style_prefab::settings_menu_full_node_bundle(),
+            AudioSettingsMenuEntity,
+            MenuEntity,
+        ))
         .with_children(|parent| {
             // Menu Title
-            parent.spawn(make_text_bundle(
-                "Audio Settings",
+            parent.spawn(style_prefab::settings_menu_title_bundle(
+                "Audio",
                 fonts.display_font.clone(),
-                72.0,
-                colors::TEXT_COLOR,
-                AlignSelf::Center,
             ));
             // #### MENU BUTTONS #####
-            parent.spawn(node_style()).with_children(|menu_buttons| {
-                // Volume slider for main volume
-                // For display purposes, use a node here as a row to show the button ("Main Volume") and then the value
-                // of main volume in a text node.
-                menu_buttons
-                    .spawn(NodeBundle {
-                        style: Style {
-                            flex_direction: FlexDirection::Row,
-                            align_items: AlignItems::Start,
-                            ..default()
-                        },
-                        ..default()
-                    })
-                    .with_children(|row| {
-                        // Button for main volume
-                        row.spawn((button_style(), ButtonAction::IncrementMainVolume))
+            parent
+                .spawn(style_prefab::settings_menu_column_node_bundle())
+                .with_children(|menu_buttons| {
+                    // Volume slider for main volume
+                    // For display purposes, use a node here as a row to show the button ("Main Volume") and then the value
+                    // of main volume in a text node.
+                    menu_buttons
+                        .spawn(style_prefab::settings_menu_button_row_node_bundle())
+                        .with_children(|row| {
+                            // Button for main volume
+                            row.spawn((
+                                style_prefab::menu_button_bundle(),
+                                ButtonAction::IncrementMainVolume,
+                                SettingsMenuButton,
+                            ))
                             .with_children(|button| {
-                                button.spawn(button_text("Main", fonts.interface_font.clone()));
+                                button.spawn(style_prefab::menu_button_text(
+                                    "Main",
+                                    fonts.interface_font.clone(),
+                                ));
                             });
-                        // Text for main volume
-                        row.spawn(TextBundle::from_section(
-                            format!("{:.2}", volume_settings.main),
-                            TextStyle {
-                                font_size: 40.0,
-                                color: colors::TEXT_COLOR,
-                                font: fonts.main_font.clone(),
-                            },
-                        ));
-                    });
-                // Volume slider for music volume
-                menu_buttons
-                    .spawn(NodeBundle {
-                        style: Style {
-                            flex_direction: FlexDirection::Row,
-                            align_items: AlignItems::Start,
-                            ..default()
-                        },
-                        ..default()
-                    })
-                    .with_children(|row| {
-                        // Button for music volume
-                        row.spawn((button_style(), ButtonAction::IncrementMusicVolume))
+                            // Text for main volume
+                            row.spawn(style_prefab::settings_menu_info_text_bundle(
+                                format!("{:.2}", volume_settings.main),
+                                fonts.main_font.clone(),
+                            ));
+                        });
+                    // Volume slider for music volume
+                    menu_buttons
+                        .spawn(style_prefab::settings_menu_button_row_node_bundle())
+                        .with_children(|row| {
+                            // Button for music volume
+                            row.spawn((
+                                style_prefab::menu_button_bundle(),
+                                ButtonAction::IncrementMusicVolume,
+                                SettingsMenuButton,
+                            ))
                             .with_children(|button| {
-                                button.spawn(button_text("Music", fonts.interface_font.clone()));
+                                button.spawn(style_prefab::menu_button_text(
+                                    "Music",
+                                    fonts.interface_font.clone(),
+                                ));
                             });
-                        // Text for music volume
-                        row.spawn(TextBundle::from_section(
-                            format!("{:.2}", volume_settings.music),
-                            TextStyle {
-                                font_size: 40.0,
-                                color: colors::TEXT_COLOR,
-                                font: fonts.main_font.clone(),
-                            },
-                        ));
-                    });
-                // Volume slider for sound effects volume
-                menu_buttons
-                    .spawn(NodeBundle {
-                        style: Style {
-                            flex_direction: FlexDirection::Row,
-                            align_items: AlignItems::Start,
-                            ..default()
-                        },
-                        ..default()
-                    })
-                    .with_children(|row| {
-                        // Button for sound effects volume
-                        row.spawn((button_style(), ButtonAction::IncrementSoundEffectsVolume))
+                            // Text for music volume
+                            row.spawn(style_prefab::settings_menu_info_text_bundle(
+                                format!("{:.2}", volume_settings.music),
+                                fonts.main_font.clone(),
+                            ));
+                        });
+                    // Volume slider for sound effects volume
+                    menu_buttons
+                        .spawn(style_prefab::settings_menu_button_row_node_bundle())
+                        .with_children(|row| {
+                            // Button for sound effects volume
+                            row.spawn((
+                                style_prefab::menu_button_bundle(),
+                                ButtonAction::IncrementSoundEffectsVolume,
+                                SettingsMenuButton,
+                            ))
                             .with_children(|button| {
-                                button.spawn(button_text(
+                                button.spawn(style_prefab::menu_button_text(
                                     "Sound Effects",
                                     fonts.interface_font.clone(),
                                 ));
                             });
-                        // Text for sound effects volume
-                        row.spawn(TextBundle::from_section(
-                            format!("{:.2}", volume_settings.sfx),
-                            TextStyle {
-                                font_size: 40.0,
-                                color: colors::TEXT_COLOR,
-                                font: fonts.main_font.clone(),
-                            },
-                        ));
-                    });
-                // Back button (=> settings)
-                menu_buttons
-                    .spawn((button_style(), ButtonAction::BackToMenu))
-                    .with_children(|button| {
-                        button.spawn(button_text("Back", fonts.interface_font.clone()));
-                    });
-            });
+                            // Text for sound effects volume
+                            row.spawn(style_prefab::settings_menu_info_text_bundle(
+                                format!("{:.2}", volume_settings.sfx),
+                                fonts.main_font.clone(),
+                            ));
+                        });
+                    // Back button (=> settings)
+                    menu_buttons
+                        .spawn((
+                            style_prefab::menu_button_bundle(),
+                            ButtonAction::BackToMenu,
+                            SettingsMenuButton,
+                        ))
+                        .with_children(|button| {
+                            button.spawn(style_prefab::menu_button_text(
+                                "Back",
+                                fonts.interface_font.clone(),
+                            ));
+                        });
+                });
         });
 }
 

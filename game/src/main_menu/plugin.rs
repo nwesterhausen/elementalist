@@ -1,12 +1,27 @@
 use bevy::prelude::*;
 
-use crate::{despawn_screen, AppState};
+use crate::{despawn_with_tag, resources::AppState};
 
-use super::{
-    components, screens,
-    state::MenuState,
-    systems::{button_system, menu_actions, transition_to_main_menu},
-};
+use super::{button_actions::menu_actions, screens};
+
+// State used for the current menu screen
+#[derive(Clone, Copy, Default, Eq, PartialEq, Debug, Hash, States)]
+pub enum MenuState {
+    Main,
+    #[default]
+    Disabled,
+}
+
+// Tag component used to tag entities added on the main menu screen
+#[derive(Component)]
+pub struct OnMainMenuScreen;
+
+/// System to setup the main menu
+///
+/// When the main menu is entered, we setup the main menu state to the main menu.
+fn transition_to_main_menu(mut menu_state: ResMut<NextState<MenuState>>) {
+    menu_state.set(MenuState::Main);
+}
 
 /// The main menu plugin. This plugin is responsible for setting up the main menu.
 ///
@@ -28,51 +43,12 @@ impl Plugin for MainMenuPlugin {
             // Transition to the main menu when entering the main menu state (starts tracking our MenuState at Main)
             .add_systems(OnEnter(AppState::MainMenu), transition_to_main_menu)
             // Add system to update the buttons on hover, etc
-            .add_systems(
-                Update,
-                (button_system, menu_actions).run_if(in_state(AppState::MainMenu)),
-            )
+            .add_systems(Update, menu_actions.run_if(in_state(AppState::MainMenu)))
             // Main main screen
             .add_systems(OnEnter(MenuState::Main), screens::main_menu)
             .add_systems(
                 OnExit(MenuState::Main),
-                despawn_screen::<components::OnMainMenuScreen>,
-            )
-            // Settings screen
-            .add_systems(OnEnter(MenuState::Settings), screens::settings)
-            .add_systems(
-                OnExit(MenuState::Settings),
-                despawn_screen::<components::OnSettingsMenuScreen>,
-            )
-            // Audio settings screen
-            .add_systems(OnEnter(MenuState::SettingsAudio), screens::audio_settings)
-            .add_systems(
-                OnExit(MenuState::SettingsAudio),
-                despawn_screen::<components::OnAudioSettingsMenuScreen>,
-            )
-            // Video settings screen
-            .add_systems(OnEnter(MenuState::SettingsVideo), screens::video_settings)
-            .add_systems(
-                OnExit(MenuState::SettingsVideo),
-                despawn_screen::<components::OnVideoSettingsMenuScreen>,
-            )
-            // Controls settings screen
-            .add_systems(
-                OnEnter(MenuState::SettingsControls),
-                screens::controls_settings,
-            )
-            .add_systems(
-                OnExit(MenuState::SettingsControls),
-                despawn_screen::<components::OnControlsSettingsMenuScreen>,
-            )
-            // Gameplay settings screen
-            .add_systems(
-                OnEnter(MenuState::SettingsGameplay),
-                screens::gameplay_settings,
-            )
-            .add_systems(
-                OnExit(MenuState::SettingsGameplay),
-                despawn_screen::<components::OnGameplaySettingsMenuScreen>,
+                despawn_with_tag::<OnMainMenuScreen>,
             );
     }
 }

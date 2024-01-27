@@ -61,6 +61,7 @@
 
 use bevy::prelude::*;
 use bevy_inspector_egui::prelude::*;
+use serde::{Deserialize, Serialize};
 
 /// Component that stores the current camera scale level.
 ///
@@ -77,7 +78,7 @@ use bevy_inspector_egui::prelude::*;
 /// These are available as constants on the struct:
 ///
 /// * [`CameraScaleLevel::LEVELS`]
-#[derive(Component, Reflect, InspectorOptions, Clone, Copy)]
+#[derive(Component, Reflect, InspectorOptions, Clone, Copy, Debug, Serialize, Deserialize)]
 #[reflect(Component, InspectorOptions)]
 #[allow(clippy::module_name_repetitions)]
 pub struct CameraScaleLevel {
@@ -183,5 +184,11 @@ impl From<f32> for CameraScaleLevel {
 impl From<CameraScaleLevel> for f32 {
     fn from(level: CameraScaleLevel) -> Self {
         level.value
+    }
+}
+
+impl std::fmt::Display for CameraScaleLevel {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:.2}", self.value)
     }
 }

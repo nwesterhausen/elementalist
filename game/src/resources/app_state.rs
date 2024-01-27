@@ -13,8 +13,23 @@ pub enum AppState {
     AppLoading,
     /// Main menu screen
     ///
-    /// Has sub-states for each menu screen (audio, video, etc)
+    /// Has buttons for:
+    ///
+    /// * Play
+    /// * Settings
+    /// * Exit
     MainMenu,
+    /// Settings menu
+    ///
+    /// Sub-states:
+    ///
+    /// * Disabled (when the menu is not open)
+    /// * Main (the main settings menu)
+    /// * Display
+    /// * Audio
+    /// * Controls
+    /// * Gameplay
+    SettingsMenu,
     /// In game
     ///
     /// Sub-states:

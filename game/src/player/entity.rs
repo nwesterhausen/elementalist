@@ -20,12 +20,21 @@ pub struct PlayerBundle {
     pub stats: StatBundle,
 }
 
+#[derive(Component, Debug, Reflect)]
+pub struct PlayerAvatar;
+
 pub fn spawn_player(
     mut commands: Commands,
     asset_server: Res<AssetServer>,
     mut spell_choices: ResMut<SpellChoices>,
     loaded_spells: Res<ExistingSpells>,
+    existing_players: Query<&PlayerAvatar>,
 ) {
+    // Only spawn player if there isn't one already
+    if existing_players.iter().count() > 0 {
+        return;
+    }
+
     // Load spells (forced right now)
     for spell_id in &loaded_spells.ids {
         if spell_id.contains("WaterBolt") {
@@ -36,16 +45,19 @@ pub fn spawn_player(
         }
     }
 
-    commands.spawn(PlayerBundle {
-        movement: MovementBundle::default(),
-        sprite: SpriteBundle {
-            texture: asset_server.load("sprite/wizard.png"),
-            transform: Transform::from_xyz(0.0, 0.0, 0.0),
-            ..Default::default()
+    commands.spawn((
+        PlayerBundle {
+            movement: MovementBundle::default(),
+            sprite: SpriteBundle {
+                texture: asset_server.load("sprite/wizard.png"),
+                transform: Transform::from_xyz(0.0, 0.0, 0.0),
+                ..Default::default()
+            },
+            player: Player,
+            health: Health::new(BASE_HEALTH),
+            mana: Mana::new(BASE_MANA),
+            stats: StatBundle::new(vec![(StatEnum::MovementSpeed, BASE_SPEED)]),
         },
-        player: Player,
-        health: Health::new(BASE_HEALTH),
-        mana: Mana::new(BASE_MANA),
-        stats: StatBundle::new(vec![(StatEnum::MovementSpeed, BASE_SPEED)]),
-    });
+        PlayerAvatar,
+    ));
 }

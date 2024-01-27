@@ -4,9 +4,13 @@ use game_library::{
     SpellData, SpellLifetime, Velocity,
 };
 
-use crate::{player::Player, resources::SpellAtlas};
+use crate::{
+    despawn_with_tag,
+    player::Player,
+    resources::{AppState, SpellAtlas},
+};
 
-use super::components::despawn_expired_spells;
+use super::components::{despawn_expired_spells, SpellEntity};
 
 /// Spells are fired using the `CastSpell` event.
 ///
@@ -27,9 +31,13 @@ impl Plugin for SpellsPlugin {
             // Load spell data (from events)
             .add_systems(Update, load_spells)
             // Spell systems
-            .add_systems(Update, despawn_expired_spells)
-            // Individual Spells
-            .add_systems(Update, cast_spells);
+            .add_systems(
+                Update,
+                (despawn_expired_spells, cast_spells).run_if(in_state(AppState::InGame)),
+            )
+            // despawn all spells when leaving the game (to main menu)
+            // stuff automatically despawns when the game exits
+            .add_systems(OnEnter(AppState::MainMenu), despawn_with_tag::<SpellEntity>);
     }
 }
 
@@ -89,24 +97,27 @@ pub fn cast_spells(
         // Todo: include the player's stats to effect the spell (damage, speed, etc)
         // Todo: figure out how we will track cooldowns. Maybe a resource?
 
-        commands.spawn(SpellBundle {
-            #[allow(clippy::cast_precision_loss)]
-            lifetime: SpellLifetime::new(spell.duration as f32 / 100.0),
-            movement: MovementBundle {
+        commands.spawn((
+            SpellBundle {
                 #[allow(clippy::cast_precision_loss)]
-                velocity: Velocity::new(slope_vec * (spell.speed as f32)),
-                ..Default::default()
-            },
-            sprite: SpriteSheetBundle {
-                texture_atlas: spell_atlas.atlas.clone(),
-                sprite: spell.texture_atlas_index(),
-                transform: Transform {
-                    translation: player_transform.translation,
-                    rotation: Quat::from_rotation_z(slope_vec.y.atan2(slope_vec.x)),
+                lifetime: SpellLifetime::new(spell.duration as f32 / 100.0),
+                movement: MovementBundle {
+                    #[allow(clippy::cast_precision_loss)]
+                    velocity: Velocity::new(slope_vec * (spell.speed as f32)),
                     ..Default::default()
                 },
-                ..Default::default()
+                sprite: SpriteSheetBundle {
+                    texture_atlas: spell_atlas.atlas.clone(),
+                    sprite: spell.texture_atlas_index(),
+                    transform: Transform {
+                        translation: player_transform.translation,
+                        rotation: Quat::from_rotation_z(slope_vec.y.atan2(slope_vec.x)),
+                        ..Default::default()
+                    },
+                    ..Default::default()
+                },
             },
-        });
+            SpellEntity,
+        ));
     }
 }

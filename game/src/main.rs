@@ -6,13 +6,14 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use bevy::{asset::AssetMetaCheck, prelude::*};
+use game_library::settings::SettingsPlugin;
 use leafwing_input_manager::plugin::InputManagerPlugin;
 
+pub(crate) mod common;
+
 mod app_info;
-mod app_state;
 mod app_systems;
 mod camera;
-mod common;
 #[cfg(debug_assertions)]
 mod dev_systems;
 mod events;
@@ -20,11 +21,11 @@ mod game;
 mod main_menu;
 mod player;
 mod resources;
+mod settings_menu;
 mod spells;
 mod splash_screen;
 
-pub use app_state::AppState;
-pub use app_systems::despawn_screen;
+pub use app_systems::despawn_with_tag;
 use events::{MenuInteraction, PlayerAction};
 
 fn main() {
@@ -48,21 +49,13 @@ fn main() {
                     }),
                     ..Default::default()
                 })
+                // Nearest neighbor scaling (pixel art)
                 .set(ImagePlugin::default_nearest()),
         )
         // Add the debug plugin if in debug mode
         .add_plugins(ElementalistDebugPlugin)
-        // Add state
-        .add_state::<AppState>()
         // Add all the general resources and their update systems (e.g. cursor position)
         .add_plugins(resources::ElementalistResourcesPlugin)
-        .add_systems(
-            Startup,
-            (
-                app_systems::add_game_descriptor,
-                app_systems::load_data_file_dir,
-            ),
-        )
         // Add input processing
         .add_plugins((
             InputManagerPlugin::<PlayerAction>::default(),
@@ -94,9 +87,13 @@ impl Plugin for ElementalistDefaultPlugins {
         // Never attempts to look up meta files. The default meta configuration will be used for each asset.
         app.insert_resource(AssetMetaCheck::Never);
         // The clear color is the color the screen is cleared to before each frame is drawn
-        app.insert_resource(ClearColor(Color::DARK_GREEN));
+        app.insert_resource(ClearColor(common::colors::CLEAR_COLOR));
         // Add the window icon
         app.add_systems(Startup, app_systems::set_window_icon);
+        // Add the settings plugin
+        app.add_plugins(SettingsPlugin);
+        // Add the menu plugin
+        app.add_plugins(settings_menu::SettingsMenuPlugin);
     }
 }
 

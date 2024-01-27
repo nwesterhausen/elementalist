@@ -4,7 +4,10 @@ use game_library::{
     SpellData, SpellLifetime, Velocity,
 };
 
-use crate::{player::Player, resources::SpellAtlas};
+use crate::{
+    player::Player,
+    resources::{AppState, SpellAtlas},
+};
 
 use super::components::despawn_expired_spells;
 
@@ -27,9 +30,10 @@ impl Plugin for SpellsPlugin {
             // Load spell data (from events)
             .add_systems(Update, load_spells)
             // Spell systems
-            .add_systems(Update, despawn_expired_spells)
-            // Individual Spells
-            .add_systems(Update, cast_spells);
+            .add_systems(
+                Update,
+                (despawn_expired_spells, cast_spells).run_if(in_state(AppState::InGame)),
+            );
     }
 }
 

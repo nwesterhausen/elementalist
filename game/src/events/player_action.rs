@@ -27,6 +27,8 @@ pub enum PlayerAction {
     ToggleAutoAim,
     /// Interact with entities in the world.
     Interact,
+    /// Pause the game and open the menu.
+    Pause,
 }
 
 impl PlayerAction {
@@ -42,6 +44,7 @@ impl PlayerAction {
             Self::ToggleAutoCast => UserInput::Single(InputKind::Keyboard(KeyCode::Q)),
             Self::ToggleAutoAim => UserInput::Single(InputKind::Keyboard(KeyCode::T)),
             Self::Interact => UserInput::Single(InputKind::Keyboard(KeyCode::F)),
+            Self::Pause => UserInput::Single(InputKind::Keyboard(KeyCode::Escape)),
         }
     }
     /// Returns the default gamepad input for this action.
@@ -68,6 +71,7 @@ impl PlayerAction {
                 UserInput::Single(InputKind::GamepadButton(GamepadButtonType::RightTrigger2))
             }
             Self::Interact => UserInput::Single(InputKind::GamepadButton(GamepadButtonType::East)),
+            Self::Pause => UserInput::Single(InputKind::GamepadButton(GamepadButtonType::Start)),
         }
     }
 

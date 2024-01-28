@@ -14,4 +14,4 @@ mod spritesheet;
 pub use app_state::AppState;
 pub use plugin::ElementalistResourcesPlugin;
 pub use return_to_state::ReturnToState;
-pub use spritesheet::SpellAtlas;
+pub use spritesheet::*;

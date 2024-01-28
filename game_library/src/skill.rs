@@ -10,6 +10,7 @@ use bevy::{
     ecs::{component::Component, system::Resource},
     reflect::Reflect,
 };
+use bevy_health_bar3d::prelude::Percentage;
 use bevy_inspector_egui::inspector_options::{InspectorOptions, ReflectInspectorOptions};
 use serde::{Deserialize, Serialize};
 
@@ -48,4 +49,10 @@ pub struct SkillTrack {
     pub skill: Skill,
     /// The experience points the player has in this skill
     pub xp: Xp,
+}
+
+impl Percentage for SkillTrack {
+    fn value(&self) -> f32 {
+        self.xp.next_level_progress()
+    }
 }

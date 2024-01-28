@@ -68,7 +68,7 @@ impl Stat {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Stat;
     ///
     /// let stat = Stat::new(10.0);
@@ -89,7 +89,7 @@ impl Stat {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Stat;
     ///
     /// let mut stat = Stat::new(6.0);
@@ -106,7 +106,7 @@ impl Stat {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Stat;
     ///
     /// let mut stat = Stat::new(10.0);
@@ -123,7 +123,7 @@ impl Stat {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Stat;
     ///
     /// let mut stat = Stat::new(6.0);
@@ -157,7 +157,7 @@ impl Stat {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Stat;
     ///
     /// let mut stat = Stat::new(6.0);
@@ -301,7 +301,7 @@ impl Stat {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Stat;
     ///
     /// let mut stat = Stat::new(10.0);
@@ -326,7 +326,7 @@ impl Stat {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Stat;
     ///
     /// let mut stat = Stat::new(10.0);

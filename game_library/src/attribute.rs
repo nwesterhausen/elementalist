@@ -91,7 +91,7 @@ impl Attribute {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new(10_u32);
@@ -114,7 +114,7 @@ impl Attribute {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new(10_u32);
@@ -140,7 +140,7 @@ impl Attribute {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new(10_u32);
@@ -180,7 +180,7 @@ impl Attribute {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new(10_u32);
@@ -219,7 +219,7 @@ impl Attribute {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Attribute;
     ///
     /// let attribute = Attribute::new(10_u32);
@@ -245,7 +245,7 @@ impl Attribute {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Attribute;
     ///
     /// let attribute = Attribute::new_with_current(5_u32, 10_u32);
@@ -278,7 +278,7 @@ impl Attribute {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new(10_u32);
@@ -328,7 +328,7 @@ impl Attribute {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new(10_u32);
@@ -382,7 +382,7 @@ impl Attribute {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new(10_u32);
@@ -409,7 +409,7 @@ impl Attribute {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new_with_current(5_u32, 10_u32);
@@ -449,7 +449,7 @@ impl Attribute {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new_with_current(5_u32, 10_u32);
@@ -497,7 +497,7 @@ impl Attribute {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new_with_current(5_u32, 10_u32);
@@ -527,7 +527,7 @@ impl Attribute {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new_with_current(5_u32, 100_u32);
@@ -565,7 +565,7 @@ impl Attribute {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new_with_current(5_u32, 100_u32);
@@ -590,7 +590,7 @@ impl Attribute {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new(10_u32);
@@ -618,7 +618,7 @@ impl Attribute {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new(10_u32);

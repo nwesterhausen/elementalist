@@ -8,7 +8,6 @@ edition = "2021"
 [dependencies]
 bevy = "0.12.1"
 bevy-inspector-egui = "0.22.1"
-bevy_health_bar3d = "3.1.0"
 bevy_pkv = "0.9.1"
 serde = "1.0.195"
 serde_default_utils = "0.2.1"

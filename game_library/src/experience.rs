@@ -36,9 +36,10 @@
 use std::ops::{AddAssign, SubAssign};
 
 use bevy::prelude::*;
-use bevy_health_bar3d::prelude::Percentage;
 use bevy_inspector_egui::prelude::*;
 use serde::{Deserialize, Serialize};
+
+use crate::progress_bar::Percentage;
 
 /// Experience component
 ///
@@ -334,7 +335,7 @@ impl std::fmt::Display for Xp {
 }
 
 impl Percentage for Xp {
-    fn value(&self) -> f32 {
+    fn percentage(&self) -> f32 {
         self.next_level_progress()
     }
 }

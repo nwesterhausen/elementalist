@@ -1,4 +1,5 @@
 use bevy::prelude::*;
+use game_library::Health;
 
 use super::{
     entity::{self, PlayerAvatar},
@@ -29,5 +30,20 @@ impl Plugin for PlayerPlugin {
                 OnEnter(AppState::MainMenu),
                 despawn_with_tag::<PlayerAvatar>,
             );
+
+        // Testing stuff
+        app.add_systems(Update, subtract_health);
+    }
+}
+
+/// System that subtracts 1 from a the players health when the 'H' key is pressed.
+fn subtract_health(
+    mut player_health: Query<&mut Health, With<PlayerAvatar>>,
+    keyboard_input: Res<Input<KeyCode>>,
+) {
+    if keyboard_input.just_pressed(KeyCode::H) {
+        for mut health in &mut player_health {
+            health.value -= 1;
+        }
     }
 }

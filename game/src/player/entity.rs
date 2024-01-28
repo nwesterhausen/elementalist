@@ -1,7 +1,11 @@
 use bevy::prelude::*;
-use game_library::{enums::StatEnum, Health, Mana, MovementBundle, SpellChoices, StatBundle};
+use game_library::{
+    enums::StatEnum,
+    progress_bar::{BarState, ProgressBarConfig},
+    Health, Mana, MovementBundle, SpellChoices, StatBundle,
+};
 
-use crate::spells::ExistingSpells;
+use crate::{common::colors, spells::ExistingSpells};
 
 const BASE_SPEED: f32 = 100.0;
 const BASE_HEALTH: u32 = 10;
@@ -58,6 +62,12 @@ pub fn spawn_player(
             mana: Mana::new(BASE_MANA),
             stats: StatBundle::new(vec![(StatEnum::MovementSpeed, BASE_SPEED)]),
         },
+        ProgressBarConfig::<Health>::default()
+            .with_color(&BarState::Ok, colors::HEALTH_BAR_COLOR_OK)
+            .with_color(&BarState::Moderate, colors::HEALTH_BAR_COLOR_MODERATE)
+            .with_color(&BarState::Critical, colors::HEALTH_BAR_COLOR_CRITICAL)
+            .with_size((10.0, 2.0).into())
+            .with_position_translation(Vec3::new(-5.0, 20.0, 0.0)),
         PlayerAvatar,
     ));
 }

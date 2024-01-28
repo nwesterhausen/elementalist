@@ -46,6 +46,24 @@ pub const HOVERED_TEXT_COLOR_ALTERNATE: Color = Color::rgba(0.553, 0.282, 0.188,
 /// Hex code #c33c40
 pub const HEALTH_BAR_COLOR: Color = Color::rgba(0.765, 0.235, 0.251, 1.);
 
+/// Health bar Ok
+///
+/// <div style="background-color:rgb(37%, 50%, 20%); width: 10px; padding: 10px; border: 1px solid;"></div>
+/// Hex code #5f7132
+pub const HEALTH_BAR_COLOR_OK: Color = Color::rgba(0.373, 0.502, 0.196, 1.);
+
+/// Health bar Moderate
+///
+/// <div style="background-color:rgb(55%, 28%, 19%); width: 10px; padding: 10px; border: 1px solid;"></div>
+/// Hex code #8d4830
+pub const HEALTH_BAR_COLOR_MODERATE: Color = Color::rgba(0.553, 0.282, 0.188, 1.);
+
+/// Health bar Critical
+///
+/// <div style="background-color:rgb(77%, 23%, 25%); width: 10px; padding: 10px; border: 1px solid;"></div>
+/// Hex code #c33c40
+pub const HEALTH_BAR_COLOR_CRITICAL: Color = HEALTH_BAR_COLOR;
+
 /// The color used for the mana bar.
 ///
 /// <div style="background-color:rgb(22%, 16%, 37%); width: 10px; padding: 10px; border: 1px solid;"></div>

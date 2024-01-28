@@ -26,6 +26,7 @@ pub mod events;
 pub mod font_resource;
 pub mod math;
 pub mod menu_helper;
+pub mod progress_bar;
 pub mod settings;
 
 mod acceleration;

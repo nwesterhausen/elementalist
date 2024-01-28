@@ -41,10 +41,10 @@ pub fn spawn_player(
 
     // Load spells (forced right now)
     for spell_id in &loaded_spells.ids {
-        if spell_id.contains("WaterBolt") {
+        if spell_id.contains("AgingBolt") {
             spell_choices.set_primary_by_id(spell_id.clone());
         }
-        if spell_id.contains("Spark") {
+        if spell_id.contains("DeathBolt") {
             spell_choices.set_secondary_by_id(spell_id.clone());
         }
     }
@@ -63,6 +63,7 @@ pub fn spawn_player(
             stats: StatBundle::new(vec![(StatEnum::MovementSpeed, BASE_SPEED)]),
         },
         ProgressBarConfig::<Health>::default()
+            .with_background_color(colors::BACKGROUND_COLOR_50)
             .with_color(&BarState::Ok, colors::HEALTH_BAR_COLOR_OK)
             .with_color(&BarState::Moderate, colors::HEALTH_BAR_COLOR_MODERATE)
             .with_color(&BarState::Critical, colors::HEALTH_BAR_COLOR_CRITICAL)

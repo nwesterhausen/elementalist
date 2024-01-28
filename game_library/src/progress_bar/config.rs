@@ -37,6 +37,11 @@ impl<T: Percentage + Component> Default for ProgressBarConfig<T> {
 }
 
 impl<T: Percentage + Component> ProgressBarConfig<T> {
+    /// The shift of the background bar (in the z-axis) relative to the entity's translation.
+    pub const BACKGROUND_BAR_SHIFT: f32 = 1.0;
+    /// The shift of the foreground bar (in the z-axis) relative to the background bar.
+    pub const FOREGROUND_BAR_SHIFT: f32 = 0.1;
+
     /// Create a new progress bar config with the given color scheme.
     #[must_use]
     pub fn new(color_scheme: ColorScheme) -> Self {
@@ -125,6 +130,10 @@ impl<T: Percentage + Component> ProgressBarConfig<T> {
     pub fn background_transform(&self, entity_transform: &Transform) -> Transform {
         let mut transform = *entity_transform;
         transform.translation += self.position_translation;
+        // Center the bar on the entity's translation
+        transform.translation.x += self.size.x / 2.0;
+        // Draw the background bar behind the foreground bar
+        transform.translation.z += Self::BACKGROUND_BAR_SHIFT;
         transform
     }
     /// Get the realized [`Transform`] for the progress bar foreground.
@@ -134,8 +143,12 @@ impl<T: Percentage + Component> ProgressBarConfig<T> {
     #[must_use]
     pub fn foreground_transform(&self, entity_transform: &Transform, percentage: &T) -> Transform {
         let mut transform = *entity_transform;
+        // Adjust position to be relative to the entity's translation
         transform.translation += self.position_translation;
+        // Center the bar on the entity's translation
         transform.translation.x += self.size.x * percentage.percentage() / 2.0;
+        // Draw the foreground bar in front of the background bar
+        transform.translation.z += Self::FOREGROUND_BAR_SHIFT + Self::BACKGROUND_BAR_SHIFT;
         transform
     }
     /// Get the mesh for the progress bar background.

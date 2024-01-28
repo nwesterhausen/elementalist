@@ -31,6 +31,7 @@ use bevy::{
     ecs::{component::Component, system::Resource},
     reflect::Reflect,
 };
+use bevy_health_bar3d::prelude::Percentage;
 use bevy_inspector_egui::inspector_options::{InspectorOptions, ReflectInspectorOptions};
 use serde::{Deserialize, Serialize};
 
@@ -155,7 +156,7 @@ impl Attribute {
     /// assert_eq!(attribute.remaining(), 1.0);
     /// ```
     #[must_use]
-    pub fn remaining(&self) -> f64 {
+    pub fn remaining(&self) -> f32 {
         // Avoid division by zero
         if self.max == 0 {
             return 1.0;
@@ -163,6 +164,10 @@ impl Attribute {
         // Get percentage but round to 2 decimal places
         #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
         let result = (f64::from(self.current) / f64::from(self.max) * 100.0).floor() / 100.0;
+
+        #[allow(clippy::cast_possible_truncation)]
+        let result = result as f32;
+
         result
     }
 
@@ -1026,3 +1031,9 @@ impl std::cmp::PartialEq for Attribute {
 }
 
 impl std::cmp::Eq for Attribute {}
+
+impl Percentage for Attribute {
+    fn value(&self) -> f32 {
+        self.remaining()
+    }
+}

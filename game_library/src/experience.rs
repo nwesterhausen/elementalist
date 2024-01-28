@@ -36,6 +36,7 @@
 use std::ops::{AddAssign, SubAssign};
 
 use bevy::prelude::*;
+use bevy_health_bar3d::prelude::Percentage;
 use bevy_inspector_egui::prelude::*;
 use serde::{Deserialize, Serialize};
 
@@ -329,5 +330,11 @@ impl std::fmt::Display for Xp {
             self.total_xp_to_next_level(),
             self.next_level_progress() * 100.
         )
+    }
+}
+
+impl Percentage for Xp {
+    fn value(&self) -> f32 {
+        self.next_level_progress()
     }
 }

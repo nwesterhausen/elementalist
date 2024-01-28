@@ -12,8 +12,8 @@
             "scale": 4.8925,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 40.061318344404704,
-                "y": 48.13490035769034
+                "x": 39.8569238630557,
+                "y": 37.50638732754216
             }
         },
         "spell_projectiles.tsx": {
@@ -22,7 +22,7 @@
             "scaleInEditor": 1
         }
     },
-    "last.imagePath": "G:/repos/elementalist/game_assets",
+    "last.imagePath": "G:/repos/elementalist/game_assets/Spell Projectiles",
     "map.height": 6,
     "map.lastUsedFormat": "tmx",
     "map.layerDataFormat": null,

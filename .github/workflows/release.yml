@@ -10,6 +10,7 @@ env:
   binary: elementalist
   add_binaries_to_github_release: true
   itch_target: nwesterhausen/elementalist
+  tag_name: ${{ github.ref_name }}
 
 permissions:
   contents: read
@@ -26,8 +27,6 @@ jobs:
       - uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           egress-policy: audit
-      - uses: olegtarasov/get-tag@14deb5cb39a98e81adb64f8ac8b27aefab278784 # v2.1.2
-        id: get_version
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
       - uses: dtolnay/rust-toolchain@78c6b5541adb5849f5d72d15da722aedb26327ca # stable
         with:
@@ -65,7 +64,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ env.binary }}.zip
-          asset_name: ${{ env.binary }}-wasm-${{ steps.get_version.outputs.tag }}.zip
+          asset_name: ${{ env.binary }}-wasm-${{ env.tag_name }}.zip
           tag: ${{ github.ref }}
           overwrite: true
 
@@ -80,8 +79,6 @@ jobs:
       - uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           egress-policy: audit
-      - uses: olegtarasov/get-tag@14deb5cb39a98e81adb64f8ac8b27aefab278784 # v2.1.2
-        id: get_version
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
       - uses: dtolnay/rust-toolchain@78c6b5541adb5849f5d72d15da722aedb26327ca # stable
         with:
@@ -120,7 +117,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ env.binary }}.zip
-          asset_name: ${{ env.binary }}-linux-${{ steps.get_version.outputs.tag }}.zip
+          asset_name: ${{ env.binary }}-linux-${{ env.tag_name }}.zip
           tag: ${{ github.ref }}
           overwrite: true
 
@@ -135,8 +132,6 @@ jobs:
       - uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           egress-policy: audit
-      - uses: olegtarasov/get-tag@14deb5cb39a98e81adb64f8ac8b27aefab278784 # v2.1.2
-        id: get_version
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
       - uses: dtolnay/rust-toolchain@78c6b5541adb5849f5d72d15da722aedb26327ca # stable
         with:
@@ -171,7 +166,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ env.binary }}.zip
-          asset_name: ${{ env.binary }}-windows-${{ steps.get_version.outputs.tag }}.zip
+          asset_name: ${{ env.binary }}-windows-${{ env.tag_name }}.zip
           tag: ${{ github.ref }}
           overwrite: true
 
@@ -186,8 +181,6 @@ jobs:
       - uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           egress-policy: audit
-      - uses: olegtarasov/get-tag@14deb5cb39a98e81adb64f8ac8b27aefab278784 # v2.1.2
-        id: get_version
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
       - uses: dtolnay/rust-toolchain@78c6b5541adb5849f5d72d15da722aedb26327ca # stable
         with:
@@ -224,7 +217,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ env.binary }}-macOS-intel.dmg
-          asset_name: ${{ env.binary }}-macOS-intel-${{ steps.get_version.outputs.tag }}.dmg
+          asset_name: ${{ env.binary }}-macOS-intel-${{ env.tag_name }}.dmg
           tag: ${{ github.ref }}
           overwrite: true
 
@@ -241,8 +234,6 @@ jobs:
       - uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           egress-policy: audit
-      - uses: olegtarasov/get-tag@14deb5cb39a98e81adb64f8ac8b27aefab278784 # v2.1.2
-        id: get_version
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
       - uses: dtolnay/rust-toolchain@78c6b5541adb5849f5d72d15da722aedb26327ca # stable
         with:
@@ -282,7 +273,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ env.binary }}-macOS-apple-silicon.dmg
-          asset_name: ${{ env.binary }}-macOS-apple-silicon-${{ steps.get_version.outputs.tag }}.dmg
+          asset_name: ${{ env.binary }}-macOS-apple-silicon-${{ env.tag_name }}.dmg
           tag: ${{ github.ref }}
           overwrite: true
 
@@ -325,8 +316,6 @@ jobs:
           unzip butler.zip
           chmod +x butler
           ./butler -V
-      - uses: olegtarasov/get-tag@14deb5cb39a98e81adb64f8ac8b27aefab278784 # v2.1.2
-        id: get_version
       - name: Upload to itch.io
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_CREDENTIALS }}
@@ -334,7 +323,7 @@ jobs:
           for channel in $(ls builds); do
             ./butler push \
                 --fix-permissions \
-                --userversion="${{ steps.get_version.outputs.tag }}" \
+                --userversion="${{ env.tag_name }}" \
                 builds/$channel/* \
                 ${{ env.itch_target }}:$channel
           done

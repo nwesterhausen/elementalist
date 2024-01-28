@@ -10,11 +10,10 @@ use bevy::{
     ecs::{component::Component, system::Resource},
     reflect::Reflect,
 };
-use bevy_health_bar3d::prelude::Percentage;
 use bevy_inspector_egui::inspector_options::{InspectorOptions, ReflectInspectorOptions};
 use serde::{Deserialize, Serialize};
 
-use crate::{enums::Skill, Xp};
+use crate::{enums::Skill, progress_bar::Percentage, Xp};
 
 /// Skills are used to track a meta-progression of a player's abilities.
 ///
@@ -52,7 +51,7 @@ pub struct SkillTrack {
 }
 
 impl Percentage for SkillTrack {
-    fn value(&self) -> f32 {
+    fn percentage(&self) -> f32 {
         self.xp.next_level_progress()
     }
 }

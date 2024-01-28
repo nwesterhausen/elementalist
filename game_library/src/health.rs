@@ -1,10 +1,9 @@
 //! Health component used in the game
 
 use bevy::{prelude::*, reflect::Reflect};
-use bevy_health_bar3d::prelude::Percentage;
 use bevy_inspector_egui::prelude::*;
 
-use crate::Attribute;
+use crate::{progress_bar::Percentage, Attribute};
 
 /// Health component to hold an entity's health value
 #[derive(Component, Default, Debug, Reflect, InspectorOptions)]
@@ -37,7 +36,7 @@ impl Health {
 }
 
 impl Percentage for Health {
-    fn value(&self) -> f32 {
+    fn percentage(&self) -> f32 {
         self.value.remaining()
     }
 }

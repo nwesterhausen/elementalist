@@ -31,9 +31,10 @@ use bevy::{
     ecs::{component::Component, system::Resource},
     reflect::Reflect,
 };
-use bevy_health_bar3d::prelude::Percentage;
 use bevy_inspector_egui::inspector_options::{InspectorOptions, ReflectInspectorOptions};
 use serde::{Deserialize, Serialize};
+
+use crate::progress_bar::Percentage;
 
 /// Attribute component. This is a simple integer representing the attribute of an entity.
 /// Has properties like `max_attribute` and `current_attribute`. We support operations with
@@ -1033,7 +1034,7 @@ impl std::cmp::PartialEq for Attribute {
 impl std::cmp::Eq for Attribute {}
 
 impl Percentage for Attribute {
-    fn value(&self) -> f32 {
+    fn percentage(&self) -> f32 {
         self.remaining()
     }
 }

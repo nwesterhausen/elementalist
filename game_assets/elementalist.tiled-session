@@ -3,17 +3,30 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "spell_projectiles.tmx",
+    "activeFile": "",
     "expandedProjectPaths": [
         "."
     ],
     "fileStates": {
+        "skill_icons.tmx": {
+            "scale": 2.44625,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 79.7138477261114,
+                "y": 96.26980071538068
+            }
+        },
+        "skill_icons.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "spell_projectiles.tmx": {
             "scale": 4.8925,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 39.8569238630557,
-                "y": 37.50638732754216
+                "x": 40.061318344404704,
+                "y": 47.93050587634134
             }
         },
         "spell_projectiles.tsx": {
@@ -22,21 +35,21 @@
             "scaleInEditor": 1
         }
     },
-    "last.imagePath": "G:/repos/elementalist/game_assets/Spell Projectiles",
+    "last.imagePath": "G:/repos/elementalist/game_assets",
     "map.height": 6,
     "map.lastUsedFormat": "tmx",
     "map.layerDataFormat": null,
-    "map.tileHeight": 16,
-    "map.tileWidth": 16,
+    "map.tileHeight": 32,
+    "map.tileWidth": 32,
     "map.width": 5,
     "openFiles": [
-        "spell_projectiles.tsx",
-        "spell_projectiles.tmx"
     ],
     "project": "elementalist.tiled-project",
     "recentFiles": [
-        "spell_projectiles.tsx",
-        "spell_projectiles.tmx"
+        "skill_icons.tsx",
+        "skill_icons.tmx",
+        "spell_projectiles.tmx",
+        "spell_projectiles.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.type": 1

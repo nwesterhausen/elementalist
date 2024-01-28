@@ -39,3 +39,21 @@ pub const HOVERED_TEXT_COLOR: Color = Color::rgba(0.937, 0.953, 0.486, 1.);
 /// <div style="background-color:rgb(55%, 28%, 19%); width: 10px; padding: 10px; border: 1px solid;"></div>
 /// Hex code #8d4830
 pub const HOVERED_TEXT_COLOR_ALTERNATE: Color = Color::rgba(0.553, 0.282, 0.188, 1.);
+
+/// The color used for the health bar.
+///
+/// <div style="background-color:rgb(77%, 23%, 25%); width: 10px; padding: 10px; border: 1px solid;"></div>
+/// Hex code #c33c40
+pub const HEALTH_BAR_COLOR: Color = Color::rgba(0.765, 0.235, 0.251, 1.);
+
+/// The color used for the mana bar.
+///
+/// <div style="background-color:rgb(22%, 16%, 37%); width: 10px; padding: 10px; border: 1px solid;"></div>
+/// Hex code #39275e
+pub const MANA_BAR_COLOR: Color = Color::rgba(0.224, 0.153, 0.369, 1.);
+
+/// The color used for the skill track bar.
+///
+/// <div style="background-color:rgb(77%, 47%, 21%); width: 10px; padding: 10px; border: 1px solid;"></div>
+/// Hex code #c57835
+pub const SKILL_TRACK_BAR_COLOR: Color = Color::rgba(0.773, 0.471, 0.208, 1.);

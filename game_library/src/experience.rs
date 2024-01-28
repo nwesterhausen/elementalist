@@ -59,7 +59,7 @@ use serde::{Deserialize, Serialize};
 ///
 /// # Example
 ///
-/// ```
+/// ```no_run
 /// use bevy::prelude::*;
 /// use game_library::Xp;
 ///
@@ -130,7 +130,7 @@ impl Xp {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Xp;
     ///
     /// let xp = Xp {

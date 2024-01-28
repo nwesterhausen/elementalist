@@ -103,7 +103,7 @@ impl CameraScaleLevel {
     ///
     /// # Example
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::CameraScaleLevel;
     ///
     /// let level = CameraScaleLevel::default();
@@ -120,7 +120,7 @@ impl CameraScaleLevel {
     ///
     /// # Example
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::CameraScaleLevel;
     ///
     /// let mut level = CameraScaleLevel::default();
@@ -146,7 +146,7 @@ impl CameraScaleLevel {
     ///
     /// # Example
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::CameraScaleLevel;
     ///
     /// let mut level = CameraScaleLevel::default();

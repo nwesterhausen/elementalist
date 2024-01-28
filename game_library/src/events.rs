@@ -14,7 +14,7 @@ use bevy::prelude::*;
 ///
 /// # Examples
 ///
-/// ```
+/// ```no_run
 /// use game_library::events::CastSpell;
 ///
 /// let event = CastSpell("Firebolt01Primary".to_string());

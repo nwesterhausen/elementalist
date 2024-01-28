@@ -1,6 +1,7 @@
 //! Mana component used in the game.
 
 use bevy::{prelude::*, reflect::Reflect};
+use bevy_health_bar3d::prelude::Percentage;
 use bevy_inspector_egui::prelude::*;
 
 use crate::Attribute;
@@ -20,5 +21,11 @@ impl Mana {
         Self {
             value: Attribute::new(value),
         }
+    }
+}
+
+impl Percentage for Mana {
+    fn value(&self) -> f32 {
+        self.value.remaining()
     }
 }

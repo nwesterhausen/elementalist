@@ -1,6 +1,7 @@
 //! Health component used in the game
 
 use bevy::{prelude::*, reflect::Reflect};
+use bevy_health_bar3d::prelude::Percentage;
 use bevy_inspector_egui::prelude::*;
 
 use crate::Attribute;
@@ -32,5 +33,11 @@ impl Health {
     #[must_use]
     pub const fn is_dead(&self) -> bool {
         self.value.is_empty()
+    }
+}
+
+impl Percentage for Health {
+    fn value(&self) -> f32 {
+        self.value.remaining()
     }
 }

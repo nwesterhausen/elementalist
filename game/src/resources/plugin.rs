@@ -1,12 +1,16 @@
 use bevy::prelude::*;
+use bevy_health_bar3d::prelude::{ColorScheme, ForegroundColor, HealthBarPlugin};
 use bevy_pkv::PkvStore;
 
 use game_library::{
     font_resource::{change_font, ChangeFont, FontResource},
-    CursorPosition, SpellChoices,
+    CursorPosition, Health, Mana, SkillTrack, SpellChoices,
 };
 
-use crate::{app_systems, common::buttons};
+use crate::{
+    app_systems,
+    common::{buttons, colors},
+};
 
 use super::{
     cleanup::cleanup_then_exit, cursor_position::update_cursor_position, fonts::set_initial_fonts,
@@ -32,8 +36,27 @@ pub struct ElementalistResourcesPlugin;
 
 impl Plugin for ElementalistResourcesPlugin {
     fn build(&self, app: &mut App) {
-        // ### ADD STATES HERE ###
+        // The app state, to track if in menu, in game, etc.
         app.add_state::<AppState>();
+
+        // health_bar3d plugin and resources (like colors for the bars)
+        app.add_plugins((
+            HealthBarPlugin::<Health>::default(),
+            HealthBarPlugin::<Mana>::default(),
+            HealthBarPlugin::<SkillTrack>::default(),
+        ))
+        .insert_resource(
+            ColorScheme::<Health>::new()
+                .foreground_color(ForegroundColor::Static(colors::HEALTH_BAR_COLOR)),
+        )
+        .insert_resource(
+            ColorScheme::<Mana>::new()
+                .foreground_color(ForegroundColor::Static(colors::MANA_BAR_COLOR)),
+        )
+        .insert_resource(
+            ColorScheme::<SkillTrack>::new()
+                .foreground_color(ForegroundColor::Static(colors::SKILL_TRACK_BAR_COLOR)),
+        );
 
         // ### ADD EVENTS HERE ###
         app.add_event::<ChangeFont>();

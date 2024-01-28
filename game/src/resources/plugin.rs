@@ -11,7 +11,7 @@ use crate::{app_systems, common::buttons};
 
 use super::{
     cleanup::cleanup_then_exit, cursor_position::update_cursor_position, fonts::set_initial_fonts,
-    spritesheet::load_spell_atlas, AppState, ReturnToState,
+    spritesheet::LoadSpritesheetPlugin, AppState, ReturnToState,
 };
 
 /// Elementalist resources plugin. This loads the resources needed which may not be
@@ -49,7 +49,7 @@ impl Plugin for ElementalistResourcesPlugin {
             .insert_resource(PkvStore::new("games.nwest.one", "Elementalist"));
 
         // ### GRAPHICS RESOURCES ###
-        app.add_systems(Startup, load_spell_atlas);
+        app.add_plugins(LoadSpritesheetPlugin);
 
         // ### ADD SYSTEMS HERE ###
         app.add_systems(

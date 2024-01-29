@@ -201,12 +201,17 @@ pub struct SettingsPlugin;
 
 impl Plugin for SettingsPlugin {
     fn build(&self, app: &mut App) {
-        app.add_event::<SettingChanged>()
+        app
+            // SettingChanged is a helper event for responding to button interaction
+            .add_event::<SettingChanged>()
+            // Register the settings resources
             .init_resource::<VolumeSettings>()
             .init_resource::<VideoSettings>()
             .init_resource::<GameplaySettings>()
             .init_resource::<AccessibilitySettings>()
+            // The first load system will load the settings from the PKV store
             .add_systems(Startup, first_load)
+            // The flush settings system will save the settings to the PKV store
             .add_systems(Update, flush_settings_to_store);
     }
 }

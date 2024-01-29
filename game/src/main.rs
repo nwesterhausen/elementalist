@@ -6,7 +6,6 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use bevy::{asset::AssetMetaCheck, prelude::*};
-use game_library::settings::SettingsPlugin;
 use leafwing_input_manager::plugin::InputManagerPlugin;
 
 mod app_info;
@@ -49,32 +48,27 @@ fn main() {
                 // Nearest neighbor scaling (pixel art)
                 .set(ImagePlugin::default_nearest()),
         )
-        // Add the debug plugin if in debug mode
+        // Add the gameplay plugins
+        .add_plugins(ElementalistGameplayPlugins)
+        // Add the debug plugin if in debug mode (this adds the inspector)
         .add_plugins(ElementalistDebugPlugin)
         // Add all the general resources and their update systems (e.g. cursor position)
         .add_plugins(resources::ElementalistResourcesPlugin)
-        // Add input processing
+        // Add plugins for Settings and the menus
         .add_plugins((
-            InputManagerPlugin::<PlayerAction>::default(),
-            InputManagerPlugin::<MenuInteraction>::default(),
+            // Add the menu plugin
+            settings_menu::SettingsMenuPlugin,
+            // Add our plugins for the menu screen and the splash screen
+            splash_screen::SplashScreenPlugin,
+            main_menu::MainMenuPlugin,
         ))
-        // Add camera plugin
-        .add_plugins(camera::CameraPlugin)
-        // Add our plugins for the menu screen and the splash screen
-        .add_plugins((splash_screen::SplashScreenPlugin, main_menu::MainMenuPlugin))
-        // Add the player plugin
-        .add_plugins(player::PlayerPlugin)
-        // Add the spells plugin
-        .add_plugins(spells::SpellsPlugin)
-        // Add the movement plugin
-        .add_plugins(resources::movement::MovementPlugin)
         // Launch
         .run();
 }
 
 /// Elementalist defaults for the "insert this resource" type of thing.
 ///
-/// This also handles adding the debug plugin _only_ when in debug mode.
+/// This adds resources specific for [`DefaultPlugins`]
 struct ElementalistDefaultPlugins;
 
 impl Plugin for ElementalistDefaultPlugins {
@@ -85,14 +79,14 @@ impl Plugin for ElementalistDefaultPlugins {
         app.insert_resource(ClearColor(resources::colors::CLEAR_COLOR));
         // Add the window icon
         app.add_systems(Startup, app_systems::set_window_icon);
-        // Add the settings plugin
-        app.add_plugins(SettingsPlugin);
-        // Add the menu plugin
-        app.add_plugins(settings_menu::SettingsMenuPlugin);
+        // Add camera plugin
+        app.add_plugins(camera::CameraPlugin);
     }
 }
 
 /// Debug plugin loader.
+///
+/// This adds the debug plugin _only_ when in debug mode.
 struct ElementalistDebugPlugin;
 
 impl Plugin for ElementalistDebugPlugin {
@@ -102,5 +96,26 @@ impl Plugin for ElementalistDebugPlugin {
         {
             app.add_plugins(dev_systems::DevSystemsPlugin);
         }
+    }
+}
+
+/// Gameplay plugins.
+///
+/// These add the gameplay functionality to the game.
+struct ElementalistGameplayPlugins;
+
+impl Plugin for ElementalistGameplayPlugins {
+    fn build(&self, app: &mut App) {
+        app.add_plugins((
+            // Add the plugin for the player
+            player::PlayerPlugin,
+            // Add the plugin for the spells
+            spells::SpellsPlugin,
+            // Add the plugin for the movement
+            resources::movement::MovementPlugin,
+            // Input processing
+            InputManagerPlugin::<PlayerAction>::default(),
+            InputManagerPlugin::<MenuInteraction>::default(),
+        ));
     }
 }

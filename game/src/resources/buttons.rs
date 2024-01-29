@@ -46,7 +46,7 @@ pub fn interaction_system(
 }
 
 pub mod style_prefab {
-    use crate::common::colors;
+    use crate::resources::colors;
     use bevy::prelude::*;
 
     /// Shared button style for the settings menus.

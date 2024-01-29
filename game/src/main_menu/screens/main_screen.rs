@@ -2,11 +2,11 @@ use bevy::prelude::*;
 use game_library::font_resource::FontResource;
 
 use crate::{
-    common::buttons::style_prefab,
     main_menu::{
         button_actions::{ButtonAction, MainMenuButton},
         plugin::OnMainMenuScreen,
     },
+    resources::buttons::style_prefab,
 };
 
 /// System to setup the main menu screen

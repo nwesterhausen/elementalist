@@ -7,7 +7,7 @@ use game_library::{
     CursorPosition, Health, SpellChoices,
 };
 
-use crate::{app_systems, common::buttons};
+use crate::{app_systems, resources::buttons};
 
 use super::{
     cleanup::cleanup_then_exit, cursor_position::update_cursor_position, fonts::set_initial_fonts,

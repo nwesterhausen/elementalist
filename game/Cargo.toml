@@ -18,7 +18,7 @@ embed-resource = "2.4.1"
 # up compilation times. `cargo run --features bevy/dynamic_linking` will enable this.
 bevy = "0.12.1"
 leafwing-input-manager = "0.11.2"
-serde = "1.0.194"
+serde = "1.0.196"
 tracing = "0.1.40"
 game_library = { path = "../game_library" }
 egui_dock = "0.10.0"

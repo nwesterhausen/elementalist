@@ -3,7 +3,7 @@
 use bevy::prelude::*;
 use game_library::{font_resource::FontResource, settings::VideoSettings};
 
-use crate::{common::buttons::style_prefab, despawn_with_tag};
+use crate::{despawn_with_tag, resources::buttons::style_prefab};
 
 use super::{
     base::SettingsMenuEntity,

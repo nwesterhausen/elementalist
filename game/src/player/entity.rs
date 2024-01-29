@@ -5,7 +5,7 @@ use game_library::{
     Health, Mana, MovementBundle, SpellChoices, StatBundle,
 };
 
-use crate::{common::colors, spells::ExistingSpells};
+use crate::{resources::colors, spells::ExistingSpells};
 
 const BASE_SPEED: f32 = 100.0;
 const BASE_HEALTH: u32 = 10;

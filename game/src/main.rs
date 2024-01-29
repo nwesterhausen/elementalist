@@ -9,8 +9,6 @@ use bevy::{asset::AssetMetaCheck, prelude::*};
 use game_library::settings::SettingsPlugin;
 use leafwing_input_manager::plugin::InputManagerPlugin;
 
-pub(crate) mod common;
-
 mod app_info;
 mod app_systems;
 mod camera;
@@ -72,7 +70,7 @@ fn main() {
         // Add the spells plugin
         .add_plugins(spells::SpellsPlugin)
         // Add the movement plugin
-        .add_plugins(common::movement::MovementPlugin)
+        .add_plugins(resources::movement::MovementPlugin)
         // Launch
         .run();
 }
@@ -87,7 +85,7 @@ impl Plugin for ElementalistDefaultPlugins {
         // Never attempts to look up meta files. The default meta configuration will be used for each asset.
         app.insert_resource(AssetMetaCheck::Never);
         // The clear color is the color the screen is cleared to before each frame is drawn
-        app.insert_resource(ClearColor(common::colors::CLEAR_COLOR));
+        app.insert_resource(ClearColor(resources::colors::CLEAR_COLOR));
         // Add the window icon
         app.add_systems(Startup, app_systems::set_window_icon);
         // Add the settings plugin

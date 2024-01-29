@@ -11,6 +11,10 @@ mod plugin;
 mod return_to_state;
 mod spritesheet;
 
+pub mod buttons;
+pub mod colors;
+pub mod movement;
+
 pub use app_state::AppState;
 pub use plugin::ElementalistResourcesPlugin;
 pub use return_to_state::ReturnToState;

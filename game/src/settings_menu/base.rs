@@ -2,9 +2,7 @@
 
 use bevy::{prelude::*, sprite::MaterialMesh2dBundle, window::PrimaryWindow};
 
-use super::MenuState;
-
-use crate::resources::colors::BACKGROUND_COLOR_50;
+use crate::resources::{colors::BACKGROUND_COLOR_50, MenuState};
 
 /// An entity tag for ease of cleanup when the menu is disabled.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Component)]

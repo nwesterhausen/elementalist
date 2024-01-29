@@ -6,13 +6,12 @@ use game_library::{
     settings::{next_font_family, AccessibilitySettings, SettingCategory, SettingChanged},
 };
 
-use crate::{despawn_with_tag, resources::buttons::style_prefab};
+use crate::{despawn_with_tag, resources::buttons::style_prefab, resources::MenuState};
 
 use super::{
     base::SettingsMenuEntity,
     button_actions::{ButtonAction, SettingsMenuButton},
     events::{ChangeSetting, IndividualSetting},
-    MenuState,
 };
 
 /// Component for tagging entities that are part of the display settings menu.

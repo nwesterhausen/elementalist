@@ -15,7 +15,6 @@ mod camera;
 #[cfg(debug_assertions)]
 mod dev_systems;
 mod events;
-mod game;
 mod main_menu;
 mod player;
 mod resources;
@@ -63,8 +62,6 @@ fn main() {
         .add_plugins(camera::CameraPlugin)
         // Add our plugins for the menu screen and the splash screen
         .add_plugins((splash_screen::SplashScreenPlugin, main_menu::MainMenuPlugin))
-        // Add the game plugin
-        .add_plugins(game::GamePlugin)
         // Add the player plugin
         .add_plugins(player::PlayerPlugin)
         // Add the spells plugin

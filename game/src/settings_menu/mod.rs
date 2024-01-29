@@ -22,7 +22,5 @@ mod events;
 mod gameplay;
 mod main;
 mod plugin;
-mod state;
 
 pub use plugin::SettingsMenuPlugin;
-pub use state::MenuState;

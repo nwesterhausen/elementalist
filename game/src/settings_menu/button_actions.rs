@@ -2,12 +2,9 @@
 
 use bevy::prelude::*;
 
-use crate::resources::{AppState, ReturnToState};
+use crate::resources::{AppState, MenuState, ReturnToState};
 
-use super::{
-    events::{ChangeSetting, IndividualSetting},
-    MenuState,
-};
+use super::events::{ChangeSetting, IndividualSetting};
 
 /// All of the various "buttons" that can be clicked in any of the main menu screens
 #[derive(Component, Debug, Eq, PartialEq, Hash, Clone, Copy)]

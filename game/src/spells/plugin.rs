@@ -112,7 +112,7 @@ pub fn cast_spells(
                     transform: Transform {
                         translation: player_transform.translation,
                         rotation: Quat::from_rotation_z(slope_vec.y.atan2(slope_vec.x)),
-                        ..Default::default()
+                        scale: Vec3::splat(0.5),
                     },
                     ..Default::default()
                 },

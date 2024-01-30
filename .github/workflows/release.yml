@@ -11,6 +11,7 @@ env:
   add_binaries_to_github_release: true
   itch_target: nwesterhausen/elementalist
   tag_name: ${{ github.ref_name }}
+  nightly_toolchain: nightly-2024-01-17
 
 permissions:
   contents: read
@@ -31,8 +32,8 @@ jobs:
       - uses: dtolnay/rust-toolchain@78c6b5541adb5849f5d72d15da722aedb26327ca # stable
         with:
           targets: wasm32-unknown-unknown
-          toolchain: nightly-2024-01-17
-      - name: install wasm-bindgen-cli
+          toolchain: ${{ env.nightly_toolchain }}
+      - name: Install wasm-bindgen-cli
         run: |
           cargo install wasm-bindgen-cli
 
@@ -45,6 +46,7 @@ jobs:
           wasm-bindgen --no-typescript --out-name bevy_game --out-dir wasm --target web target/wasm32-unknown-unknown/release/${{ env.binary }}.wasm
           cp -r game/assets wasm/
           cp -r game_data wasm/
+          cp game/web/index.html wasm/
 
       - name: Package as a zip
         working-directory: ./wasm
@@ -83,7 +85,7 @@ jobs:
       - uses: dtolnay/rust-toolchain@78c6b5541adb5849f5d72d15da722aedb26327ca # stable
         with:
           targets: x86_64-unknown-linux-gnu
-          toolchain: nightly-2024-01-17
+          toolchain: ${{ env.nightly_toolchain }}
       - name: install dependencies
         run: |
           sudo apt-get update; sudo apt-get install pkg-config libx11-dev libasound2-dev libudev-dev libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev
@@ -136,7 +138,7 @@ jobs:
       - uses: dtolnay/rust-toolchain@78c6b5541adb5849f5d72d15da722aedb26327ca # stable
         with:
           targets: x86_64-pc-windows-msvc
-          toolchain: nightly-2024-01-17
+          toolchain: ${{ env.nightly_toolchain }}
 
       - name: Build
         run: |
@@ -185,7 +187,7 @@ jobs:
       - uses: dtolnay/rust-toolchain@78c6b5541adb5849f5d72d15da722aedb26327ca # stable
         with:
           targets: x86_64-apple-darwin
-          toolchain: nightly-2024-01-17
+          toolchain: ${{ env.nightly_toolchain }}
       - name: Environment Setup
         run: |
           export CFLAGS="-fno-stack-check"
@@ -238,7 +240,7 @@ jobs:
       - uses: dtolnay/rust-toolchain@78c6b5541adb5849f5d72d15da722aedb26327ca # stable
         with:
           targets: aarch64-apple-darwin
-          toolchain: nightly-2024-01-17
+          toolchain: ${{ env.nightly_toolchain }}
       - name: Setup LLVM
         run: |
           # seems to be we need to install LLVM via brew.

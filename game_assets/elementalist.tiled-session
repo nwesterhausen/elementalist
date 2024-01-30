@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "skill_icons.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -12,8 +12,8 @@
             "scale": 2.44625,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 79.7138477261114,
-                "y": 96.26980071538068
+                "x": 79.30505876341337,
+                "y": 95.86101175268269
             }
         },
         "skill_icons.tsx": {
@@ -35,7 +35,7 @@
             "scaleInEditor": 1
         }
     },
-    "last.imagePath": "G:/repos/elementalist/game_assets",
+    "last.imagePath": "G:/repos/elementalist/game_assets/Skills",
     "map.height": 6,
     "map.lastUsedFormat": "tmx",
     "map.layerDataFormat": null,
@@ -43,6 +43,8 @@
     "map.tileWidth": 32,
     "map.width": 5,
     "openFiles": [
+        "skill_icons.tsx",
+        "skill_icons.tmx"
     ],
     "project": "elementalist.tiled-project",
     "recentFiles": [

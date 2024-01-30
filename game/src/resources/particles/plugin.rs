@@ -1,4 +1,4 @@
-use bevy::{prelude::*, sprite::MaterialMesh2dBundle};
+use bevy::prelude::*;
 use bevy_hanabi::prelude::*;
 
 pub struct ParticlesPlugin;

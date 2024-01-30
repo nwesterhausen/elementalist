@@ -35,6 +35,8 @@ rand = "0.8.5"
 egui_dock = "0.10.0"
 # DEBUG ONLY: inspector for bevy
 bevy-inspector-egui = "0.22.1"
+# Particle system
+bevy_hanabi = { version = "0.9.0", default-features = false, features = ["2d"] }
 
 # Some very strict lints.
 [lints.rust]

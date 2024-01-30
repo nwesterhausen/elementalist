@@ -7,6 +7,7 @@ mod app_state;
 mod cleanup;
 mod cursor_position;
 mod fonts;
+mod particles;
 mod plugin;
 mod return_to_state;
 mod spritesheet;

@@ -5,7 +5,12 @@
 // Hide the console window on Windows when not in debug mode
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use bevy::{asset::AssetMetaCheck, prelude::*};
+use bevy::{
+    asset::AssetMetaCheck,
+    log::LogPlugin,
+    prelude::*,
+    render::{render_resource::WgpuFeatures, settings::WgpuSettings, RenderPlugin},
+};
 use leafwing_input_manager::plugin::InputManagerPlugin;
 
 mod app_info;
@@ -25,6 +30,24 @@ pub use app_systems::despawn_with_tag;
 use events::{MenuInteraction, PlayerAction};
 
 fn main() {
+    // Set the wgpu settings per bevy_hanabi
+    let mut wgpu_settings = WgpuSettings::default();
+    wgpu_settings
+        .features
+        .set(WgpuFeatures::VERTEX_WRITABLE_STORAGE, true);
+
+    // Set the log level based on whether we are in debug mode or not
+    let (log_level, log_filter) = if cfg!(debug_assertions) {
+        // If in debug mode, set the log level to debug
+        (
+            bevy::log::Level::INFO,
+            "wgpu=warn,bevy_hanabi=warn,elementalist=info",
+        )
+    } else {
+        // If in release mode, set the log level to warn
+        (bevy::log::Level::WARN, "elementalist=info")
+    };
+
     App::new()
         // Add our custom default plugins
         .add_plugins(ElementalistDefaultPlugins)
@@ -46,7 +69,16 @@ fn main() {
                     ..Default::default()
                 })
                 // Nearest neighbor scaling (pixel art)
-                .set(ImagePlugin::default_nearest()),
+                .set(ImagePlugin::default_nearest())
+                // Configure the log plugin
+                .set(LogPlugin {
+                    level: log_level,
+                    filter: log_filter.to_string(),
+                })
+                // Add our the wgpu settings per bevy_hanabi
+                .set(RenderPlugin {
+                    render_creation: wgpu_settings.into(),
+                }),
         )
         // Add the gameplay plugins
         .add_plugins(ElementalistGameplayPlugins)

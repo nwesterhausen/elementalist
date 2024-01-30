@@ -51,6 +51,9 @@ impl Plugin for ElementalistResourcesPlugin {
             ProgressBarPlugin::<Mana>::default(),
         ));
 
+        // Add the particles plugin to the app
+        app.add_plugins(super::particles::ParticlesPlugin);
+
         app
             // Game settings and resources
             .add_plugins(

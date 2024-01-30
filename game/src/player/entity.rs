@@ -2,7 +2,7 @@ use bevy::prelude::*;
 use game_library::{
     enums::StatEnum,
     progress_bar::{BarState, ProgressBarConfig},
-    Health, Mana, MovementBundle, SpellChoices, StatBundle,
+    Health, Mana, MovementBundle, SpellChoices, StatBundle, Xp,
 };
 
 use crate::{resources::colors, spells::ExistingSpells};
@@ -22,6 +22,7 @@ pub struct PlayerBundle {
     pub health: Health,
     pub mana: Mana,
     pub stats: StatBundle,
+    pub xp: Xp,
 }
 
 #[derive(Component, Debug, Reflect)]
@@ -61,6 +62,7 @@ pub fn spawn_player(
             health: Health::new(BASE_HEALTH),
             mana: Mana::new(BASE_MANA),
             stats: StatBundle::new(vec![(StatEnum::MovementSpeed, BASE_SPEED)]),
+            xp: Xp::default(),
         },
         ProgressBarConfig::<Health>::default()
             .with_background_color(colors::BACKGROUND_COLOR_50)
@@ -69,6 +71,16 @@ pub fn spawn_player(
             .with_color(&BarState::Critical, colors::HEALTH_BAR_COLOR_CRITICAL)
             .with_size((10.0, 2.0).into())
             .with_position_translation(Vec3::new(-5.0, 20.0, 0.0)),
+        ProgressBarConfig::<Mana>::default()
+            .with_background_color(colors::BACKGROUND_COLOR_50)
+            .with_single_color(colors::MANA_BAR_COLOR)
+            .with_size((10.0, 2.0).into())
+            .with_position_translation(Vec3::new(-5.0, 18.0, 0.0)),
+        ProgressBarConfig::<Xp>::default()
+            .with_background_color(colors::BACKGROUND_COLOR_50)
+            .with_single_color(colors::SKILL_TRACK_BAR_COLOR)
+            .with_size((10.0, 2.0).into())
+            .with_position_translation(Vec3::new(-5.0, 16.0, 0.0)),
         PlayerAvatar,
     ));
 }

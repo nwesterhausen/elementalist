@@ -4,7 +4,7 @@ use game_library::{
     font_resource::{change_font, ChangeFont, FontResource},
     progress_bar::ProgressBarPlugin,
     settings::SettingsPlugin,
-    CursorPosition, Health, SpellChoices,
+    CursorPosition, Health, Mana, SpellChoices, Xp,
 };
 
 use crate::{app_systems, resources::buttons};
@@ -45,7 +45,11 @@ impl Plugin for ElementalistResourcesPlugin {
 
         // ProgressBar plugins are used to display health or experience bars. This might be out of
         // "resource" scope.
-        app.add_plugins(ProgressBarPlugin::<Health>::default());
+        app.add_plugins((
+            ProgressBarPlugin::<Health>::default(),
+            ProgressBarPlugin::<Xp>::default(),
+            ProgressBarPlugin::<Mana>::default(),
+        ));
 
         app
             // Game settings and resources

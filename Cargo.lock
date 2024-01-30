@@ -1761,7 +1761,6 @@ version = "0.3.1"
 dependencies = [
  "bevy",
  "bevy-inspector-egui",
- "bevy_pkv",
  "built",
  "egui_dock",
  "embed-resource",
@@ -1769,7 +1768,6 @@ dependencies = [
  "image",
  "leafwing-input-manager",
  "rand",
- "serde",
  "tracing",
  "winit",
 ]

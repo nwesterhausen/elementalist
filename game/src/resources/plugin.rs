@@ -1,6 +1,5 @@
 use bevy::prelude::*;
 
-use bevy_pkv::PkvStore;
 use game_library::{
     font_resource::{change_font, ChangeFont, FontResource},
     progress_bar::ProgressBarPlugin,
@@ -49,10 +48,10 @@ impl Plugin for ElementalistResourcesPlugin {
         app.add_plugins(ProgressBarPlugin::<Health>::default());
 
         app
-            // The PKV store is how we save and load settings from disk
-            .insert_resource(PkvStore::new("games.nwest.one", "Elementalist"))
             // Game settings and resources
-            .add_plugins(SettingsPlugin);
+            .add_plugins(
+                SettingsPlugin::default().with_structure(&"games.nwest.one", &"Elementalist"),
+            );
 
         app
             // Return to state lets us move into [`AppState::SettingsMenu`] and then return to where we

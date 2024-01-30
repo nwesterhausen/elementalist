@@ -8,6 +8,7 @@ edition = "2021"
 [dependencies]
 bevy = "0.12.1"
 bevy-inspector-egui = "0.22.1"
+# Local disk storage in a key-value store. Settings are stored with this.
 bevy_pkv = "0.9.1"
 serde = "1.0.196"
 serde_default_utils = "0.2.1"

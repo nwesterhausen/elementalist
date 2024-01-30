@@ -90,6 +90,8 @@ impl Plugin for ElementalistDefaultPlugins {
 struct ElementalistDebugPlugin;
 
 impl Plugin for ElementalistDebugPlugin {
+    // Unused variables allowed because when in release mode, `app` will not be used.
+    #[allow(unused_variables)]
     fn build(&self, app: &mut App) {
         // When in debug mode, add the debug plugin.
         #[cfg(debug_assertions)]

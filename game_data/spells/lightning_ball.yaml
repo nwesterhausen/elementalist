@@ -12,7 +12,7 @@ data:
   manaCost: 0
   castSlot: primary
   castTime: 0
-  cooldown: 175
+  cooldown: 1.7.5
   magic: lightning
   spellTier: 3
   long_description: As the ball travels it will launch a lightning bolt at the closest target to it up to 4 times before its exhausted.

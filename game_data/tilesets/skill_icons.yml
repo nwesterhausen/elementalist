@@ -1,0 +1,8 @@
+identity: skill_icons
+path: tileset/skill_icons.png
+tileSize:
+  width: 32
+  height: 32
+numTiles:
+  rows: 5
+  columns: 5

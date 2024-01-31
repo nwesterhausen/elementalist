@@ -12,6 +12,12 @@ data:
   manaCost: 2
   castSlot: secondary
   castTime: 0
-  cooldown: 330
+  cooldown: 3.30
   magic: fire
   spellTier: 2
+  flags:
+    - wall
+  castType: instant
+  castCategory: ground
+  spriteTileset: tileset/ground_effects.png
+  spriteIndex: 0

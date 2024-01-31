@@ -179,14 +179,13 @@
     "description",
     "manaCost",
     "castSlot",
-    "spellType",
     "castTime",
     "cooldown",
     "spellTier",
     "flags",
     "castType",
     "castCategory",
-    "icon",
-    "sprite"
+    "spriteTileset",
+    "spriteIndex"
   ]
 }

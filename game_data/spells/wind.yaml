@@ -12,6 +12,6 @@ data:
   manaCost: 1
   castSlot: secondary
   castTime: 0
-  cooldown: 250
+  cooldown: 2.50
   magic: air
   spellTier: 1

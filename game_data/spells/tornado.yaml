@@ -11,8 +11,8 @@ data:
   description: Summon a tornado at the target location.
   manaCost: 2
   castSlot: secondary
-  castTime: 50
-  cooldown: 500
+  castTime: 5.0
+  cooldown: 5.00
   castType: cast
   magic: air
   spellTier: 2

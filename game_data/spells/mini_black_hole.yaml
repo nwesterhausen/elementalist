@@ -12,7 +12,7 @@ data:
   manaCost: 2
   castSlot: secondary
   castTime: 0
-  cooldown: 575
+  cooldown: 5.7.5
   magic: dark
   spellTier: 3
   spriteTileset: tileset/spell_projectiles.png

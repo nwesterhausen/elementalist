@@ -50,5 +50,5 @@
       "enum": [1]
     }
   },
-  "required": ["unique_id", "system", "author", "description", "display_version", "internal_version", "valid_game_internal_version"]
+  "required": ["uniqueId", "system", "author", "description", "displayVersion", "internalVersion", "validGameInternalVersion"]
 }

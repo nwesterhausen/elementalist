@@ -12,7 +12,7 @@ data:
   manaCost: 0
   castSlot: primary
   castTime: 0
-  cooldown: 50
+  cooldown: 5.0
   magic: air
   spellTier: 0
   spriteTileset: tileset/spell_projectiles.png

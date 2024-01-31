@@ -1,0 +1,8 @@
+identity: spell_projectiles
+path: tileset/spell_projectiles.png
+tileSize:
+  height: 16
+  width: 16
+numTiles:
+  column: 5
+  row: 6

@@ -12,8 +12,12 @@ data:
   manaCost: 0
   castSlot: primary
   castTime: 0
-  cooldown: 75
+  cooldown: 7.5
   magic: death
   spellTier: 0
   spriteTileset: tileset/spell_projectiles.png
   spriteIndex: 1
+  flags:
+    - projectile
+  castType: instant
+  castCategory: projectile

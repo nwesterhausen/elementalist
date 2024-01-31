@@ -12,6 +12,12 @@ data:
   manaCost: 3
   castSlot: secondary
   castTime: 0
-  cooldown: 6
+  cooldown: 6.0
   magic: lightning
   spellTier: 3
+  flags:
+    - aoe
+  castType: instant
+  castCategory: ground
+  spriteTileset: tileset/ground_effects.png
+  spriteIndex: 0

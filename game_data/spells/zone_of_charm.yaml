@@ -11,8 +11,8 @@ data:
   description: Create an area with an aura of charm magic at the target location.
   manaCost: 3
   castSlot: secondary
-  castTime: 25
-  cooldown: 500
+  castTime: .25
+  cooldown: 5.00
   castType: cast
   magic: arcane
   spellTier: 3

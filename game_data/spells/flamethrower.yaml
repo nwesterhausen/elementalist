@@ -11,8 +11,8 @@ data:
   description: Sustain a fiery stream of flames.
   magic: fire
   spellTier: 2
-  cooldown: 500
-  castTime: 150
+  cooldown: 5.00
+  castTime: 1.50
   manaCost: 1
   castSlot: secondary
   flags:

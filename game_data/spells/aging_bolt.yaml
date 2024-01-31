@@ -4,7 +4,7 @@ data:
   manaCost: 1
   castSlot: primary
   castTime: 0
-  cooldown: 250
+  cooldown: 2.50
   magic: time
   skill: chronomancy
   spellTier: 0
@@ -16,12 +16,12 @@ data:
   spriteTileset: tileset/spell_projectiles.png
   spriteIndex: 11
   debuff:
-    duration: 250
+    duration: 2.50
     maxStacks: 1
     affectedEntity: enemies
     affectedStats:
       - affectType: add
-        amount: -20
+        amount: -.20
         stat: healing
 header:
   uniqueId: time_dart

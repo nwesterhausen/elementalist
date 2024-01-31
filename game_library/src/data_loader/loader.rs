@@ -76,7 +76,7 @@ pub fn load_data_file_dir(
     mut ew_spell_df: EventWriter<LoadedSpellData>,
     mut ew_tileset_df: EventWriter<LoadedTilesetData>,
 ) {
-    let start = std::time::Instant::now();
+    // let start = std::time::Instant::now();
 
     let mut possible_ingests: Vec<String> = WalkDir::new(DATA_FILE_DIR)
         .into_iter()
@@ -136,11 +136,6 @@ pub fn load_data_file_dir(
             }
         }
     }
-    let duration = start.elapsed();
-    tracing::info!(
-        "loaded {} spells, {} tilesets in {:?}",
-        spells_read,
-        tilesets_read,
-        duration
-    );
+    // let duration = start.elapsed();
+    tracing::info!("loaded {} spells, {} tilesets", spells_read, tilesets_read);
 }

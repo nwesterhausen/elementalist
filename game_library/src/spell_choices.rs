@@ -4,7 +4,7 @@ use bevy::prelude::*;
 use bevy_inspector_egui::prelude::*;
 use serde::{Deserialize, Serialize};
 
-use crate::{enums::CastSlot, SpellData};
+use crate::{enums::CastSlot, InternalId, SpellData};
 
 /// A resource that stores the player's spell choices.
 #[derive(

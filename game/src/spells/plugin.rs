@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 use game_library::{
-    events::CastSpell, math, CursorPosition, LoadedSpellData, MovementBundle, SpellBundle,
-    SpellData, SpellLifetime, Velocity,
+    events::CastSpell, math, CursorPosition, InternalId, LoadedSpellData, MovementBundle,
+    SpellBundle, SpellData, SpellLifetime, Velocity,
 };
 
 use crate::{
@@ -100,10 +100,10 @@ pub fn cast_spells(
         commands.spawn((
             SpellBundle {
                 #[allow(clippy::cast_precision_loss)]
-                lifetime: SpellLifetime::new(spell.duration as f32 / 100.0),
+                lifetime: SpellLifetime::new(spell.duration / 100.0),
                 movement: MovementBundle {
                     #[allow(clippy::cast_precision_loss)]
-                    velocity: Velocity::new(slope_vec * (spell.speed as f32)),
+                    velocity: Velocity::new(slope_vec * (spell.speed)),
                     ..Default::default()
                 },
                 sprite: SpriteSheetBundle {

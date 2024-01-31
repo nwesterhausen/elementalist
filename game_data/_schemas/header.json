@@ -12,7 +12,7 @@
     "system": {
       "description": "System the data file is for",
       "type": "string",
-      "enum": ["Spell"]
+      "enum": ["Spell", "Tileset"]
     },
     "mustPrecede": {
       "description": "List of data files that must be loaded before this one",

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.nwest.one/games/elementalist/tileset_data.json",
+  "title": "Elementalist Tileset Definition File",
+  "description": "A JSON schema for defining a tileset for the Elementalist game",
+  "type": "object",
+  "properties": {
+    "path": {
+      "description": "The path to the tileset image, inside the assets directory. (e.g. 'tileset/my-tileset.png')",
+      "type": "string"
+    },
+    "tileSize": {
+      "description": "The size of each tile in the tileset, in pixels",
+      "type": "object",
+      "properties": {
+        "width": {
+          "description": "The width of each tile in the tileset, in pixels",
+          "type": "integer"
+        },
+        "height": {
+          "description": "The height of each tile in the tileset, in pixels",
+          "type": "integer"
+        }
+      }
+    },
+    "numTiles": {
+      "description": "The number of tiles in each row of the tileset",
+      "type": "object",
+      "properties": {
+        "row": {
+          "description": "The number of tiles in each row of the tileset",
+          "type": "integer"
+        },
+        "column": {
+          "description": "The number of tiles in each column of the tileset",
+          "type": "integer"
+        }
+      }
+    }
+  },
+  "required": ["path", "tileSize", "numTiles"]
+}

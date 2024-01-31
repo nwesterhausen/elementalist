@@ -1,8 +1,16 @@
-identity: spell_projectiles
-path: tileset/spell_projectiles.png
-tileSize:
-  height: 16
-  width: 16
-numTiles:
-  column: 5
-  row: 6
+header:
+  uniqueId: spell_projectiles
+  system: Tileset
+  author: Nicholas Westerhausen
+  description: Projectile sprites for the projectile spells
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  path: tileset/spell_projectiles.png
+  tileSize:
+    height: 16
+    width: 16
+  numTiles:
+    column: 5
+    row: 6

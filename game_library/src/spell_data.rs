@@ -6,10 +6,11 @@
 //! # $schema: "https://schemas.nwest.one/games/elementalist/spell.json"
 //! ```
 use serde_default_utils::{default_i32, default_usize};
-use std::hash::Hash;
+use std::{any::Any, hash::Hash};
 
 use crate::{
-    enums::{CastCategory, CastSlot, CastType, MagicType, Skill, SpellCollision},
+    data_loader::DataFile,
+    enums::{CastCategory, CastSlot, CastType, GameSystem, MagicType, Skill, SpellCollision},
     InternalId, StatEffect,
 };
 
@@ -192,5 +193,68 @@ mod spell_defaults {
     }
     pub(super) const fn spell_duration() -> f32 {
         5.0
+    }
+}
+
+impl<D: Hash + InternalId + 'static> TryInto<SpellData> for DataFile<D> {
+    type Error = ();
+
+    fn try_into(self) -> Result<SpellData, Self::Error> {
+        if self.header.system != GameSystem::Spell {
+            return Err(());
+        }
+
+        (&self.data as &dyn Any)
+            .downcast_ref::<SpellData>()
+            .cloned()
+            .ok_or(())
+    }
+}
+
+impl<D: Hash + InternalId + 'static> TryFrom<&DataFile<D>> for SpellData {
+    type Error = ();
+
+    fn try_from(data_file: &DataFile<D>) -> Result<Self, Self::Error> {
+        if data_file.header.system != GameSystem::Tileset {
+            return Err(());
+        }
+
+        (&data_file.data as &dyn Any)
+            .downcast_ref::<Self>()
+            .cloned()
+            .ok_or(())
+    }
+}
+
+impl Default for SpellData {
+    fn default() -> Self {
+        Self {
+            internal_id: None,
+            name: "Unnamed Spell".to_string(),
+            description: "No description provided.".to_string(),
+            long_description: String::new(),
+            spell_tier: 0,
+            magic: MagicType::Arcane,
+            cast_slot: CastSlot::Primary,
+            collision: SpellCollision::Point,
+            cast_type: CastType::Instant,
+            cast_category: CastCategory::Projectile,
+            icon_tileset: spell_defaults::placeholder_png_path(),
+            icon_index: 0,
+            sprite_tileset: spell_defaults::placeholder_png_path(),
+            sprite_index: 0,
+            cooldown: spell_defaults::spell_cooldown(),
+            cast_time: spell_defaults::spell_cast_time(),
+            mana_cost: 0,
+            range: spell_defaults::spell_range(),
+            speed: spell_defaults::spell_speed(),
+            duration: spell_defaults::spell_duration(),
+            damage: 0,
+            healing: 0,
+            radius: 0,
+            angle: 0,
+            buffs: Vec::new(),
+            debuffs: Vec::new(),
+        }
     }
 }

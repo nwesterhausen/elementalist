@@ -82,7 +82,11 @@ pub fn load_data_file_dir(
         .into_iter()
         .filter_map(std::result::Result::ok)
         .filter(|entry| {
-            entry.file_type().is_file() && entry.path().extension().is_some_and(|ext| ext == "yaml")
+            entry.file_type().is_file()
+                && entry
+                    .path()
+                    .extension()
+                    .is_some_and(|ext| ext == "yaml" || ext == "yml")
         })
         .map(|e| e.path().to_string_lossy().to_string())
         .collect();

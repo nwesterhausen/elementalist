@@ -1,7 +1,7 @@
 //! Tileset data. Instructions for what tilesets to load.
-use std::hash::Hash;
+use std::{any::Any, hash::Hash};
 
-use crate::InternalId;
+use crate::{data_loader::DataFile, enums::GameSystem, InternalId};
 
 mod tileset_defaults {
     pub(super) const fn tile_dimension() -> f32 {
@@ -18,10 +18,6 @@ mod tileset_defaults {
 pub struct Tileset {
     /// The internal ID of the tileset.
     pub internal_id: Option<String>,
-    /// The identity (or name) of the tileset.
-    pub identity: String,
-    /// The description of the tileset.
-    pub description: Option<String>,
     /// The path to the tileset (relative to the game's asset directory).
     pub path: String,
     /// The width of the tiles in the tileset.
@@ -41,7 +37,6 @@ pub struct Tileset {
 impl Hash for Tileset {
     fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
         self.internal_id.hash(state);
-        self.identity.hash(state);
         self.tileset_width.hash(state);
         self.tileset_height.hash(state);
     }
@@ -63,11 +58,53 @@ impl InternalId for Tileset {
         }
 
         format!(
-            "{}{}{}{}",
-            self.identity.replace(' ', ""),
+            "{}{}{}",
             self.path.replace(' ', ""),
             self.tileset_width,
             self.tileset_height
         )
+    }
+}
+
+impl<D: Hash + InternalId + 'static> TryInto<Tileset> for DataFile<D> {
+    type Error = ();
+
+    fn try_into(self) -> Result<Tileset, Self::Error> {
+        if self.header.system != GameSystem::Tileset {
+            return Err(());
+        }
+
+        (&self.data as &dyn Any)
+            .downcast_ref::<Tileset>()
+            .cloned()
+            .ok_or(())
+    }
+}
+
+impl<D: Hash + InternalId + 'static> TryFrom<&DataFile<D>> for Tileset {
+    type Error = ();
+
+    fn try_from(data_file: &DataFile<D>) -> Result<Self, Self::Error> {
+        if data_file.header.system != GameSystem::Tileset {
+            return Err(());
+        }
+
+        (&data_file.data as &dyn Any)
+            .downcast_ref::<Self>()
+            .cloned()
+            .ok_or(())
+    }
+}
+
+impl Default for Tileset {
+    fn default() -> Self {
+        Self {
+            internal_id: None,
+            path: "path/to/tileset.png".to_string(),
+            tile_width: 32.0,
+            tile_height: 32.0,
+            tileset_width: 5,
+            tileset_height: 5,
+        }
     }
 }

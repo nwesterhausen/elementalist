@@ -153,7 +153,7 @@
     "castCategory": {
       "description": "The broad category of the spell",
       "type": "string",
-      "enum": ["touch", "projectile", "ground", "summon", "self"]
+      "enum": ["touch", "projectile", "ground", "summon", "onSelf"]
     },
     "iconTileset": {
       "description": "The tileset with the icon of the spell (path in the assets folder)",

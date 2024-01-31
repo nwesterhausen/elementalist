@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use std::hash::Hash;
 
-use crate::enums::GameSystem;
+use crate::{enums::GameSystem, InternalId};
 
 /// Each data file includes header information about the data in the file.
 #[derive(Debug, Serialize, Deserialize)]
@@ -40,7 +40,7 @@ pub struct DataFileHeaderOnly {
 #[serde(rename_all = "camelCase")]
 pub struct DataFile<T>
 where
-    T: Hash,
+    T: Hash + InternalId,
 {
     /// The header information for this data file.
     pub header: DataFileHeader,

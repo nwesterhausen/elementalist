@@ -3,7 +3,10 @@ use serde_yaml;
 use std::hash::Hash;
 use walkdir::WalkDir;
 
-use crate::{data_loader::DATA_FILE_DIR, enums::GameSystem, SpellData};
+use crate::{
+    data_loader::DATA_FILE_DIR, enums::GameSystem, InternalId, LoadedTilesetData, SpellData,
+    Tileset,
+};
 
 use super::{
     events::LoadedSpellData,
@@ -37,7 +40,9 @@ pub fn read_file_header(path: &str) -> Option<DataFileHeader> {
 
 /// Read in an ingestible file and return it. This is generic because all ingestible files
 /// are the same, they only differ in the struct that is returned.
-pub fn read_data_file<T: serde::de::DeserializeOwned + Hash>(path: &str) -> Option<DataFile<T>> {
+pub fn read_data_file<T: serde::de::DeserializeOwned + Hash + InternalId>(
+    path: &str,
+) -> Option<DataFile<T>> {
     // Attempt to open the file passed in
     let f = match std::fs::File::open(path) {
         Ok(f) => f,
@@ -67,7 +72,10 @@ pub fn read_data_file<T: serde::de::DeserializeOwned + Hash>(path: &str) -> Opti
 /// 3. Add the data to the database in system load order (TDB)
 /// 4. Validate skill -> class, magic -> skill,class, and other relationships are valid
 ///
-pub fn load_data_file_dir(mut ew_df: EventWriter<LoadedSpellData>) {
+pub fn load_data_file_dir(
+    mut ew_spell_df: EventWriter<LoadedSpellData>,
+    mut ew_tileset_df: EventWriter<LoadedTilesetData>,
+) {
     let start = std::time::Instant::now();
 
     let mut possible_ingests: Vec<String> = WalkDir::new(DATA_FILE_DIR)
@@ -80,6 +88,7 @@ pub fn load_data_file_dir(mut ew_df: EventWriter<LoadedSpellData>) {
         .collect();
 
     let mut spells_read: usize = 0;
+    let mut tilesets_read: usize = 0;
 
     for d in &mut possible_ingests {
         let filepath = d.as_str();
@@ -102,8 +111,22 @@ pub fn load_data_file_dir(mut ew_df: EventWriter<LoadedSpellData>) {
                         );
                         continue;
                     };
-                    ew_df.send(LoadedSpellData { spell_data });
+                    ew_spell_df.send(LoadedSpellData { spell_data });
                     spells_read += 1;
+                }
+                GameSystem::Tileset => {
+                    let tileset_data: DataFile<Tileset> = if let Some(f) = read_data_file(filepath)
+                    {
+                        f
+                    } else {
+                        tracing::debug!(
+                            "load_data_file_dir: failed to read tileset data from {}",
+                            header.unique_id
+                        );
+                        continue;
+                    };
+                    ew_tileset_df.send(LoadedTilesetData { tileset_data });
+                    tilesets_read += 1;
                 } // _ => {
                   //     tracing::warn!(
                   //         "load_data_file_dir: no system match for {:?}",
@@ -114,5 +137,10 @@ pub fn load_data_file_dir(mut ew_df: EventWriter<LoadedSpellData>) {
         }
     }
     let duration = start.elapsed();
-    tracing::info!("loaded {} spells in {:?}", spells_read, duration);
+    tracing::info!(
+        "loaded {} spells, {} tilesets in {:?}",
+        spells_read,
+        tilesets_read,
+        duration
+    );
 }

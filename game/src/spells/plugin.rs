@@ -21,9 +21,8 @@ pub struct SpellsPlugin;
 
 impl Plugin for SpellsPlugin {
     fn build(&self, app: &mut App) {
+        // Spell data supporting event and resources
         app.add_event::<CastSpell>()
-            // Spell data supporting event and resources
-            .add_event::<LoadedSpellData>()
             .insert_resource(ExistingSpells {
                 data: Vec::new(),
                 ids: Vec::new(),

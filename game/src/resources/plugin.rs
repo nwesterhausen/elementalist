@@ -1,6 +1,7 @@
 use bevy::prelude::*;
 
 use game_library::{
+    data_loader::DataLoaderPlugin,
     font_resource::{change_font, ChangeFont, FontResource},
     progress_bar::ProgressBarPlugin,
     settings::SettingsPlugin,
@@ -43,6 +44,9 @@ impl Plugin for ElementalistResourcesPlugin {
             .add_state::<MenuState>()
             .add_state::<SaveState>();
 
+        // Data loading plugin
+        app.add_plugins(DataLoaderPlugin);
+
         // ProgressBar plugins are used to display health or experience bars. This might be out of
         // "resource" scope.
         app.add_plugins((
@@ -81,8 +85,6 @@ impl Plugin for ElementalistResourcesPlugin {
             (
                 // Draws a mostly transparent version and build git hash in the top right corner
                 app_systems::add_game_descriptor,
-                // Loads data from the `game_data` directory
-                app_systems::load_data_file_dir,
             ),
         )
         .add_systems(

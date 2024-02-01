@@ -15,5 +15,5 @@ data:
   cooldown: .25
   magic: force
   spellTier: 0
-  spriteTileset: tileset/spell_projectiles.png
+  spriteTileset: spell_projectiles
   spriteIndex: 6

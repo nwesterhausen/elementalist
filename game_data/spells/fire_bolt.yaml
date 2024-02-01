@@ -15,7 +15,7 @@ data:
   castSlot: primary
   castTime: 0
   cooldown: 1.50
-  spriteTileset: tileset/spell_projectiles.png
+  spriteTileset: spell_projectiles
   spriteIndex: 2
   flags:
     - projectile

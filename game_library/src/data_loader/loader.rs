@@ -1,4 +1,4 @@
-use bevy::ecs::event::EventWriter;
+use bevy::{prelude::*, utils::hashbrown::HashMap};
 use serde_yaml;
 use std::hash::Hash;
 use walkdir::WalkDir;
@@ -105,9 +105,9 @@ pub fn load_data_file_dir(
             );
             match header.system {
                 GameSystem::Spell => {
-                    let spell_data: DataFile<SpellData> = if let Some(f) = read_data_file(filepath)
+                    let spell_data: DataFile<SpellData> = if let Some(d) = read_data_file(filepath)
                     {
-                        f
+                        d
                     } else {
                         tracing::debug!(
                             "load_data_file_dir: failed to read spell data from {}",
@@ -119,9 +119,9 @@ pub fn load_data_file_dir(
                     spells_read += 1;
                 }
                 GameSystem::Tileset => {
-                    let tileset_data: DataFile<Tileset> = if let Some(f) = read_data_file(filepath)
+                    let tileset_data: DataFile<Tileset> = if let Some(d) = read_data_file(filepath)
                     {
-                        f
+                        d
                     } else {
                         tracing::debug!(
                             "load_data_file_dir: failed to read tileset data from {}",
@@ -142,4 +142,43 @@ pub fn load_data_file_dir(
     }
     // let duration = start.elapsed();
     tracing::info!("loaded {} spells, {} tilesets", spells_read, tilesets_read);
+}
+
+/// The tile atlas store is a resource that holds all the tilesets that have been loaded into the game.
+///
+/// They are stored by their `unique_id`, which is supplied in the header.
+#[derive(Resource, Default, Debug, Clone, PartialEq, Eq)]
+pub struct TileAtlasStore {
+    /// The tilesets that have been loaded into the game.
+    pub tilesets: HashMap<String, Handle<TextureAtlas>>,
+}
+
+/// Load the tilesets into the game and store a handle under the `unique_id`.
+#[allow(clippy::needless_pass_by_value)]
+pub fn load_tilesets(
+    mut er_tileset_df: EventReader<LoadedTilesetData>,
+    mut texture_atlases: ResMut<Assets<TextureAtlas>>,
+    mut tile_atlas_store: ResMut<TileAtlasStore>,
+    asset_server: Res<AssetServer>,
+) {
+    for tileset in er_tileset_df.read() {
+        let unique_id = &tileset.tileset_data.header.unique_id;
+        let tileset = &tileset.tileset_data.data;
+
+        let texture_handle = asset_server.load(&tileset.path);
+        let texture_atlas = TextureAtlas::from_grid(
+            texture_handle,
+            Vec2::new(tileset.tile_width, tileset.tile_height),
+            tileset.tileset_width,
+            tileset.tileset_height,
+            None,
+            None,
+        );
+
+        let atlas_handle = texture_atlases.add(texture_atlas);
+
+        tile_atlas_store
+            .tilesets
+            .insert(String::from(unique_id), atlas_handle);
+    }
 }

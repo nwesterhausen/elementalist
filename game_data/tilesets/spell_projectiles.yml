@@ -8,9 +8,7 @@ header:
   validGameInternalVersion: 1
 data:
   path: tileset/spell_projectiles.png
-  tileSize:
-    height: 16
-    width: 16
-  numTiles:
-    column: 5
-    row: 6
+  tileWidth: 16
+  tileHeight: 16
+  tileSetWidth: 5
+  tileSetHeight: 6

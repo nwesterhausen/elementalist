@@ -14,7 +14,6 @@ use super::{
     cleanup::cleanup_then_exit,
     cursor_position::update_cursor_position,
     fonts::set_initial_fonts,
-    spritesheet::LoadSpritesheetPlugin,
     state::{GameState, MenuState, SaveState},
     AppState, ReturnToState,
 };
@@ -75,10 +74,7 @@ impl Plugin for ElementalistResourcesPlugin {
             // The font resource has handles to the fonts used in the game to save loading assets constantly
             // and to easily allow the user to change the font (e.g. for accessibility)
             .add_event::<ChangeFont>()
-            .insert_resource(FontResource::default())
-            // The sprite atlases are loaded from disk and stored in the asset server. This plugin handles
-            // loading the spritesheet and adding it to the asset server.
-            .add_plugins(LoadSpritesheetPlugin);
+            .insert_resource(FontResource::default());
 
         app.add_systems(
             Startup,

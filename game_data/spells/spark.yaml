@@ -19,5 +19,5 @@ data:
     - instant
     - target
     - homing
-  spriteTileset: tileset/spell_projectiles.png
+  spriteTileset: spell_projectiles
   spriteIndex: 9

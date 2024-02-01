@@ -9,34 +9,22 @@
       "description": "The path to the tileset image, inside the assets directory. (e.g. 'tileset/my-tileset.png')",
       "type": "string"
     },
-    "tileSize": {
-      "description": "The size of each tile in the tileset, in pixels",
-      "type": "object",
-      "properties": {
-        "width": {
-          "description": "The width of each tile in the tileset, in pixels",
-          "type": "integer"
-        },
-        "height": {
-          "description": "The height of each tile in the tileset, in pixels",
-          "type": "integer"
-        }
-      }
+    "tileWidth": {
+      "description": "Width of each tile in pixels",
+      "type": "integer"
     },
-    "numTiles": {
-      "description": "The number of tiles in each row of the tileset",
-      "type": "object",
-      "properties": {
-        "row": {
-          "description": "The number of tiles in each row of the tileset",
-          "type": "integer"
-        },
-        "column": {
-          "description": "The number of tiles in each column of the tileset",
-          "type": "integer"
-        }
-      }
+    "tileHeight": {
+      "description": "Height of each tile in pixels",
+      "type": "integer"
+    },
+    "tileSetWidth": {
+      "description": "Width of the tileset in tiles (NOT pixels)",
+      "type": "integer"
+    },
+    "tileSetHeight": {
+      "description": "Height of the tileset in tiles (NOT pixels)",
+      "type": "integer"
     }
   },
-  "required": ["path", "tileSize", "numTiles"]
+  "required": ["path", "tileWidth", "tileHeight", "tileSetWidth", "tileSetHeight"]
 }

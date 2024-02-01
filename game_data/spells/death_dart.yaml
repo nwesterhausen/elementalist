@@ -15,7 +15,7 @@ data:
   cooldown: 7.5
   magic: death
   spellTier: 0
-  spriteTileset: tileset/spell_projectiles.png
+  spriteTileset: spell_projectiles
   spriteIndex: 1
   flags:
     - projectile

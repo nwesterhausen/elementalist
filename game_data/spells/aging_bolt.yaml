@@ -13,7 +13,7 @@ data:
     - projectile
   castCategory: projectile
   castType: instant
-  spriteTileset: tileset/spell_projectiles.png
+  spriteTileset: spell_projectiles
   spriteIndex: 11
   debuff:
     duration: 2.50

@@ -71,7 +71,7 @@ impl<D: Hash + InternalId + 'static> DataFile<D> {
             return None;
         }
 
-        self.try_into().map_or(None, Some)
+        self.try_into().ok()
     }
     /// Get the data file as a spell. Otherwise, return None.
     #[must_use]
@@ -80,7 +80,7 @@ impl<D: Hash + InternalId + 'static> DataFile<D> {
             return None;
         }
 
-        self.try_into().map_or(None, Some)
+        self.try_into().ok()
     }
 }
 

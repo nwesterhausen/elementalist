@@ -15,7 +15,7 @@ data:
   cooldown: 5.75
   magic: dark
   spellTier: 3
-  spriteTileset: tileset/spell_projectiles.png
+  spriteTileset: spell_projectiles
   spriteIndex: 0
   long_description:
     As the black hole travels, the area it affects becomes larger and larger. Though magically stable, it can also affect the caster.

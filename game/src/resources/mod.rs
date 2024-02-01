@@ -10,7 +10,6 @@ mod fonts;
 mod particles;
 mod plugin;
 mod return_to_state;
-mod spritesheet;
 mod state;
 
 pub mod buttons;
@@ -20,5 +19,4 @@ pub mod movement;
 pub use app_state::AppState;
 pub use plugin::ElementalistResourcesPlugin;
 pub use return_to_state::ReturnToState;
-pub use spritesheet::*;
 pub use state::*;

@@ -15,5 +15,5 @@ data:
   cooldown: 1
   magic: lightning
   spellTier: 1
-  spriteTileset: tileset/spell_projectiles.png
+  spriteTileset: spell_projectiles
   spriteIndex: 9

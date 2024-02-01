@@ -218,12 +218,12 @@ pub fn load_particle_effects(
         let unique_id = &data_file.particle_data.header.unique_id;
         let particle = &data_file.particle_data.data;
 
-        let mut writer = ExprWriter::new();
+        let writer = ExprWriter::new();
 
         let age = writer.lit(0.).expr();
         let init_age = SetAttributeModifier::new(Attribute::AGE, age);
 
-        let lifetime = writer.lit(particle.particle_lifetime).expr();
+        let lifetime = writer.lit(particle.lifetime).expr();
         let init_lifetime = SetAttributeModifier::new(Attribute::LIFETIME, lifetime);
 
         let init_pos = SetPositionCircleModifier {
@@ -251,11 +251,11 @@ pub fn load_particle_effects(
                 .init(init_age)
                 .init(init_lifetime)
                 .render(SizeOverLifetimeModifier {
-                    gradient: Gradient::constant(Vec2::splat(0.52)),
+                    gradient: particle.get_size_gradient(),
                     screen_space_size: false,
                 })
                 .render(ColorOverLifetimeModifier {
-                    gradient: Gradient::constant(Vec4::splat(0.5)),
+                    gradient: particle.get_color_gradient(),
                 }),
         );
 

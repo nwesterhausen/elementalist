@@ -314,8 +314,9 @@ pub enum PaletteColor {
 }
 
 impl PaletteColor {
-    /// Convert the PaletteColor to a Color.
-    pub fn to_color(&self) -> Color {
+    /// Convert the `PaletteColor` to a `Color`.
+    #[must_use]
+    pub const fn to_color(&self) -> Color {
         match self {
             Self::Rangitoto => RANGITOTO,
             Self::CostaDelSol => COSTA_DEL_SOL,

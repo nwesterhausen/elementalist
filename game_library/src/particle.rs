@@ -1,11 +1,9 @@
 //! Particle effect details.
-use bevy::math::Vec4;
+use bevy::math::{Vec2, Vec4};
 use bevy_hanabi::prelude::*;
 
-use crate::{
-    colors::PaletteColor, data_loader::DataFile, enums::GameSystem, InternalId, LoadedParticleData,
-};
-use std::{any::Any, hash::Hash};
+use crate::{colors::PaletteColor, data_loader::DataFile, enums::GameSystem, InternalId};
+use std::{any::Any, fmt::Write, hash::Hash};
 
 /// Details about a particle effect.
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
@@ -21,7 +19,7 @@ pub struct Particle {
     pub size_gradients: Vec<ParticleSizeGradient>,
     /// The lifetime of the particles in seconds
     #[serde(default = "particle_defaults::lifetime")]
-    pub particle_lifetime: f32,
+    pub lifetime: f32,
     /// The number of particles to spawn per second.
     #[serde(default = "particle_defaults::spawn_rate")]
     pub spawn_rate: f32,
@@ -59,6 +57,7 @@ mod particle_defaults {
 /// Initial velocity for a particle effect.
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
+#[allow(clippy::module_name_repetitions)]
 pub struct ParticleInitialVelocity {
     /// initial velocity modifier
     pub center_x: f32,
@@ -81,6 +80,7 @@ impl Default for ParticleInitialVelocity {
 /// Initial position for a particle effect.
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
+#[allow(clippy::module_name_repetitions)]
 pub struct ParticleInitialPosition {
     /// initial position modifier
     pub modifier_type: PositionModifierType,
@@ -123,7 +123,7 @@ pub enum ShapeDimensionType {
 impl ShapeDimensionType {
     /// Convert the shape dimension type into a bevy shape dimension.
     #[must_use]
-    pub fn as_shape_dimension(&self) -> ShapeDimension {
+    pub const fn as_shape_dimension(&self) -> ShapeDimension {
         match self {
             Self::Volume => ShapeDimension::Volume,
             Self::Surface => ShapeDimension::Surface,
@@ -134,6 +134,7 @@ impl ShapeDimensionType {
 /// Color for a particle effect.
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
+#[allow(clippy::module_name_repetitions)]
 pub struct ParticleColorGradient {
     /// The index of the color gradient.
     index: f32,
@@ -144,7 +145,7 @@ pub struct ParticleColorGradient {
     alpha: f32,
 }
 
-fn default_alpha() -> f32 {
+const fn default_alpha() -> f32 {
     1.0
 }
 
@@ -161,6 +162,7 @@ impl Default for ParticleColorGradient {
 /// Color for a particle effect.
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
+#[allow(clippy::module_name_repetitions)]
 pub struct ParticleSizeGradient {
     /// The index of the size gradient.
     index: f32,
@@ -171,8 +173,8 @@ pub struct ParticleSizeGradient {
     height: f32,
 }
 
-fn default_height() -> f32 {
-    1.0
+const fn default_height() -> f32 {
+    f32::NEG_INFINITY
 }
 
 impl Default for ParticleSizeGradient {
@@ -189,8 +191,10 @@ impl Hash for Particle {
     fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
         self.color_gradients
             .iter()
-            .map(|c| format!("{:?}", c.color))
-            .collect::<String>()
+            .fold(String::new(), |mut output, b| {
+                let _ = write!(output, "{:?}", b.color);
+                output
+            })
             .hash(state);
         self.capacity.hash(state);
     }
@@ -215,8 +219,10 @@ impl InternalId for Particle {
             "{}{}",
             self.color_gradients
                 .iter()
-                .map(|c| format!("{:?}", c.color))
-                .collect::<String>(),
+                .fold(String::new(), |mut output, b| {
+                    let _ = write!(output, "{:?}", b.color);
+                    output
+                }),
             self.capacity
         )
     }
@@ -255,15 +261,36 @@ impl<D: Hash + InternalId + 'static> TryFrom<&DataFile<D>> for Particle {
 impl Particle {
     /// Get a gradient from the particle's color gradients.
     #[must_use]
-    pub fn get_gradient(&self) -> Gradient<Vec4> {
+    pub fn get_color_gradient(&self) -> Gradient<Vec4> {
         let mut gradient = Gradient::new();
         for color in &self.color_gradients {
             let mut color_vec: Vec4 = color.color.to_color().as_rgba_f32().into();
-            if color.alpha != 1.0 {
+            if (color.alpha - 1.0).abs() > f32::EPSILON {
                 color_vec.w = color.alpha;
             }
 
             gradient.add_key(color.index.clamp(0.0, 1.0), color_vec);
+        }
+
+        gradient
+    }
+
+    /// Get a gradient from the particle's size gradients.
+    #[must_use]
+    pub fn get_size_gradient(&self) -> Gradient<Vec2> {
+        let mut gradient = Gradient::new();
+        for size in &self.size_gradients {
+            if size.height.is_finite() {
+                gradient.add_key(
+                    size.index.clamp(0.0, 1.0),
+                    Vec2::new(size.width, size.height),
+                );
+            } else {
+                gradient.add_key(
+                    size.index.clamp(0.0, 1.0),
+                    Vec2::new(size.width, size.width),
+                );
+            }
         }
 
         gradient

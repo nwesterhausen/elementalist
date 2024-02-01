@@ -11,8 +11,7 @@
     },
     "system": {
       "description": "System the data file is for",
-      "type": "string",
-      "enum": ["Spell", "Tileset"]
+      "$ref": "https://schemas.nwest.one/games/elementalist/game_system.json"
     },
     "mustPrecede": {
       "description": "List of data files that must be loaded before this one",

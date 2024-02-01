@@ -5,18 +5,6 @@
   "description": "Describes a particle effect for use in the Elementalist game",
   "type": "object",
   "properties": {
-    "identifier": {
-      "description": "An identifier for the particle effect, so that it can be referenced by a spell or other things.",
-      "type": "string"
-    },
-    "description": {
-      "description": "A short description of the particle effect",
-      "type": "string"
-    },
-    "extendedDescription": {
-      "description": "(Optional) A longer description of the particle effect, for use in tooltips or other places where a more detailed description is needed.",
-      "type": "string"
-    },
     "colorGradients": {
       "description": "An array of colors to use over the particle lifetime as a gradient (or a single color if you want the particles to be a single color)",
       "type": "array",
@@ -31,7 +19,7 @@
         "$ref": "https://schemas.nwest.one/games/elementalist/size_gradient.json"
       }
     },
-    "particleLifetime": {
+    "lifetime": {
       "description": "The lifetime of the particles in the effect, in seconds",
       "type": "number"
     },
@@ -59,7 +47,7 @@
         "shapeDimension": {
           "description": "The shape dimension to use for the initial position. Volume is anywhere within the circle, Surface is only on the edge of the circle.",
           "type": "string",
-          "enum": ["Volume", "Surface"]
+          "enum": ["volume", "surface"]
         }
       }
     },
@@ -74,13 +62,12 @@
         "centerY": {
           "description": "The y coordinate of the center of the velocity modifier",
           "type": "number"
+        },
+        "speed": {
+          "description": "The speed of the particles",
+          "type": "number"
         }
-      },
-      "speed": {
-        "description": "The speed of the particles",
-        "type": "number"
       }
     }
-  },
-  "required": ["name", "description"]
+  }
 }

@@ -1,5 +1,5 @@
-use crate::resources::colors;
 use bevy::prelude::*;
+use game_library::colors;
 
 /// Shared button style for the settings menus.
 #[must_use]

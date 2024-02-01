@@ -1,11 +1,12 @@
 use bevy::prelude::*;
 use game_library::{
+    colors,
     enums::StatEnum,
     progress_bar::{BarState, ProgressBarConfig},
     Health, Mana, MovementBundle, SpellChoices, StatBundle, Xp,
 };
 
-use crate::{resources::colors, spells::ExistingSpells};
+use crate::spells::ExistingSpells;
 
 const BASE_SPEED: f32 = 100.0;
 const BASE_HEALTH: u32 = 10;

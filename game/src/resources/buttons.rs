@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use super::colors;
+use game_library::colors;
 
 /// Tag component used to mark which setting is currently selected
 #[derive(Component)]

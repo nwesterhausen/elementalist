@@ -12,7 +12,6 @@ mod return_to_state;
 mod state;
 
 pub mod buttons;
-pub mod colors;
 pub mod movement;
 pub mod style_prefab;
 

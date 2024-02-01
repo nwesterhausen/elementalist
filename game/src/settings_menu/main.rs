@@ -3,7 +3,7 @@ use bevy::prelude::*;
 use game_library::font_resource::FontResource;
 
 use crate::{
-    common::buttons::style_prefab,
+    resources::style_prefab,
     resources::{AppState, ReturnToState},
 };
 

@@ -12,6 +12,6 @@ data:
   manaCost: 1
   castSlot: secondary
   castTime: 0
-  cooldown: 425
+  cooldown: 4.25
   magic: arcane
   spellTier: 0

@@ -13,8 +13,12 @@ data:
   spellTier: 0
   castSlot: primary
   castTime: 0
-  cooldown: 200
+  cooldown: 2.00
   magic: fire
   flags:
     - touch
     - instant
+  castType: instant
+  castCategory: touch
+  spriteTileset: tileset/spell_icons.png
+  spriteIndex: 0

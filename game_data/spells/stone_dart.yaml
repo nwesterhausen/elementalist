@@ -12,8 +12,8 @@ data:
   manaCost: 0
   castSlot: primary
   castTime: 0
-  cooldown: 33
+  cooldown: .33
   magic: earth
   spellTier: 0
-  spriteTileset: tileset/spell_projectiles.png
+  spriteTileset: spell_projectiles
   spriteIndex: 10

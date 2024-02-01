@@ -11,7 +11,12 @@ file to inform it of the proper schemas for the `game_data` files:
 
 ```json
   "yaml.schemas": {
-    "https://schemas.nwest.one/games/elementalist/spell.json": ["**/game_data/spells/*.yaml"],
-    "https://schemas.nwest.one/games/elementalist/spell_tag.json": ["**/game_data/spell_tags/*.yaml"]
+    "https://schemas.nwest.one/games/elementalist/spell.json": ["**/game_data/spells/*.y*ml"],
+    "https://schemas.nwest.one/games/elementalist/spell_tag.json": ["**/game_data/spell_tags/*.y*ml"],
+    "https://schemas.nwest.one/games/elementalist/tileset.json": [
+      "**/game_data/tilesets/*.y*ml",
+      "file:///g%3A/repos/elementalist/game_data/tilesets/skill_icons.yml"
+    ],
+    "https://schemas.nwest.one/games/elementalist/particle.json": ["**/game_data/particles/*.y*ml"]
   }
 ```

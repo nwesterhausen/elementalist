@@ -11,7 +11,7 @@ data:
   description: Launch a ray of freezing magic towards your target.
   manaCost: 2
   castSlot: secondary
-  castTime: 50
-  cooldown: 300
+  castTime: 5.0
+  cooldown: 3.00
   magic: ice
   spellTier: 2

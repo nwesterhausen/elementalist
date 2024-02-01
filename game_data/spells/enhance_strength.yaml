@@ -12,6 +12,12 @@ data:
   manaCost: 2
   castSlot: secondary
   castTime: 0
-  cooldown: 10
+  cooldown: .10
   magic: enhancement
   spellTier: 0
+  flags:
+    - buff
+  castType: instant
+  castCategory: onSelf
+  spriteTileset: tileset/spell_icons.png
+  spriteIndex: 0

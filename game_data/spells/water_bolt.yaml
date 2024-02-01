@@ -15,5 +15,5 @@ data:
   cooldown: 2
   magic: water
   spellTier: 0
-  spriteTileset: tileset/spell_projectiles.png
+  spriteTileset: spell_projectiles
   spriteIndex: 12

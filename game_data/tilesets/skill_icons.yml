@@ -1,0 +1,14 @@
+header:
+  uniqueId: skill_icons
+  system: Tileset
+  author: Nicholas Westerhausen
+  description: Icons for the 15 standard skills
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  path: tileset/skill_icons.png
+  tileWidth: 32
+  tileHeight: 32
+  tileSetWidth: 5
+  tileSetHeight: 5

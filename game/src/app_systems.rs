@@ -65,6 +65,3 @@ pub fn set_window_icon(
         window.set_window_icon(Some(icon.clone()));
     }
 }
-
-/// Reads `game_data` and imports the data into the game
-pub use game_library::data_loader::load_data_file_dir;

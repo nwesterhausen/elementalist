@@ -1,5 +1,10 @@
 use bevy::prelude::*;
-use game_library::{enums::StatEnum, Health, Mana, MovementBundle, SpellChoices, StatBundle};
+use game_library::{
+    colors,
+    enums::StatEnum,
+    progress_bar::{BarState, ProgressBarConfig},
+    Health, Mana, MovementBundle, SpellChoices, StatBundle, Xp,
+};
 
 use crate::spells::ExistingSpells;
 
@@ -18,12 +23,13 @@ pub struct PlayerBundle {
     pub health: Health,
     pub mana: Mana,
     pub stats: StatBundle,
+    pub xp: Xp,
 }
 
 #[derive(Component, Debug, Reflect)]
 pub struct PlayerAvatar;
 
-pub fn spawn_player(
+pub fn spawn_player_avatar(
     mut commands: Commands,
     asset_server: Res<AssetServer>,
     mut spell_choices: ResMut<SpellChoices>,
@@ -37,10 +43,10 @@ pub fn spawn_player(
 
     // Load spells (forced right now)
     for spell_id in &loaded_spells.ids {
-        if spell_id.contains("WaterBolt") {
+        if spell_id.contains("AgingBolt") {
             spell_choices.set_primary_by_id(spell_id.clone());
         }
-        if spell_id.contains("Spark") {
+        if spell_id.contains("DeathBolt") {
             spell_choices.set_secondary_by_id(spell_id.clone());
         }
     }
@@ -57,7 +63,25 @@ pub fn spawn_player(
             health: Health::new(BASE_HEALTH),
             mana: Mana::new(BASE_MANA),
             stats: StatBundle::new(vec![(StatEnum::MovementSpeed, BASE_SPEED)]),
+            xp: Xp::default(),
         },
+        ProgressBarConfig::<Xp>::default()
+            .with_background_color(colors::BACKGROUND_COLOR_50)
+            .with_single_color(colors::SKILL_TRACK_BAR_COLOR)
+            .with_size((10.0, 2.0).into())
+            .with_position_translation(Vec3::new(-5.0, 26.0, 0.0)),
+        ProgressBarConfig::<Health>::default()
+            .with_background_color(colors::BACKGROUND_COLOR_50)
+            .with_color(&BarState::Ok, colors::HEALTH_BAR_COLOR_OK)
+            .with_color(&BarState::Moderate, colors::HEALTH_BAR_COLOR_MODERATE)
+            .with_color(&BarState::Critical, colors::HEALTH_BAR_COLOR_CRITICAL)
+            .with_size((10.0, 2.0).into())
+            .with_position_translation(Vec3::new(-5.0, 24.0, 0.0)),
+        ProgressBarConfig::<Mana>::default()
+            .with_background_color(colors::BACKGROUND_COLOR_50)
+            .with_single_color(colors::MANA_BAR_COLOR)
+            .with_size((10.0, 2.0).into())
+            .with_position_translation(Vec3::new(-5.0, 22.0, 0.0)),
         PlayerAvatar,
     ));
 }

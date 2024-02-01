@@ -14,10 +14,10 @@ data:
   castSlot: primary
   manaCost: 0
   castTime: 0
-  cooldown: 250
+  cooldown: 2.50
   flags:
     - instant
     - target
     - homing
-  spriteTileset: tileset/spell_projectiles.png
+  spriteTileset: spell_projectiles
   spriteIndex: 9

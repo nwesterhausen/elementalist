@@ -3,7 +3,10 @@
 
 use bevy::prelude::*;
 
-use crate::{despawn_with_tag, resources::AppState};
+use crate::{
+    despawn_with_tag,
+    resources::{AppState, MenuState},
+};
 
 use super::{
     accessibility::AccessibilitySettingsMenuPlugin,
@@ -15,7 +18,6 @@ use super::{
     events::ChangeSetting,
     gameplay::GameplaySettingsMenuPlugin,
     main::{show_main_menu, BaseSettingsMenuEntity},
-    state::MenuState,
 };
 
 /// The settings menu plugin.

@@ -12,6 +12,6 @@ data:
   manaCost: 4
   castSlot: secondary
   castTime: 0
-  cooldown: 20
+  cooldown: .20
   magic: polymorph
   spellTier: 0

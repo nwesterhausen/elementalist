@@ -5,11 +5,13 @@
 // Hide the console window on Windows when not in debug mode
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use bevy::{asset::AssetMetaCheck, prelude::*};
-use game_library::settings::SettingsPlugin;
+use bevy::{
+    asset::AssetMetaCheck,
+    log::LogPlugin,
+    prelude::*,
+    render::{render_resource::WgpuFeatures, settings::WgpuSettings, RenderPlugin},
+};
 use leafwing_input_manager::plugin::InputManagerPlugin;
-
-pub(crate) mod common;
 
 mod app_info;
 mod app_systems;
@@ -17,7 +19,7 @@ mod camera;
 #[cfg(debug_assertions)]
 mod dev_systems;
 mod events;
-mod game;
+mod game_overlays;
 mod main_menu;
 mod player;
 mod resources;
@@ -29,6 +31,24 @@ pub use app_systems::despawn_with_tag;
 use events::{MenuInteraction, PlayerAction};
 
 fn main() {
+    // Set the wgpu settings per bevy_hanabi
+    let mut wgpu_settings = WgpuSettings::default();
+    wgpu_settings
+        .features
+        .set(WgpuFeatures::VERTEX_WRITABLE_STORAGE, true);
+
+    // Set the log level based on whether we are in debug mode or not
+    let (log_level, log_filter) = if cfg!(debug_assertions) {
+        // If in debug mode, set the log level to debug
+        (
+            bevy::log::Level::INFO,
+            "wgpu=warn,bevy_hanabi=warn,elementalist=info",
+        )
+    } else {
+        // If in release mode, set the log level to warn
+        (bevy::log::Level::WARN, "elementalist=info")
+    };
+
     App::new()
         // Add our custom default plugins
         .add_plugins(ElementalistDefaultPlugins)
@@ -50,36 +70,37 @@ fn main() {
                     ..Default::default()
                 })
                 // Nearest neighbor scaling (pixel art)
-                .set(ImagePlugin::default_nearest()),
+                .set(ImagePlugin::default_nearest())
+                // Configure the log plugin
+                .set(LogPlugin {
+                    level: log_level,
+                    filter: log_filter.to_string(),
+                })
+                // Add our the wgpu settings per bevy_hanabi
+                .set(RenderPlugin {
+                    render_creation: wgpu_settings.into(),
+                }),
         )
-        // Add the debug plugin if in debug mode
+        // Add the gameplay plugins
+        .add_plugins(ElementalistGameplayPlugins)
+        // Add the debug plugin if in debug mode (this adds the inspector)
         .add_plugins(ElementalistDebugPlugin)
         // Add all the general resources and their update systems (e.g. cursor position)
         .add_plugins(resources::ElementalistResourcesPlugin)
-        // Add input processing
+        // Add plugins for Settings and the menus
         .add_plugins((
-            InputManagerPlugin::<PlayerAction>::default(),
-            InputManagerPlugin::<MenuInteraction>::default(),
+            settings_menu::SettingsMenuPlugin,
+            splash_screen::SplashScreenPlugin,
+            main_menu::MainMenuPlugin,
+            game_overlays::GameOverlaysPlugin,
         ))
-        // Add camera plugin
-        .add_plugins(camera::CameraPlugin)
-        // Add our plugins for the menu screen and the splash screen
-        .add_plugins((splash_screen::SplashScreenPlugin, main_menu::MainMenuPlugin))
-        // Add the game plugin
-        .add_plugins(game::GamePlugin)
-        // Add the player plugin
-        .add_plugins(player::PlayerPlugin)
-        // Add the spells plugin
-        .add_plugins(spells::SpellsPlugin)
-        // Add the movement plugin
-        .add_plugins(common::movement::MovementPlugin)
         // Launch
         .run();
 }
 
 /// Elementalist defaults for the "insert this resource" type of thing.
 ///
-/// This also handles adding the debug plugin _only_ when in debug mode.
+/// This adds resources specific for [`DefaultPlugins`]
 struct ElementalistDefaultPlugins;
 
 impl Plugin for ElementalistDefaultPlugins {
@@ -87,25 +108,48 @@ impl Plugin for ElementalistDefaultPlugins {
         // Never attempts to look up meta files. The default meta configuration will be used for each asset.
         app.insert_resource(AssetMetaCheck::Never);
         // The clear color is the color the screen is cleared to before each frame is drawn
-        app.insert_resource(ClearColor(common::colors::CLEAR_COLOR));
+        app.insert_resource(ClearColor(game_library::colors::CLEAR_COLOR));
         // Add the window icon
         app.add_systems(Startup, app_systems::set_window_icon);
-        // Add the settings plugin
-        app.add_plugins(SettingsPlugin);
-        // Add the menu plugin
-        app.add_plugins(settings_menu::SettingsMenuPlugin);
+        // Add camera plugin
+        app.add_plugins(camera::CameraPlugin);
     }
 }
 
 /// Debug plugin loader.
+///
+/// This adds the debug plugin _only_ when in debug mode.
 struct ElementalistDebugPlugin;
 
 impl Plugin for ElementalistDebugPlugin {
+    // Unused variables allowed because when in release mode, `app` will not be used.
+    #[allow(unused_variables)]
     fn build(&self, app: &mut App) {
         // When in debug mode, add the debug plugin.
         #[cfg(debug_assertions)]
         {
             app.add_plugins(dev_systems::DevSystemsPlugin);
         }
+    }
+}
+
+/// Gameplay plugins.
+///
+/// These add the gameplay functionality to the game.
+struct ElementalistGameplayPlugins;
+
+impl Plugin for ElementalistGameplayPlugins {
+    fn build(&self, app: &mut App) {
+        app.add_plugins((
+            // Add the plugin for the player
+            player::PlayerPlugin,
+            // Add the plugin for the spells
+            spells::SpellsPlugin,
+            // Add the plugin for the movement
+            resources::movement::MovementPlugin,
+            // Input processing
+            InputManagerPlugin::<PlayerAction>::default(),
+            InputManagerPlugin::<MenuInteraction>::default(),
+        ));
     }
 }

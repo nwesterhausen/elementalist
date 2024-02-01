@@ -37,7 +37,7 @@ pub fn player_movement_controls(
 
     if action_state.pressed(PlayerAction::Move) {
         if let Some(axis_pair) = action_state.clamped_axis_pair(PlayerAction::Move) {
-            velocity.value = axis_pair.xy().normalize() * speed.value();
+            velocity.value = axis_pair.xy().normalize_or_zero() * speed.value();
         }
     }
 }

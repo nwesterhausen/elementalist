@@ -36,8 +36,8 @@ impl MenuInteraction {
         match self {
             Self::Up => UserInput::Single(InputKind::Keyboard(KeyCode::W)),
             Self::Down => UserInput::Single(InputKind::Keyboard(KeyCode::S)),
-            Self::Select => UserInput::Single(InputKind::Keyboard(KeyCode::F)),
-            Self::Back => UserInput::Single(InputKind::Keyboard(KeyCode::X)),
+            Self::Select => UserInput::Single(InputKind::Keyboard(KeyCode::Space)),
+            Self::Back => UserInput::Single(InputKind::Keyboard(KeyCode::Escape)),
         }
     }
     /// Returns the default gamepad input for this action.

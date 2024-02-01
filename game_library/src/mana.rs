@@ -3,7 +3,7 @@
 use bevy::{prelude::*, reflect::Reflect};
 use bevy_inspector_egui::prelude::*;
 
-use crate::Attribute;
+use crate::{progress_bar::Percentage, Attribute};
 
 /// Mana component to hold an entity's mana value
 #[derive(Component, Default, Debug, Reflect, InspectorOptions)]
@@ -20,5 +20,11 @@ impl Mana {
         Self {
             value: Attribute::new(value),
         }
+    }
+}
+
+impl Percentage for Mana {
+    fn percentage(&self) -> f32 {
+        self.value.remaining()
     }
 }

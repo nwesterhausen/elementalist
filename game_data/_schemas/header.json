@@ -11,8 +11,7 @@
     },
     "system": {
       "description": "System the data file is for",
-      "type": "string",
-      "enum": ["Spell"]
+      "$ref": "https://schemas.nwest.one/games/elementalist/game_system.json"
     },
     "mustPrecede": {
       "description": "List of data files that must be loaded before this one",
@@ -50,5 +49,5 @@
       "enum": [1]
     }
   },
-  "required": ["unique_id", "system", "author", "description", "display_version", "internal_version", "valid_game_internal_version"]
+  "required": ["uniqueId", "system", "author", "description", "displayVersion", "internalVersion", "validGameInternalVersion"]
 }

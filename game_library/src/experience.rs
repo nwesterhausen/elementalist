@@ -39,6 +39,8 @@ use bevy::prelude::*;
 use bevy_inspector_egui::prelude::*;
 use serde::{Deserialize, Serialize};
 
+use crate::progress_bar::Percentage;
+
 /// Experience component
 ///
 /// Tracks the amount of xp accumulated by an entity. The xp curve is defined by the following
@@ -58,7 +60,7 @@ use serde::{Deserialize, Serialize};
 ///
 /// # Example
 ///
-/// ```
+/// ```no_run
 /// use bevy::prelude::*;
 /// use game_library::Xp;
 ///
@@ -129,7 +131,7 @@ impl Xp {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Xp;
     ///
     /// let xp = Xp {
@@ -329,5 +331,11 @@ impl std::fmt::Display for Xp {
             self.total_xp_to_next_level(),
             self.next_level_progress() * 100.
         )
+    }
+}
+
+impl Percentage for Xp {
+    fn percentage(&self) -> f32 {
+        self.next_level_progress()
     }
 }

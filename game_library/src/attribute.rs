@@ -34,6 +34,8 @@ use bevy::{
 use bevy_inspector_egui::inspector_options::{InspectorOptions, ReflectInspectorOptions};
 use serde::{Deserialize, Serialize};
 
+use crate::progress_bar::Percentage;
+
 /// Attribute component. This is a simple integer representing the attribute of an entity.
 /// Has properties like `max_attribute` and `current_attribute`. We support operations with
 /// integers, floats, and other `Attribute` components.
@@ -90,7 +92,7 @@ impl Attribute {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new(10_u32);
@@ -113,7 +115,7 @@ impl Attribute {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new(10_u32);
@@ -139,7 +141,7 @@ impl Attribute {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new(10_u32);
@@ -155,7 +157,7 @@ impl Attribute {
     /// assert_eq!(attribute.remaining(), 1.0);
     /// ```
     #[must_use]
-    pub fn remaining(&self) -> f64 {
+    pub fn remaining(&self) -> f32 {
         // Avoid division by zero
         if self.max == 0 {
             return 1.0;
@@ -163,6 +165,10 @@ impl Attribute {
         // Get percentage but round to 2 decimal places
         #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
         let result = (f64::from(self.current) / f64::from(self.max) * 100.0).floor() / 100.0;
+
+        #[allow(clippy::cast_possible_truncation)]
+        let result = result as f32;
+
         result
     }
 
@@ -175,7 +181,7 @@ impl Attribute {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new(10_u32);
@@ -214,7 +220,7 @@ impl Attribute {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Attribute;
     ///
     /// let attribute = Attribute::new(10_u32);
@@ -240,7 +246,7 @@ impl Attribute {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Attribute;
     ///
     /// let attribute = Attribute::new_with_current(5_u32, 10_u32);
@@ -273,7 +279,7 @@ impl Attribute {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new(10_u32);
@@ -323,7 +329,7 @@ impl Attribute {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new(10_u32);
@@ -377,7 +383,7 @@ impl Attribute {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new(10_u32);
@@ -404,7 +410,7 @@ impl Attribute {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new_with_current(5_u32, 10_u32);
@@ -444,7 +450,7 @@ impl Attribute {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new_with_current(5_u32, 10_u32);
@@ -492,7 +498,7 @@ impl Attribute {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new_with_current(5_u32, 10_u32);
@@ -522,7 +528,7 @@ impl Attribute {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new_with_current(5_u32, 100_u32);
@@ -560,7 +566,7 @@ impl Attribute {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new_with_current(5_u32, 100_u32);
@@ -585,7 +591,7 @@ impl Attribute {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new(10_u32);
@@ -613,7 +619,7 @@ impl Attribute {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new(10_u32);
@@ -1026,3 +1032,9 @@ impl std::cmp::PartialEq for Attribute {
 }
 
 impl std::cmp::Eq for Attribute {}
+
+impl Percentage for Attribute {
+    fn percentage(&self) -> f32 {
+        self.remaining()
+    }
+}

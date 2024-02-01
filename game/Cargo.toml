@@ -1,39 +1,49 @@
 [package]
 name = "elementalist"
-version = "0.3.1"
+version = "0.4.0"
 edition = "2021"
 build = "build.rs"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+# Built is used to insert the git commit hash into the binary.
 [build-dependencies.built]
 version = "0.7"
 features = ["git2"]
 
 [build-dependencies]
+# Used to set the icon of the .exe file on Windows.
 embed-resource = "2.4.1"
 
 [dependencies]
 # When running the game in development, use the dynamic linking feature of Bevy to speed
 # up compilation times. `cargo run --features bevy/dynamic_linking` will enable this.
 bevy = "0.12.1"
+# Input abstraction layer, makes for easy input handling and rebinding.
 leafwing-input-manager = "0.11.2"
-serde = "1.0.196"
+# Used for logging. This might be able to be replaced with a re-pub from bevy.
 tracing = "0.1.40"
+# The game library contains a lot of resources, logic and compoents used in the game.
 game_library = { path = "../game_library" }
-egui_dock = "0.10.0"
-bevy-inspector-egui = "0.22.1"
+# For setting the icon on Windows, we use this, which must match the version in bevy.
 winit = "0.28"
+# Used to load our icon for the window.
 image = "0.24"
+# Random noise generation library
 rand = "0.8.5"
-bevy_pkv = "0.9.1"
+# DEBUG ONLY: docking support for the inspector egui
+egui_dock = "0.10.0"
+# DEBUG ONLY: inspector for bevy
+bevy-inspector-egui = "0.22.1"
+# Particle system
+bevy_hanabi = { version = "0.9.0", default-features = false, features = ["2d"] }
 
+# Some very strict lints.
 [lints.rust]
 unsafe_code = "forbid"
 missing_docs = "warn"
 unreachable_code = "warn"
 unreachable_patterns = "warn"
-
 [lints.clippy]
 enum_glob_use = "deny"
 pedantic = "deny"

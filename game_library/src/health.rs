@@ -3,7 +3,7 @@
 use bevy::{prelude::*, reflect::Reflect};
 use bevy_inspector_egui::prelude::*;
 
-use crate::Attribute;
+use crate::{progress_bar::Percentage, Attribute};
 
 /// Health component to hold an entity's health value
 #[derive(Component, Default, Debug, Reflect, InspectorOptions)]
@@ -32,5 +32,11 @@ impl Health {
     #[must_use]
     pub const fn is_dead(&self) -> bool {
         self.value.is_empty()
+    }
+}
+
+impl Percentage for Health {
+    fn percentage(&self) -> f32 {
+        self.value.remaining()
     }
 }

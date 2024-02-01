@@ -82,8 +82,9 @@
             "enum": ["add", "multiply"]
           }
         }
-      }
+      },
+      "required": ["stat", "amount", "affectType"]
     }
   },
-  "required": ["affectedEntity", "stat", "amount", "affectType", "duration", "maxStacks"]
+  "required": ["affectedEntity", "affectedStats", "name", "description", "duration", "maxStacks"]
 }

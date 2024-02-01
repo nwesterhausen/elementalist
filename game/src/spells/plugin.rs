@@ -1,14 +1,10 @@
 use bevy::prelude::*;
 use game_library::{
-    events::CastSpell, math, CursorPosition, LoadedSpellData, MovementBundle, SpellBundle,
-    SpellData, SpellLifetime, Velocity,
+    data_loader::TileAtlasStore, events::CastSpell, math, CursorPosition, InternalId,
+    LoadedSpellData, MovementBundle, SpellBundle, SpellData, SpellLifetime, Velocity,
 };
 
-use crate::{
-    despawn_with_tag,
-    player::Player,
-    resources::{AppState, SpellAtlas},
-};
+use crate::{despawn_with_tag, player::Player, resources::AppState};
 
 use super::components::{despawn_expired_spells, SpellEntity};
 
@@ -21,9 +17,8 @@ pub struct SpellsPlugin;
 
 impl Plugin for SpellsPlugin {
     fn build(&self, app: &mut App) {
+        // Spell data supporting event and resources
         app.add_event::<CastSpell>()
-            // Spell data supporting event and resources
-            .add_event::<LoadedSpellData>()
             .insert_resource(ExistingSpells {
                 data: Vec::new(),
                 ids: Vec::new(),
@@ -66,13 +61,16 @@ fn load_spells(mut events: EventReader<LoadedSpellData>, mut spells: ResMut<Exis
     }
 }
 
+const SPELL_SPRITE_SCALE: f32 = 0.5;
+const SPELL_SPEED_MULTIPLIER: f32 = 100.0;
+
 pub fn cast_spells(
     mut commands: Commands,
     mut event_reader: EventReader<CastSpell>,
     query: Query<&Transform, With<Player>>,
     cursor_position: Res<CursorPosition>,
     existing_spells: Res<ExistingSpells>,
-    spell_atlas: Res<SpellAtlas>,
+    spell_atlas: Res<TileAtlasStore>,
 ) {
     for CastSpell(spell_identifier) in event_reader.read() {
         let Ok(player_transform) = query.get_single() else {
@@ -91,6 +89,15 @@ pub fn cast_spells(
             continue;
         };
 
+        let Some(texture_atlas) = spell_atlas.tilesets.get(&spell.sprite_tileset) else {
+            tracing::error!(
+                "cast_spells: No texture atlas found for {} (spell:{})",
+                spell.sprite_tileset,
+                spell.get_internal_id()
+            );
+            continue;
+        };
+
         let slope_vec = math::slope_vec(player_transform, &cursor_position);
 
         // Todo: include the player's velocity in the spell's velocity
@@ -99,20 +106,18 @@ pub fn cast_spells(
 
         commands.spawn((
             SpellBundle {
-                #[allow(clippy::cast_precision_loss)]
-                lifetime: SpellLifetime::new(spell.duration as f32 / 100.0),
+                lifetime: SpellLifetime::new(spell.duration),
                 movement: MovementBundle {
-                    #[allow(clippy::cast_precision_loss)]
-                    velocity: Velocity::new(slope_vec * (spell.speed as f32)),
+                    velocity: Velocity::new(slope_vec * (spell.speed * SPELL_SPEED_MULTIPLIER)),
                     ..Default::default()
                 },
                 sprite: SpriteSheetBundle {
-                    texture_atlas: spell_atlas.atlas.clone(),
+                    texture_atlas: texture_atlas.clone(),
                     sprite: spell.texture_atlas_index(),
                     transform: Transform {
-                        translation: player_transform.translation,
+                        translation: player_transform.translation - Vec3::new(0.0, 0.0, 0.1),
                         rotation: Quat::from_rotation_z(slope_vec.y.atan2(slope_vec.x)),
-                        ..Default::default()
+                        scale: Vec3::splat(SPELL_SPRITE_SCALE),
                     },
                     ..Default::default()
                 },

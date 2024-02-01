@@ -19,8 +19,7 @@
     },
     "manaCost": {
       "description": "The cost of the spell",
-      "type": "integer",
-      "enum": [0, 1, 2, 3, 4]
+      "type": "integer"
     },
     "castSlot": {
       "description": "The slot the spell is cast in",
@@ -39,27 +38,7 @@
     },
     "magic": {
       "description": "The family of magic the spell belongs to",
-      "type": "string",
-      "enum": [
-        "fire",
-        "lightning",
-        "water",
-        "earth",
-        "air",
-        "ice",
-        "force",
-        "light",
-        "dark",
-        "arcane",
-        "life",
-        "death",
-        "enhancement",
-        "reduction",
-        "summoning",
-        "necromancy",
-        "polymorph",
-        "time"
-      ]
+      "$ref": "https://schemas.nwest.one/games/elementalist/magic_school.json"
     },
     "flags": {
       "description": "Flags to specify general behavior",
@@ -134,8 +113,7 @@
     },
     "collider": {
       "description": "The collider of the spell, used to determine how it interacts with the world",
-      "type": "string",
-      "enum": ["circle", "square", "line", "cone", "point"]
+      "$ref": "https://schemas.nwest.one/games/elementalist/collider.json"
     },
     "debuffs": {
       "description": "The debuffs applied by the spell",
@@ -153,7 +131,7 @@
     "castCategory": {
       "description": "The broad category of the spell",
       "type": "string",
-      "enum": ["touch", "projectile", "ground", "summon", "self"]
+      "enum": ["touch", "projectile", "ground", "summon", "onSelf"]
     },
     "iconTileset": {
       "description": "The tileset with the icon of the spell (path in the assets folder)",
@@ -179,14 +157,13 @@
     "description",
     "manaCost",
     "castSlot",
-    "spellType",
     "castTime",
     "cooldown",
     "spellTier",
     "flags",
     "castType",
     "castCategory",
-    "icon",
-    "sprite"
+    "spriteTileset",
+    "spriteIndex"
   ]
 }

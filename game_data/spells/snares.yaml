@@ -11,8 +11,8 @@ data:
   description: Create an area of excellerated root growth, ensnaring entities that walk through.
   manaCost: 3
   castSlot: secondary
-  castTime: 15
-  cooldown: 500
+  castTime: .15
+  cooldown: 5.00
   castType: cast
   magic: life
   spellTier: 1

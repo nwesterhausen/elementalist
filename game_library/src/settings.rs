@@ -196,18 +196,79 @@ pub const fn next_font_family(font_family: FontFamily) -> FontFamily {
 ///
 /// This also registers the [`SettingChanged`] event and a system to flush the settings to the
 /// [`bevy_pkv::PkvStore`] when the [`SettingChanged`] event is sent.
+///
+/// This will take care of initializing the [`bevy_pkv::PkvStore`] and loading the settings from
+/// disk. If you do not set the organization and application name, it will use the default
+/// organization and application name.
 #[allow(clippy::module_name_repetitions)]
-pub struct SettingsPlugin;
+pub struct SettingsPlugin {
+    /// The organization name. This is the directory that will be created on the disk, and contain a
+    /// subdirectory for the application name, which then has the database file.
+    pub organization: String,
+    /// The application name.
+    pub application: String,
+}
+
+impl Default for SettingsPlugin {
+    fn default() -> Self {
+        Self {
+            organization: "Bevy".into(),
+            application: "bevy_game".into(),
+        }
+    }
+}
 
 impl Plugin for SettingsPlugin {
     fn build(&self, app: &mut App) {
-        app.add_event::<SettingChanged>()
+        // Initialize the PKV store
+        app.insert_resource(PkvStore::new(
+            self.organization.as_str(),
+            self.application.as_str(),
+        ));
+
+        app
+            // SettingChanged is a helper event for responding to button interaction
+            .add_event::<SettingChanged>()
+            // Register the settings resources
             .init_resource::<VolumeSettings>()
             .init_resource::<VideoSettings>()
             .init_resource::<GameplaySettings>()
             .init_resource::<AccessibilitySettings>()
+            // The first load system will load the settings from the PKV store
             .add_systems(Startup, first_load)
+            // The flush settings system will save the settings to the PKV store
             .add_systems(Update, flush_settings_to_store);
+    }
+}
+
+impl SettingsPlugin {
+    /// Set the application name.
+    #[must_use]
+    pub fn with_application<S: ToString>(self, application: &S) -> Self {
+        let application = application.to_string();
+        Self {
+            application,
+            ..self
+        }
+    }
+    /// Set the organization name.
+    #[must_use]
+    pub fn with_organization<S: ToString>(self, organization: &S) -> Self {
+        let organization = organization.to_string();
+        Self {
+            organization,
+            ..self
+        }
+    }
+    /// Set the organization and application name.
+    #[must_use]
+    pub fn with_structure<S: ToString>(self, organization: &S, application: &S) -> Self {
+        let organization = organization.to_string();
+        let application = application.to_string();
+        Self {
+            organization,
+            application,
+        }
     }
 }
 

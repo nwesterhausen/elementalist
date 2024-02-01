@@ -11,8 +11,8 @@ data:
   description: Grow a wall of plants at the target location.
   manaCost: 2
   castSlot: secondary
-  castTime: 15
-  cooldown: 400
+  castTime: .15
+  cooldown: 4.00
   castType: cast
   magic: life
   spellTier: 0

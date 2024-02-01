@@ -12,7 +12,7 @@ data:
   manaCost: 0
   castSlot: primary
   castTime: 0
-  cooldown: 125
+  cooldown: 1.25
   magic: life
   spellTier: 1
   long_description: Can be whipped up to 3 times.

@@ -20,12 +20,14 @@
 //! The remaining items are specific to the Elementalist game.
 //!
 
+pub mod colors;
 pub mod data_loader;
 pub mod enums;
 pub mod events;
 pub mod font_resource;
 pub mod math;
 pub mod menu_helper;
+pub mod progress_bar;
 pub mod settings;
 
 mod acceleration;
@@ -36,6 +38,8 @@ mod experience;
 mod health;
 mod mana;
 mod movement_bundle;
+mod particle;
+mod shared_traits;
 mod skill;
 mod spell_bundle;
 mod spell_choices;
@@ -45,6 +49,7 @@ mod stat;
 mod stat_bonus;
 mod stat_bundle;
 mod stat_effect;
+mod tileset;
 mod velocity;
 mod volume;
 
@@ -57,6 +62,7 @@ pub use experience::Xp;
 pub use health::Health;
 pub use mana::Mana;
 pub use movement_bundle::MovementBundle;
+pub use shared_traits::InternalId;
 pub use skill::SkillTrack;
 pub use spell_bundle::SpellBundle;
 pub use spell_choices::SpellChoices;
@@ -66,5 +72,6 @@ pub use stat::Stat;
 pub use stat_bonus::StatBonus;
 pub use stat_bundle::StatBundle;
 pub use stat_effect::StatEffect;
+pub use tileset::Tileset;
 pub use velocity::Velocity;
 pub use volume::Volume;

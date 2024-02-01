@@ -14,8 +14,10 @@ data:
   magic: fire
   castSlot: primary
   castTime: 0
-  cooldown: 150
-  spriteTileset: tileset/spell_projectiles.png
+  cooldown: 1.50
+  spriteTileset: spell_projectiles
   spriteIndex: 2
   flags:
     - projectile
+  castType: instant
+  castCategory: projectile

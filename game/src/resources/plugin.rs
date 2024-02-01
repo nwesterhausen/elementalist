@@ -1,16 +1,22 @@
 use bevy::prelude::*;
-use bevy_pkv::PkvStore;
 
+use bevy_hanabi::HanabiPlugin;
 use game_library::{
+    data_loader::DataLoaderPlugin,
     font_resource::{change_font, ChangeFont, FontResource},
-    CursorPosition, SpellChoices,
+    progress_bar::ProgressBarPlugin,
+    settings::SettingsPlugin,
+    CursorPosition, Health, Mana, SpellChoices, Xp,
 };
 
-use crate::{app_systems, common::buttons};
+use crate::{app_systems, resources::buttons};
 
 use super::{
-    cleanup::cleanup_then_exit, cursor_position::update_cursor_position, fonts::set_initial_fonts,
-    spritesheet::load_spell_atlas, AppState, ReturnToState,
+    cleanup::cleanup_then_exit,
+    cursor_position::update_cursor_position,
+    fonts::set_initial_fonts,
+    state::{GameState, MenuState, SaveState},
+    AppState, ReturnToState,
 };
 
 /// Elementalist resources plugin. This loads the resources needed which may not be
@@ -32,42 +38,74 @@ pub struct ElementalistResourcesPlugin;
 
 impl Plugin for ElementalistResourcesPlugin {
     fn build(&self, app: &mut App) {
-        // ### ADD STATES HERE ###
-        app.add_state::<AppState>();
+        // The app states
+        app.add_state::<AppState>()
+            .add_state::<GameState>()
+            .add_state::<MenuState>()
+            .add_state::<SaveState>();
 
-        // ### ADD EVENTS HERE ###
-        app.add_event::<ChangeFont>();
+        // Data loading plugin
+        app.add_plugins(DataLoaderPlugin);
 
-        // ### ADD RESOURCES HERE ###
-        app.init_resource::<ReturnToState>()
+        // ProgressBar plugins are used to display health or experience bars. This might be out of
+        // "resource" scope.
+        app.add_plugins((
+            ProgressBarPlugin::<Health>::default(),
+            ProgressBarPlugin::<Xp>::default(),
+            ProgressBarPlugin::<Mana>::default(),
+        ));
+
+        // Add the Hanabi plugin (note that the particle effects are loaded from disk in the `DataLoaderPlugin`)
+        app.add_plugins(HanabiPlugin);
+
+        app
+            // Game settings and resources
+            .add_plugins(
+                SettingsPlugin::default().with_structure(&"games.nwest.one", &"Elementalist"),
+            );
+
+        app
+            // Return to state lets us move into [`AppState::SettingsMenu`] and then return to where we
+            // were before we entered the settings menu.
+            .init_resource::<ReturnToState>()
+            // The cursor position resource, used to aim spells or know cursor coordinates easily
             .insert_resource(CursorPosition::default())
+            // The player's spell choices
             .insert_resource(SpellChoices::default())
-            .insert_resource(FontResource::default())
-            .insert_resource(PkvStore::new("games.nwest.one", "Elementalist"));
+            // The font resource has handles to the fonts used in the game to save loading assets constantly
+            // and to easily allow the user to change the font (e.g. for accessibility)
+            .add_event::<ChangeFont>()
+            .insert_resource(FontResource::default());
 
-        // ### GRAPHICS RESOURCES ###
-        app.add_systems(Startup, load_spell_atlas);
-
-        // ### ADD SYSTEMS HERE ###
         app.add_systems(
             Startup,
             (
+                // Draws a mostly transparent version and build git hash in the top right corner
                 app_systems::add_game_descriptor,
-                app_systems::load_data_file_dir,
             ),
         )
         .add_systems(
             Update,
             (
+                // Updates the cursor position (should we have a cursor position plugin?)
                 update_cursor_position,
+                // Changes the font when the user changes the font (responds to [`ChangeFont`])
                 change_font,
+                // Handles the button VISUAL interactions (e.g. hover, click, pressed, etc.) but not the logic attached
+                // to the button (e.g. what happens when you click the button)
                 buttons::interaction_system,
             ),
         )
-        // This system is [`PostStartup`] because we need to load any font settings from
-        // disk before assigning the initial fonts handles.
-        .add_systems(PostStartup, set_initial_fonts)
-        // handle the cleanup state
-        .add_systems(OnEnter(AppState::CleanUp), cleanup_then_exit);
+        .add_systems(
+            PostStartup,
+            // This system is [`PostStartup`] because we need to load any font settings from disk before assigning the
+            // initial fonts handles.
+            set_initial_fonts,
+        )
+        .add_systems(
+            OnEnter(AppState::CleanUp),
+            // Cleanup the game when we exit (e.g. save settings, etc.)
+            cleanup_then_exit,
+        );
     }
 }

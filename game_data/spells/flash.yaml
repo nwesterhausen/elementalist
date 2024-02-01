@@ -12,6 +12,6 @@ data:
   manaCost: 0
   castSlot: secondary
   castTime: 0
-  cooldown: 350
+  cooldown: 3.50
   magic: light
   spellTier: 0

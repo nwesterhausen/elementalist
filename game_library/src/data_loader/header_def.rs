@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use std::hash::Hash;
 
-use crate::enums::GameSystem;
+use crate::{enums::GameSystem, InternalId, Tileset};
 
 /// Each data file includes header information about the data in the file.
 #[derive(Debug, Serialize, Deserialize)]
@@ -38,12 +38,64 @@ pub struct DataFileHeaderOnly {
 /// A generic data file which can be loaded into the game.
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct DataFile<T>
+pub struct DataFile<D>
 where
-    T: Hash,
+    D: Hash + InternalId,
 {
     /// The header information for this data file.
     pub header: DataFileHeader,
     /// The data in this data file.
-    pub data: T,
+    pub data: D,
+}
+
+impl<D> InternalId for DataFile<D>
+where
+    D: Hash + InternalId,
+{
+    /// Update the data file's internal ID.
+    fn update_internal_id(&mut self) {
+        self.data.update_internal_id();
+    }
+    /// Get the data file's internal ID.
+    #[must_use]
+    fn get_internal_id(&self) -> String {
+        self.data.get_internal_id()
+    }
+}
+
+impl<D: Hash + InternalId + 'static> DataFile<D> {
+    /// Get the data file as a tileset. Otherwise, return None.
+    #[must_use]
+    pub fn as_tileset(&self) -> Option<Tileset> {
+        if self.header.system != GameSystem::Tileset {
+            return None;
+        }
+
+        self.try_into().ok()
+    }
+    /// Get the data file as a spell. Otherwise, return None.
+    #[must_use]
+    pub fn as_spell(&self) -> Option<crate::SpellData> {
+        if self.header.system != GameSystem::Spell {
+            return None;
+        }
+
+        self.try_into().ok()
+    }
+}
+
+impl Default for DataFileHeader {
+    fn default() -> Self {
+        Self {
+            unique_id: String::new(),
+            system: GameSystem::Spell,
+            must_precede: None,
+            must_follow: None,
+            author: String::new(),
+            description: String::new(),
+            internal_version: 0,
+            display_version: String::new(),
+            valid_game_internal_version: 1,
+        }
+    }
 }

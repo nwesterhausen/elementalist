@@ -1,0 +1,14 @@
+header:
+  uniqueId: spell_projectiles
+  system: Tileset
+  author: Nicholas Westerhausen
+  description: Projectile sprites for the projectile spells
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  path: tileset/spell_projectiles.png
+  tileWidth: 16
+  tileHeight: 16
+  tileSetWidth: 5
+  tileSetHeight: 6

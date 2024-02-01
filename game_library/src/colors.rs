@@ -1,8 +1,8 @@
 //! Colors used in the game. Some which are specifically named here due to their use in the game.
 //!
-//! The other colors are named from https://chir.ag/projects/name-that-color/
+//! The colors are named from <https://chir.ag/projects/name-that-color/>.
 //!
-//! The colors come from the Comfy52 color palette https://lospec.com/palette-list/comfy52
+//! The colors come from the Comfy52 color palette <https://lospec.com/palette-list/comfy52>
 
 use bevy::prelude::*;
 

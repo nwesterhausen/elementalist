@@ -1,4 +1,5 @@
 use bevy::{prelude::*, utils::hashbrown::HashMap};
+use bevy_hanabi::prelude::*;
 use serde_yaml;
 use std::hash::Hash;
 use walkdir::WalkDir;
@@ -168,6 +169,14 @@ pub struct TileAtlasStore {
     /// The tilesets that have been loaded into the game.
     pub tilesets: HashMap<String, Handle<TextureAtlas>>,
 }
+/// The particle asset store is a resource that holds all the particles that have been loaded into the game.
+///
+/// They are stored by their `unique_id`, which is supplied in the header.
+#[derive(Resource, Default, Debug, Clone, PartialEq, Eq)]
+pub struct ParticleEffectStore {
+    /// The particles that have been loaded into the game.
+    pub particles: HashMap<String, Handle<EffectAsset>>,
+}
 
 /// Load the tilesets into the game and store a handle under the `unique_id`.
 #[allow(clippy::needless_pass_by_value)]
@@ -196,5 +205,62 @@ pub fn load_tilesets(
         tile_atlas_store
             .tilesets
             .insert(String::from(unique_id), atlas_handle);
+    }
+}
+
+/// System to load a particle effect.
+pub fn load_particle_effects(
+    mut effects: ResMut<Assets<EffectAsset>>,
+    mut er_particle_df: EventReader<LoadedParticleData>,
+    mut particle_effect_store: ResMut<ParticleEffectStore>,
+) {
+    for data_file in er_particle_df.read() {
+        let unique_id = &data_file.particle_data.header.unique_id;
+        let particle = &data_file.particle_data.data;
+
+        let mut writer = ExprWriter::new();
+
+        let age = writer.lit(0.).expr();
+        let init_age = SetAttributeModifier::new(Attribute::AGE, age);
+
+        let lifetime = writer.lit(particle.particle_lifetime).expr();
+        let init_lifetime = SetAttributeModifier::new(Attribute::LIFETIME, lifetime);
+
+        let init_pos = SetPositionCircleModifier {
+            center: writer.lit(Vec3::ZERO).expr(),
+            axis: writer.lit(Vec3::Z).expr(),
+            radius: writer.lit(particle.initial_position.radius).expr(),
+            dimension: particle
+                .initial_position
+                .shape_dimension
+                .as_shape_dimension(),
+        };
+
+        let init_vel = SetVelocityCircleModifier {
+            center: writer.lit(Vec3::ZERO).expr(),
+            axis: writer.lit(Vec3::Z).expr(),
+            speed: writer.lit(particle.initial_velocity.speed).expr(),
+        };
+
+        let spawner = Spawner::rate(particle.spawn_rate.into());
+        let effect = effects.add(
+            EffectAsset::new(particle.capacity, spawner, writer.finish())
+                .with_name(unique_id)
+                .init(init_pos)
+                .init(init_vel)
+                .init(init_age)
+                .init(init_lifetime)
+                .render(SizeOverLifetimeModifier {
+                    gradient: Gradient::constant(Vec2::splat(0.52)),
+                    screen_space_size: false,
+                })
+                .render(ColorOverLifetimeModifier {
+                    gradient: Gradient::constant(Vec4::splat(0.5)),
+                }),
+        );
+
+        particle_effect_store
+            .particles
+            .insert(String::from(unique_id), effect);
     }
 }

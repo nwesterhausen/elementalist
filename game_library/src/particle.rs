@@ -1,5 +1,10 @@
 //! Particle effect details.
-use crate::{colors::PaletteColor, data_loader::DataFile, enums::GameSystem, InternalId};
+use bevy::math::Vec4;
+use bevy_hanabi::prelude::*;
+
+use crate::{
+    colors::PaletteColor, data_loader::DataFile, enums::GameSystem, InternalId, LoadedParticleData,
+};
 use std::{any::Any, hash::Hash};
 
 /// Details about a particle effect.
@@ -8,15 +13,6 @@ use std::{any::Any, hash::Hash};
 pub struct Particle {
     /// The internal ID of the particle effect.
     pub internal_id: Option<String>,
-    /// An identifier for the particle effect, used to reference it in the game and by spell and other data files.
-    #[serde(default = "particle_defaults::identifier")]
-    pub identifier: String,
-    /// A description of the particle effect.
-    #[serde(default = "String::new")]
-    pub description: String,
-    /// A long description of the particle effect.
-    #[serde(default = "String::new")]
-    pub extended_description: String,
     /// Color gradients for the particles.
     #[serde(default = "Vec::new")]
     pub color_gradients: Vec<ParticleColorGradient>,
@@ -33,7 +29,7 @@ pub struct Particle {
     ///
     /// Note: the lower the better
     #[serde(default = "particle_defaults::capacity")]
-    pub capacity: usize,
+    pub capacity: u32,
     /// The initial position of the particles.
     #[serde(default = "ParticleInitialPosition::default")]
     pub initial_position: ParticleInitialPosition,
@@ -43,10 +39,6 @@ pub struct Particle {
 }
 
 mod particle_defaults {
-    #[must_use]
-    pub fn identifier() -> String {
-        String::from("unnamed_particle")
-    }
 
     #[must_use]
     pub const fn lifetime() -> f32 {
@@ -59,7 +51,7 @@ mod particle_defaults {
     }
 
     #[must_use]
-    pub const fn capacity() -> usize {
+    pub const fn capacity() -> u32 {
         100
     }
 }
@@ -128,6 +120,17 @@ pub enum ShapeDimensionType {
     Surface,
 }
 
+impl ShapeDimensionType {
+    /// Convert the shape dimension type into a bevy shape dimension.
+    #[must_use]
+    pub fn as_shape_dimension(&self) -> ShapeDimension {
+        match self {
+            Self::Volume => ShapeDimension::Volume,
+            Self::Surface => ShapeDimension::Surface,
+        }
+    }
+}
+
 /// Color for a particle effect.
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -184,9 +187,12 @@ impl Default for ParticleSizeGradient {
 
 impl Hash for Particle {
     fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
-        self.identifier.hash(state);
+        self.color_gradients
+            .iter()
+            .map(|c| format!("{:?}", c.color))
+            .collect::<String>()
+            .hash(state);
         self.capacity.hash(state);
-        self.description.hash(state);
     }
 }
 
@@ -206,8 +212,7 @@ impl InternalId for Particle {
         }
 
         format!(
-            "{}{}{}",
-            self.identifier.replace(' ', ""),
+            "{}{}",
             self.color_gradients
                 .iter()
                 .map(|c| format!("{:?}", c.color))
@@ -244,5 +249,23 @@ impl<D: Hash + InternalId + 'static> TryFrom<&DataFile<D>> for Particle {
             .downcast_ref::<Self>()
             .cloned()
             .ok_or(())
+    }
+}
+
+impl Particle {
+    /// Get a gradient from the particle's color gradients.
+    #[must_use]
+    pub fn get_gradient(&self) -> Gradient<Vec4> {
+        let mut gradient = Gradient::new();
+        for color in &self.color_gradients {
+            let mut color_vec: Vec4 = color.color.to_color().as_rgba_f32().into();
+            if color.alpha != 1.0 {
+                color_vec.w = color.alpha;
+            }
+
+            gradient.add_key(color.index.clamp(0.0, 1.0), color_vec);
+        }
+
+        gradient
     }
 }

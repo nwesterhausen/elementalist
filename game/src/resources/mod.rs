@@ -3,7 +3,6 @@
 //!
 //! All resources can be added with default values to the game using the `ElementalistResourcesPlugin`.
 
-mod app_state;
 mod cleanup;
 mod cursor_position;
 mod fonts;
@@ -15,8 +14,8 @@ mod state;
 pub mod buttons;
 pub mod colors;
 pub mod movement;
+pub mod style_prefab;
 
-pub use app_state::AppState;
 pub use plugin::ElementalistResourcesPlugin;
 pub use return_to_state::ReturnToState;
 pub use state::*;

@@ -91,3 +91,42 @@ pub enum StatEnum {
     /// A percentage amplification of incoming magical damage.
     MagicalDamageAmplification,
 }
+
+impl std::fmt::Display for StatEnum {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Health => write!(f, "Health"),
+            Self::Mana => write!(f, "Mana"),
+            Self::DamageReduction => write!(f, "Damage Reduction"),
+            Self::DamageResistance => write!(f, "Damage Resistance"),
+            Self::DamageReflection => write!(f, "Damage Reflection"),
+            Self::DamageAmplification => write!(f, "Damage Amplification"),
+            Self::CriticalStrikeChance => write!(f, "Critical Strike Chance"),
+            Self::CriticalStrikeDamage => write!(f, "Critical Strike Damage"),
+            Self::LifeSteal => write!(f, "Life Steal"),
+            Self::ManaSteal => write!(f, "Mana Steal"),
+            Self::MovementSpeed => write!(f, "Movement Speed"),
+            Self::StunResistance => write!(f, "Stun Resistance"),
+            Self::HealthRegeneration => write!(f, "Health Regeneration"),
+            Self::ManaRegeneration => write!(f, "Mana Regeneration"),
+            Self::ProjectileSpeed => write!(f, "Projectile Speed"),
+            Self::ProjectileSize => write!(f, "Projectile Size"),
+            Self::ProjectileLifetime => write!(f, "Projectile Lifetime"),
+            Self::DodgeChance => write!(f, "Dodge Chance"),
+            Self::AttackDamage => write!(f, "Attack Damage"),
+            Self::AttackSpeed => write!(f, "Attack Speed"),
+            Self::AttackRange => write!(f, "Attack Range"),
+            Self::PhysicalDamageReduction => write!(f, "Physical Damage Reduction"),
+            Self::PhysicalDamageResistance => write!(f, "Physical Damage Resistance"),
+            Self::PhysicalDamageReflection => write!(f, "Physical Damage Reflection"),
+            Self::PhysicalDamageAmplification => write!(f, "Physical Damage Amplification"),
+            Self::MagicDamage => write!(f, "Magic Damage"),
+            Self::CooldownReduction => write!(f, "Cooldown Reduction"),
+            Self::SpellRange => write!(f, "Spell Range"),
+            Self::MagicalDamageReduction => write!(f, "Magical Damage Reduction"),
+            Self::MagicalDamageResistance => write!(f, "Magical Damage Resistance"),
+            Self::MagicalDamageReflection => write!(f, "Magical Damage Reflection"),
+            Self::MagicalDamageAmplification => write!(f, "Magical Damage Amplification"),
+        }
+    }
+}

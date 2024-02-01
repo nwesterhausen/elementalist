@@ -1,6 +1,56 @@
-//! The states that the settings menu can be in.
-
+//! The states used in the game.
 use bevy::prelude::*;
+
+/// The state of the game (broadly)
+#[derive(Default, Debug, Clone, Copy, PartialEq, Eq, Hash, States)]
+pub enum AppState {
+    /// First boot, loading assets etc
+    ///
+    /// Sub-states:
+    ///
+    /// * LoadingAssets
+    /// * AssetsLoaded
+    #[default]
+    AppLoading,
+    /// Main menu screen
+    ///
+    /// Has buttons for:
+    ///
+    /// * Play
+    /// * Settings
+    /// * Exit
+    MainMenu,
+    /// Settings menu
+    ///
+    /// Sub-states:
+    ///
+    /// * Disabled (when the menu is not open)
+    /// * Main (the main settings menu)
+    /// * Display
+    /// * Audio
+    /// * Controls
+    /// * Gameplay
+    SettingsMenu,
+    /// In game
+    ///
+    /// Sub-states:
+    ///
+    /// * Loading
+    /// * Saving
+    /// * GameMenu (preparation area)
+    /// * Playing
+    /// * Status ("inventory", etc; pauses the game)
+    /// * Results (after match summary)
+    /// * Settings (in-game settings)
+    InGame,
+    /// Clean up and exit (save, etc)
+    ///
+    /// Sub-states:
+    ///
+    /// * Saving
+    /// * Exiting
+    CleanUp,
+}
 
 /// The menu states.
 ///
@@ -77,4 +127,26 @@ pub enum SaveState {
     Saving,
     /// Idle state
     Idle,
+}
+
+/// State for the in-game overlay options.
+#[derive(Default, Debug, Clone, Copy, PartialEq, Eq, Hash, States, Reflect)]
+pub enum OverlayState {
+    /// By default, the OverlayState is disabled, since it's not used until the game is entered
+    #[default]
+    Disabled,
+    /// The normal HUD overlay
+    Normal,
+    /// The status overlay (shows player's stats and inventory)
+    Status,
+    /// The spell book overlay (shows the player's spells)
+    ///
+    /// This is referential while in the game, and can't be used to change spells.
+    SpellBook,
+    /// The skill book overlay (shows the player's skills)
+    ///
+    /// This also is just for reference, and no new perks can be chosen.
+    SkillBook,
+    /// HUD hidden (minimal UI)
+    Hidden,
 }

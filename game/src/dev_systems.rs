@@ -53,7 +53,7 @@ fn inspector_ui(world: &mut World) {
     let mut egui_context = egui_context.clone();
 
     egui::Window::new("Inspector")
-        .anchor(Align2::RIGHT_TOP, (0., 0.))
+        .anchor(Align2::RIGHT_TOP, (0., 32.))
         .default_open(false)
         .show(egui_context.get_mut(), |ui| {
             // The world inspector plugin

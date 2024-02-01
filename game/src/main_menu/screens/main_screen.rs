@@ -6,7 +6,7 @@ use crate::{
         button_actions::{ButtonAction, MainMenuButton},
         plugin::OnMainMenuScreen,
     },
-    resources::buttons::style_prefab,
+    resources::style_prefab,
 };
 
 /// System to setup the main menu screen

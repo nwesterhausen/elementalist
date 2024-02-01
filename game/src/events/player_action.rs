@@ -29,6 +29,8 @@ pub enum PlayerAction {
     Interact,
     /// Pause the game and open the menu.
     Pause,
+    /// Open the status overlay.
+    StatusOverlay,
 }
 
 impl PlayerAction {
@@ -45,6 +47,7 @@ impl PlayerAction {
             Self::ToggleAutoAim => UserInput::Single(InputKind::Keyboard(KeyCode::T)),
             Self::Interact => UserInput::Single(InputKind::Keyboard(KeyCode::F)),
             Self::Pause => UserInput::Single(InputKind::Keyboard(KeyCode::Escape)),
+            Self::StatusOverlay => UserInput::Single(InputKind::Keyboard(KeyCode::Tab)),
         }
     }
     /// Returns the default gamepad input for this action.
@@ -72,6 +75,9 @@ impl PlayerAction {
             }
             Self::Interact => UserInput::Single(InputKind::GamepadButton(GamepadButtonType::East)),
             Self::Pause => UserInput::Single(InputKind::GamepadButton(GamepadButtonType::Start)),
+            Self::StatusOverlay => {
+                UserInput::Single(InputKind::GamepadButton(GamepadButtonType::Select))
+            }
         }
     }
 

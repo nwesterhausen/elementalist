@@ -19,6 +19,7 @@ mod camera;
 #[cfg(debug_assertions)]
 mod dev_systems;
 mod events;
+mod game_overlays;
 mod main_menu;
 mod player;
 mod resources;
@@ -88,11 +89,10 @@ fn main() {
         .add_plugins(resources::ElementalistResourcesPlugin)
         // Add plugins for Settings and the menus
         .add_plugins((
-            // Add the menu plugin
             settings_menu::SettingsMenuPlugin,
-            // Add our plugins for the menu screen and the splash screen
             splash_screen::SplashScreenPlugin,
             main_menu::MainMenuPlugin,
+            game_overlays::GameOverlaysPlugin,
         ))
         // Launch
         .run();

@@ -6,7 +6,7 @@ use game_library::{
     settings::{GameplaySettings, SettingCategory, SettingChanged},
 };
 
-use crate::{despawn_with_tag, resources::buttons::style_prefab, resources::MenuState};
+use crate::{despawn_with_tag, resources::style_prefab, resources::MenuState};
 
 use super::{
     base::SettingsMenuEntity,

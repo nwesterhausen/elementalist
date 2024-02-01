@@ -13,7 +13,7 @@
       "description": "A description of the tag",
       "type": "string"
     },
-    "extended_description": {
+    "extendedDescription": {
       "description": "A longer description of the tag",
       "type": "string"
     }

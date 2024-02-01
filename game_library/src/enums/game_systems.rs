@@ -8,6 +8,8 @@ pub enum GameSystem {
     Spell,
     /// The tileset system is responsible for loading tilesets as sprite atlases
     Tileset,
+    /// A particle effect to use in the game
+    Particle,
 }
 
 /// The order in which the game systems should be loaded.
@@ -23,4 +25,4 @@ pub enum GameSystem {
 /// - Skill perks / trees
 /// - Monsters
 #[allow(dead_code)]
-pub const ORDERED: [GameSystem; 2] = [GameSystem::Tileset, GameSystem::Spell];
+pub const ORDERED: [GameSystem; 3] = [GameSystem::Tileset, GameSystem::Particle, GameSystem::Spell];

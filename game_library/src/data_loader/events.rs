@@ -8,7 +8,7 @@
 
 use bevy::ecs::event::Event;
 
-use crate::{SpellData, Tileset};
+use crate::{particle::Particle, SpellData, Tileset};
 
 use super::DataFile;
 
@@ -24,4 +24,11 @@ pub struct LoadedSpellData {
 pub struct LoadedTilesetData {
     /// The tileset data that was loaded.
     pub tileset_data: DataFile<Tileset>,
+}
+
+#[derive(Event)]
+/// Event that is fired when a particle is loaded.
+pub struct LoadedParticleData {
+    /// The particle data that was loaded.
+    pub particle_data: DataFile<Particle>,
 }

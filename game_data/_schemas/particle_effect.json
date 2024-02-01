@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.nwest.one/games/elementalist/particle_effect.json",
+  "title": "Particle Effect Schema",
+  "description": "Describes a particle effect for use in the Elementalist game",
+  "type": "object",
+  "properties": {
+    "identifier": {
+      "description": "An identifier for the particle effect, so that it can be referenced by a spell or other things.",
+      "type": "string"
+    },
+    "description": {
+      "description": "A short description of the particle effect",
+      "type": "string"
+    },
+    "extendedDescription": {
+      "description": "(Optional) A longer description of the particle effect, for use in tooltips or other places where a more detailed description is needed.",
+      "type": "string"
+    },
+    "colorGradients": {
+      "description": "An array of colors to use over the particle lifetime as a gradient (or a single color if you want the particles to be a single color)",
+      "type": "array",
+      "items": {
+        "$ref": "https://schemas.nwest.one/games/elementalist/color_gradient.json"
+      }
+    },
+    "sizeGradients": {
+      "description": "An array of sizes to use over the particle lifetime as a gradient (or a single size if you want the particles to be a single size)",
+      "type": "array",
+      "items": {
+        "$ref": "https://schemas.nwest.one/games/elementalist/size_gradient.json"
+      }
+    },
+    "particleLifetime": {
+      "description": "The lifetime of the particles in the effect, in seconds",
+      "type": "number"
+    },
+    "spawnRate": {
+      "description": "The rate at which particles are spawned, in particles per second",
+      "type": "number"
+    },
+    "capacity": {
+      "description": "The maximum number of particles that can be active at any one time",
+      "type": "number"
+    },
+    "initialPosition": {
+      "description": "The initial position of the particle effect",
+      "type": "object",
+      "properties": {
+        "modifierType": {
+          "description": "The type of modifier to use for the initial position",
+          "type": "string",
+          "enum": ["circle"]
+        },
+        "radius": {
+          "description": "The radius of the circle to spawn particles in",
+          "type": "number"
+        },
+        "shapeDimension": {
+          "description": "The shape dimension to use for the initial position. Volume is anywhere within the circle, Surface is only on the edge of the circle.",
+          "type": "string",
+          "enum": ["Volume", "Surface"]
+        }
+      }
+    },
+    "initialVelocity": {
+      "description": "The initial velocity of the particle effect, as moving away from the point defined.",
+      "type": "object",
+      "properties": {
+        "centerX": {
+          "description": "The x position of the circle center, relative to the emitter position.",
+          "type": "number"
+        },
+        "centerY": {
+          "description": "The y coordinate of the center of the velocity modifier",
+          "type": "number"
+        }
+      },
+      "speed": {
+        "description": "The speed of the particles",
+        "type": "number"
+      }
+    }
+  },
+  "required": ["name", "description"]
+}

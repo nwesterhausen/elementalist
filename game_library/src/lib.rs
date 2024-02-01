@@ -38,6 +38,7 @@ mod experience;
 mod health;
 mod mana;
 mod movement_bundle;
+mod particle;
 mod shared_traits;
 mod skill;
 mod spell_bundle;

@@ -4,8 +4,8 @@ use std::hash::Hash;
 use walkdir::WalkDir;
 
 use crate::{
-    data_loader::DATA_FILE_DIR, enums::GameSystem, InternalId, LoadedTilesetData, SpellData,
-    Tileset,
+    data_loader::DATA_FILE_DIR, enums::GameSystem, particle::Particle, InternalId,
+    LoadedParticleData, LoadedTilesetData, SpellData, Tileset,
 };
 
 use super::{
@@ -75,6 +75,7 @@ pub fn read_data_file<T: serde::de::DeserializeOwned + Hash + InternalId>(
 pub fn load_data_file_dir(
     mut ew_spell_df: EventWriter<LoadedSpellData>,
     mut ew_tileset_df: EventWriter<LoadedTilesetData>,
+    mut ew_particle_df: EventWriter<LoadedParticleData>,
 ) {
     // let start = std::time::Instant::now();
 
@@ -93,6 +94,7 @@ pub fn load_data_file_dir(
 
     let mut spells_read: usize = 0;
     let mut tilesets_read: usize = 0;
+    let mut particles_read: usize = 0;
 
     for d in &mut possible_ingests {
         let filepath = d.as_str();
@@ -131,17 +133,31 @@ pub fn load_data_file_dir(
                     };
                     ew_tileset_df.send(LoadedTilesetData { tileset_data });
                     tilesets_read += 1;
-                } // _ => {
-                  //     tracing::warn!(
-                  //         "load_data_file_dir: no system match for {:?}",
-                  //         header.system
-                  //     );
-                  // }
+                }
+                GameSystem::Particle => {
+                    let particle_data: DataFile<Particle> =
+                        if let Some(d) = read_data_file(filepath) {
+                            d
+                        } else {
+                            tracing::debug!(
+                                "load_data_file_dir: failed to read particle data from {}",
+                                header.unique_id
+                            );
+                            continue;
+                        };
+                    ew_particle_df.send(LoadedParticleData { particle_data });
+                    particles_read += 1;
+                }
             }
         }
     }
     // let duration = start.elapsed();
-    tracing::info!("loaded {} spells, {} tilesets", spells_read, tilesets_read);
+    tracing::info!(
+        "loaded {} spells, {} tilesets, {} particles",
+        spells_read,
+        tilesets_read,
+        particles_read
+    );
 }
 
 /// The tile atlas store is a resource that holds all the tilesets that have been loaded into the game.

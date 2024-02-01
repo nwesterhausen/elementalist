@@ -36,7 +36,7 @@ pub struct Tileset {
 
 impl Hash for Tileset {
     fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
-        self.internal_id.hash(state);
+        self.path.hash(state);
         self.tileset_width.hash(state);
         self.tileset_height.hash(state);
     }

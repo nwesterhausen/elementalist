@@ -13,7 +13,8 @@ pub struct DataLoaderPlugin;
 impl Plugin for DataLoaderPlugin {
     fn build(&self, app: &mut App) {
         app.add_event::<LoadedSpellData>()
-            .add_event::<LoadedTilesetData>();
+            .add_event::<LoadedTilesetData>()
+            .add_event::<LoadedParticleData>();
 
         // Set up the resources used and the systems to store the data
         app.init_resource::<TileAtlasStore>()

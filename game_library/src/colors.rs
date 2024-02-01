@@ -206,62 +206,115 @@ pub const KANGAROO: Color = Color::rgba(0.769, 0.776, 0.722, 1.);
 /// Color of the Comfy52 palette to be able to use in the game.
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, Default)]
 pub enum PaletteColor {
+    /// <div style="background-color:rgb(25%, 25%, 16%); width: 10px; padding: 10px; border: 1px solid;"></div>
     Rangitoto,
+    /// <div style="background-color:rgb(37%, 44%, 19%); width: 10px; padding: 10px; border: 1px solid;"></div>
     CostaDelSol,
+    /// <div style="background-color:rgb(58%, 68%, 22%); width: 10px; padding: 10px; border: 1px solid;"></div>
     Sushi,
+    /// <div style="background-color:rgb(76%, 84%, 31%); width: 10px; padding: 10px; border: 1px solid;"></div>
     Conifer,
+    /// <div style="background-color:rgb(94%, 95%, 49%); width: 10px; padding: 10px; border: 1px solid;"></div>
     Manz,
+    /// <div style="background-color:rgb(89%, 90%, 68%); width: 10px; padding: 10px; border: 1px solid;"></div>
     Hampton,
+    /// <div style="background-color:rgb(65%, 78%, 49%); width: 10px; padding: 10px; border: 1px solid;"></div>
     Olivine,
+    /// <div style="background-color:rgb(45%, 60%, 44%); width: 10px; padding: 10px; border: 1px solid;"></div>
     Laurel,
+    /// <div style="background-color:rgb(30%, 40%, 35%); width: 10px; padding: 10px; border: 1px solid;"></div>
     Nandor,
+    /// <div style="background-color:rgb(20%, 25%, 26%); width: 10px; padding: 10px; border: 1px solid;"></div>
     OuterSpace,
+    /// <div style="background-color:rgb(16%, 18%, 23%); width: 10px; padding: 10px; border: 1px solid;"></div>
     EbonyClay,
+    /// <div style="background-color:rgb(10%, 12%, 18%); width: 10px; padding: 10px; border: 1px solid;"></div>
     Mirage,
+    /// <div style="background-color:rgb(17%, 19%, 29%); width: 10px; padding: 10px; border: 1px solid;"></div>
     CloudBurst,
+    /// <div style="background-color:rgb(18%, 30%, 42%); width: 10px; padding: 10px; border: 1px solid;"></div>
     SanJuan,
+    /// <div style="background-color:rgb(24%, 50%, 64%); width: 10px; padding: 10px; border: 1px solid;"></div>
     SteelBlue,
+    /// <div style="background-color:rgb(39%, 77%, 80%); width: 10px; padding: 10px; border: 1px solid;"></div>
     Downy,
+    /// <div style="background-color:rgb(50%, 85%, 85%); width: 10px; padding: 10px; border: 1px solid;"></div>
     WaterLeaf,
+    /// <div style="background-color:rgb(84%, 94%, 94%); width: 10px; padding: 10px; border: 1px solid;"></div>
     Mystic,
+    /// <div style="background-color:rgb(73%, 79%, 80%); width: 10px; padding: 10px; border: 1px solid;"></div>
     Loblolly,
+    /// <div style="background-color:rgb(55%, 60%, 64%); width: 10px; padding: 10px; border: 1px solid;"></div>
     RegentGray,
+    /// <div style="background-color:rgb(41%, 44%, 50%); width: 10px; padding: 10px; border: 1px solid;"></div>
     PaleSky,
+    /// <div style="background-color:rgb(25%, 26%, 33%); width: 10px; padding: 10px; border: 1px solid;"></div>
     BrightGray,
+    /// <div style="background-color:rgb(72%, 63%, 76%); width: 10px; padding: 10px; border: 1px solid;"></div>
     LondonHue,
+    /// <div style="background-color:rgb(50%, 41%, 36%); width: 10px; padding: 10px; border: 1px solid;"></div>
     SandDune,
+    /// <div style="background-color:rgb(36%, 23%, 44%); width: 10px; padding: 10px; border: 1px solid;"></div>
     #[default]
     Bossanova,
+    /// <div style="background-color:rgb(22%, 15%, 37%); width: 10px; padding: 10px; border: 1px solid;"></div>
     Jacarta,
+    /// <div style="background-color:rgb(18%, 10%, 24%); width: 10px; padding: 10px; border: 1px solid;"></div>
     Revolver,
+    /// <div style="background-color:rgb(30%, 10%, 29%); width: 10px; padding: 10px; border: 1px solid;"></div>
     WineBerry,
+    /// <div style="background-color:rgb(40%, 16%, 29%); width: 10px; padding: 10px; border: 1px solid;"></div>
     PurpleAlternateDark,
+    /// <div style="background-color:rgb(48%, 14%, 30%); width: 10px; padding: 10px; border: 1px solid;"></div>
     TawnyPort,
+    /// <div style="background-color:rgb(82%, 41%, 46%); width: 10px; padding: 10px; border: 1px solid;"></div>
     ChestnutRose,
+    /// <div style="background-color:rgb(93%, 67%, 64%); width: 10px; padding: 10px; border: 1px solid;"></div>
     SeaPink,
+    /// <div style="background-color:rgb(93%, 80%, 57%); width: 10px; padding: 10px; border: 1px solid;"></div>
     Chalky,
+    /// <div style="background-color:rgb(89%, 66%, 27%); width: 10px; padding: 10px; border: 1px solid;"></div>
     Anzac,
+    /// <div style="background-color:rgb(77%, 47%, 21%); width: 10px; padding: 10px; border: 1px solid;"></div>
     Copper,
+    /// <div style="background-color:rgb(55%, 28%, 19%); width: 10px; padding: 10px; border: 1px solid;"></div>
     MuleFawn,
+    /// <div style="background-color:rgb(89%, 45%, 35%); width: 10px; padding: 10px; border: 1px solid;"></div>
     Terracotta,
+    /// <div style="background-color:rgb(77%, 23%, 25%); width: 10px; padding: 10px; border: 1px solid;"></div>
     Mojo,
+    /// <div style="background-color:rgb(55%, 21%, 29%); width: 10px; padding: 10px; border: 1px solid;"></div>
     SolidPink,
+    /// <div style="background-color:rgb(36%, 17%, 20%); width: 10px; padding: 10px; border: 1px solid;"></div>
     Buccaneer,
+    /// <div style="background-color:rgb(24%, 15%, 17%); width: 10px; padding: 10px; border: 1px solid;"></div>
     CocoaBrown,
+    /// <div style="background-color:rgb(41%, 25%, 22%); width: 10px; padding: 10px; border: 1px solid;"></div>
     Millbrook,
+    /// <div style="background-color:rgb(51%, 34%, 28%); width: 10px; padding: 10px; border: 1px solid;"></div>
     SpicyMix,
+    /// <div style="background-color:rgb(72%, 47%, 38%); width: 10px; padding: 10px; border: 1px solid;"></div>
     SantaFe,
+    /// <div style="background-color:rgb(49%, 35%, 37%); width: 10px; padding: 10px; border: 1px solid;"></div>
     Russett,
+    /// <div style="background-color:rgb(33%, 23%, 26%); width: 10px; padding: 10px; border: 1px solid;"></div>
     Matterhorn,
+    /// <div style="background-color:rgb(25%, 20%, 23%); width: 10px; padding: 10px; border: 1px solid;"></div>
     Thunder,
+    /// <div style="background-color:rgb(17%, 13%, 17%); width: 10px; padding: 10px; border: 1px solid;"></div>
     DarkerThunder,
+    /// <div style="background-color:rgb(43%, 30%, 29%); width: 10px; padding: 10px; border: 1px solid;"></div>
     Ferra,
+    /// <div style="background-color:rgb(53%, 44%, 40%); width: 10px; padding: 10px; border: 1px solid;"></div>
     LighterSandDune,
+    /// <div style="background-color:rgb(70%, 61%, 50%); width: 10px; padding: 10px; border: 1px solid;"></div>
     Mongoose,
+    /// <div style="background-color:rgb(77%, 78%, 72%); width: 10px; padding: 10px; border: 1px solid;"></div>
     Kangaroo,
 }
 
 impl PaletteColor {
+    /// Convert the PaletteColor to a Color.
     pub fn to_color(&self) -> Color {
         match self {
             Self::Rangitoto => RANGITOTO,

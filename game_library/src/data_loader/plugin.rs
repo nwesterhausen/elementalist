@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::{LoadedSpellData, LoadedTilesetData};
+use crate::{LoadedSpellData, LoadedTilesetData,LoadedParticleData};
 
 use super::loader::{load_data_file_dir, load_tilesets, TileAtlasStore};
 

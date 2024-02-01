@@ -1,5 +1,6 @@
 use bevy::prelude::*;
 
+use bevy_hanabi::HanabiPlugin;
 use game_library::{
     data_loader::DataLoaderPlugin,
     font_resource::{change_font, ChangeFont, FontResource},
@@ -54,8 +55,8 @@ impl Plugin for ElementalistResourcesPlugin {
             ProgressBarPlugin::<Mana>::default(),
         ));
 
-        // Add the particles plugin to the app
-        app.add_plugins(super::particles::ParticlesPlugin);
+        // Add the Hanabi plugin (note that the particle effects are loaded from disk in the `DataLoaderPlugin`)
+        app.add_plugins(HanabiPlugin);
 
         app
             // Game settings and resources

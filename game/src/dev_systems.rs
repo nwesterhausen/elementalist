@@ -5,6 +5,7 @@ use bevy_inspector_egui::egui::{self, Align2};
 use game_library::settings::{
     AccessibilitySettings, GameplaySettings, VideoSettings, VolumeSettings,
 };
+use game_library::Xp;
 use game_library::{
     enums::Skill,
     font_resource::{FontChoice, FontResource},
@@ -25,6 +26,7 @@ impl Plugin for DevSystemsPlugin {
             .register_type::<Volume>()
             .register_type::<Mana>()
             .register_type::<Health>()
+            .register_type::<Xp>()
             .register_type::<Velocity>()
             .register_type::<Acceleration>()
             .register_type::<SpellChoices>()

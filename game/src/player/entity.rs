@@ -28,7 +28,7 @@ pub struct PlayerBundle {
 #[derive(Component, Debug, Reflect)]
 pub struct PlayerAvatar;
 
-pub fn spawn_player(
+pub fn spawn_player_avatar(
     mut commands: Commands,
     asset_server: Res<AssetServer>,
     mut spell_choices: ResMut<SpellChoices>,
@@ -64,23 +64,23 @@ pub fn spawn_player(
             stats: StatBundle::new(vec![(StatEnum::MovementSpeed, BASE_SPEED)]),
             xp: Xp::default(),
         },
+        ProgressBarConfig::<Xp>::default()
+            .with_background_color(colors::BACKGROUND_COLOR_50)
+            .with_single_color(colors::SKILL_TRACK_BAR_COLOR)
+            .with_size((10.0, 2.0).into())
+            .with_position_translation(Vec3::new(-5.0, 26.0, 0.0)),
         ProgressBarConfig::<Health>::default()
             .with_background_color(colors::BACKGROUND_COLOR_50)
             .with_color(&BarState::Ok, colors::HEALTH_BAR_COLOR_OK)
             .with_color(&BarState::Moderate, colors::HEALTH_BAR_COLOR_MODERATE)
             .with_color(&BarState::Critical, colors::HEALTH_BAR_COLOR_CRITICAL)
             .with_size((10.0, 2.0).into())
-            .with_position_translation(Vec3::new(-5.0, 20.0, 0.0)),
+            .with_position_translation(Vec3::new(-5.0, 24.0, 0.0)),
         ProgressBarConfig::<Mana>::default()
             .with_background_color(colors::BACKGROUND_COLOR_50)
             .with_single_color(colors::MANA_BAR_COLOR)
             .with_size((10.0, 2.0).into())
-            .with_position_translation(Vec3::new(-5.0, 18.0, 0.0)),
-        ProgressBarConfig::<Xp>::default()
-            .with_background_color(colors::BACKGROUND_COLOR_50)
-            .with_single_color(colors::SKILL_TRACK_BAR_COLOR)
-            .with_size((10.0, 2.0).into())
-            .with_position_translation(Vec3::new(-5.0, 16.0, 0.0)),
+            .with_position_translation(Vec3::new(-5.0, 22.0, 0.0)),
         PlayerAvatar,
     ));
 }

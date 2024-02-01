@@ -160,6 +160,12 @@ fn update<T: Percentage + Component>(
             if *child != foreground {
                 continue;
             }
+
+            tracing::info!(
+                "Updating progress bar for entity with percentage {}",
+                percentage.percentage()
+            );
+
             // grab the mutable mesh
             let Ok(mut transform) = mesh_query.get_mut(*child) else {
                 tracing::warn!(

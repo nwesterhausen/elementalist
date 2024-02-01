@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use game_library::Health;
+use game_library::{Health, Xp};
 
 use super::{
     entity::{self, PlayerAvatar},
@@ -20,7 +20,7 @@ impl Plugin for PlayerPlugin {
             .add_plugins(PlayerControlsPlugin)
             .add_systems(Update, (menu_control::menu_input,))
             // Sprite stuff
-            .add_systems(OnEnter(AppState::InGame), entity::spawn_player)
+            .add_systems(OnEnter(AppState::InGame), entity::spawn_player_avatar)
             .add_systems(
                 Update,
                 (movement::player_movement_controls).run_if(in_state(AppState::InGame)),
@@ -39,11 +39,17 @@ impl Plugin for PlayerPlugin {
 /// System that subtracts 1 from a the players health when the 'H' key is pressed.
 fn subtract_health(
     mut player_health: Query<&mut Health, With<PlayerAvatar>>,
+    mut player_xp: Query<&mut Xp, With<PlayerAvatar>>,
     keyboard_input: Res<Input<KeyCode>>,
 ) {
     if keyboard_input.just_pressed(KeyCode::H) {
         for mut health in &mut player_health {
             health.value -= 1;
+        }
+    }
+    if keyboard_input.just_pressed(KeyCode::X) {
+        for mut xp in &mut player_xp {
+            xp.add(1);
         }
     }
 }

@@ -7,7 +7,43 @@ use game_library::{
     Health, Mana, MovementBundle, SpellChoices, StatBundle, Xp,
 };
 
-const BASE_SPEED: f32 = 100.0;
+const fn player_base_stats(stat: &StatEnum) -> f32 {
+    match stat {
+        StatEnum::MovementSpeed => 100.0,
+        StatEnum::Health => 10.0,
+        StatEnum::Mana => 4.0,
+        StatEnum::DamageReduction => 0.0,
+        StatEnum::DamageResistance => 0.0,
+        StatEnum::DamageReflection => 0.0,
+        StatEnum::DamageAmplification => 0.0,
+        StatEnum::CriticalStrikeChance => 0.0,
+        StatEnum::CriticalStrikeDamage => 0.0,
+        StatEnum::LifeSteal => 0.0,
+        StatEnum::ManaSteal => 0.0,
+        StatEnum::StunResistance => 0.0,
+        StatEnum::HealthRegeneration => 0.05,
+        StatEnum::ManaRegeneration => 1.0,
+        StatEnum::ProjectileSpeed => 1.0,
+        StatEnum::ProjectileSize => 1.0,
+        StatEnum::ProjectileLifetime => 1.0,
+        StatEnum::DodgeChance => 0.0,
+        StatEnum::AttackDamage => 0.0,
+        StatEnum::AttackSpeed => 0.0,
+        StatEnum::AttackRange => 0.0,
+        StatEnum::PhysicalDamageReduction => 0.0,
+        StatEnum::PhysicalDamageResistance => 0.0,
+        StatEnum::PhysicalDamageReflection => 0.0,
+        StatEnum::PhysicalDamageAmplification => 0.0,
+        StatEnum::MagicDamage => 1.0,
+        StatEnum::CooldownReduction => 0.0,
+        StatEnum::SpellRange => 50.0,
+        StatEnum::MagicalDamageReduction => 0.0,
+        StatEnum::MagicalDamageResistance => 0.0,
+        StatEnum::MagicalDamageReflection => 0.0,
+        StatEnum::MagicalDamageAmplification => 0.0,
+    }
+}
+
 const BASE_HEALTH: u32 = 10;
 const BASE_MANA: u32 = 4;
 
@@ -61,7 +97,13 @@ pub fn spawn_player_avatar(
             player: Player,
             health: Health::new(BASE_HEALTH),
             mana: Mana::new(BASE_MANA),
-            stats: StatBundle::new(vec![(StatEnum::MovementSpeed, BASE_SPEED)]),
+            stats: StatBundle::new(
+                StatEnum::variants()
+                    .iter()
+                    .filter(|stat| *stat != &StatEnum::Health && *stat != &StatEnum::Mana)
+                    .map(|stat| (stat.clone(), player_base_stats(&stat)))
+                    .collect(),
+            ),
             xp: Xp::default(),
         },
         ProgressBarConfig::<Xp>::default()

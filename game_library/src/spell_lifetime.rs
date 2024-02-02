@@ -6,7 +6,7 @@ use bevy::prelude::*;
 ///
 /// When a spell is spawned, it is given a lifetime. When the lifetime expires,
 /// the spell is despawned.
-#[derive(Debug, Clone, Copy, PartialEq, Component, Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Component, Default, Reflect)]
 pub struct SpellLifetime {
     /// The remaining lifetime of the spell in seconds
     pub remaining: f32,

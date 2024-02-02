@@ -1,9 +1,23 @@
-use bevy::ecs::{component::Component, system::Resource};
+use bevy::{
+    ecs::{component::Component, system::Resource},
+    reflect::Reflect,
+};
 use serde::{Deserialize, Serialize};
 
 /// The type of collision the spell has.
 #[derive(
-    Debug, Default, Clone, Copy, PartialEq, Eq, Hash, Component, Resource, Serialize, Deserialize,
+    Debug,
+    Default,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Hash,
+    Component,
+    Resource,
+    Serialize,
+    Deserialize,
+    Reflect,
 )]
 #[serde(rename_all = "camelCase")]
 pub enum SpellCollision {

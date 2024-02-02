@@ -4,13 +4,13 @@ use bevy_hanabi::prelude::*;
 
 use crate::LoadedParticleData;
 
-use super::storage::ParticleEffectStore;
+use super::storage::GameData;
 
 /// System to load a particle effect.
 pub(super) fn load_particle_effects(
     mut effects: ResMut<Assets<EffectAsset>>,
     mut er_particle_df: EventReader<LoadedParticleData>,
-    mut particle_effect_store: ResMut<ParticleEffectStore>,
+    mut game_data: ResMut<GameData>,
 ) {
     for data_file in er_particle_df.read() {
         let unique_id = &data_file.particle_data.header.unique_id;
@@ -57,8 +57,6 @@ pub(super) fn load_particle_effects(
                 }),
         );
 
-        particle_effect_store
-            .particles
-            .insert(String::from(unique_id), effect);
+        game_data.particles.insert(String::from(unique_id), effect);
     }
 }

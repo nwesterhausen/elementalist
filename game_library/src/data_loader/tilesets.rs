@@ -4,14 +4,14 @@ use bevy::prelude::*;
 
 use crate::LoadedTilesetData;
 
-use super::storage::TileAtlasStore;
+use super::storage::GameData;
 
 /// Load the tilesets into the game and store a handle under the `unique_id`.
 #[allow(clippy::needless_pass_by_value)]
 pub fn load_tilesets(
     mut er_tileset_df: EventReader<LoadedTilesetData>,
     mut texture_atlases: ResMut<Assets<TextureAtlas>>,
-    mut tile_atlas_store: ResMut<TileAtlasStore>,
+    mut game_data: ResMut<GameData>,
     asset_server: Res<AssetServer>,
 ) {
     for tileset in er_tileset_df.read() {
@@ -30,8 +30,8 @@ pub fn load_tilesets(
 
         let atlas_handle = texture_atlases.add(texture_atlas);
 
-        tile_atlas_store
-            .tilesets
+        game_data
+            .tile_atlas
             .insert(String::from(unique_id), atlas_handle);
     }
 }

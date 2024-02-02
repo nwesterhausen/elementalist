@@ -1,12 +1,11 @@
 use bevy::prelude::*;
 use game_library::{
     colors,
+    data_loader::storage::GameData,
     enums::StatEnum,
     progress_bar::{BarState, ProgressBarConfig},
     Health, Mana, MovementBundle, SpellChoices, StatBundle, Xp,
 };
-
-use game_library::data_loader::storage::ExistingSpells;
 
 const BASE_SPEED: f32 = 100.0;
 const BASE_HEALTH: u32 = 10;
@@ -33,7 +32,7 @@ pub fn spawn_player_avatar(
     mut commands: Commands,
     asset_server: Res<AssetServer>,
     mut spell_choices: ResMut<SpellChoices>,
-    loaded_spells: Res<ExistingSpells>,
+    game_data: Res<GameData>,
     existing_players: Query<&PlayerAvatar>,
 ) {
     // Only spawn player if there isn't one already
@@ -42,11 +41,11 @@ pub fn spawn_player_avatar(
     }
 
     // Load spells (forced right now)
-    for spell_id in &loaded_spells.ids {
-        if spell_id.contains("AgingBolt") {
+    for spell_id in game_data.spells.iter_ids() {
+        if spell_id.contains("mana-dart") {
             spell_choices.set_primary_by_id(spell_id.clone());
         }
-        if spell_id.contains("DeathBolt") {
+        if spell_id.contains("spark") {
             spell_choices.set_secondary_by_id(spell_id.clone());
         }
     }

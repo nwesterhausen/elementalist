@@ -5,6 +5,7 @@
 //! ```yaml
 //! # $schema: "https://schemas.nwest.one/games/elementalist/spell.json"
 //! ```
+use bevy::reflect::Reflect;
 use serde_default_utils::{default_i32, default_usize};
 use std::{any::Any, hash::Hash};
 
@@ -18,7 +19,7 @@ use crate::{
 /// Details about a spell.
 ///
 /// Describes in detail how a spell works and how it should be displayed.
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, Reflect)]
 #[serde(rename_all = "camelCase")]
 pub struct SpellData {
     /// The internal ID of the spell.
@@ -147,7 +148,7 @@ impl InternalId for SpellData {
 }
 
 /// A particle that a spell can create.
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, Reflect)]
 #[serde(rename_all = "camelCase")]
 pub struct SpellParticles {
     /// The unique_id for the particle effect
@@ -157,7 +158,7 @@ pub struct SpellParticles {
 }
 
 /// The attachment point for a particle effect.
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, Reflect)]
 pub enum ParticleAttachment {
     /// The particle is emitted once on the caster when the spell is cast.
     OnCast,

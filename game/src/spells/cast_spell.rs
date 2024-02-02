@@ -1,9 +1,8 @@
 //! This system listens for the `CastSpell` event and spawns a spell entity based on the spell identifier.
 use bevy::prelude::*;
 use game_library::{
-    data_loader::storage::{ExistingSpells, TileAtlasStore},
-    events::CastSpell,
-    math, CursorPosition, InternalId, MovementBundle, SpellBundle, SpellLifetime, Velocity,
+    data_loader::storage::GameData, events::CastSpell, math, CursorPosition, InternalId,
+    MovementBundle, SpellBundle, SpellLifetime, Velocity,
 };
 
 use crate::player::Player;
@@ -18,8 +17,7 @@ pub(super) fn cast_spells(
     mut event_reader: EventReader<CastSpell>,
     query: Query<&Transform, With<Player>>,
     cursor_position: Res<CursorPosition>,
-    existing_spells: Res<ExistingSpells>,
-    spell_atlas: Res<TileAtlasStore>,
+    game_data: Res<GameData>,
 ) {
     for CastSpell(spell_identifier) in event_reader.read() {
         let Ok(player_transform) = query.get_single() else {
@@ -27,18 +25,12 @@ pub(super) fn cast_spells(
             return;
         };
 
-        // Todo: maybe check if the rest of the resources are ready?
-
-        let Some(spell) = existing_spells
-            .data
-            .iter()
-            .find(|s| &s.get_internal_id() == spell_identifier)
-        else {
+        let Some(spell) = game_data.spells.get(spell_identifier) else {
             tracing::error!("cast_spells: 404 {spell_identifier} not found");
             continue;
         };
 
-        let Some(texture_atlas) = spell_atlas.tilesets.get(&spell.sprite_tileset) else {
+        let Some(texture_atlas) = game_data.tile_atlas.get(&spell.sprite_tileset) else {
             tracing::error!(
                 "cast_spells: No texture atlas found for {} (spell:{})",
                 spell.sprite_tileset,

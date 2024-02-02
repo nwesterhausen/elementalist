@@ -1,5 +1,6 @@
 pub mod components;
+
+mod cast_spell;
 mod plugin;
 
-pub use plugin::ExistingSpells;
 pub use plugin::SpellsPlugin;

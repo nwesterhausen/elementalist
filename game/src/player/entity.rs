@@ -6,7 +6,7 @@ use game_library::{
     Health, Mana, MovementBundle, SpellChoices, StatBundle, Xp,
 };
 
-use crate::spells::ExistingSpells;
+use game_library::data_loader::storage::ExistingSpells;
 
 const BASE_SPEED: f32 = 100.0;
 const BASE_HEALTH: u32 = 10;

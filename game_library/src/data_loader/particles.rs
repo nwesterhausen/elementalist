@@ -2,9 +2,7 @@
 use bevy::prelude::*;
 use bevy_hanabi::prelude::*;
 
-use crate::LoadedParticleData;
-
-use super::storage::GameData;
+use super::{events::LoadedParticleData, storage::GameData};
 
 /// System to load a particle effect.
 pub(super) fn load_particle_effects(

@@ -2,7 +2,8 @@
 
 use bevy::prelude::*;
 
-use crate::resources::{AppState, MenuState, ReturnToState};
+use crate::resources::ReturnToState;
+use game_library::state::{AppState, MenuState};
 
 use super::events::{ChangeSetting, IndividualSetting};
 

@@ -1,8 +1,8 @@
 use bevy::prelude::*;
 
-use crate::{InternalId, LoadedSpellData};
+use crate::InternalId;
 
-use super::storage::GameData;
+use super::{events::LoadedSpellData, storage::GameData};
 
 pub(super) fn load_spells(
     mut events: EventReader<LoadedSpellData>,

@@ -29,6 +29,7 @@ pub mod math;
 pub mod menu_helper;
 pub mod progress_bar;
 pub mod settings;
+pub mod state;
 
 mod acceleration;
 mod attribute;
@@ -57,7 +58,6 @@ pub use acceleration::Acceleration;
 pub use attribute::Attribute;
 pub use camera_scale::CameraScaleLevel;
 pub use cursor_position::CursorPosition;
-pub use data_loader::events::*;
 pub use experience::Xp;
 pub use health::Health;
 pub use mana::Mana;

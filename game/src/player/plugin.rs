@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use game_library::{Health, Xp};
+use game_library::{state::AppState, Health, Xp};
 
 use super::{
     entity::{self, PlayerAvatar},
@@ -7,7 +7,7 @@ use super::{
     player_control::PlayerControlsPlugin,
     player_creation,
 };
-use crate::{despawn_with_tag, resources::AppState};
+use crate::despawn_with_tag;
 
 pub struct PlayerPlugin;
 

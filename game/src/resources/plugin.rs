@@ -6,17 +6,15 @@ use game_library::{
     font_resource::{change_font, ChangeFont, FontResource},
     progress_bar::ProgressBarPlugin,
     settings::SettingsPlugin,
+    state::{AppState, GameState, MenuState, SaveState},
     CursorPosition, Health, Mana, SpellChoices, Xp,
 };
 
 use crate::{app_systems, resources::buttons};
 
 use super::{
-    cleanup::cleanup_then_exit,
-    cursor_position::update_cursor_position,
-    fonts::set_initial_fonts,
-    state::{GameState, MenuState, SaveState},
-    AppState, ReturnToState,
+    cleanup::cleanup_then_exit, cursor_position::update_cursor_position, fonts::set_initial_fonts,
+    ReturnToState,
 };
 
 /// Elementalist resources plugin. This loads the resources needed which may not be

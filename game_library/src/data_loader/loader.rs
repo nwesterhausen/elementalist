@@ -4,12 +4,12 @@ use std::hash::Hash;
 use walkdir::WalkDir;
 
 use crate::{
-    data_loader::DATA_FILE_DIR, enums::GameSystem, particle::Particle, InternalId,
-    LoadedParticleData, LoadedTilesetData, SpellData, Tileset,
+    data_loader::DATA_FILE_DIR, enums::GameSystem, particle::Particle, InternalId, SpellData,
+    Tileset,
 };
 
 use super::{
-    events::LoadedSpellData,
+    events::{LoadedParticleData, LoadedSpellData, LoadedTilesetData},
     header_def::{DataFile, DataFileHeader},
     DataFileHeaderOnly,
 };

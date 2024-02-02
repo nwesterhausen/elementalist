@@ -1,8 +1,8 @@
 use bevy::prelude::*;
 
-use crate::resources::{AppState, ReturnToState};
-
 use super::MenuState;
+use crate::resources::ReturnToState;
+use game_library::state::AppState;
 
 /// All of the various "buttons" that can be clicked in any of the main menu screens
 #[derive(Component, Debug, Eq, PartialEq, Hash, Clone, Copy)]

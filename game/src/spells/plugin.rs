@@ -1,7 +1,7 @@
+use crate::despawn_with_tag;
 use bevy::prelude::*;
 use game_library::events::CastSpell;
-
-use crate::{despawn_with_tag, resources::AppState};
+use game_library::state::AppState;
 
 use super::{
     cast_spell::cast_spells,

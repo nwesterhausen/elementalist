@@ -1,12 +1,8 @@
 use bevy::prelude::*;
-use game_library::{events::CastSpell, settings::GameplaySettings, SpellChoices};
+use game_library::{events::CastSpell, settings::GameplaySettings, state::AppState, SpellChoices};
 use leafwing_input_manager::action_state::ActionState;
 
-use crate::{
-    events::PlayerAction,
-    player::Player,
-    resources::{AppState, ReturnToState},
-};
+use crate::{events::PlayerAction, player::Player, resources::ReturnToState};
 
 pub(super) struct PlayerControlsPlugin;
 

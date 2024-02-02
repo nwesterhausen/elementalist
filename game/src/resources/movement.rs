@@ -1,7 +1,5 @@
 use bevy::prelude::*;
-use game_library::{Acceleration, Velocity};
-
-use crate::resources::AppState;
+use game_library::{state::AppState, Acceleration, Velocity};
 
 /// Plugin that makes moving things move
 pub struct MovementPlugin;

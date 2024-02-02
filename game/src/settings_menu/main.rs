@@ -1,11 +1,9 @@
 //! Main menu systems.
 use bevy::prelude::*;
 use game_library::font_resource::FontResource;
+use game_library::state::AppState;
 
-use crate::{
-    resources::style_prefab,
-    resources::{AppState, ReturnToState},
-};
+use crate::{resources::style_prefab, resources::ReturnToState};
 
 use super::{
     base::SettingsMenuEntity,

@@ -2,8 +2,9 @@
 
 use bevy::prelude::*;
 use game_library::font_resource::FontResource;
+use game_library::state::MenuState;
 
-use crate::{despawn_with_tag, resources::style_prefab, resources::MenuState};
+use crate::{despawn_with_tag, resources::style_prefab};
 
 use super::{
     base::SettingsMenuEntity,

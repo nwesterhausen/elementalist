@@ -3,10 +3,8 @@
 
 use bevy::prelude::*;
 
-use crate::{
-    despawn_with_tag,
-    resources::{AppState, MenuState},
-};
+use crate::despawn_with_tag;
+use game_library::state::{AppState, MenuState};
 
 use super::{
     accessibility::AccessibilitySettingsMenuPlugin,

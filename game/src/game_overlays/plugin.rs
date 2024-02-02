@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::resources::OverlayState;
+use game_library::state::OverlayState;
 
 use super::status_screen::StatusScreenPlugin;
 

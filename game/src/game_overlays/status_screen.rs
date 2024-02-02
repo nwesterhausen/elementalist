@@ -1,14 +1,13 @@
 //! This may end up a full module. It is the plugin/systems for the status screen overlay.
 use bevy::prelude::*;
-use game_library::{font_resource::FontResource, StatBundle};
+use game_library::{
+    font_resource::FontResource,
+    state::{AppState, OverlayState},
+    StatBundle,
+};
 use leafwing_input_manager::action_state::ActionState;
 
-use crate::{
-    despawn_with_tag,
-    events::PlayerAction,
-    player::Player,
-    resources::{style_prefab, AppState, OverlayState},
-};
+use crate::{despawn_with_tag, events::PlayerAction, player::Player, resources::style_prefab};
 
 pub(super) struct StatusScreenPlugin;
 

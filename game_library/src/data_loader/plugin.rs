@@ -1,9 +1,11 @@
 use bevy::prelude::*;
 
-use crate::{LoadedParticleData, LoadedSpellData, LoadedTilesetData};
-
 use super::{
-    load_data_file_dir, particles::load_particle_effects, spells::load_spells, storage::GameData,
+    events::{LoadedParticleData, LoadedSpellData, LoadedTilesetData},
+    load_data_file_dir,
+    particles::load_particle_effects,
+    spells::load_spells,
+    storage::GameData,
     tilesets::load_tilesets,
 };
 

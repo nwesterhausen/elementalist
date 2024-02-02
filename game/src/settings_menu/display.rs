@@ -1,9 +1,9 @@
 //! Has systems for the display settings menu.
 
 use bevy::prelude::*;
-use game_library::{font_resource::FontResource, settings::VideoSettings};
+use game_library::{font_resource::FontResource, settings::VideoSettings, state::MenuState};
 
-use crate::{despawn_with_tag, resources::style_prefab, resources::MenuState};
+use crate::{despawn_with_tag, resources::style_prefab};
 
 use super::{
     base::SettingsMenuEntity,

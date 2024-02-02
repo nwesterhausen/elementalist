@@ -1,4 +1,5 @@
 //! Tileset data. Instructions for what tilesets to load.
+use bevy::reflect::Reflect;
 use std::{any::Any, hash::Hash};
 
 use crate::{data_loader::DataFile, enums::GameSystem, InternalId};
@@ -13,7 +14,7 @@ mod tileset_defaults {
 }
 
 /// Details about a tileset.
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, Reflect)]
 #[serde(rename_all = "camelCase")]
 pub struct Tileset {
     /// The internal ID of the tileset.

@@ -1,12 +1,13 @@
 //! Particle effect details.
 use bevy::math::{Vec2, Vec4};
+use bevy::reflect::Reflect;
 use bevy_hanabi::prelude::*;
 
 use crate::{colors::PaletteColor, data_loader::DataFile, enums::GameSystem, InternalId};
 use std::{any::Any, fmt::Write, hash::Hash};
 
 /// Details about a particle effect.
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, Reflect)]
 #[serde(rename_all = "camelCase")]
 pub struct Particle {
     /// The internal ID of the particle effect.
@@ -55,7 +56,7 @@ mod particle_defaults {
 }
 
 /// Initial velocity for a particle effect.
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, Reflect)]
 #[serde(rename_all = "camelCase")]
 #[allow(clippy::module_name_repetitions)]
 pub struct ParticleInitialVelocity {
@@ -78,7 +79,7 @@ impl Default for ParticleInitialVelocity {
 }
 
 /// Initial position for a particle effect.
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, Reflect)]
 #[serde(rename_all = "camelCase")]
 #[allow(clippy::module_name_repetitions)]
 pub struct ParticleInitialPosition {
@@ -101,7 +102,7 @@ impl Default for ParticleInitialPosition {
 }
 
 /// The type of position modifier for the particles.
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, Default)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, Default, Reflect)]
 #[serde(rename_all = "camelCase")]
 pub enum PositionModifierType {
     /// A circle shape
@@ -110,7 +111,7 @@ pub enum PositionModifierType {
 }
 
 /// The type of position modifier for the particles.
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, Default)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, Default, Reflect)]
 #[serde(rename_all = "camelCase")]
 pub enum ShapeDimensionType {
     /// The entire volume of the circle
@@ -132,7 +133,7 @@ impl ShapeDimensionType {
 }
 
 /// Color for a particle effect.
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, Reflect)]
 #[serde(rename_all = "camelCase")]
 #[allow(clippy::module_name_repetitions)]
 pub struct ParticleColorGradient {
@@ -160,7 +161,7 @@ impl Default for ParticleColorGradient {
 }
 
 /// Color for a particle effect.
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, Reflect)]
 #[serde(rename_all = "camelCase")]
 #[allow(clippy::module_name_repetitions)]
 pub struct ParticleSizeGradient {

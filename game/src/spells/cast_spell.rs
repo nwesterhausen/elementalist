@@ -39,11 +39,14 @@ pub(super) fn cast_spells(
             continue;
         };
 
+        // To know where to "aim" the spell, we need to calculate the slope between the player and the cursor
         let slope_vec = math::slope_vec(player_transform, &cursor_position);
 
         // Todo: include the player's velocity in the spell's velocity
         // Todo: include the player's stats to effect the spell (damage, speed, etc)
         // Todo: figure out how we will track cooldowns. Maybe a resource?
+
+        // Todo: attach any projectile particles to the spell entity
 
         commands.spawn((
             SpellBundle {

@@ -147,13 +147,13 @@
 						"description": "The attachment point of the particle",
 						"type": "string",
 						"enum": [
-							"OnCast",
-							"OnProjectile",
-							"OnImpact",
-							"OnTarget",
-							"OnCaster",
-							"OnGround",
-							"OnSummon"
+							"Cast",
+							"Projectile",
+							"Impact",
+							"Target",
+							"Caster",
+							"Ground",
+							"Summon"
 						]
 					}
 				}

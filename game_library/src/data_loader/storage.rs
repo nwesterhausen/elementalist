@@ -38,12 +38,10 @@ impl<T: Reflect> Vault<T> {
         self.data.remove(unique_id);
     }
     /// Returns an iterator over the unique ids of the data that have been loaded into the game.
-    #[must_use]
     pub fn iter_ids(&self) -> impl Iterator<Item = &String> {
         self.data.keys()
     }
     /// Returns an iterator over the data that have been loaded into the game.
-    #[must_use]
     pub fn iter_data(&self) -> impl Iterator<Item = &T> {
         self.data.values()
     }

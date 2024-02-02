@@ -3,6 +3,7 @@ use bevy::prelude::*;
 
 /// The state of the game (broadly)
 #[derive(Default, Debug, Clone, Copy, PartialEq, Eq, Hash, States)]
+#[allow(clippy::module_name_repetitions)]
 pub enum AppState {
     /// First boot, loading assets etc
     ///
@@ -57,6 +58,7 @@ pub enum AppState {
 /// The menu can be in one of these states at any given time. Each state
 /// roughly corresponds to a different screen in the menu.
 #[derive(Debug, Clone, Copy, Eq, PartialEq, Hash, Default, States)]
+#[allow(clippy::module_name_repetitions)]
 pub enum MenuState {
     /// Disabled (default) state. The menu is not opened.
     #[default]
@@ -99,6 +101,7 @@ pub enum MenuState {
 /// [`SaveState::Saving`] should save after spending essence, changing spells, choosing skill perks. It should be
 /// in the background and not interrupt the game.
 #[derive(Default, Debug, Clone, Copy, PartialEq, Eq, Hash, States, Reflect)]
+#[allow(clippy::module_name_repetitions)]
 pub enum GameState {
     /// By default, the GameState is disabled, since it's not used until the game is entered
     #[default]
@@ -117,6 +120,7 @@ pub enum GameState {
 
 /// State for the status of the save file. This can be changed by systems to trigger saving/loading.
 #[derive(Default, Debug, Clone, Copy, PartialEq, Eq, Hash, States, Reflect)]
+#[allow(clippy::module_name_repetitions)]
 pub enum SaveState {
     /// By default, the SaveState is disabled, since it's not used until the game is entered
     #[default]
@@ -131,6 +135,7 @@ pub enum SaveState {
 
 /// State for the in-game overlay options.
 #[derive(Default, Debug, Clone, Copy, PartialEq, Eq, Hash, States, Reflect)]
+#[allow(clippy::module_name_repetitions)]
 pub enum OverlayState {
     /// By default, the OverlayState is disabled, since it's not used until the game is entered
     #[default]

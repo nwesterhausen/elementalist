@@ -5,7 +5,7 @@ use bevy::prelude::*;
 use super::{events::LoadedTilesetData, storage::GameData};
 
 /// Load the tilesets into the game and store a handle under the `unique_id`.
-#[allow(clippy::needless_pass_by_value)]
+#[allow(clippy::needless_pass_by_value, clippy::module_name_repetitions)]
 pub fn load_tilesets(
     mut er_tileset_df: EventReader<LoadedTilesetData>,
     mut texture_atlases: ResMut<Assets<TextureAtlas>>,

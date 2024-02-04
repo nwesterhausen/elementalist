@@ -2,7 +2,7 @@ use bevy::prelude::*;
 use game_library::{state::AppState, Health, Xp};
 
 use super::{
-    entity::{self, PlayerAvatar},
+    avatar::{self, PlayerAvatar},
     menu_control, movement,
     player_control::PlayerControlsPlugin,
     player_creation,
@@ -20,7 +20,7 @@ impl Plugin for PlayerPlugin {
             .add_plugins(PlayerControlsPlugin)
             .add_systems(Update, (menu_control::menu_input,))
             // Sprite stuff
-            .add_systems(OnEnter(AppState::InGame), entity::spawn_player_avatar)
+            .add_systems(OnEnter(AppState::InGame), avatar::spawn_player_avatar)
             .add_systems(
                 Update,
                 (movement::player_movement_controls).run_if(in_state(AppState::InGame)),

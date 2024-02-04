@@ -1,4 +1,7 @@
-use bevy::{ecs::{component::Component, system::Resource}, reflect::Reflect};
+use bevy::{
+    ecs::{component::Component, system::Resource},
+    reflect::Reflect,
+};
 use serde::{Deserialize, Serialize};
 
 /// How the spell is targeted when casting.

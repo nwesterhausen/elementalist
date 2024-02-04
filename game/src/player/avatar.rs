@@ -78,6 +78,8 @@ pub struct PlayerBundle {
     pub stats: StatBundle,
     /// The player's experience points.
     pub xp: Xp,
+    /// Player marker component.
+    pub player: Player,
 }
 
 /// `PlayerAvatar` is a marker component for the player's avatar, i.e. the entity that the player
@@ -136,6 +138,7 @@ pub fn spawn_player_avatar(
                         .collect(),
                 ),
                 xp: Xp::default(),
+                player: Player,
             },
             ProgressBarConfig::<Xp>::default()
                 .with_background_color(colors::BACKGROUND_COLOR_50)

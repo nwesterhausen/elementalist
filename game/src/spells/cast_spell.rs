@@ -1,8 +1,9 @@
 //! This system listens for the `CastSpell` event and spawns a spell entity based on the spell identifier.
 use bevy::prelude::*;
+use bevy_hanabi::{ParticleEffect, ParticleEffectBundle};
 use game_library::{
-    data_loader::storage::GameData, events::CastSpell, math, CursorPosition, InternalId,
-    MovementBundle, SpellBundle, SpellLifetime, Velocity,
+    data_loader::storage::GameData, enums::ParticleAttachment, events::CastSpell, math,
+    CursorPosition, InternalId, MovementBundle, SpellBundle, SpellLifetime, Velocity,
 };
 
 use crate::player::Player;
@@ -46,27 +47,58 @@ pub(super) fn cast_spells(
         // Todo: include the player's stats to effect the spell (damage, speed, etc)
         // Todo: figure out how we will track cooldowns. Maybe a resource?
 
-        // Todo: attach any projectile particles to the spell entity
-
-        commands.spawn((
-            SpellBundle {
-                lifetime: SpellLifetime::new(spell.duration),
-                movement: MovementBundle {
-                    velocity: Velocity::new(slope_vec * (spell.speed * SPELL_SPEED_MULTIPLIER)),
-                    ..Default::default()
-                },
-                sprite: SpriteSheetBundle {
-                    texture_atlas: texture_atlas.clone(),
-                    sprite: spell.texture_atlas_index(),
-                    transform: Transform {
-                        translation: player_transform.translation - Vec3::new(0.0, 0.0, 0.1),
-                        rotation: Quat::from_rotation_z(slope_vec.y.atan2(slope_vec.x)),
-                        scale: Vec3::splat(SPELL_SPRITE_SCALE),
+        let spell_projectile = commands
+            .spawn((
+                SpellBundle {
+                    lifetime: SpellLifetime::new(spell.duration),
+                    movement: MovementBundle {
+                        velocity: Velocity::new(slope_vec * (spell.speed * SPELL_SPEED_MULTIPLIER)),
+                        ..Default::default()
                     },
-                    ..Default::default()
+                    sprite: SpriteSheetBundle {
+                        texture_atlas: texture_atlas.clone(),
+                        sprite: spell.texture_atlas_index(),
+                        transform: Transform {
+                            translation: player_transform.translation - Vec3::new(0.0, 0.0, 0.1),
+                            rotation: Quat::from_rotation_z(slope_vec.y.atan2(slope_vec.x)),
+                            scale: Vec3::splat(SPELL_SPRITE_SCALE),
+                        },
+                        ..Default::default()
+                    },
                 },
-            },
-            SpellEntity,
-        ));
+                SpellEntity,
+            ))
+            .id();
+
+        // check for any particles that go on the projectile
+        let projectile_particles = spell
+            .particles
+            .iter()
+            .filter_map(|particle_link| {
+                if particle_link.attachment == ParticleAttachment::Projectile {
+                    tracing::info!("Spawning projectile particle {}", particle_link.particle_id);
+                    game_data.particles.get(&particle_link.particle_id)
+                } else {
+                    None
+                }
+            })
+            .map(|particle| {
+                commands
+                    .spawn(ParticleEffectBundle {
+                        effect: ParticleEffect::new(particle.clone()),
+                        transform: Transform {
+                            translation: Vec3::ZERO,
+                            ..Default::default()
+                        },
+                        ..Default::default()
+                    })
+                    .id()
+            })
+            .collect::<Vec<Entity>>();
+
+        // insert the particles into the spell entity
+        commands
+            .entity(spell_projectile)
+            .push_children(&projectile_particles);
     }
 }

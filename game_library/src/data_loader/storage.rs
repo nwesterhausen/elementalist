@@ -7,13 +7,13 @@ use crate::SpellData;
 /// The vault resource is a generic resource that holds data that is stored by a unique id.
 ///
 /// This is useful for storing data that is loaded from files, such as spells, tile atlases, and particles.
-#[derive(Resource, Default, Debug, Clone, PartialEq, Eq, Reflect)]
-pub struct Vault<T: Reflect> {
+#[derive(Resource, Default, Debug, Clone, PartialEq, Eq)]
+pub struct Vault<T> {
     /// The data that has been loaded into the game.
     data: HashMap<String, T>,
 }
 
-impl<T: Reflect> Vault<T> {
+impl<T> Vault<T> {
     /// Returns the data that has the given `unique_id`.
     ///
     /// If the data does not exist, then `None` is returned.
@@ -52,7 +52,7 @@ impl<T: Reflect> Vault<T> {
 /// This includes the spells, tile atlases, and particles.
 ///
 /// This resource helps to simplify grabbing resources in systems.
-#[derive(Resource, Default, Debug, Clone, Reflect)]
+#[derive(Resource, Default, Debug, Clone)]
 pub struct GameData {
     /// The spells that have been loaded into the game.
     pub spells: Vault<SpellData>,

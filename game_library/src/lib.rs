@@ -63,7 +63,7 @@ pub use health::Health;
 pub use mana::Mana;
 pub use movement_bundle::MovementBundle;
 pub use shared_traits::InternalId;
-pub use skill::SkillTrack;
+pub use skill::Skills;
 pub use spell_bundle::SpellBundle;
 pub use spell_choices::SpellChoices;
 pub use spell_data::SpellData;

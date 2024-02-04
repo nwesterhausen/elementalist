@@ -26,19 +26,19 @@
 			"type": "integer"
 		},
 		"horizontalPadding": {
-			"description": "The number of pixels of padding between each tile in the tileset",
+			"description": "The number of pixels of padding between each tile in the tileset. Defaults to 1.0 if not specified.",
 			"type": "integer"
 		},
 		"verticalPadding": {
-			"description": "The number of pixels of padding between each tile in the tileset",
+			"description": "The number of pixels of padding between each tile in the tileset. Defaults to 1.0 if not specified.",
 			"type": "integer"
 		},
 		"horizontalOffset": {
-			"description": "The number of pixels to offset the tileset by, horizontally",
+			"description": "The number of pixels to offset the tileset by, horizontally. Defaults to 1.0 if not specified.",
 			"type": "integer"
 		},
 		"verticalOffset": {
-			"description": "The number of pixels to offset the tileset by, vertically",
+			"description": "The number of pixels to offset the tileset by, vertically. Defaults to 1.0 if not specified.",
 			"type": "integer"
 		}
 	},

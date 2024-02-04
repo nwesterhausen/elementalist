@@ -10,9 +10,9 @@ pub const DEFAULT_TILE_DIMENSION: f32 = 32.0;
 /// Default tileset dimensions (5x5 tiles)
 pub const DEFAULT_TILESET_DIMENSION: usize = 5;
 /// Default tileset padding (0x0 pixels)
-pub const DEFAULT_TILESET_PADDING: f32 = 0.0;
+pub const DEFAULT_TILESET_PADDING: f32 = 1.0;
 /// Default tileset offset (0x0 pixels)
-pub const DEFAULT_TILESET_OFFSET: f32 = 0.0;
+pub const DEFAULT_TILESET_OFFSET: f32 = 1.0;
 
 mod tileset_defaults {
     use super::{DEFAULT_TILESET_DIMENSION, DEFAULT_TILE_DIMENSION};

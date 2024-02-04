@@ -9,6 +9,7 @@ use super::{
 };
 use crate::despawn_with_tag;
 
+/// Plugin which handles adding all the systems and components for the player.
 pub struct PlayerPlugin;
 
 impl Plugin for PlayerPlugin {
@@ -37,6 +38,11 @@ impl Plugin for PlayerPlugin {
 }
 
 /// System that subtracts 1 from a the players health when the 'H' key is pressed.
+///
+/// It also adds 1 to the player's experience points when the 'X' key is pressed.
+///
+/// This is just a test system to see if the player's health and experience points are
+/// being updated correctly.
 fn subtract_health(
     mut player_health: Query<&mut Health, With<PlayerAvatar>>,
     mut player_xp: Query<&mut Xp, With<PlayerAvatar>>,

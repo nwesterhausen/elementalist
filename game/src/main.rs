@@ -178,7 +178,7 @@ fn spawn_random_environment(
     let rng = &mut rand::thread_rng();
 
     // spawn a solid background color for the grass
-    let grass_material = materials.add(colors::SAND_DUNE.into());
+    let grass_material = materials.add(colors::THUNDER.into());
     let big_rectangle = meshes.add(Mesh::from(shape::Quad {
         size: Vec2::new(1000.0, 1000.0),
         flip: false,

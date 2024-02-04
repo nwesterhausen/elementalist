@@ -125,7 +125,11 @@ pub fn spawn_player_avatar(
                 movement: MovementBundle::default(),
                 sprite: SpriteBundle {
                     texture: asset_server.load("sprite/wizard.png"),
-                    transform: Transform::from_xyz(0.0, 0.0, 50.0),
+                    transform: Transform {
+                        translation: Vec3::new(0.0, 0.0, 50.0),
+                        scale: Vec3::splat(0.75),
+                        ..Default::default()
+                    },
                     ..Default::default()
                 },
                 health: Health::new(BASE_HEALTH),

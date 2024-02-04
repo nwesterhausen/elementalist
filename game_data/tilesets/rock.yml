@@ -1,0 +1,18 @@
+header:
+  uniqueId: rock
+  system: Tileset
+  author: Steve Jones
+  description: Rocks for the environment
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  path: tileset/rock.png
+  tileWidth: 16
+  tileHeight: 16
+  tileSetWidth: 2
+  tileSetHeight: 1
+  horizontalPadding: 1
+  verticalPadding: 1
+  horizontalOffset: 1
+  verticalOffset: 1

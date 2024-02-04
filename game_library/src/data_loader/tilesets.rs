@@ -22,8 +22,8 @@ pub fn load_tilesets(
             Vec2::new(tileset.tile_width, tileset.tile_height),
             tileset.tileset_width,
             tileset.tileset_height,
-            None,
-            None,
+            tileset.get_padding(),
+            tileset.get_offset(),
         );
 
         let atlas_handle = texture_atlases.add(texture_atlas);

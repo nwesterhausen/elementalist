@@ -17,3 +17,9 @@ data:
   spellTier: 0
   spriteTileset: spell_projectiles
   spriteIndex: 12
+  flags: []
+  castType: instant
+  castCategory: projectile
+  particles:
+    - attachment: Projectile
+      particleId: water-bolt

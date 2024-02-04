@@ -11,7 +11,9 @@ use bevy::{
     prelude::*,
     render::{render_resource::WgpuFeatures, settings::WgpuSettings, RenderPlugin},
 };
+use game_library::{data_loader::storage::GameData, state::AppState};
 use leafwing_input_manager::plugin::InputManagerPlugin;
+use rand::Rng;
 
 mod app_info;
 mod app_systems;
@@ -94,6 +96,7 @@ fn main() {
             main_menu::MainMenuPlugin,
             game_overlays::GameOverlaysPlugin,
         ))
+        .add_systems(OnEnter(AppState::InGame), spawn_random_environment)
         // Launch
         .run();
 }
@@ -151,5 +154,54 @@ impl Plugin for ElementalistGameplayPlugins {
             InputManagerPlugin::<PlayerAction>::default(),
             InputManagerPlugin::<MenuInteraction>::default(),
         ));
+    }
+}
+
+/// Spawn some trees as a test
+fn spawn_random_environment(
+    mut commands: Commands,
+    asset_server: Res<AssetServer>,
+    game_data: Res<GameData>,
+) {
+    let tree = asset_server.load("sprite/tree.png");
+    let Some(rock) = game_data.tile_atlas.get("rock") else {
+        tracing::error!("Failed to load rock tile");
+        return;
+    };
+
+    let rng = &mut rand::thread_rng();
+
+    for i in -16..16 {
+        for j in -16..16 {
+            if rng.gen_bool(0.25) {
+                commands.spawn(SpriteBundle {
+                    texture: tree.clone(),
+                    transform: Transform {
+                        #[allow(clippy::cast_precision_loss)]
+                        translation: Vec3::new(i as f32 * 32.0, j as f32 * 32.0, 0.0),
+                        scale: Vec3::splat(1.0),
+                        ..Default::default()
+                    },
+                    ..Default::default()
+                });
+            } else if rng.gen_bool(0.5) {
+                let index = rng.gen_range(0..2);
+                commands.spawn(SpriteSheetBundle {
+                    texture_atlas: rock.clone(),
+                    sprite: bevy::sprite::TextureAtlasSprite::new(index),
+                    transform: Transform {
+                        #[allow(clippy::cast_precision_loss)]
+                        translation: Vec3::new(
+                            (i as f32).mul_add(32.0, 8.0),
+                            (j as f32).mul_add(32.0, 8.0),
+                            0.0,
+                        ),
+                        scale: Vec3::splat(1.0),
+                        ..Default::default()
+                    },
+                    ..Default::default()
+                });
+            }
+        }
     }
 }

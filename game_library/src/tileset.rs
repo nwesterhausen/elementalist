@@ -1,15 +1,23 @@
 //! Tileset data. Instructions for what tilesets to load.
+use bevy::math::Vec2;
 use bevy::reflect::Reflect;
 use std::{any::Any, hash::Hash};
 
 use crate::{data_loader::DataFile, enums::GameSystem, InternalId};
 
+/// Default tile dimensions (32x32 pixels)
+pub const DEFAULT_TILE_DIMENSION: f32 = 32.0;
+/// Default tileset dimensions (5x5 tiles)
+pub const DEFAULT_TILESET_DIMENSION: usize = 5;
+
 mod tileset_defaults {
+    use super::{DEFAULT_TILESET_DIMENSION, DEFAULT_TILE_DIMENSION};
+
     pub(super) const fn tile_dimension() -> f32 {
-        32.0
+        DEFAULT_TILE_DIMENSION
     }
     pub(super) const fn tileset_dimension() -> usize {
-        5
+        DEFAULT_TILESET_DIMENSION
     }
 }
 
@@ -33,6 +41,14 @@ pub struct Tileset {
     /// The number of tiles in the tileset.
     #[serde(default = "tileset_defaults::tileset_dimension")]
     pub tileset_height: usize,
+    /// The horizontal padding between tiles.
+    pub horizontal_padding: Option<f32>,
+    /// The vertical padding between tiles.
+    pub vertical_padding: Option<f32>,
+    /// The horizontal offset for the tileset.
+    pub horizontal_offset: Option<f32>,
+    /// The vertical offset for the tileset.
+    pub vertical_offset: Option<f32>,
 }
 
 impl Hash for Tileset {
@@ -102,10 +118,44 @@ impl Default for Tileset {
         Self {
             internal_id: None,
             path: "path/to/tileset.png".to_string(),
-            tile_width: 32.0,
-            tile_height: 32.0,
-            tileset_width: 5,
-            tileset_height: 5,
+            tile_width: DEFAULT_TILE_DIMENSION,
+            tile_height: DEFAULT_TILE_DIMENSION,
+            tileset_width: DEFAULT_TILESET_DIMENSION,
+            tileset_height: DEFAULT_TILESET_DIMENSION,
+            horizontal_padding: None,
+            vertical_padding: None,
+            horizontal_offset: None,
+            vertical_offset: None,
         }
+    }
+}
+
+impl Tileset {
+    /// Get the Vec2 padding for the tileset.
+    ///
+    /// If the padding is not set, it will default to None.
+    #[must_use]
+    pub fn get_padding(&self) -> Option<Vec2> {
+        if self.horizontal_padding.is_none() && self.vertical_padding.is_none() {
+            return None;
+        }
+        Some(Vec2::new(
+            self.horizontal_padding.unwrap_or_default(),
+            self.vertical_padding.unwrap_or_default(),
+        ))
+    }
+
+    /// Get the Vec2 offset for the tileset.
+    ///
+    /// If the offset is not set, it will default to None.
+    #[must_use]
+    pub fn get_offset(&self) -> Option<Vec2> {
+        if self.horizontal_offset.is_none() && self.vertical_offset.is_none() {
+            return None;
+        }
+        Some(Vec2::new(
+            self.horizontal_offset.unwrap_or_default(),
+            self.vertical_offset.unwrap_or_default(),
+        ))
     }
 }

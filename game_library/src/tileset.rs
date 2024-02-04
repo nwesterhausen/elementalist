@@ -9,6 +9,10 @@ use crate::{data_loader::DataFile, enums::GameSystem, InternalId};
 pub const DEFAULT_TILE_DIMENSION: f32 = 32.0;
 /// Default tileset dimensions (5x5 tiles)
 pub const DEFAULT_TILESET_DIMENSION: usize = 5;
+/// Default tileset padding (0x0 pixels)
+pub const DEFAULT_TILESET_PADDING: f32 = 0.0;
+/// Default tileset offset (0x0 pixels)
+pub const DEFAULT_TILESET_OFFSET: f32 = 0.0;
 
 mod tileset_defaults {
     use super::{DEFAULT_TILESET_DIMENSION, DEFAULT_TILE_DIMENSION};
@@ -140,8 +144,8 @@ impl Tileset {
             return None;
         }
         Some(Vec2::new(
-            self.horizontal_padding.unwrap_or_default(),
-            self.vertical_padding.unwrap_or_default(),
+            self.horizontal_padding.unwrap_or(DEFAULT_TILESET_PADDING),
+            self.vertical_padding.unwrap_or(DEFAULT_TILESET_PADDING),
         ))
     }
 
@@ -154,8 +158,8 @@ impl Tileset {
             return None;
         }
         Some(Vec2::new(
-            self.horizontal_offset.unwrap_or_default(),
-            self.vertical_offset.unwrap_or_default(),
+            self.horizontal_offset.unwrap_or(DEFAULT_TILESET_OFFSET),
+            self.vertical_offset.unwrap_or(DEFAULT_TILESET_OFFSET),
         ))
     }
 }

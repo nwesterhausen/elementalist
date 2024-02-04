@@ -111,7 +111,7 @@ pub fn spawn_player_avatar(
 
     // Load spells (forced right now)
     for spell_id in game_data.spells.iter_ids() {
-        if spell_id.contains("mana-dart") {
+        if spell_id.contains("death_bolt") {
             spell_choices.set_primary_by_id(spell_id.clone());
         }
         if spell_id.contains("spark") {
@@ -125,7 +125,7 @@ pub fn spawn_player_avatar(
                 movement: MovementBundle::default(),
                 sprite: SpriteBundle {
                     texture: asset_server.load("sprite/wizard.png"),
-                    transform: Transform::from_xyz(0.0, 0.0, 0.0),
+                    transform: Transform::from_xyz(0.0, 0.0, 50.0),
                     ..Default::default()
                 },
                 health: Health::new(BASE_HEALTH),

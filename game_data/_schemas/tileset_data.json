@@ -25,12 +25,20 @@
 			"description": "Height of the tileset in tiles (NOT pixels)",
 			"type": "integer"
 		},
-		"tileHorizontalPadding": {
+		"horizontalPadding": {
 			"description": "The number of pixels of padding between each tile in the tileset",
 			"type": "integer"
 		},
-		"tileVerticalPadding": {
+		"verticalPadding": {
 			"description": "The number of pixels of padding between each tile in the tileset",
+			"type": "integer"
+		},
+		"horizontalOffset": {
+			"description": "The number of pixels to offset the tileset by, horizontally",
+			"type": "integer"
+		},
+		"verticalOffset": {
+			"description": "The number of pixels to offset the tileset by, vertically",
 			"type": "integer"
 		}
 	},

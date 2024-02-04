@@ -11,7 +11,7 @@ use bevy::{
     prelude::*,
     render::{render_resource::WgpuFeatures, settings::WgpuSettings, RenderPlugin},
 };
-use game_library::{data_loader::storage::GameData, state::AppState};
+use game_library::{colors, data_loader::storage::GameData, state::AppState};
 use leafwing_input_manager::plugin::InputManagerPlugin;
 use rand::Rng;
 
@@ -97,6 +97,10 @@ fn main() {
             game_overlays::GameOverlaysPlugin,
         ))
         .add_systems(OnEnter(AppState::InGame), spawn_random_environment)
+        .add_systems(
+            OnExit(AppState::InGame),
+            despawn_with_tag::<EnvironmentStuff>,
+        )
         // Launch
         .run();
 }
@@ -162,6 +166,8 @@ fn spawn_random_environment(
     mut commands: Commands,
     asset_server: Res<AssetServer>,
     game_data: Res<GameData>,
+    mut materials: ResMut<Assets<ColorMaterial>>,
+    mut meshes: ResMut<Assets<Mesh>>,
 ) {
     let tree = asset_server.load("sprite/tree.png");
     let Some(rock) = game_data.tile_atlas.get("rock") else {
@@ -171,37 +177,65 @@ fn spawn_random_environment(
 
     let rng = &mut rand::thread_rng();
 
+    // spawn a solid background color for the grass
+    let grass_material = materials.add(colors::SAND_DUNE.into());
+    let big_rectangle = meshes.add(Mesh::from(shape::Quad {
+        size: Vec2::new(1000.0, 1000.0),
+        flip: false,
+    }));
+    // spawn it in the center of the screen
+    commands.spawn((
+        ColorMesh2dBundle {
+            material: grass_material,
+            mesh: big_rectangle.into(),
+            transform: Transform::from_xyz(0.0, 0.0, -10.0),
+            ..Default::default()
+        },
+        EnvironmentStuff,
+    ));
+
     for i in -16..16 {
         for j in -16..16 {
             if rng.gen_bool(0.25) {
-                commands.spawn(SpriteBundle {
-                    texture: tree.clone(),
-                    transform: Transform {
-                        #[allow(clippy::cast_precision_loss)]
-                        translation: Vec3::new(i as f32 * 32.0, j as f32 * 32.0, 0.0),
-                        scale: Vec3::splat(1.0),
+                commands.spawn((
+                    SpriteBundle {
+                        texture: tree.clone(),
+                        transform: Transform {
+                            #[allow(clippy::cast_precision_loss)]
+                            translation: Vec3::new(i as f32 * 32.0, j as f32 * 32.0, 0.0),
+                            scale: Vec3::splat(1.0),
+                            ..Default::default()
+                        },
                         ..Default::default()
                     },
-                    ..Default::default()
-                });
+                    EnvironmentStuff,
+                ));
             } else if rng.gen_bool(0.5) {
                 let index = rng.gen_range(0..2);
-                commands.spawn(SpriteSheetBundle {
-                    texture_atlas: rock.clone(),
-                    sprite: bevy::sprite::TextureAtlasSprite::new(index),
-                    transform: Transform {
-                        #[allow(clippy::cast_precision_loss)]
-                        translation: Vec3::new(
-                            (i as f32).mul_add(32.0, 8.0),
-                            (j as f32).mul_add(32.0, 8.0),
-                            0.0,
-                        ),
-                        scale: Vec3::splat(1.0),
+                let jitter = rng.gen_range(0.0..16.0);
+                commands.spawn((
+                    SpriteSheetBundle {
+                        texture_atlas: rock.clone(),
+                        sprite: bevy::sprite::TextureAtlasSprite::new(index),
+                        transform: Transform {
+                            #[allow(clippy::cast_precision_loss)]
+                            translation: Vec3::new(
+                                (i as f32).mul_add(32.0, jitter),
+                                (j as f32).mul_add(32.0, jitter),
+                                0.0,
+                            ),
+                            scale: Vec3::splat(1.0),
+                            ..Default::default()
+                        },
                         ..Default::default()
                     },
-                    ..Default::default()
-                });
+                    EnvironmentStuff,
+                ));
             }
         }
     }
 }
+
+/// Test environment stuff
+#[derive(Component)]
+pub struct EnvironmentStuff;

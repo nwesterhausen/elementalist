@@ -15,6 +15,9 @@ data:
   castType: instant
   spriteTileset: spell_projectiles
   spriteIndex: 11
+  particles:
+    - attachment: Projectile
+      particleId: aging-bolt
   debuff:
     duration: 2.50
     maxStacks: 1

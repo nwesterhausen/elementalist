@@ -164,12 +164,14 @@ impl Plugin for ElementalistGameplayPlugins {
 /// Spawn some trees as a test
 fn spawn_random_environment(
     mut commands: Commands,
-    asset_server: Res<AssetServer>,
     game_data: Res<GameData>,
     mut materials: ResMut<Assets<ColorMaterial>>,
     mut meshes: ResMut<Assets<Mesh>>,
 ) {
-    let tree = asset_server.load("sprite/tree.png");
+    let Some(tree) = game_data.tile_atlas.get("trees") else {
+        tracing::error!("Failed to load tree tile");
+        return;
+    };
     let Some(rock) = game_data.tile_atlas.get("rock") else {
         tracing::error!("Failed to load rock tile");
         return;
@@ -194,15 +196,25 @@ fn spawn_random_environment(
         EnvironmentStuff,
     ));
 
+    let mut no_tree = 0.0;
+
     for i in -16..16 {
         for j in -16..16 {
-            if rng.gen_bool(0.25) {
+            if rng.gen_bool(0.05 + no_tree) {
+                let index = rng.gen_range(0..=2);
+                let jitter = rng.gen_range(-16.0..16.0);
+                let y_val = (j as f32).mul_add(32.0, jitter);
                 commands.spawn((
-                    SpriteBundle {
-                        texture: tree.clone(),
+                    SpriteSheetBundle {
+                        texture_atlas: tree.clone(),
+                        sprite: bevy::sprite::TextureAtlasSprite::new(index),
                         transform: Transform {
                             #[allow(clippy::cast_precision_loss)]
-                            translation: Vec3::new(i as f32 * 32.0, j as f32 * 32.0, 0.0),
+                            translation: Vec3::new(
+                                (i as f32).mul_add(32.0, jitter),
+                                y_val,
+                                y_val / -100.0,
+                            ),
                             scale: Vec3::splat(1.0),
                             ..Default::default()
                         },
@@ -210,9 +222,14 @@ fn spawn_random_environment(
                     },
                     EnvironmentStuff,
                 ));
-            } else if rng.gen_bool(0.5) {
-                let index = rng.gen_range(0..2);
-                let jitter = rng.gen_range(0.0..16.0);
+                no_tree = 0.0;
+            } else if rng.gen_bool(0.1) {
+                let index = rng.gen_range(0..=2);
+                let mut jitter = rng.gen_range(0.0..16.0);
+                if index == 0 {
+                    jitter = 0.;
+                }
+                let y_val = (j as f32).mul_add(32.0, jitter);
                 commands.spawn((
                     SpriteSheetBundle {
                         texture_atlas: rock.clone(),
@@ -221,8 +238,8 @@ fn spawn_random_environment(
                             #[allow(clippy::cast_precision_loss)]
                             translation: Vec3::new(
                                 (i as f32).mul_add(32.0, jitter),
-                                (j as f32).mul_add(32.0, jitter),
-                                0.0,
+                                y_val,
+                                y_val / -100.0,
                             ),
                             scale: Vec3::splat(1.0),
                             ..Default::default()
@@ -232,6 +249,7 @@ fn spawn_random_environment(
                     EnvironmentStuff,
                 ));
             }
+            no_tree += 0.01;
         }
     }
 }

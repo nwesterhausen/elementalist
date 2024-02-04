@@ -21,3 +21,6 @@ data:
     - projectile
   castType: instant
   castCategory: projectile
+  particles:
+    - attachment: Projectile
+      particleId: death-bolt

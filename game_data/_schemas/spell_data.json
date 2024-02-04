@@ -134,6 +134,7 @@
 			"enum": ["touch", "projectile", "ground", "summon", "onSelf"]
 		},
 		"particles": {
+			"required": ["particleId", "attachment"],
 			"description": "Particles to attach to the spell",
 			"type": "array",
 			"items": {

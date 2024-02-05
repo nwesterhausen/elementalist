@@ -7,7 +7,7 @@ use super::{
     player_control::PlayerControlsPlugin,
     player_creation,
 };
-use crate::despawn_with_tag;
+use crate::{camera::MainCamera, despawn_with_tag};
 
 /// Plugin which handles adding all the systems and components for the player.
 pub struct PlayerPlugin;
@@ -33,7 +33,22 @@ impl Plugin for PlayerPlugin {
             );
 
         // Testing stuff
-        app.add_systems(Update, subtract_health);
+        app.add_systems(Update, subtract_health).add_systems(
+            PostUpdate,
+            camera_movement.run_if(in_state(AppState::InGame)),
+        );
+    }
+}
+
+fn camera_movement(
+    mut camera: Query<&mut Transform, (With<MainCamera>, Without<PlayerAvatar>)>,
+    player: Query<&Transform, With<PlayerAvatar>>,
+) {
+    for mut transform in &mut camera {
+        for player_transform in &player {
+            transform.translation.x = player_transform.translation.x;
+            transform.translation.y = player_transform.translation.y;
+        }
     }
 }
 

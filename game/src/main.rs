@@ -11,7 +11,7 @@ use bevy::{
     prelude::*,
     render::{render_resource::WgpuFeatures, settings::WgpuSettings, RenderPlugin},
 };
-use game_library::{colors, data_loader::storage::GameData, state::AppState};
+use game_library::{colors, data_loader::storage::GameData, state::AppState, SchedulingPlugin};
 use leafwing_input_manager::plugin::InputManagerPlugin;
 use rand::Rng;
 
@@ -96,6 +96,7 @@ fn main() {
             main_menu::MainMenuPlugin,
             game_overlays::GameOverlaysPlugin,
         ))
+        // Some test plugins for environment stuff
         .add_systems(OnEnter(AppState::InGame), spawn_random_environment)
         .add_systems(
             OnExit(AppState::InGame),
@@ -120,6 +121,8 @@ impl Plugin for ElementalistDefaultPlugins {
         app.add_systems(Startup, app_systems::set_window_icon);
         // Add camera plugin
         app.add_plugins(camera::CameraPlugin);
+        // Add the schedule plugin
+        app.add_plugins(SchedulingPlugin);
     }
 }
 

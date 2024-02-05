@@ -39,6 +39,7 @@ mod experience;
 mod health;
 mod mana;
 mod movement_bundle;
+mod noise;
 mod particle;
 mod schedule;
 mod shared_traits;

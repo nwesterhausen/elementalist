@@ -4,7 +4,7 @@ use bevy::prelude::*;
 use game_library::{
     font_resource::{ChangeFont, FontChoice, FontResource},
     settings::{next_font_family, AccessibilitySettings, SettingCategory, SettingChanged},
-    state::MenuState,
+    state::Settings,
 };
 
 use crate::{despawn_with_tag, resources::style_prefab};
@@ -90,7 +90,7 @@ pub(super) struct AccessibilitySettingsMenuPlugin;
 impl Plugin for AccessibilitySettingsMenuPlugin {
     fn build(&self, app: &mut App) {
         app.add_systems(
-            OnEnter(MenuState::Accessibility),
+            OnEnter(Settings::Accessibility),
             show_accessibility_settings,
         );
         app.add_systems(
@@ -99,10 +99,10 @@ impl Plugin for AccessibilitySettingsMenuPlugin {
                 handle_accessibility_setting_changes,
                 (update_current_font_family_text),
             )
-                .run_if(in_state(MenuState::Accessibility)),
+                .run_if(in_state(Settings::Accessibility)),
         );
         app.add_systems(
-            OnExit(MenuState::Accessibility),
+            OnExit(Settings::Accessibility),
             despawn_with_tag::<AccessibilitySettingsMenuEntity>,
         );
     }

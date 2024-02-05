@@ -1,7 +1,7 @@
 use crate::despawn_with_tag;
 use bevy::prelude::*;
-use game_library::events::CastSpell;
 use game_library::state::AppState;
+use game_library::{events::CastSpell, state::Overlay};
 
 use super::{
     cast_spell::cast_spells,
@@ -22,10 +22,11 @@ impl Plugin for SpellsPlugin {
             // Spell systems
             .add_systems(
                 Update,
-                (despawn_expired_spells, cast_spells).run_if(in_state(AppState::InGame)),
+                (despawn_expired_spells, cast_spells)
+                    .run_if(in_state(AppState::InGame).and_then(not(in_state(Overlay::Settings)))),
             )
             // despawn all spells when leaving the game (to main menu)
             // stuff automatically despawns when the game exits
-            .add_systems(OnEnter(AppState::MainMenu), despawn_with_tag::<SpellEntity>);
+            .add_systems(OnExit(AppState::InGame), despawn_with_tag::<SpellEntity>);
     }
 }

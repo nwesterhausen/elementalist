@@ -1,16 +1,15 @@
 use bevy::prelude::*;
-use game_library::state::{AppState, MenuState};
+use game_library::state::{Overlay, Settings};
 use leafwing_input_manager::action_state::ActionState;
 
-use crate::{events::MenuInteraction, player::Player, resources::ReturnToState};
+use crate::{events::MenuInteraction, player::Player};
 
 /// Handle menu input
 pub fn menu_input(
     query: Query<&ActionState<MenuInteraction>, With<Player>>,
-    menu_state: Res<State<MenuState>>,
-    mut next_menu_state: ResMut<NextState<MenuState>>,
-    mut next_app_state: ResMut<NextState<AppState>>,
-    return_to_state: Res<ReturnToState>,
+    menu_state: Res<State<Settings>>,
+    mut next_menu_state: ResMut<NextState<Settings>>,
+    mut next_overlay_state: ResMut<NextState<Overlay>>,
 ) {
     let action_state = query.single();
     if action_state.just_pressed(MenuInteraction::Up) {
@@ -23,11 +22,11 @@ pub fn menu_input(
         println!("Select (in Menu)");
     }
     if action_state.just_pressed(MenuInteraction::Back) {
-        if *menu_state == MenuState::Main {
-            next_app_state.set(return_to_state.0.clone());
-            next_menu_state.set(MenuState::Disabled);
+        if *menu_state == Settings::Main {
+            next_overlay_state.set(Overlay::None);
+            next_menu_state.set(Settings::Disabled);
         } else {
-            next_menu_state.set(MenuState::Main);
+            next_menu_state.set(Settings::Main);
         }
     }
 }

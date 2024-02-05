@@ -4,7 +4,7 @@ use bevy::prelude::*;
 use game_library::{
     font_resource::FontResource,
     settings::{SettingCategory, SettingChanged, VolumeSettings},
-    state::MenuState,
+    state::Settings,
 };
 
 use crate::{despawn_with_tag, resources::style_prefab};
@@ -163,7 +163,7 @@ pub(super) struct AudioSettingsMenuPlugin;
 
 impl Plugin for AudioSettingsMenuPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(OnEnter(MenuState::Audio), show_audio_settings);
+        app.add_systems(OnEnter(Settings::Audio), show_audio_settings);
         app.add_systems(
             Update,
             (
@@ -174,10 +174,10 @@ impl Plugin for AudioSettingsMenuPlugin {
                     update_current_sfx_volume_text,
                 ),
             )
-                .run_if(in_state(MenuState::Audio)),
+                .run_if(in_state(Settings::Audio)),
         );
         app.add_systems(
-            OnExit(MenuState::Audio),
+            OnExit(Settings::Audio),
             despawn_with_tag::<AudioSettingsMenuEntity>,
         );
     }

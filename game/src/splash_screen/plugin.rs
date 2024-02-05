@@ -12,12 +12,12 @@ impl Plugin for SplashScreenPlugin {
         // As this plugin is managing the splash screen, it will focus on the state `AppState::Splash`
         app
             // When entering the state, spawn everything needed for this screen
-            .add_systems(OnEnter(AppState::AppLoading), splash_setup)
+            .add_systems(OnEnter(AppState::Startup), splash_setup)
             // While in this state, run the `countdown` system
-            .add_systems(Update, countdown.run_if(in_state(AppState::AppLoading)))
+            .add_systems(Update, countdown.run_if(in_state(AppState::Startup)))
             // When exiting the state, despawn everything that was spawned for this screen
             .add_systems(
-                OnExit(AppState::AppLoading),
+                OnExit(AppState::Startup),
                 despawn_with_tag::<OnSplashScreen>,
             );
     }

@@ -168,6 +168,6 @@ impl std::fmt::Display for Skill {
             Self::Mutatiomancy => "Mutatiomancy",
             Self::Chronomancy => "Chronomancy",
         };
-        write!(f, "{}", s)
+        write!(f, "{s}")
     }
 }

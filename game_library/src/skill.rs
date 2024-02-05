@@ -49,16 +49,19 @@ pub struct Skills {
 
 impl Skills {
     /// Get xp for a skill.
+    #[must_use]
     pub fn get_xp(&self, skill: Skill) -> Option<&Xp> {
         self.tracks.get(&skill)
     }
     /// Get the level for a skill.
+    #[must_use]
     pub fn get_level(&self, skill: Skill) -> Option<u32> {
         self.get_xp(skill).map(|xp| xp.current_level)
     }
     /// Get the percentage to the next level for a skill.
+    #[must_use]
     pub fn get_percentage_to_next_level(&self, skill: Skill) -> Option<f32> {
-        self.get_xp(skill).map(|xp| xp.next_level_progress())
+        self.get_xp(skill).map(Xp::next_level_progress)
     }
     /// Add xp to a skill.
     pub fn add_xp(&mut self, skill: Skill, xp: u32) {

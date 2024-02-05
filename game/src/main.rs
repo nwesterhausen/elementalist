@@ -203,6 +203,7 @@ fn spawn_random_environment(
             if rng.gen_bool(0.05 + no_tree) {
                 let index = rng.gen_range(0..=2);
                 let jitter = rng.gen_range(-16.0..16.0);
+                #[allow(clippy::cast_precision_loss)]
                 let y_val = (j as f32).mul_add(32.0, jitter);
                 commands.spawn((
                     SpriteSheetBundle {
@@ -225,10 +226,12 @@ fn spawn_random_environment(
                 no_tree = 0.0;
             } else if rng.gen_bool(0.1) {
                 let index = rng.gen_range(0..=2);
-                let mut jitter = rng.gen_range(0.0..16.0);
-                if index == 0 {
-                    jitter = 0.;
-                }
+                let jitter = if index == 0 {
+                    0.
+                } else {
+                    rng.gen_range(-16.0..16.0)
+                };
+                #[allow(clippy::cast_precision_loss)]
                 let y_val = (j as f32).mul_add(32.0, jitter);
                 commands.spawn((
                     SpriteSheetBundle {

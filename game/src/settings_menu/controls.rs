@@ -2,7 +2,7 @@
 
 use bevy::prelude::*;
 use game_library::font_resource::FontResource;
-use game_library::state::MenuState;
+use game_library::state::Settings;
 
 use crate::{despawn_with_tag, resources::style_prefab};
 
@@ -53,13 +53,13 @@ pub(super) struct ControlsSettingsMenuPlugin;
 
 impl Plugin for ControlsSettingsMenuPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(OnEnter(MenuState::Controls), show_controls_settings);
+        app.add_systems(OnEnter(Settings::Controls), show_controls_settings);
         // app.add_systems(
         //     Update,
         //     (handle_control_settings_changes,).run_if(in_state(MenuState::Controls)),
         // );
         app.add_systems(
-            OnExit(MenuState::Controls),
+            OnExit(Settings::Controls),
             despawn_with_tag::<ControlsSettingsMenuEntity>,
         );
     }

@@ -1,5 +1,8 @@
 use bevy::prelude::*;
-use game_library::{state::AppState, Acceleration, Velocity};
+use game_library::{
+    state::{AppState, Overlay},
+    Acceleration, Velocity,
+};
 
 /// Plugin that makes moving things move
 pub struct MovementPlugin;
@@ -8,7 +11,8 @@ impl Plugin for MovementPlugin {
     fn build(&self, app: &mut App) {
         app.add_systems(
             Update,
-            (update_velocity, update_position).run_if(in_state(AppState::InGame)),
+            (update_velocity, update_position)
+                .run_if(in_state(AppState::InGame).and_then(not(in_state(Overlay::Settings)))),
         );
     }
 }

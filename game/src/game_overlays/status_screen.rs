@@ -2,7 +2,7 @@
 use bevy::prelude::*;
 use game_library::{
     font_resource::FontResource,
-    state::{AppState, OverlayState},
+    state::{AppState, Overlay},
     StatBundle,
 };
 use leafwing_input_manager::action_state::ActionState;
@@ -13,13 +13,13 @@ pub(super) struct StatusScreenPlugin;
 
 impl Plugin for StatusScreenPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(OnEnter(OverlayState::Status), spawn_status_screen);
+        app.add_systems(OnEnter(Overlay::Status), spawn_status_screen);
         app.add_systems(
             Update,
             toggle_status_screen.run_if(in_state(AppState::InGame)),
         );
         app.add_systems(
-            OnExit(OverlayState::Status),
+            OnExit(Overlay::Status),
             despawn_with_tag::<StatusScreenEntity>,
         );
     }
@@ -82,16 +82,16 @@ fn spawn_status_screen(
 
 /// System to handle opening the status screen or closing it
 fn toggle_status_screen(
-    mut next_state: ResMut<NextState<OverlayState>>,
-    state: Res<State<OverlayState>>,
+    mut next_state: ResMut<NextState<Overlay>>,
+    state: Res<State<Overlay>>,
     query: Query<&ActionState<PlayerAction>, With<Player>>,
 ) {
     if let Ok(action_state) = query.get_single() {
         if action_state.just_pressed(PlayerAction::StatusOverlay) {
-            if *state == OverlayState::Status {
-                next_state.set(OverlayState::Normal);
+            if *state == Overlay::Status {
+                next_state.set(Overlay::None);
             } else {
-                next_state.set(OverlayState::Status);
+                next_state.set(Overlay::Status);
             }
         }
     } else {

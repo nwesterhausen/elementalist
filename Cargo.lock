@@ -3795,12 +3795,24 @@ dependencies = [
 ]
 
 [[package]]
-name = "serde_default_utils"
-version = "0.2.1"
+name = "serde-inline-default"
+version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b528184e8ea6409c5574f2cd3d28a81d1c559c7c425a22b4ed371f0f2d3f2b6a"
+checksum = "9980133dc534d02ab08df3b384295223a45090c40a4c46240e3eaa982b495910"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.46",
+]
+
+[[package]]
+name = "serde_default_utils"
+version = "0.2.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "08cfeb4ce708d7d1e4cec34a291b9b920395d3fd4c7c072fac22c345365f770c"
 dependencies = [
  "paste",
+ "serde-inline-default",
 ]
 
 [[package]]

@@ -64,6 +64,7 @@ pub use experience::Xp;
 pub use health::Health;
 pub use mana::Mana;
 pub use movement_bundle::MovementBundle;
+pub use noise::NoisePlugin;
 pub use schedule::*;
 pub use shared_traits::InternalId;
 pub use skill::Skills;

@@ -18,8 +18,10 @@
 //! We need integers from the noise, because we need to determine what tile to place
 //! at a given position. We can use the `get_tile_at` method to determine what tile
 //! to place at a given position, and then use the `Tile` to place the tile. (roughly)
+mod beta_info;
 mod generator;
 mod plugin;
 mod resources;
 
+#[allow(clippy::module_name_repetitions)]
 pub use plugin::NoisePlugin;

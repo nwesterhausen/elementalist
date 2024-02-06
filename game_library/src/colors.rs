@@ -16,7 +16,9 @@ pub const BACKGROUND_COLOR_50: Color = Color::rgba(0.169, 0.133, 0.165, 0.5);
 pub const CLEAR_COLOR: Color = MIRAGE;
 
 /// The color used for text.
-pub const TEXT_COLOR: Color = Color::rgba(1., 0.658, 0.27, 1.);
+pub const TEXT_COLOR: Color = MYSTIC;
+/// Partially transparent text color.
+pub const TEXT_COLOR_25: Color = Color::rgba(0.835, 0.937, 0.937, 0.25);
 
 /// The color used for selected text.
 pub const SELECTED_TEXT_COLOR: Color = KANGAROO;

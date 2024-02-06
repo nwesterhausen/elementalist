@@ -11,7 +11,10 @@ use bevy::{
     prelude::*,
     render::{render_resource::WgpuFeatures, settings::WgpuSettings, RenderPlugin},
 };
-use game_library::{colors, data_loader::storage::GameData, state::AppState, SchedulingPlugin};
+use game_library::{
+    colors, data_loader::storage::GameData, state::Game, NoisePlugin, SchedulingPlugin,
+};
+use in_game::InGamePlugin;
 use leafwing_input_manager::plugin::InputManagerPlugin;
 use rand::Rng;
 
@@ -22,6 +25,7 @@ mod camera;
 mod dev_systems;
 mod events;
 mod game_overlays;
+mod in_game;
 mod main_menu;
 mod player;
 mod resources;
@@ -96,12 +100,10 @@ fn main() {
             main_menu::MainMenuPlugin,
             game_overlays::GameOverlaysPlugin,
         ))
+        .add_plugins(NoisePlugin)
         // Some test plugins for environment stuff
-        .add_systems(OnEnter(AppState::InGame), spawn_random_environment)
-        .add_systems(
-            OnExit(AppState::InGame),
-            despawn_with_tag::<EnvironmentStuff>,
-        )
+        .add_systems(OnEnter(Game::Playing), spawn_random_environment)
+        .add_systems(OnExit(Game::Playing), despawn_with_tag::<EnvironmentStuff>)
         // Launch
         .run();
 }
@@ -161,6 +163,7 @@ impl Plugin for ElementalistGameplayPlugins {
             InputManagerPlugin::<PlayerAction>::default(),
             InputManagerPlugin::<MenuInteraction>::default(),
         ));
+        app.add_plugins(InGamePlugin);
     }
 }
 

@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use game_library::{state::AppState, Health, Xp};
+use game_library::{state::Game, Health, Xp};
 
 use super::{
     avatar::{self, PlayerAvatar},
@@ -21,22 +21,17 @@ impl Plugin for PlayerPlugin {
             .add_plugins(PlayerControlsPlugin)
             .add_systems(Update, (menu_control::menu_input,))
             // Sprite stuff
-            .add_systems(OnEnter(AppState::InGame), avatar::spawn_player_avatar)
+            .add_systems(OnEnter(Game::Playing), avatar::spawn_player_avatar)
             .add_systems(
                 Update,
-                (movement::player_movement_controls).run_if(in_state(AppState::InGame)),
+                (movement::player_movement_controls).run_if(in_state(Game::Playing)),
             )
             // Remove player when leaving game
-            .add_systems(
-                OnEnter(AppState::MainMenu),
-                despawn_with_tag::<PlayerAvatar>,
-            );
+            .add_systems(OnExit(Game::Playing), despawn_with_tag::<PlayerAvatar>);
 
         // Testing stuff
-        app.add_systems(Update, subtract_health).add_systems(
-            PostUpdate,
-            camera_movement.run_if(in_state(AppState::InGame)),
-        );
+        app.add_systems(Update, subtract_health)
+            .add_systems(PostUpdate, camera_movement.run_if(in_state(Game::Playing)));
     }
 }
 

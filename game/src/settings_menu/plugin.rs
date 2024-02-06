@@ -26,8 +26,10 @@ impl Plugin for SettingsMenuPlugin {
         app.add_state::<Settings>();
         app.add_event::<ChangeSetting>();
         // Add system to setup the menu
-        app.add_systems(OnEnter(Overlay::Settings), transition_to_base_menu);
-        app.add_systems(OnEnter(Settings::Main), (clear_background, show_main_menu));
+        app.add_systems(
+            OnEnter(Settings::Main),
+            (clear_background, show_main_menu).chain(),
+        );
         app.add_systems(
             OnExit(Settings::Main),
             (despawn_with_tag::<BaseSettingsMenuEntity>,),
@@ -50,5 +52,14 @@ impl Plugin for SettingsMenuPlugin {
         ));
         // Add system to update the buttons on hover, and respond to button presses
         app.add_systems(Update, menu_actions.run_if(in_state(Overlay::Settings)));
+        // Add system to transition to the next state when the settings menu is entered
+        app.add_systems(OnEnter(Overlay::Settings), transition_to_base_menu);
+        // Add system to transition to the next state when the settings menu is exited
+        app.add_systems(OnExit(Overlay::Settings), exit_settings_menu);
     }
+}
+
+/// Transition to [`Settings::Disabled`] when the settings menu is exited.
+fn exit_settings_menu(mut next_settings_state: ResMut<NextState<Settings>>) {
+    next_settings_state.set(Settings::Disabled);
 }

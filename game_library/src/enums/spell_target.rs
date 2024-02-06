@@ -1,5 +1,9 @@
+use bevy::reflect::Reflect;
+
 /// The target of a spell; where the spell can be targeted at
-#[derive(Debug, Clone, Hash, Default, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[derive(
+    Debug, Clone, Hash, Default, PartialEq, Eq, serde::Serialize, serde::Deserialize, Reflect,
+)]
 #[serde(rename_all = "camelCase")]
 pub enum SpellTarget {
     /// The spell can be cast on any entity.

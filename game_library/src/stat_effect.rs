@@ -2,12 +2,14 @@
 //!
 //! If a spell causes entities to move slower, this would have an effect that reduces the movement speed stat.
 
+use bevy::reflect::Reflect;
+
 use crate::{enums::SpellTarget, enums::StatEnum, StatBonus};
 
 /// Effects from a spell or other item.
 ///
 /// Describes in detail how a this effect can be applied.
-#[derive(Debug, Clone, Default, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, Default, PartialEq, Eq, serde::Serialize, serde::Deserialize, Reflect)]
 #[serde(rename_all = "camelCase")]
 pub struct StatEffect {
     /// An identifier for the effect.

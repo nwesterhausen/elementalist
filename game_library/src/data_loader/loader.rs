@@ -1,16 +1,15 @@
-use bevy::{prelude::*, utils::hashbrown::HashMap};
-use bevy_hanabi::prelude::*;
+use bevy::prelude::*;
 use serde_yaml;
 use std::hash::Hash;
 use walkdir::WalkDir;
 
 use crate::{
-    data_loader::DATA_FILE_DIR, enums::GameSystem, particle::Particle, InternalId,
-    LoadedParticleData, LoadedTilesetData, SpellData, Tileset,
+    data_loader::DATA_FILE_DIR, enums::GameSystem, particle::Particle, InternalId, SpellData,
+    Tileset,
 };
 
 use super::{
-    events::LoadedSpellData,
+    events::{LoadedParticleData, LoadedSpellData, LoadedTilesetData},
     header_def::{DataFile, DataFileHeader},
     DataFileHeaderOnly,
 };
@@ -159,108 +158,4 @@ pub fn load_data_file_dir(
         tilesets_read,
         particles_read
     );
-}
-
-/// The tile atlas store is a resource that holds all the tilesets that have been loaded into the game.
-///
-/// They are stored by their `unique_id`, which is supplied in the header.
-#[derive(Resource, Default, Debug, Clone, PartialEq, Eq)]
-pub struct TileAtlasStore {
-    /// The tilesets that have been loaded into the game.
-    pub tilesets: HashMap<String, Handle<TextureAtlas>>,
-}
-/// The particle asset store is a resource that holds all the particles that have been loaded into the game.
-///
-/// They are stored by their `unique_id`, which is supplied in the header.
-#[derive(Resource, Default, Debug, Clone, PartialEq, Eq)]
-pub struct ParticleEffectStore {
-    /// The particles that have been loaded into the game.
-    pub particles: HashMap<String, Handle<EffectAsset>>,
-}
-
-/// Load the tilesets into the game and store a handle under the `unique_id`.
-#[allow(clippy::needless_pass_by_value)]
-pub fn load_tilesets(
-    mut er_tileset_df: EventReader<LoadedTilesetData>,
-    mut texture_atlases: ResMut<Assets<TextureAtlas>>,
-    mut tile_atlas_store: ResMut<TileAtlasStore>,
-    asset_server: Res<AssetServer>,
-) {
-    for tileset in er_tileset_df.read() {
-        let unique_id = &tileset.tileset_data.header.unique_id;
-        let tileset = &tileset.tileset_data.data;
-
-        let texture_handle = asset_server.load(&tileset.path);
-        let texture_atlas = TextureAtlas::from_grid(
-            texture_handle,
-            Vec2::new(tileset.tile_width, tileset.tile_height),
-            tileset.tileset_width,
-            tileset.tileset_height,
-            None,
-            None,
-        );
-
-        let atlas_handle = texture_atlases.add(texture_atlas);
-
-        tile_atlas_store
-            .tilesets
-            .insert(String::from(unique_id), atlas_handle);
-    }
-}
-
-/// System to load a particle effect.
-pub fn load_particle_effects(
-    mut effects: ResMut<Assets<EffectAsset>>,
-    mut er_particle_df: EventReader<LoadedParticleData>,
-    mut particle_effect_store: ResMut<ParticleEffectStore>,
-) {
-    for data_file in er_particle_df.read() {
-        let unique_id = &data_file.particle_data.header.unique_id;
-        let particle = &data_file.particle_data.data;
-
-        let writer = ExprWriter::new();
-
-        let age = writer.lit(0.).expr();
-        let init_age = SetAttributeModifier::new(Attribute::AGE, age);
-
-        let lifetime = writer.lit(particle.lifetime).expr();
-        let init_lifetime = SetAttributeModifier::new(Attribute::LIFETIME, lifetime);
-
-        let init_pos = SetPositionCircleModifier {
-            center: writer.lit(Vec3::ZERO).expr(),
-            axis: writer.lit(Vec3::Z).expr(),
-            radius: writer.lit(particle.initial_position.radius).expr(),
-            dimension: particle
-                .initial_position
-                .shape_dimension
-                .as_shape_dimension(),
-        };
-
-        let init_vel = SetVelocityCircleModifier {
-            center: writer.lit(Vec3::ZERO).expr(),
-            axis: writer.lit(Vec3::Z).expr(),
-            speed: writer.lit(particle.initial_velocity.speed).expr(),
-        };
-
-        let spawner = Spawner::rate(particle.spawn_rate.into());
-        let effect = effects.add(
-            EffectAsset::new(particle.capacity, spawner, writer.finish())
-                .with_name(unique_id)
-                .init(init_pos)
-                .init(init_vel)
-                .init(init_age)
-                .init(init_lifetime)
-                .render(SizeOverLifetimeModifier {
-                    gradient: particle.get_size_gradient(),
-                    screen_space_size: false,
-                })
-                .render(ColorOverLifetimeModifier {
-                    gradient: particle.get_color_gradient(),
-                }),
-        );
-
-        particle_effect_store
-            .particles
-            .insert(String::from(unique_id), effect);
-    }
 }

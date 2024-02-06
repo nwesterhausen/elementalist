@@ -1,8 +1,7 @@
 use bevy::prelude::*;
 
-use crate::resources::{AppState, ReturnToState};
-
 use super::MenuState;
+use game_library::state::{AppState, Overlay};
 
 /// All of the various "buttons" that can be clicked in any of the main menu screens
 #[derive(Component, Debug, Eq, PartialEq, Hash, Clone, Copy)]
@@ -31,7 +30,7 @@ pub fn menu_actions(
     >,
     mut menu_state: ResMut<NextState<MenuState>>,
     mut game_state: ResMut<NextState<AppState>>,
-    mut return_to_state: ResMut<ReturnToState>,
+    mut overlay_state: ResMut<NextState<Overlay>>,
 ) {
     // Loop through all the buttons that have been interacted with
     for (interaction, menu_button_action) in &interaction_query {
@@ -45,11 +44,8 @@ pub fn menu_actions(
                     menu_state.set(MenuState::Disabled);
                 }
                 ButtonAction::Settings => {
-                    // Set the return to state to the main menu
-                    return_to_state.0 = AppState::MainMenu;
                     // Set the game state to the settings menu
-                    game_state.set(AppState::SettingsMenu);
-                    menu_state.set(MenuState::Disabled);
+                    overlay_state.set(Overlay::Settings);
                 }
             }
         }

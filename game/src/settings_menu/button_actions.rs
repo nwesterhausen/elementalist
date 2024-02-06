@@ -2,7 +2,7 @@
 
 use bevy::prelude::*;
 
-use crate::resources::{AppState, MenuState, ReturnToState};
+use game_library::state::{AppState, Overlay, Settings};
 
 use super::events::{ChangeSetting, IndividualSetting};
 
@@ -56,9 +56,9 @@ pub fn menu_actions(
         (&Interaction, &ButtonAction),
         (Changed<Interaction>, With<Button>, With<SettingsMenuButton>),
     >,
-    mut menu_state: ResMut<NextState<MenuState>>,
+    mut menu_state: ResMut<NextState<Settings>>,
     mut game_state: ResMut<NextState<AppState>>,
-    return_to_state: Res<ReturnToState>,
+    mut overlay_state: ResMut<NextState<Overlay>>,
     mut ew_change_setting: EventWriter<ChangeSetting>,
 ) {
     // Loop through all the buttons that have been interacted with
@@ -68,19 +68,19 @@ pub fn menu_actions(
             // Check which button action has been pressed (i.e. what action we attached to the button)
             match menu_button_action {
                 ButtonAction::CloseMenu => {
-                    menu_state.set(MenuState::Disabled);
-                    game_state.set(return_to_state.0);
+                    menu_state.set(Settings::Disabled);
+                    overlay_state.set(Overlay::None);
                 }
                 ButtonAction::GoToMainGameMenu => {
-                    menu_state.set(MenuState::Disabled);
+                    menu_state.set(Settings::Disabled);
                     game_state.set(AppState::MainMenu);
                 }
-                ButtonAction::BackToMenu => menu_state.set(MenuState::Main),
-                ButtonAction::SettingsAudio => menu_state.set(MenuState::Audio),
-                ButtonAction::SettingsDisplay => menu_state.set(MenuState::Display),
-                ButtonAction::SettingsControls => menu_state.set(MenuState::Controls),
-                ButtonAction::SettingsGameplay => menu_state.set(MenuState::Gameplay),
-                ButtonAction::SettingsAccessibility => menu_state.set(MenuState::Accessibility),
+                ButtonAction::BackToMenu => menu_state.set(Settings::Main),
+                ButtonAction::SettingsAudio => menu_state.set(Settings::Audio),
+                ButtonAction::SettingsDisplay => menu_state.set(Settings::Display),
+                ButtonAction::SettingsControls => menu_state.set(Settings::Controls),
+                ButtonAction::SettingsGameplay => menu_state.set(Settings::Gameplay),
+                ButtonAction::SettingsAccessibility => menu_state.set(Settings::Accessibility),
                 ButtonAction::ToggleAutoCast => {
                     ew_change_setting.send(ChangeSetting {
                         setting: IndividualSetting::AutoCast,

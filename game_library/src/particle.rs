@@ -1,12 +1,30 @@
 //! Particle effect details.
 use bevy::math::{Vec2, Vec4};
+use bevy::reflect::Reflect;
 use bevy_hanabi::prelude::*;
 
 use crate::{colors::PaletteColor, data_loader::DataFile, enums::GameSystem, InternalId};
 use std::{any::Any, fmt::Write, hash::Hash};
 
+/// Default lifetime used if not specified. This is the lifetime of the particles in seconds.
+pub const PARTICLE_DEFAULT_LIFETIME: f32 = 0.5;
+/// Default spawn rate used if not specified. This is the number of particles to spawn per second.
+pub const PARTICLE_DEFAULT_SPAWN_RATE: f32 = 25.0;
+/// Default capacity used if not specified. This is the maximum number of particles to be alive at any given time.
+pub const PARTICLE_DEFAULT_CAPACITY: u32 = 100;
+/// Default velocity used if not specified. This is the speed of the particles.
+pub const PARTICLE_DEFAULT_SPEED: f32 = 2.0;
+/// Default radius used if not specified. This is the spread of the particles.
+pub const PARTICLE_DEFAULT_RADIUS: f32 = 2.0;
+/// Default color used if not specified.
+///
+/// <div style="background-color:rgb(100%, 100%, 100%); width: 10px; padding: 10px; border: 1px solid;"></div>
+pub const PARTICLE_DEFAULT_COLOR: Vec4 = Vec4::new(1.0, 1.0, 1.0, 1.0);
+/// Default size that is used if not specified.
+pub const PARTICLE_DEFAULT_SIZE: f32 = 0.75;
+
 /// Details about a particle effect.
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, Reflect)]
 #[serde(rename_all = "camelCase")]
 pub struct Particle {
     /// The internal ID of the particle effect.
@@ -37,25 +55,28 @@ pub struct Particle {
 }
 
 mod particle_defaults {
+    use super::{
+        PARTICLE_DEFAULT_CAPACITY, PARTICLE_DEFAULT_LIFETIME, PARTICLE_DEFAULT_SPAWN_RATE,
+    };
 
     #[must_use]
     pub const fn lifetime() -> f32 {
-        1.0
+        PARTICLE_DEFAULT_LIFETIME
     }
 
     #[must_use]
     pub const fn spawn_rate() -> f32 {
-        1.0
+        PARTICLE_DEFAULT_SPAWN_RATE
     }
 
     #[must_use]
     pub const fn capacity() -> u32 {
-        100
+        PARTICLE_DEFAULT_CAPACITY
     }
 }
 
 /// Initial velocity for a particle effect.
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, Reflect)]
 #[serde(rename_all = "camelCase")]
 #[allow(clippy::module_name_repetitions)]
 pub struct ParticleInitialVelocity {
@@ -72,13 +93,13 @@ impl Default for ParticleInitialVelocity {
         Self {
             center_x: 0.0,
             center_y: 0.0,
-            speed: 0.0,
+            speed: PARTICLE_DEFAULT_SPEED,
         }
     }
 }
 
 /// Initial position for a particle effect.
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, Reflect)]
 #[serde(rename_all = "camelCase")]
 #[allow(clippy::module_name_repetitions)]
 pub struct ParticleInitialPosition {
@@ -94,14 +115,14 @@ impl Default for ParticleInitialPosition {
     fn default() -> Self {
         Self {
             modifier_type: PositionModifierType::Circle,
-            radius: 0.0,
+            radius: PARTICLE_DEFAULT_RADIUS,
             shape_dimension: ShapeDimensionType::Volume,
         }
     }
 }
 
 /// The type of position modifier for the particles.
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, Default)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, Default, Reflect)]
 #[serde(rename_all = "camelCase")]
 pub enum PositionModifierType {
     /// A circle shape
@@ -110,7 +131,7 @@ pub enum PositionModifierType {
 }
 
 /// The type of position modifier for the particles.
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, Default)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, Default, Reflect)]
 #[serde(rename_all = "camelCase")]
 pub enum ShapeDimensionType {
     /// The entire volume of the circle
@@ -132,7 +153,7 @@ impl ShapeDimensionType {
 }
 
 /// Color for a particle effect.
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, Reflect)]
 #[serde(rename_all = "camelCase")]
 #[allow(clippy::module_name_repetitions)]
 pub struct ParticleColorGradient {
@@ -160,7 +181,7 @@ impl Default for ParticleColorGradient {
 }
 
 /// Color for a particle effect.
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, Reflect)]
 #[serde(rename_all = "camelCase")]
 #[allow(clippy::module_name_repetitions)]
 pub struct ParticleSizeGradient {
@@ -262,7 +283,12 @@ impl Particle {
     /// Get a gradient from the particle's color gradients.
     #[must_use]
     pub fn get_color_gradient(&self) -> Gradient<Vec4> {
+        if self.color_gradients.is_empty() {
+            return Gradient::constant(PARTICLE_DEFAULT_COLOR);
+        }
+
         let mut gradient = Gradient::new();
+
         for color in &self.color_gradients {
             let mut color_vec: Vec4 = color.color.to_color().as_rgba_f32().into();
             if (color.alpha - 1.0).abs() > f32::EPSILON {
@@ -278,7 +304,12 @@ impl Particle {
     /// Get a gradient from the particle's size gradients.
     #[must_use]
     pub fn get_size_gradient(&self) -> Gradient<Vec2> {
+        if self.size_gradients.is_empty() {
+            return Gradient::constant(Vec2::splat(PARTICLE_DEFAULT_SIZE));
+        }
+
         let mut gradient = Gradient::new();
+
         for size in &self.size_gradients {
             if size.height.is_finite() {
                 gradient.add_key(

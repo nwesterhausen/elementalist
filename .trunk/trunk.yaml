@@ -21,7 +21,7 @@ lint:
     - markdownlint@0.39.0
     - yamllint@1.33.0
     - actionlint@1.6.26
-    - checkov@3.2.2
+    - checkov@3.2.5
     - clippy@1.65.0
     - git-diff-check
     - osv-scanner@1.6.2
@@ -31,8 +31,8 @@ lint:
     - shellcheck@0.9.0
     - shfmt@3.6.0
     - taplo@0.8.1
-    - trivy@0.48.3
-    - trufflehog@3.66.2
+    - trivy@0.49.0
+    - trufflehog@3.66.3
 actions:
   disabled:
     - trunk-announce

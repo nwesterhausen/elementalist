@@ -11,7 +11,9 @@ use bevy::{
     prelude::*,
     render::{render_resource::WgpuFeatures, settings::WgpuSettings, RenderPlugin},
 };
+use game_library::{colors, data_loader::storage::GameData, state::AppState, SchedulingPlugin};
 use leafwing_input_manager::plugin::InputManagerPlugin;
+use rand::Rng;
 
 mod app_info;
 mod app_systems;
@@ -94,6 +96,12 @@ fn main() {
             main_menu::MainMenuPlugin,
             game_overlays::GameOverlaysPlugin,
         ))
+        // Some test plugins for environment stuff
+        .add_systems(OnEnter(AppState::InGame), spawn_random_environment)
+        .add_systems(
+            OnExit(AppState::InGame),
+            despawn_with_tag::<EnvironmentStuff>,
+        )
         // Launch
         .run();
 }
@@ -113,6 +121,8 @@ impl Plugin for ElementalistDefaultPlugins {
         app.add_systems(Startup, app_systems::set_window_icon);
         // Add camera plugin
         app.add_plugins(camera::CameraPlugin);
+        // Add the schedule plugin
+        app.add_plugins(SchedulingPlugin);
     }
 }
 
@@ -153,3 +163,103 @@ impl Plugin for ElementalistGameplayPlugins {
         ));
     }
 }
+
+/// Spawn some trees as a test
+fn spawn_random_environment(
+    mut commands: Commands,
+    game_data: Res<GameData>,
+    mut materials: ResMut<Assets<ColorMaterial>>,
+    mut meshes: ResMut<Assets<Mesh>>,
+) {
+    let Some(tree) = game_data.tile_atlas.get("trees") else {
+        tracing::error!("Failed to load tree tile");
+        return;
+    };
+    let Some(rock) = game_data.tile_atlas.get("rock") else {
+        tracing::error!("Failed to load rock tile");
+        return;
+    };
+
+    let rng = &mut rand::thread_rng();
+
+    // spawn a solid background color for the grass
+    let grass_material = materials.add(colors::THUNDER.into());
+    let big_rectangle = meshes.add(Mesh::from(shape::Quad {
+        size: Vec2::new(1000.0, 1000.0),
+        flip: false,
+    }));
+    // spawn it in the center of the screen
+    commands.spawn((
+        ColorMesh2dBundle {
+            material: grass_material,
+            mesh: big_rectangle.into(),
+            transform: Transform::from_xyz(0.0, 0.0, -10.0),
+            ..Default::default()
+        },
+        EnvironmentStuff,
+    ));
+
+    let mut no_tree = 0.0;
+
+    for i in -16..16 {
+        for j in -16..16 {
+            if rng.gen_bool(0.05 + no_tree) {
+                let index = rng.gen_range(0..=2);
+                let jitter = rng.gen_range(-16.0..16.0);
+                #[allow(clippy::cast_precision_loss)]
+                let y_val = (j as f32).mul_add(32.0, jitter);
+                commands.spawn((
+                    SpriteSheetBundle {
+                        texture_atlas: tree.clone(),
+                        sprite: bevy::sprite::TextureAtlasSprite::new(index),
+                        transform: Transform {
+                            #[allow(clippy::cast_precision_loss)]
+                            translation: Vec3::new(
+                                (i as f32).mul_add(32.0, jitter),
+                                y_val,
+                                y_val / -100.0,
+                            ),
+                            scale: Vec3::splat(1.0),
+                            ..Default::default()
+                        },
+                        ..Default::default()
+                    },
+                    EnvironmentStuff,
+                ));
+                no_tree = 0.0;
+            } else if rng.gen_bool(0.1) {
+                let index = rng.gen_range(0..=2);
+                let jitter = if index == 0 {
+                    0.
+                } else {
+                    rng.gen_range(-16.0..16.0)
+                };
+                #[allow(clippy::cast_precision_loss)]
+                let y_val = (j as f32).mul_add(32.0, jitter);
+                commands.spawn((
+                    SpriteSheetBundle {
+                        texture_atlas: rock.clone(),
+                        sprite: bevy::sprite::TextureAtlasSprite::new(index),
+                        transform: Transform {
+                            #[allow(clippy::cast_precision_loss)]
+                            translation: Vec3::new(
+                                (i as f32).mul_add(32.0, jitter),
+                                y_val,
+                                y_val / -100.0,
+                            ),
+                            scale: Vec3::splat(1.0),
+                            ..Default::default()
+                        },
+                        ..Default::default()
+                    },
+                    EnvironmentStuff,
+                ));
+            }
+            no_tree += 0.01;
+        }
+    }
+}
+
+/// Test environment stuff
+#[derive(Component)]
+pub struct EnvironmentStuff;

@@ -1,0 +1,14 @@
+header:
+  uniqueId: trees
+  system: Tileset
+  author: Steve Jones
+  description: Tree sprites for the environment
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  path: tileset/trees.png
+  tileWidth: 64
+  tileHeight: 64
+  tileSetWidth: 3
+  tileSetHeight: 1

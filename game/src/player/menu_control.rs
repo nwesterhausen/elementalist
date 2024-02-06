@@ -1,10 +1,16 @@
 use bevy::prelude::*;
+use game_library::state::{Overlay, Settings};
 use leafwing_input_manager::action_state::ActionState;
 
 use crate::{events::MenuInteraction, player::Player};
 
 /// Handle menu input
-pub fn menu_input(query: Query<&ActionState<MenuInteraction>, With<Player>>) {
+pub fn menu_input(
+    query: Query<&ActionState<MenuInteraction>, With<Player>>,
+    menu_state: Res<State<Settings>>,
+    mut next_menu_state: ResMut<NextState<Settings>>,
+    mut next_overlay_state: ResMut<NextState<Overlay>>,
+) {
     let action_state = query.single();
     if action_state.just_pressed(MenuInteraction::Up) {
         println!("Up (in Menu)");
@@ -16,6 +22,11 @@ pub fn menu_input(query: Query<&ActionState<MenuInteraction>, With<Player>>) {
         println!("Select (in Menu)");
     }
     if action_state.just_pressed(MenuInteraction::Back) {
-        println!("Back (in Menu)");
+        if *menu_state == Settings::Main {
+            next_overlay_state.set(Overlay::None);
+            next_menu_state.set(Settings::Disabled);
+        } else {
+            next_menu_state.set(Settings::Main);
+        }
     }
 }

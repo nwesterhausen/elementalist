@@ -5,7 +5,7 @@ use bevy::{prelude::*, utils::hashbrown::HashMap};
 use crate::{enums::StatEnum, Stat};
 
 /// Bundle that contains data for all stats an entity might have.
-#[derive(Component, Default, Debug)]
+#[derive(Component, Default, Debug, Reflect)]
 pub struct StatBundle {
     /// A mapping of stat to stat value.
     pub stats: HashMap<StatEnum, Stat>,

@@ -1,9 +1,9 @@
 //! Has systems for the display settings menu.
 
 use bevy::prelude::*;
-use game_library::{font_resource::FontResource, settings::VideoSettings};
+use game_library::{font_resource::FontResource, settings::VideoSettings, state::Settings};
 
-use crate::{despawn_with_tag, resources::style_prefab, resources::MenuState};
+use crate::{despawn_with_tag, resources::style_prefab};
 
 use super::{
     base::SettingsMenuEntity,
@@ -92,13 +92,13 @@ pub(super) struct DisplaySettingsMenuPlugin;
 
 impl Plugin for DisplaySettingsMenuPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(OnEnter(MenuState::Display), show_display_settings);
+        app.add_systems(OnEnter(Settings::Display), show_display_settings);
         // app.add_systems(
         //     Update,
         //     (handle_display_settings_changes,).run_if(in_state(MenuState::Display)),
         // );
         app.add_systems(
-            OnExit(MenuState::Display),
+            OnExit(Settings::Display),
             despawn_with_tag::<DisplaySettingsMenuEntity>,
         );
     }

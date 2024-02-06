@@ -6,17 +6,14 @@ use game_library::{
     font_resource::{change_font, ChangeFont, FontResource},
     progress_bar::ProgressBarPlugin,
     settings::SettingsPlugin,
+    state::{AppState, Game, Save, Settings},
     CursorPosition, Health, Mana, SpellChoices, Xp,
 };
 
 use crate::{app_systems, resources::buttons};
 
 use super::{
-    cleanup::cleanup_then_exit,
-    cursor_position::update_cursor_position,
-    fonts::set_initial_fonts,
-    state::{GameState, MenuState, SaveState},
-    AppState, ReturnToState,
+    cleanup::cleanup_then_exit, cursor_position::update_cursor_position, fonts::set_initial_fonts,
 };
 
 /// Elementalist resources plugin. This loads the resources needed which may not be
@@ -40,9 +37,9 @@ impl Plugin for ElementalistResourcesPlugin {
     fn build(&self, app: &mut App) {
         // The app states
         app.add_state::<AppState>()
-            .add_state::<GameState>()
-            .add_state::<MenuState>()
-            .add_state::<SaveState>();
+            .add_state::<Game>()
+            .add_state::<Settings>()
+            .add_state::<Save>();
 
         // Data loading plugin
         app.add_plugins(DataLoaderPlugin);
@@ -65,9 +62,6 @@ impl Plugin for ElementalistResourcesPlugin {
             );
 
         app
-            // Return to state lets us move into [`AppState::SettingsMenu`] and then return to where we
-            // were before we entered the settings menu.
-            .init_resource::<ReturnToState>()
             // The cursor position resource, used to aim spells or know cursor coordinates easily
             .insert_resource(CursorPosition::default())
             // The player's spell choices

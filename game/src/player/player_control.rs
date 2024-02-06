@@ -1,12 +1,13 @@
 use bevy::prelude::*;
-use game_library::{events::CastSpell, settings::GameplaySettings, SpellChoices};
+use game_library::{
+    events::CastSpell,
+    settings::GameplaySettings,
+    state::{AppState, Overlay},
+    SpellChoices,
+};
 use leafwing_input_manager::action_state::ActionState;
 
-use crate::{
-    events::PlayerAction,
-    player::Player,
-    resources::{AppState, ReturnToState},
-};
+use crate::{events::PlayerAction, player::Player};
 
 pub(super) struct PlayerControlsPlugin;
 
@@ -153,8 +154,7 @@ fn player_toggle_auto_system(
 fn player_press_pause_system(
     query: Query<&ActionState<PlayerAction>, With<Player>>,
     current_state: Res<State<AppState>>,
-    mut app_state: ResMut<NextState<AppState>>,
-    mut return_to_state: ResMut<ReturnToState>,
+    mut next_overlay_state: ResMut<NextState<Overlay>>,
 ) {
     if *current_state.get() != AppState::InGame {
         return;
@@ -166,8 +166,7 @@ fn player_press_pause_system(
     };
 
     if action_state.just_pressed(PlayerAction::Pause) {
-        // Pause the game and open the settings menu
-        return_to_state.0 = AppState::InGame;
-        app_state.set(AppState::SettingsMenu);
+        // Pause the game (automatically happens when in [`Overlay::Settings`]) and open the settings menu
+        next_overlay_state.set(Overlay::Settings);
     }
 }

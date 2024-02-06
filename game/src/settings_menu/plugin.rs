@@ -3,10 +3,8 @@
 
 use bevy::prelude::*;
 
-use crate::{
-    despawn_with_tag,
-    resources::{AppState, MenuState},
-};
+use crate::despawn_with_tag;
+use game_library::state::{Overlay, Settings};
 
 use super::{
     accessibility::AccessibilitySettingsMenuPlugin,
@@ -25,18 +23,18 @@ pub struct SettingsMenuPlugin;
 
 impl Plugin for SettingsMenuPlugin {
     fn build(&self, app: &mut App) {
-        app.add_state::<MenuState>();
+        app.add_state::<Settings>();
         app.add_event::<ChangeSetting>();
         // Add system to setup the menu
-        app.add_systems(OnEnter(AppState::SettingsMenu), transition_to_base_menu);
-        app.add_systems(OnEnter(MenuState::Main), (clear_background, show_main_menu));
+        app.add_systems(OnEnter(Overlay::Settings), transition_to_base_menu);
+        app.add_systems(OnEnter(Settings::Main), (clear_background, show_main_menu));
         app.add_systems(
-            OnExit(MenuState::Main),
+            OnExit(Settings::Main),
             (despawn_with_tag::<BaseSettingsMenuEntity>,),
         );
         // When disabled, we should clean up all the entities that are part of the menu.
         app.add_systems(
-            OnEnter(MenuState::Disabled),
+            OnEnter(Settings::Disabled),
             (
                 despawn_with_tag::<SettingsMenuEntity>,
                 despawn_with_tag::<SettingsMenuBackground>,
@@ -51,9 +49,6 @@ impl Plugin for SettingsMenuPlugin {
             GameplaySettingsMenuPlugin,
         ));
         // Add system to update the buttons on hover, and respond to button presses
-        app.add_systems(
-            Update,
-            menu_actions.run_if(in_state(AppState::SettingsMenu)),
-        );
+        app.add_systems(Update, menu_actions.run_if(in_state(Overlay::Settings)));
     }
 }

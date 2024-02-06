@@ -2,7 +2,13 @@
 
 This directory has the raw graphics used in the game.
 
-The graphics are put onto sprite sheets and then saved to the [assets](../game/assets) directory for use in the game.
+The graphics are put onto sprite sheets and then saved to the [game/assets](../game/assets) directory for use in the game.
+
+The files in this directly are never bundled with the published versions and only used to generate "baked" assets for the game to use.
+
+## Contributing Assets
+
+If you are going to edit/contribute assets, please use the [Comfy52](https://lospec.com/palette-list/comfy52) color palette for consistent color styling of assets. PRs welcome! (Otherwise we may be stuck with my programmer art forever!)
 
 ## Tools Used
 

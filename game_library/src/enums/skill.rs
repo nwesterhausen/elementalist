@@ -117,4 +117,57 @@ impl Skill {
             Self::Chronomancy => MagicType::Time,
         }
     }
+
+    /// Get the index of the skill icon in the tile atlas
+    ///
+    /// This is hard-coded for now, but we could make it configurable..
+    #[must_use]
+    pub const fn icon_index(self) -> usize {
+        match self {
+            Self::Aeromancy => 0,
+            Self::Arcanomancy => 1,
+            Self::Ampiliomancy => 2,
+            Self::Chronomancy => 3,
+            Self::Citomancy => 4,
+            Self::Cryomancy => 5,
+            Self::Diminiomancy => 6,
+            Self::Fulgomancy => 7,
+            Self::Geomancy => 8,
+            Self::Hydromancy => 9,
+            Self::Mortomancy => 10,
+            Self::Mutatiomancy => 11,
+            Self::Necromancy => 12,
+            Self::Photomancy => 13,
+            Self::Pyromancy => 14,
+            Self::Trudomancy => 15,
+            Self::Umbramancy => 16,
+            Self::Vitomancy => 17,
+        }
+    }
+}
+
+impl std::fmt::Display for Skill {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let s = match self {
+            Self::Pyromancy => "Pyromancy",
+            Self::Fulgomancy => "Fulgomancy",
+            Self::Hydromancy => "Hydromancy",
+            Self::Geomancy => "Geomancy",
+            Self::Aeromancy => "Aeromancy",
+            Self::Cryomancy => "Cryomancy",
+            Self::Trudomancy => "Trudomancy",
+            Self::Photomancy => "Photomancy",
+            Self::Umbramancy => "Umbramancy",
+            Self::Arcanomancy => "Arcanomancy",
+            Self::Vitomancy => "Vitomancy",
+            Self::Mortomancy => "Mortomancy",
+            Self::Ampiliomancy => "Ampiliomancy",
+            Self::Diminiomancy => "Diminiomancy",
+            Self::Citomancy => "Citomancy",
+            Self::Necromancy => "Necromancy",
+            Self::Mutatiomancy => "Mutatiomancy",
+            Self::Chronomancy => "Chronomancy",
+        };
+        write!(f, "{s}")
+    }
 }

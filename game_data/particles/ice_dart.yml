@@ -1,0 +1,16 @@
+header:
+  uniqueId: ice_dart
+  author: Nicholas Westerhausen
+  description: A particle effect for the water bolt spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+  system: Particle
+data:
+  capacity: 32
+  colorGradients:
+    - index: 0.0
+      color: WaterLeaf
+    - index: 1.0
+      color: WaterLeaf
+      alpha: 0.0

@@ -4,9 +4,10 @@ use bevy::prelude::*;
 use game_library::{
     font_resource::FontResource,
     settings::{GameplaySettings, SettingCategory, SettingChanged},
+    state::Settings,
 };
 
-use crate::{despawn_with_tag, resources::style_prefab, resources::MenuState};
+use crate::{despawn_with_tag, resources::style_prefab};
 
 use super::{
     base::SettingsMenuEntity,
@@ -110,7 +111,7 @@ pub(super) struct GameplaySettingsMenuPlugin;
 
 impl Plugin for GameplaySettingsMenuPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(OnEnter(MenuState::Gameplay), show_gameplay_settings);
+        app.add_systems(OnEnter(Settings::Gameplay), show_gameplay_settings);
         app.add_systems(
             Update,
             (
@@ -120,10 +121,10 @@ impl Plugin for GameplaySettingsMenuPlugin {
                     update_current_auto_cast_state_text,
                 ),
             )
-                .run_if(in_state(MenuState::Gameplay)),
+                .run_if(in_state(Settings::Gameplay)),
         );
         app.add_systems(
-            OnExit(MenuState::Gameplay),
+            OnExit(Settings::Gameplay),
             despawn_with_tag::<GameplaySettingsMenuEntity>,
         );
     }

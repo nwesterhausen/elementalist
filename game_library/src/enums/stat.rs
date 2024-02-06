@@ -130,3 +130,44 @@ impl std::fmt::Display for StatEnum {
         }
     }
 }
+
+impl StatEnum {
+    /// Returns a vec of all variants of the enum.
+    #[must_use]
+    pub const fn variants() -> [Self; 32] {
+        [
+            Self::Health,
+            Self::Mana,
+            Self::DamageReduction,
+            Self::DamageResistance,
+            Self::DamageReflection,
+            Self::DamageAmplification,
+            Self::CriticalStrikeChance,
+            Self::CriticalStrikeDamage,
+            Self::LifeSteal,
+            Self::ManaSteal,
+            Self::MovementSpeed,
+            Self::StunResistance,
+            Self::HealthRegeneration,
+            Self::ManaRegeneration,
+            Self::ProjectileSpeed,
+            Self::ProjectileSize,
+            Self::ProjectileLifetime,
+            Self::DodgeChance,
+            Self::AttackDamage,
+            Self::AttackSpeed,
+            Self::AttackRange,
+            Self::PhysicalDamageReduction,
+            Self::PhysicalDamageResistance,
+            Self::PhysicalDamageReflection,
+            Self::PhysicalDamageAmplification,
+            Self::MagicDamage,
+            Self::CooldownReduction,
+            Self::SpellRange,
+            Self::MagicalDamageReduction,
+            Self::MagicalDamageResistance,
+            Self::MagicalDamageReflection,
+            Self::MagicalDamageAmplification,
+        ]
+    }
+}

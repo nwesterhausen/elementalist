@@ -1,4 +1,7 @@
-use bevy::ecs::{component::Component, system::Resource};
+use bevy::{
+    ecs::{component::Component, system::Resource},
+    reflect::Reflect,
+};
 use serde::{Deserialize, Serialize};
 
 use crate::enums::Skill;
@@ -6,7 +9,9 @@ use crate::enums::Skill;
 /// The different types of magic.
 ///
 /// Each school of magic has a corresponding [`Skill`].
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Component, Resource, Serialize, Deserialize)]
+#[derive(
+    Debug, Clone, Copy, PartialEq, Eq, Hash, Component, Resource, Serialize, Deserialize, Reflect,
+)]
 #[serde(rename_all = "camelCase")]
 #[allow(clippy::module_name_repetitions)]
 pub enum MagicType {

@@ -1,6 +1,7 @@
 use bevy::prelude::*;
 
-use crate::{despawn_with_tag, resources::AppState};
+use crate::despawn_with_tag;
+use game_library::state::AppState;
 
 use super::{button_actions::menu_actions, screens};
 

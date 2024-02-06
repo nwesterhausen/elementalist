@@ -1,10 +1,12 @@
 use bevy::prelude::*;
 
-use crate::{LoadedParticleData, LoadedSpellData, LoadedTilesetData};
-
 use super::{
-    load_particle_effects,
-    loader::{load_data_file_dir, load_tilesets, ParticleEffectStore, TileAtlasStore},
+    events::{LoadedParticleData, LoadedSpellData, LoadedTilesetData},
+    load_data_file_dir,
+    particles::load_particle_effects,
+    spells::load_spells,
+    storage::GameData,
+    tilesets::load_tilesets,
 };
 
 /// The plugin for the data loader.
@@ -20,9 +22,8 @@ impl Plugin for DataLoaderPlugin {
             .add_event::<LoadedParticleData>();
 
         // Set up the resources used and the systems to store the data
-        app.init_resource::<TileAtlasStore>()
-            .init_resource::<ParticleEffectStore>()
-            .add_systems(Update, (load_tilesets, load_particle_effects));
+        app.init_resource::<GameData>()
+            .add_systems(Update, (load_tilesets, load_particle_effects, load_spells));
 
         // Add the system to load the data
         app.add_systems(Startup, load_data_file_dir);

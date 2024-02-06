@@ -1,11 +1,9 @@
 //! Main menu systems.
 use bevy::prelude::*;
 use game_library::font_resource::FontResource;
+use game_library::state::AppState;
 
-use crate::{
-    resources::style_prefab,
-    resources::{AppState, ReturnToState},
-};
+use crate::resources::style_prefab;
 
 use super::{
     base::SettingsMenuEntity,
@@ -21,7 +19,7 @@ pub struct BaseSettingsMenuEntity;
 pub fn show_main_menu(
     mut commands: Commands,
     fonts: Res<FontResource>,
-    return_to_state: Res<ReturnToState>,
+    current_state: Res<State<AppState>>,
 ) {
     commands
         .spawn((
@@ -118,7 +116,7 @@ pub fn show_main_menu(
                             ));
                         });
                     // Back to MainMenu (show when we came from InGame)
-                    if return_to_state.0 == AppState::InGame {
+                    if *current_state == AppState::InGame {
                         menu_buttons
                             .spawn((
                                 style_prefab::menu_button_bundle(),

@@ -3,7 +3,7 @@
 use bevy::{prelude::*, sprite::MaterialMesh2dBundle, window::PrimaryWindow};
 use game_library::colors::BACKGROUND_COLOR_50;
 
-use crate::resources::MenuState;
+use game_library::state::Settings;
 
 /// An entity tag for ease of cleanup when the menu is disabled.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Component)]
@@ -49,6 +49,6 @@ pub(super) fn clear_background(
 /// System to setup settings menu.
 ///
 /// When the settings menu is entered, we should setup the menu.
-pub(super) fn transition_to_base_menu(mut menu_state: ResMut<NextState<MenuState>>) {
-    menu_state.set(MenuState::Main);
+pub(super) fn transition_to_base_menu(mut menu_state: ResMut<NextState<Settings>>) {
+    menu_state.set(Settings::Main);
 }

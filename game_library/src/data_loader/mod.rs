@@ -4,9 +4,14 @@
 //! loading the game data files and sending events with the loaded data.
 
 pub mod events;
+pub mod storage;
+
 mod header_def;
 mod loader;
+mod particles;
 mod plugin;
+mod spells;
+mod tilesets;
 
 /// The directory where the game data files are stored
 pub const DATA_FILE_DIR: &str = "game_data";

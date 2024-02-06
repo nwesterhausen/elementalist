@@ -11,8 +11,7 @@ pub fn set_initial_fonts(
     font_resource.fancy_font_handle = asset_loader.load("ui/fonts/Almendra-Regular.ttf");
     font_resource.dyslexic_font_handle = asset_loader.load("ui/fonts/OpenDyslexic-Regular.otf");
     font_resource.sans_serif_font_handle = asset_loader.load("ui/fonts/RedHatDisplay-Regular.ttf");
-    font_resource.monospace_font_handle =
-        asset_loader.load("ui/fonts/NanumGothicCoding-Regular.ttf");
+    font_resource.monospace_font_handle = asset_loader.load("ui/fonts/SyneMono-Regular.ttf");
 
     // Set the initial fonts
     font_resource.display_font = font_resource.display_font_handle.clone();

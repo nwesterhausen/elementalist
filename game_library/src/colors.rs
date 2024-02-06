@@ -5,6 +5,7 @@
 //! The colors come from the Comfy52 color palette <https://lospec.com/palette-list/comfy52>
 
 use bevy::prelude::*;
+use bevy::reflect::Reflect;
 
 /// The dark color used for the background.
 pub const BACKGROUND_COLOR: Color = DARKER_THUNDER;
@@ -204,7 +205,7 @@ pub const MONGOOSE: Color = Color::rgba(0.706, 0.616, 0.494, 1.);
 pub const KANGAROO: Color = Color::rgba(0.769, 0.776, 0.722, 1.);
 
 /// Color of the Comfy52 palette to be able to use in the game.
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, Default)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, Default, Reflect)]
 pub enum PaletteColor {
     /// <div style="background-color:rgb(25%, 25%, 16%); width: 10px; padding: 10px; border: 1px solid;"></div>
     Rangitoto,

@@ -1,8 +1,13 @@
-use bevy::ecs::{component::Component, system::Resource};
+use bevy::{
+    ecs::{component::Component, system::Resource},
+    reflect::Reflect,
+};
 use serde::{Deserialize, Serialize};
 
 /// Where the spell can be slotted for casting.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Component, Resource, Serialize, Deserialize)]
+#[derive(
+    Debug, Clone, Copy, PartialEq, Eq, Hash, Component, Resource, Serialize, Deserialize, Reflect,
+)]
 #[serde(rename_all = "camelCase")]
 pub enum CastSlot {
     /// Primary spells typically have no mana cost and a short cooldown. Typically used for basic

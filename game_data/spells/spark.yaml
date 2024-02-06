@@ -21,3 +21,8 @@ data:
     - homing
   spriteTileset: spell_projectiles
   spriteIndex: 9
+  castCategory: projectile
+  castType: instant
+  particles:
+    - attachment: Projectile
+      particleId: spark

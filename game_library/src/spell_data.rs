@@ -5,19 +5,24 @@
 //! ```yaml
 //! # $schema: "https://schemas.nwest.one/games/elementalist/spell.json"
 //! ```
+use bevy::reflect::Reflect;
 use serde_default_utils::{default_i32, default_usize};
 use std::{any::Any, hash::Hash};
 
 use crate::{
     data_loader::DataFile,
-    enums::{CastCategory, CastSlot, CastType, GameSystem, MagicType, Skill, SpellCollision},
+    enums::{
+        CastCategory, CastSlot, CastType, GameSystem, MagicType, ParticleAttachment, Skill,
+        SpellCollision,
+    },
+    shared_traits::KnownCastSlot,
     InternalId, StatEffect,
 };
 
 /// Details about a spell.
 ///
 /// Describes in detail how a spell works and how it should be displayed.
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, Reflect)]
 #[serde(rename_all = "camelCase")]
 pub struct SpellData {
     /// The internal ID of the spell.
@@ -104,6 +109,11 @@ pub struct SpellData {
     /// Debuffs that the spell can apply to the caster or to the target.
     #[serde(default = "Vec::new")]
     pub debuffs: Vec<StatEffect>,
+
+    // #### SPELL PARTICLES ####
+    /// Particles that the spell can create.
+    #[serde(default = "Vec::new")]
+    pub particles: Vec<SpellParticles>,
 }
 
 impl Hash for SpellData {
@@ -140,8 +150,14 @@ impl InternalId for SpellData {
     }
 }
 
-pub trait KnownCastSlot {
-    fn cast_slot(&self) -> CastSlot;
+/// A particle that a spell can create.
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, Reflect)]
+#[serde(rename_all = "camelCase")]
+pub struct SpellParticles {
+    /// The unique_id for the particle effect
+    pub particle_id: String,
+    /// The attachment point for the particle effect
+    pub attachment: ParticleAttachment,
 }
 
 impl KnownCastSlot for SpellData {
@@ -255,6 +271,7 @@ impl Default for SpellData {
             angle: 0,
             buffs: Vec::new(),
             debuffs: Vec::new(),
+            particles: Vec::new(),
         }
     }
 }

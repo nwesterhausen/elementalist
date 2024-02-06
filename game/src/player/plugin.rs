@@ -1,14 +1,15 @@
 use bevy::prelude::*;
-use game_library::{Health, Xp};
+use game_library::{state::AppState, Health, Xp};
 
 use super::{
-    entity::{self, PlayerAvatar},
+    avatar::{self, PlayerAvatar},
     menu_control, movement,
     player_control::PlayerControlsPlugin,
     player_creation,
 };
-use crate::{despawn_with_tag, resources::AppState};
+use crate::{camera::MainCamera, despawn_with_tag};
 
+/// Plugin which handles adding all the systems and components for the player.
 pub struct PlayerPlugin;
 
 impl Plugin for PlayerPlugin {
@@ -20,7 +21,7 @@ impl Plugin for PlayerPlugin {
             .add_plugins(PlayerControlsPlugin)
             .add_systems(Update, (menu_control::menu_input,))
             // Sprite stuff
-            .add_systems(OnEnter(AppState::InGame), entity::spawn_player_avatar)
+            .add_systems(OnEnter(AppState::InGame), avatar::spawn_player_avatar)
             .add_systems(
                 Update,
                 (movement::player_movement_controls).run_if(in_state(AppState::InGame)),
@@ -32,11 +33,31 @@ impl Plugin for PlayerPlugin {
             );
 
         // Testing stuff
-        app.add_systems(Update, subtract_health);
+        app.add_systems(Update, subtract_health).add_systems(
+            PostUpdate,
+            camera_movement.run_if(in_state(AppState::InGame)),
+        );
+    }
+}
+
+fn camera_movement(
+    mut camera: Query<&mut Transform, (With<MainCamera>, Without<PlayerAvatar>)>,
+    player: Query<&Transform, With<PlayerAvatar>>,
+) {
+    for mut transform in &mut camera {
+        for player_transform in &player {
+            transform.translation.x = player_transform.translation.x;
+            transform.translation.y = player_transform.translation.y;
+        }
     }
 }
 
 /// System that subtracts 1 from a the players health when the 'H' key is pressed.
+///
+/// It also adds 1 to the player's experience points when the 'X' key is pressed.
+///
+/// This is just a test system to see if the player's health and experience points are
+/// being updated correctly.
 fn subtract_health(
     mut player_health: Query<&mut Health, With<PlayerAvatar>>,
     mut player_xp: Query<&mut Xp, With<PlayerAvatar>>,

@@ -4,16 +4,17 @@
 //!
 //! Skills are able to be leveled up, and have no level cap but do have a
 //! soft cap that makes it harder to level up the higher the skill is (this is
-//! automatically handled by the `[game_library::Xp]` component).
+//! automatically handled by the [`game_library::Xp`] component).
 
 use bevy::{
     ecs::{component::Component, system::Resource},
     reflect::Reflect,
+    utils::HashMap,
 };
 use bevy_inspector_egui::inspector_options::{InspectorOptions, ReflectInspectorOptions};
 use serde::{Deserialize, Serialize};
 
-use crate::{enums::Skill, progress_bar::Percentage, Xp};
+use crate::{enums::Skill, Xp};
 
 /// Skills are used to track a meta-progression of a player's abilities.
 ///
@@ -32,10 +33,8 @@ use crate::{enums::Skill, progress_bar::Percentage, Xp};
     Component,
     Debug,
     Clone,
-    Copy,
     PartialEq,
     Eq,
-    Hash,
     Serialize,
     Deserialize,
     Reflect,
@@ -43,15 +42,37 @@ use crate::{enums::Skill, progress_bar::Percentage, Xp};
 )]
 #[reflect(InspectorOptions)]
 #[allow(clippy::module_name_repetitions)]
-pub struct SkillTrack {
-    /// The skill the this is tracking
-    pub skill: Skill,
-    /// The experience points the player has in this skill
-    pub xp: Xp,
+pub struct Skills {
+    /// Skill tracks for each of the different skills.
+    pub tracks: HashMap<Skill, Xp>,
 }
 
-impl Percentage for SkillTrack {
-    fn percentage(&self) -> f32 {
-        self.xp.next_level_progress()
+impl Skills {
+    /// Get xp for a skill.
+    #[must_use]
+    pub fn get_xp(&self, skill: Skill) -> Option<&Xp> {
+        self.tracks.get(&skill)
+    }
+    /// Get the level for a skill.
+    #[must_use]
+    pub fn get_level(&self, skill: Skill) -> Option<u32> {
+        self.get_xp(skill).map(|xp| xp.current_level)
+    }
+    /// Get the percentage to the next level for a skill.
+    #[must_use]
+    pub fn get_percentage_to_next_level(&self, skill: Skill) -> Option<f32> {
+        self.get_xp(skill).map(Xp::next_level_progress)
+    }
+    /// Add xp to a skill.
+    pub fn add_xp(&mut self, skill: Skill, xp: u32) {
+        if let Some(skill_xp) = self.tracks.get_mut(&skill) {
+            skill_xp.add(xp);
+        }
+    }
+    /// Level-up a skill.
+    pub fn level_up(&mut self, skill: Skill) {
+        if let Some(skill_xp) = self.tracks.get_mut(&skill) {
+            skill_xp.level_up();
+        }
     }
 }

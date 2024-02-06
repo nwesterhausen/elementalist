@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::resources::OverlayState;
+use game_library::state::Overlay;
 
 use super::status_screen::StatusScreenPlugin;
 
@@ -9,7 +9,6 @@ pub struct GameOverlaysPlugin;
 
 impl Plugin for GameOverlaysPlugin {
     fn build(&self, app: &mut App) {
-        app.add_state::<OverlayState>()
-            .add_plugins(StatusScreenPlugin);
+        app.add_state::<Overlay>().add_plugins(StatusScreenPlugin);
     }
 }

@@ -1,5 +1,6 @@
 use bevy::prelude::*;
 use bevy::winit::WinitWindows;
+use game_library::colors;
 use game_library::font_resource::FontResource;
 use winit::window::Icon;
 
@@ -20,7 +21,7 @@ pub fn add_game_descriptor(mut commands: Commands, fonts: Res<FontResource>) {
             TextStyle {
                 font: fonts.console_font.clone(),
                 font_size: 12.0,
-                color: Color::rgba(1.0, 1.0, 1.0, 0.25),
+                color: colors::TEXT_COLOR_25,
             },
         ),
         style: Style {

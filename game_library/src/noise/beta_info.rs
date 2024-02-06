@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::font_resource::FontResource;
+use crate::{colors, font_resource::FontResource};
 
 use super::resources::GenerationSeed;
 
@@ -21,7 +21,7 @@ pub(super) fn draw_seed_on_screen(
             TextStyle {
                 font,
                 font_size: 12.0,
-                color: Color::rgba(1.0, 1.0, 1.0, 0.25),
+                color: colors::TEXT_COLOR_25,
             },
         ),
         style: Style {

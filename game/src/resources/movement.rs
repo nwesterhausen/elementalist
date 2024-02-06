@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 use game_library::{
-    state::{AppState, Overlay},
+    state::{Game, Overlay},
     Acceleration, Velocity,
 };
 
@@ -12,7 +12,7 @@ impl Plugin for MovementPlugin {
         app.add_systems(
             Update,
             (update_velocity, update_position)
-                .run_if(in_state(AppState::InGame).and_then(not(in_state(Overlay::Settings)))),
+                .run_if(in_state(Game::Playing).and_then(not(in_state(Overlay::Settings)))),
         );
     }
 }

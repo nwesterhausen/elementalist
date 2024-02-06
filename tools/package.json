@@ -1,0 +1,10 @@
+{
+	"name": "elementalist-tools",
+	"scripts": {
+		"docs": "node ./update_design_notes.js"
+	},
+	"dependencies": {
+		"@tabler/icons-png": "^2.45.0",
+		"yaml": "^2.3.4"
+	}
+}

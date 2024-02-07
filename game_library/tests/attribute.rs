@@ -6,10 +6,10 @@ fn new() {
 
     assert_eq!(attribute.current, 100_u32);
     assert!(u32::from(attribute) == 100_u32);
-
-    assert_eq!(attribute.is_empty(), false);
-    assert_eq!(attribute.is_full(), true);
-    assert_eq!(attribute.remaining(), 1.);
+    assert!(!attribute.is_empty());
+    assert!(attribute.is_full());
+    let almost_eq = (attribute.remaining() - 1.0).abs() < f32::EPSILON;
+    assert!(almost_eq);
     assert_eq!(attribute.percentage_remaining(), 100);
 }
 
@@ -19,10 +19,10 @@ fn new_with_current() {
 
     assert_eq!(attribute.current, 20_u32);
     assert!(u32::from(attribute) == 20_u32);
-
-    assert_eq!(attribute.is_empty(), false);
-    assert_eq!(attribute.is_full(), false);
-    assert_eq!(attribute.remaining(), 0.2);
+    assert!(!attribute.is_empty());
+    assert!(!attribute.is_full());
+    let almost_eq = (attribute.remaining() - 0.2).abs() < f32::EPSILON;
+    assert!(almost_eq);
     assert_eq!(attribute.percentage_remaining(), 20);
 }
 
@@ -32,10 +32,10 @@ fn new_with_current_greater_than_max() {
 
     assert_eq!(attribute.current, 100_u32);
     assert!(u32::from(attribute) == 100_u32);
-
-    assert_eq!(attribute.is_empty(), false);
-    assert_eq!(attribute.is_full(), true);
-    assert_eq!(attribute.remaining(), 1.);
+    assert!(!attribute.is_empty());
+    assert!(attribute.is_full());
+    let almost_eq = (attribute.remaining() - 1.0).abs() < f32::EPSILON;
+    assert!(almost_eq);
     assert_eq!(attribute.percentage_remaining(), 100);
 }
 
@@ -47,10 +47,10 @@ fn add_to_current() {
 
     assert_eq!(attribute.current, 30_u32);
     assert!(u32::from(attribute) == 30_u32);
-
-    assert_eq!(attribute.is_empty(), false);
-    assert_eq!(attribute.is_full(), false);
-    assert_eq!(attribute.remaining(), 0.3);
+    assert!(!attribute.is_empty());
+    assert!(!attribute.is_full());
+    let almost_eq = (attribute.remaining() - 0.3).abs() < f32::EPSILON;
+    assert!(almost_eq);
     assert_eq!(attribute.percentage_remaining(), 30);
 }
 
@@ -62,10 +62,10 @@ fn add_to_current_greater_than_max() {
 
     assert_eq!(attribute.current, 100_u32);
     assert!(u32::from(attribute) == 100_u32);
-
-    assert_eq!(attribute.is_empty(), false);
-    assert_eq!(attribute.is_full(), true);
-    assert_eq!(attribute.remaining(), 1.);
+    assert!(!attribute.is_empty());
+    assert!(attribute.is_full());
+    let almost_eq = (attribute.remaining() - 1.0).abs() < f32::EPSILON;
+    assert!(almost_eq);
     assert_eq!(attribute.percentage_remaining(), 100);
 }
 
@@ -77,10 +77,10 @@ fn add_to_current_negative() {
 
     assert_eq!(attribute.current, 10_u32);
     assert!(u32::from(attribute) == 10_u32);
-
-    assert_eq!(attribute.is_empty(), false);
-    assert_eq!(attribute.is_full(), false);
-    assert_eq!(attribute.remaining(), 0.1);
+    assert!(!attribute.is_empty());
+    assert!(!attribute.is_full());
+    let almost_eq = (attribute.remaining() - 0.1).abs() < f32::EPSILON;
+    assert!(almost_eq);
     assert_eq!(attribute.percentage_remaining(), 10);
 }
 
@@ -92,10 +92,10 @@ fn add_to_current_negative_below_zero() {
 
     assert_eq!(attribute.current, 0_u32);
     assert!(u32::from(attribute) == 0_u32);
-
-    assert_eq!(attribute.is_empty(), true);
-    assert_eq!(attribute.is_full(), false);
-    assert_eq!(attribute.remaining(), 0.);
+    assert!(attribute.is_empty());
+    assert!(!attribute.is_full());
+    let almost_eq = (attribute.remaining() - 0.0).abs() < f32::EPSILON;
+    assert!(almost_eq);
     assert_eq!(attribute.percentage_remaining(), 0);
 }
 
@@ -109,10 +109,10 @@ fn add_to_max() {
     assert!(u32::from(attribute) == 20_u32);
 
     assert_eq!(attribute.max, 110_u32);
-
-    assert_eq!(attribute.is_empty(), false);
-    assert_eq!(attribute.is_full(), false);
-    assert_eq!(attribute.remaining(), 0.18);
+    assert!(!attribute.is_empty());
+    assert!(!attribute.is_full());
+    let almost_eq = (attribute.remaining() - 0.18).abs() < f32::EPSILON;
+    assert!(almost_eq);
     assert_eq!(attribute.percentage_remaining(), 18);
 }
 
@@ -126,10 +126,10 @@ fn add_to_max_negative() {
     assert!(u32::from(attribute) == 20_u32);
 
     assert_eq!(attribute.max, 90_u32);
-
-    assert_eq!(attribute.is_empty(), false);
-    assert_eq!(attribute.is_full(), false);
-    assert_eq!(attribute.remaining(), 0.22);
+    assert!(!attribute.is_empty());
+    assert!(!attribute.is_full());
+    let almost_eq = (attribute.remaining() - 0.22).abs() < f32::EPSILON;
+    assert!(almost_eq);
     assert_eq!(attribute.percentage_remaining(), 22);
 }
 
@@ -144,10 +144,11 @@ fn add_to_max_negative_below_current() {
 
     assert_eq!(attribute.max, 10_u32);
     assert_eq!(attribute.current, attribute.max);
+    assert!(!attribute.is_empty());
+    assert!(attribute.is_full());
 
-    assert_eq!(attribute.is_empty(), false);
-    assert_eq!(attribute.is_full(), true);
-    assert_eq!(attribute.remaining(), 1.);
+    let almost_eq = (attribute.remaining() - 1.0).abs() < f32::EPSILON;
+    assert!(almost_eq);
     assert_eq!(attribute.percentage_remaining(), 100);
 }
 
@@ -161,10 +162,10 @@ fn add_to_max_negative_below_zero() {
     assert!(u32::from(attribute) == 0_u32);
 
     assert_eq!(attribute.max, 0_u32);
-
-    assert_eq!(attribute.is_empty(), true);
-    assert_eq!(attribute.is_full(), true);
-    assert_eq!(attribute.remaining(), 1.);
+    assert!(attribute.is_empty());
+    assert!(attribute.is_full());
+    let almost_eq = (attribute.remaining() - 1.0).abs() < f32::EPSILON;
+    assert!(almost_eq);
     assert_eq!(attribute.percentage_remaining(), 100);
 }
 
@@ -176,10 +177,10 @@ fn scale_current() {
 
     assert_eq!(attribute.current, 40_u32);
     assert!(u32::from(attribute) == 40_u32);
-
-    assert_eq!(attribute.is_empty(), false);
-    assert_eq!(attribute.is_full(), false);
-    assert_eq!(attribute.remaining(), 0.4);
+    assert!(!attribute.is_empty());
+    assert!(!attribute.is_full());
+    let almost_eq = (attribute.remaining() - 0.4).abs() < f32::EPSILON;
+    assert!(almost_eq);
     assert_eq!(attribute.percentage_remaining(), 40);
 }
 
@@ -191,10 +192,11 @@ fn scale_current_greater_than_max() {
 
     assert_eq!(attribute.current, 100_u32);
     assert!(u32::from(attribute) == 100_u32);
+    assert!(!attribute.is_empty());
+    assert!(attribute.is_full());
 
-    assert_eq!(attribute.is_empty(), false);
-    assert_eq!(attribute.is_full(), true);
-    assert_eq!(attribute.remaining(), 1.);
+    let almost_eq = (attribute.remaining() - 1.0).abs() < f32::EPSILON;
+    assert!(almost_eq);
     assert_eq!(attribute.percentage_remaining(), 100);
 }
 
@@ -208,10 +210,10 @@ fn scale_max() {
     assert!(u32::from(attribute) == 20_u32);
 
     assert_eq!(attribute.max, 200_u32);
-
-    assert_eq!(attribute.is_empty(), false);
-    assert_eq!(attribute.is_full(), false);
-    assert_eq!(attribute.remaining(), 0.1);
+    assert!(!attribute.is_empty());
+    assert!(!attribute.is_full());
+    let almost_eq = (attribute.remaining() - 0.1).abs() < f32::EPSILON;
+    assert!(almost_eq);
     assert_eq!(attribute.percentage_remaining(), 10);
 }
 
@@ -223,10 +225,11 @@ fn scale_current_by_percentage() {
 
     assert_eq!(attribute.current, 10_u32);
     assert!(u32::from(attribute) == 10_u32);
+    assert!(!attribute.is_empty());
+    assert!(!attribute.is_full());
+    let almost_eq = (attribute.remaining() - 0.1).abs() < f32::EPSILON;
+    assert!(almost_eq);
 
-    assert_eq!(attribute.is_empty(), false);
-    assert_eq!(attribute.is_full(), false);
-    assert_eq!(attribute.remaining(), 0.1);
     assert_eq!(attribute.percentage_remaining(), 10);
 }
 
@@ -238,10 +241,11 @@ fn scale_current_by_percentage_greater_than_max() {
 
     assert_eq!(attribute.current, 100_u32);
     assert!(u32::from(attribute) == 100_u32);
+    assert!(!attribute.is_empty());
+    assert!(attribute.is_full());
 
-    assert_eq!(attribute.is_empty(), false);
-    assert_eq!(attribute.is_full(), true);
-    assert_eq!(attribute.remaining(), 1.);
+    let almost_eq = (attribute.remaining() - 1.0).abs() < f32::EPSILON;
+    assert!(almost_eq);
     assert_eq!(attribute.percentage_remaining(), 100);
 }
 
@@ -255,10 +259,10 @@ fn scale_max_by_percentage() {
     assert!(u32::from(attribute) == 20_u32);
 
     assert_eq!(attribute.max, 50_u32);
-
-    assert_eq!(attribute.is_empty(), false);
-    assert_eq!(attribute.is_full(), false);
-    assert_eq!(attribute.remaining(), 0.4);
+    assert!(!attribute.is_empty());
+    assert!(!attribute.is_full());
+    let almost_eq = (attribute.remaining() - 0.4).abs() < f32::EPSILON;
+    assert!(almost_eq);
     assert_eq!(attribute.percentage_remaining(), 40);
 }
 
@@ -270,10 +274,10 @@ fn add_to_current_by_scale_max_percentage() {
 
     assert_eq!(attribute.current, 70_u32);
     assert!(u32::from(attribute) == 70_u32);
-
-    assert_eq!(attribute.is_empty(), false);
-    assert_eq!(attribute.is_full(), false);
-    assert_eq!(attribute.remaining(), 0.7);
+    assert!(!attribute.is_empty());
+    assert!(!attribute.is_full());
+    let almost_eq = (attribute.remaining() - 0.7).abs() < f32::EPSILON;
+    assert!(almost_eq);
     assert_eq!(attribute.percentage_remaining(), 70);
 }
 
@@ -285,10 +289,10 @@ fn add_to_current_by_scale_max_percentage_greater_than_max() {
 
     assert_eq!(attribute.current, 100_u32);
     assert!(u32::from(attribute) == 100_u32);
-
-    assert_eq!(attribute.is_empty(), false);
-    assert_eq!(attribute.is_full(), true);
-    assert_eq!(attribute.remaining(), 1.);
+    assert!(!attribute.is_empty());
+    assert!(attribute.is_full());
+    let almost_eq = (attribute.remaining() - 1.0).abs() < f32::EPSILON;
+    assert!(almost_eq);
     assert_eq!(attribute.percentage_remaining(), 100);
 }
 
@@ -300,10 +304,10 @@ fn add_to_current_by_scale_max() {
 
     assert_eq!(attribute.current, 70_u32);
     assert!(u32::from(attribute) == 70_u32);
-
-    assert_eq!(attribute.is_empty(), false);
-    assert_eq!(attribute.is_full(), false);
-    assert_eq!(attribute.remaining(), 0.7);
+    assert!(!attribute.is_empty());
+    assert!(!attribute.is_full());
+    let almost_eq = (attribute.remaining() - 0.7).abs() < f32::EPSILON;
+    assert!(almost_eq);
     assert_eq!(attribute.percentage_remaining(), 70);
 }
 

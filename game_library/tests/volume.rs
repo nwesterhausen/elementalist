@@ -4,12 +4,12 @@ use game_library::Volume;
 fn mute() {
     let mut volume = Volume::from(19);
 
-    assert_eq!(volume.is_muted(), false);
+    assert!(!volume.is_muted());
     assert_eq!(volume.volume::<u32>(), 19);
 
     volume.mute();
 
-    assert_eq!(volume.is_muted(), true);
+    assert!(volume.is_muted());
     assert_eq!(volume.volume::<u32>(), 0);
 }
 
@@ -20,12 +20,12 @@ fn unmute() {
         muted: true,
     };
 
-    assert_eq!(volume.is_muted(), true);
+    assert!(volume.is_muted());
     assert_eq!(volume.volume::<u32>(), 0);
 
     volume.unmute();
 
-    assert_eq!(volume.is_muted(), false);
+    assert!(!volume.is_muted());
     assert_eq!(volume.volume::<u32>(), 19);
 }
 
@@ -77,7 +77,7 @@ fn conversion_over_max_i8() {
 
 #[test]
 fn conversion_over_max_i16() {
-    let volume = Volume::from(101_00_i16);
+    let volume = Volume::from(10_100_i16);
 
     assert_eq!(volume.raw_volume::<u32>(), 100);
 }

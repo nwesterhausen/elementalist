@@ -141,8 +141,10 @@ impl Stat {
     /// Updates the value of the stat.
     ///
     /// This is called automatically when the base value or bonus is changed.
+    ///
+    /// The value of the stat cannot be less than 0.0.
     fn update_value(&mut self) {
-        self.value = self.base_value * self.bonus.value();
+        self.value = (self.base_value * self.bonus.value()).clamp(0.0, f32::MAX);
     }
 
     /// Add to the base value of the stat. The base value is one part of what

@@ -14,7 +14,7 @@ fn zoom_out() {
     assert!(almost_eq);
 
     level.zoom_out();
-    let almost_eq = (level.value() - 0.4).abs() < f32::EPSILON;
+    let almost_eq = (level.value() - 0.5).abs() < f32::EPSILON;
     assert!(almost_eq);
 }
 
@@ -25,7 +25,7 @@ fn zoom_in() {
     assert!(almost_eq);
 
     level.zoom_in();
-    let almost_eq = (level.value() - 0.2).abs() < f32::EPSILON;
+    let almost_eq = (level.value() - 0.25).abs() < f32::EPSILON;
     assert!(almost_eq);
 }
 

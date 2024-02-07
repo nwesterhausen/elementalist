@@ -42,17 +42,20 @@ fn remaining_xp_to_next_level() {
 #[test]
 fn next_level_progress() {
     let mut xp = Xp::default();
-
-    assert_eq!(xp.next_level_progress(), 0.);
+    let almost_eq = (xp.next_level_progress() - 0.).abs() < f32::EPSILON;
+    assert!(almost_eq);
 
     xp.value = 5;
-    assert_eq!(xp.next_level_progress(), 0.5);
+    let almost_eq = (xp.next_level_progress() - 0.5).abs() < f32::EPSILON;
+    assert!(almost_eq);
 
     xp.value = 10;
-    assert_eq!(xp.next_level_progress(), 1.);
+    let almost_eq = (xp.next_level_progress() - 1.).abs() < f32::EPSILON;
+    assert!(almost_eq);
 
     xp.value = 11;
-    assert_eq!(xp.next_level_progress(), 1.);
+    let almost_eq = (xp.next_level_progress() - 1.).abs() < f32::EPSILON;
+    assert!(almost_eq);
 }
 
 #[test]
@@ -93,12 +96,10 @@ fn level_up() {
 #[test]
 fn can_level_up() {
     let mut xp = Xp::default();
-
-    assert_eq!(xp.can_level_up(), false);
+    assert!(!xp.can_level_up());
 
     xp += 10;
-
-    assert_eq!(xp.can_level_up(), true);
+    assert!(xp.can_level_up());
 }
 
 #[test]

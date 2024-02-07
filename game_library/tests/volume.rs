@@ -49,49 +49,49 @@ fn conversion_over_max_u8() {
 
 #[test]
 fn conversion_over_max_u16() {
-    let volume = Volume::from(10100u16);
+    let volume = Volume::from(10_100_u16);
 
     assert_eq!(volume.raw_volume::<u32>(), 100);
 }
 
 #[test]
 fn conversion_over_max_u32() {
-    let volume = Volume::from(1010000u32);
+    let volume = Volume::from(1_010_000_u32);
 
     assert_eq!(volume.raw_volume::<u32>(), 100);
 }
 
 #[test]
 fn conversion_over_max_u64() {
-    let volume = Volume::from(10100000000u64);
+    let volume = Volume::from(10_100_000_000_u64);
 
     assert_eq!(volume.raw_volume::<u32>(), 100);
 }
 
 #[test]
 fn conversion_over_max_i8() {
-    let volume = Volume::from(101i8);
+    let volume = Volume::from(101_i8);
 
     assert_eq!(volume.raw_volume::<u32>(), 100);
 }
 
 #[test]
 fn conversion_over_max_i16() {
-    let volume = Volume::from(10100i16);
+    let volume = Volume::from(101_00_i16);
 
     assert_eq!(volume.raw_volume::<u32>(), 100);
 }
 
 #[test]
 fn conversion_over_max_i32() {
-    let volume = Volume::from(1010000i32);
+    let volume = Volume::from(101_0000_i32);
 
     assert_eq!(volume.raw_volume::<u32>(), 100);
 }
 
 #[test]
 fn conversion_over_max_i64() {
-    let volume = Volume::from(10100000000i64);
+    let volume = Volume::from(10_100_000_000_i64);
 
     assert_eq!(volume.raw_volume::<u32>(), 100);
 }
@@ -119,21 +119,21 @@ fn conversion_under_min_i8() {
 
 #[test]
 fn conversion_under_min_i16() {
-    let volume = Volume::from(-10100i16);
+    let volume = Volume::from(-10_100_i16);
 
     assert_eq!(volume.raw_volume::<u32>(), 0);
 }
 
 #[test]
 fn conversion_under_min_i32() {
-    let volume = Volume::from(-1010000i32);
+    let volume = Volume::from(-101_0000_i32);
 
     assert_eq!(volume.raw_volume::<u32>(), 0);
 }
 
 #[test]
 fn conversion_under_min_i64() {
-    let volume = Volume::from(-10100000000i64);
+    let volume = Volume::from(-10_100_000_000_i64);
 
     assert_eq!(volume.raw_volume::<u32>(), 0);
 }

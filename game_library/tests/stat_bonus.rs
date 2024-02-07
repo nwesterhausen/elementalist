@@ -3,7 +3,8 @@ use game_library::StatBonus;
 #[test]
 fn new() {
     let stat_bonus = StatBonus::new(1.0);
-    assert_eq!(stat_bonus.value(), 1.0);
+    let almost_eq = (stat_bonus.value() - 1.0).abs() < f32::EPSILON;
+    assert!(almost_eq);
 }
 
 #[test]

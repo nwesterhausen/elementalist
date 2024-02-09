@@ -25,3 +25,4 @@ mod resources;
 
 #[allow(clippy::module_name_repetitions)]
 pub use plugin::NoisePlugin;
+pub use resources::GeneratedMaps;

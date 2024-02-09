@@ -12,7 +12,8 @@ use bevy::{
     render::{render_resource::WgpuFeatures, settings::WgpuSettings, RenderPlugin},
 };
 use game_library::{
-    colors, data_loader::storage::GameData, state::Game, NoisePlugin, SchedulingPlugin,
+    colors, data_loader::storage::GameData, enums::GenericBiome, state::Game, GeneratedMaps,
+    NoisePlugin, SchedulingPlugin,
 };
 use in_game::InGamePlugin;
 use leafwing_input_manager::plugin::InputManagerPlugin;
@@ -173,6 +174,7 @@ fn spawn_random_environment(
     game_data: Res<GameData>,
     mut materials: ResMut<Assets<ColorMaterial>>,
     mut meshes: ResMut<Assets<Mesh>>,
+    generated_map: Res<GeneratedMaps>,
 ) {
     let Some(tree) = game_data.tile_atlas.get("trees") else {
         tracing::error!("Failed to load tree tile");
@@ -183,25 +185,58 @@ fn spawn_random_environment(
         return;
     };
 
-    let rng = &mut rand::thread_rng();
+    // add the colors to the materials so we can just use the handles
+    let color1 = materials.add(colors::COSTA_DEL_SOL.into());
+    let color2 = materials.add(colors::LAUREL.into());
+    let color3 = materials.add(colors::OUTER_SPACE.into());
+    let color4 = materials.add(colors::RANGITOTO.into());
+    let color5 = materials.add(colors::MATTERHORN.into());
+    let color6 = materials.add(colors::SAND_DUNE.into());
+    let color7 = materials.add(colors::LIGHTER_SAND_DUNE.into());
+    let color8 = materials.add(colors::HAMPTON.into());
+    let color9 = materials.add(colors::DOWNY.into());
+    let color10 = materials.add(colors::SAN_JUAN.into());
 
-    // spawn a solid background color for the grass
-    let grass_material = materials.add(colors::THUNDER.into());
-    let big_rectangle = meshes.add(Mesh::from(shape::Quad {
-        size: Vec2::new(1000.0, 1000.0),
+    // add the 16x16 quad mesh
+    let mesh = meshes.add(Mesh::from(shape::Quad {
+        size: Vec2::new(16.0, 16.0),
         flip: false,
     }));
-    // spawn it in the center of the screen
-    commands.spawn((
-        ColorMesh2dBundle {
-            material: grass_material,
-            mesh: big_rectangle.into(),
-            transform: Transform::from_xyz(0.0, 0.0, -10.0),
-            ..Default::default()
-        },
-        EnvironmentStuff,
-    ));
 
+    // spawn a colored 16x16 quad for each tile in the biome map.
+    for (i, row) in generated_map.biome_map.iter().enumerate() {
+        for (j, biome) in row.iter().enumerate() {
+            let material = match biome {
+                GenericBiome::Biome1 => color1.clone(),
+                GenericBiome::Biome2 => color2.clone(),
+                GenericBiome::Biome3 => color3.clone(),
+                GenericBiome::Biome4 => color4.clone(),
+                GenericBiome::Biome5 => color5.clone(),
+                GenericBiome::Biome6 => color6.clone(),
+                GenericBiome::Biome7 => color7.clone(),
+                GenericBiome::Biome8 => color8.clone(),
+                GenericBiome::Biome9 => color9.clone(),
+                GenericBiome::Biome10 => color10.clone(),
+            };
+
+            // spawn a colored 16x16 quad for each tile in the biome map.
+            // use the `map_to_world` function to convert the biome map coordinates to world coordinates.
+            commands.spawn((
+                ColorMesh2dBundle {
+                    material,
+                    transform: Transform::from_translation(
+                        generated_map.map_to_world((i as f32, j as f32, 0.0).into()),
+                    ),
+                    mesh: mesh.clone().into(),
+                    ..Default::default()
+                },
+                EnvironmentStuff,
+            ));
+        }
+    }
+
+    // spawn random objects.
+    let rng = &mut rand::thread_rng();
     let mut no_tree = 0.0;
 
     for i in -16..16 {

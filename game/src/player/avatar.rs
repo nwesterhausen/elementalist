@@ -102,7 +102,6 @@ pub fn spawn_player_avatar(
     mut spell_choices: ResMut<SpellChoices>,
     game_data: Res<GameData>,
     existing_players: Query<&PlayerAvatar>,
-    existing_player_entity: Query<Entity, With<Player>>,
 ) {
     // Only spawn player if there isn't one already
     if existing_players.iter().count() > 0 {
@@ -119,58 +118,47 @@ pub fn spawn_player_avatar(
         }
     }
 
-    let avatar = commands
-        .spawn((
-            PlayerBundle {
-                movement: MovementBundle::default(),
-                sprite: SpriteBundle {
-                    texture: asset_server.load("sprite/wizard.png"),
-                    transform: Transform {
-                        translation: Vec3::new(0.0, 0.0, 50.0),
-                        scale: Vec3::splat(0.75),
-                        ..Default::default()
-                    },
+    commands.spawn((
+        PlayerBundle {
+            movement: MovementBundle::default(),
+            sprite: SpriteBundle {
+                texture: asset_server.load("sprite/wizard.png"),
+                transform: Transform {
+                    translation: Vec3::new(0.0, 0.0, 50.0),
+                    scale: Vec3::splat(0.75),
                     ..Default::default()
                 },
-                health: Health::new(BASE_HEALTH),
-                mana: Mana::new(BASE_MANA),
-                stats: StatBundle::new(
-                    StatEnum::variants()
-                        .iter()
-                        .filter(|stat| *stat != &StatEnum::Health && *stat != &StatEnum::Mana)
-                        .map(|stat| (stat.clone(), player_base_stats(stat)))
-                        .collect(),
-                ),
-                xp: Xp::default(),
-                player: Player,
+                ..Default::default()
             },
-            ProgressBarConfig::<Xp>::default()
-                .with_background_color(colors::BACKGROUND_COLOR_50)
-                .with_single_color(colors::SKILL_TRACK_BAR_COLOR)
-                .with_size((10.0, 2.0).into())
-                .with_position_translation(Vec3::new(-5.0, 26.0, 0.0)),
-            ProgressBarConfig::<Health>::default()
-                .with_background_color(colors::BACKGROUND_COLOR_50)
-                .with_color(&BarState::Ok, colors::HEALTH_BAR_COLOR_OK)
-                .with_color(&BarState::Moderate, colors::HEALTH_BAR_COLOR_MODERATE)
-                .with_color(&BarState::Critical, colors::HEALTH_BAR_COLOR_CRITICAL)
-                .with_size((10.0, 2.0).into())
-                .with_position_translation(Vec3::new(-5.0, 24.0, 0.0)),
-            ProgressBarConfig::<Mana>::default()
-                .with_background_color(colors::BACKGROUND_COLOR_50)
-                .with_single_color(colors::MANA_BAR_COLOR)
-                .with_size((10.0, 2.0).into())
-                .with_position_translation(Vec3::new(-5.0, 22.0, 0.0)),
-            PlayerAvatar,
-        ))
-        .id();
-
-    // Attach the player's avatar to the player entity
-    if let Ok(entity) = existing_player_entity.get_single() {
-        commands.entity(entity).push_children(&[avatar]);
-    } else {
-        tracing::error!(
-            "Failed to find player entity to spawn avatar for! Avatar has been spawned unattached."
-        );
-    }
+            health: Health::new(BASE_HEALTH),
+            mana: Mana::new(BASE_MANA),
+            stats: StatBundle::new(
+                StatEnum::variants()
+                    .iter()
+                    .filter(|stat| *stat != &StatEnum::Health && *stat != &StatEnum::Mana)
+                    .map(|stat| (stat.clone(), player_base_stats(stat)))
+                    .collect(),
+            ),
+            xp: Xp::default(),
+            player: Player,
+        },
+        ProgressBarConfig::<Xp>::default()
+            .with_background_color(colors::BACKGROUND_COLOR_50)
+            .with_single_color(colors::SKILL_TRACK_BAR_COLOR)
+            .with_size((10.0, 2.0).into())
+            .with_position_translation(Vec3::new(-5.0, 26.0, 0.0)),
+        ProgressBarConfig::<Health>::default()
+            .with_background_color(colors::BACKGROUND_COLOR_50)
+            .with_color(&BarState::Ok, colors::HEALTH_BAR_COLOR_OK)
+            .with_color(&BarState::Moderate, colors::HEALTH_BAR_COLOR_MODERATE)
+            .with_color(&BarState::Critical, colors::HEALTH_BAR_COLOR_CRITICAL)
+            .with_size((10.0, 2.0).into())
+            .with_position_translation(Vec3::new(-5.0, 24.0, 0.0)),
+        ProgressBarConfig::<Mana>::default()
+            .with_background_color(colors::BACKGROUND_COLOR_50)
+            .with_single_color(colors::MANA_BAR_COLOR)
+            .with_size((10.0, 2.0).into())
+            .with_position_translation(Vec3::new(-5.0, 22.0, 0.0)),
+        PlayerAvatar,
+    ));
 }

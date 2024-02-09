@@ -1,9 +1,10 @@
 use bevy::prelude::*;
+use noise::{NoiseFn, Perlin, Seedable, Simplex};
 use rand::Rng;
 
-use crate::state::Game;
+use crate::{enums::GenericBiome, state::Game};
 
-use super::resources::GenerationSeed;
+use super::resources::{GeneratedMaps, GenerationSeed};
 
 /// Generate a new seed for the world generation.
 ///
@@ -24,4 +25,51 @@ pub(super) fn generate_new_seed(mut seed: ResMut<GenerationSeed>) {
 pub(super) fn progress_to_playing(mut state: ResMut<NextState<Game>>) {
     state.set(Game::Playing);
     tracing::info!("Progressing to playing state");
+}
+
+/// Use the perlin noise generator to generate a biome map. And then use simplex noise to determine
+/// how to place trees and other objects based on the biome map. Both should be seedable.
+///
+/// This system should be called when the game state is `Game::Generating`.
+pub(super) fn generate_biome_map(seed: Res<GenerationSeed>, mut maps: ResMut<GeneratedMaps>) {
+    tracing::info!("Generating biome map");
+
+    let perlin = Perlin::new(seed.0);
+    let simplex = Simplex::new(seed.0);
+
+    for x in 0..maps.biome_map.len() {
+        for y in 0..maps.biome_map[x].len() {
+            let pos = [x as f64 / 100.0, y as f64 / 100.0, 0.0];
+            let value = perlin.get(pos);
+            let biome = match value {
+                v if v < -0.5 => GenericBiome::Biome1,
+                v if v < -0.4 => GenericBiome::Biome2,
+                v if v < -0.3 => GenericBiome::Biome3,
+                v if v < -0.2 => GenericBiome::Biome4,
+                v if v < -0.1 => GenericBiome::Biome5,
+                v if v < 0.0 => GenericBiome::Biome6,
+                v if v < 0.1 => GenericBiome::Biome7,
+                v if v < 0.2 => GenericBiome::Biome8,
+                v if v < 0.3 => GenericBiome::Biome9,
+                _ => GenericBiome::Biome10,
+            };
+            maps.biome_map[x][y] = biome;
+
+            // Map the simplex noise for position to the object map.
+            let value = simplex.get(pos);
+            let object = match value {
+                v if v < -0.5 => 0,
+                v if v < -0.4 => 1,
+                v if v < -0.3 => 2,
+                v if v < -0.2 => 3,
+                v if v < -0.1 => 4,
+                v if v < 0.0 => 5,
+                v if v < 0.1 => 6,
+                v if v < 0.2 => 7,
+                v if v < 0.3 => 8,
+                _ => 9,
+            };
+            maps.object_map[x][y] = object;
+        }
+    }
 }

@@ -16,7 +16,9 @@ pub struct GeneratedMaps {
     pub biome_map: Vec<Vec<GenericBiome>>,
     /// The object map.
     pub object_map: Vec<Vec<usize>>,
+    /// The width of the map. Each tile is 16x16 px.
     width: usize,
+    /// The height of the map. Each tile is 16x16 px.
     height: usize,
 }
 
@@ -24,7 +26,8 @@ impl GeneratedMaps {
     /// The default size of the map.
     pub const DEFAULT_SIZE: (usize, usize) = (100, 100);
 
-    /// Create a new Empty GeneratedMaps with the given size.
+    /// Create a new Empty `GeneratedMaps` with the given size.
+    #[must_use]
     pub fn new(size: (usize, usize)) -> Self {
         let mut empty_map = Self {
             biome_map: Vec::with_capacity(size.0),
@@ -46,36 +49,11 @@ impl GeneratedMaps {
     ///
     /// The world origin is in the exact center of the map. This is represented by a 0,0
     /// coordinate being at the middle index of the map.
-    pub fn get_biome(&self, pos: Vec2) -> Option<GenericBiome> {
-        // Check if the position is out of bounds.
-        if pos.x < -(self.width as f32 / 2.0) || pos.x > (self.width as f32 / 2.0) {
-            tracing::warn!(
-                "get_biome: X position out of bounds: ({}, {})",
-                pos.x,
-                pos.y
-            );
-            return None;
-        }
-        if pos.y < -(self.height as f32 / 2.0) || pos.y > (self.height as f32 / 2.0) {
-            tracing::warn!(
-                "get_biome: Y position out of bounds: ({}, {})",
-                pos.x,
-                pos.y
-            );
-            return None;
-        }
+    #[must_use]
+    pub fn get_biome(&self, pos: Vec2) -> GenericBiome {
+        let (x, y) = self.world_to_map(Vec3::new(pos.x, pos.y, 0.0));
 
-        // Convert the position to the map's coordinates.
-        let x = (pos.x + (self.width as f32 / 2.0)) as usize;
-        let y = (pos.y + (self.height as f32 / 2.0)) as usize;
-
-        // Sanity check before returning the biome.
-        if x < self.biome_map.len() && y < self.biome_map[0].len() {
-            Some(self.biome_map[x][y])
-        } else {
-            tracing::warn!("get_biome: Position out of bounds: ({}, {})", x, y);
-            None
-        }
+        self.biome_map[x][y]
     }
 
     /// Function to transform map coordinates to world coordinates.
@@ -84,20 +62,95 @@ impl GeneratedMaps {
     /// coordinate being at the middle index of the map.
     ///
     /// The world grid is 16x16 pixels per tile.
-    pub fn map_to_world(&self, pos: Vec3) -> Vec3 {
+    ///
+    /// ## Note
+    ///
+    /// This function has possible truncation and precision loss. This is because the
+    /// world coordinates are floats and the map coordinates are usize.
+    ///
+    /// # Parameters
+    ///
+    /// * `pos`: The map position to convert to world coordinates. It sets `pos.z` to 0.0.
+    ///
+    /// # Returns
+    ///
+    /// The world position for the given map coordinates.
+    #[must_use]
+    pub fn map_to_world(&self, pos: (usize, usize)) -> Vec3 {
+        #[allow(clippy::cast_precision_loss)]
         Vec3::new(
-            pos.x * 16.0 - (self.width as f32 * 8.0),
-            pos.y * 16.0 - (self.height as f32 * 8.0),
-            pos.z,
+            (pos.0 as f32).mul_add(16.0, self.width as f32 * 8.0),
+            (pos.1 as f32).mul_add(16.0, self.height as f32 * 8.0),
+            0.0,
+        )
+    }
+
+    /// Function to transform world coordinates to map coordinates.
+    ///
+    /// The world origin is in the exact center of the map. This is represented by a 0,0
+    /// world coordinate being at the middle index of the map (width/2, height/2).
+    ///
+    /// The world grid is 16x16 pixels per tile.
+    ///
+    /// ## Note
+    ///
+    /// This function has possible truncation and precision loss. This is because the
+    /// world coordinates are floats and the map coordinates are usize.
+    ///
+    /// # Parameters
+    ///
+    /// * `pos`: The world position to convert to map coordinates. `pos.z` is ignored.
+    ///
+    /// # Returns
+    ///
+    /// A tuple of the x and y coordinates of the map for the given world position.
+    ///
+    /// If the world position is out of bounds, then `(0,0)` is returned.
+    #[must_use]
+    pub fn world_to_map(&self, pos: Vec3) -> (usize, usize) {
+        // Check if the position is out of bounds.
+        #[allow(clippy::cast_precision_loss)]
+        if pos.x < -(self.width as f32 / 2.0) || pos.x > (self.width as f32 / 2.0) {
+            tracing::error!(
+                "world_to_map: X position out of bounds: ({}, {})",
+                pos.x,
+                pos.y
+            );
+            return (0, 0);
+        }
+        #[allow(clippy::cast_precision_loss)]
+        if pos.y < -(self.height as f32 / 2.0) || pos.y > (self.height as f32 / 2.0) {
+            tracing::error!(
+                "world_to_map: Y position out of bounds: ({}, {})",
+                pos.x,
+                pos.y
+            );
+            return (0, 0);
+        }
+
+        #[allow(
+            clippy::cast_precision_loss,
+            clippy::cast_possible_truncation,
+            clippy::cast_sign_loss
+        )]
+        (
+            pos.x.mul_add(1. / 16.0, self.width as f32 * -8.0) as usize,
+            pos.y.mul_add(1. / 16.0, self.height as f32 * -8.0) as usize,
         )
     }
 
     /// Get the dimensions of the map.
-    pub fn dimensions(&self) -> (usize, usize) {
+    ///
+    /// Returns a tuple of the width and height of the map.
+    #[must_use]
+    pub const fn dimensions(&self) -> (usize, usize) {
         (self.width, self.height)
     }
 
     /// Reset the maps to be empty.
+    ///
+    /// This will clear the biome and object maps and reset them to be empty. It will also
+    /// add the correct amount of empty vectors to the maps (just like during a `new` call)
     pub fn reset(&mut self) {
         self.biome_map.clear();
         self.object_map.clear();
@@ -111,6 +164,6 @@ impl GeneratedMaps {
 
 impl Default for GeneratedMaps {
     fn default() -> Self {
-        Self::new(GeneratedMaps::DEFAULT_SIZE)
+        Self::new(Self::DEFAULT_SIZE)
     }
 }

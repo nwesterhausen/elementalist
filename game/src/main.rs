@@ -12,12 +12,10 @@ use bevy::{
     render::{render_resource::WgpuFeatures, settings::WgpuSettings, RenderPlugin},
 };
 use game_library::{
-    colors, data_loader::storage::GameData, enums::GenericBiome, state::Game, GeneratedMaps,
-    NoisePlugin, SchedulingPlugin,
+    colors, enums::GenericBiome, state::Game, GeneratedMaps, NoisePlugin, SchedulingPlugin,
 };
 use in_game::InGamePlugin;
 use leafwing_input_manager::plugin::InputManagerPlugin;
-use rand::Rng;
 
 mod app_info;
 mod app_systems;
@@ -171,20 +169,10 @@ impl Plugin for ElementalistGameplayPlugins {
 /// Spawn some trees as a test
 fn spawn_random_environment(
     mut commands: Commands,
-    game_data: Res<GameData>,
     mut materials: ResMut<Assets<ColorMaterial>>,
     mut meshes: ResMut<Assets<Mesh>>,
     generated_map: Res<GeneratedMaps>,
 ) {
-    let Some(tree) = game_data.tile_atlas.get("trees") else {
-        tracing::error!("Failed to load tree tile");
-        return;
-    };
-    let Some(rock) = game_data.tile_atlas.get("rock") else {
-        tracing::error!("Failed to load rock tile");
-        return;
-    };
-
     // add the colors to the materials so we can just use the handles
     let color1 = materials.add(colors::COSTA_DEL_SOL.into());
     let color2 = materials.add(colors::LAUREL.into());
@@ -224,76 +212,12 @@ fn spawn_random_environment(
             commands.spawn((
                 ColorMesh2dBundle {
                     material,
-                    transform: Transform::from_translation(
-                        generated_map.map_to_world((i as f32, j as f32, 0.0).into()),
-                    ),
+                    transform: Transform::from_translation(generated_map.map_to_world((i, j))),
                     mesh: mesh.clone().into(),
                     ..Default::default()
                 },
                 EnvironmentStuff,
             ));
-        }
-    }
-
-    // spawn random objects.
-    let rng = &mut rand::thread_rng();
-    let mut no_tree = 0.0;
-
-    for i in -16..16 {
-        for j in -16..16 {
-            if rng.gen_bool(0.05 + no_tree) {
-                let index = rng.gen_range(0..=2);
-                let jitter = rng.gen_range(-16.0..16.0);
-                #[allow(clippy::cast_precision_loss)]
-                let y_val = (j as f32).mul_add(32.0, jitter);
-                commands.spawn((
-                    SpriteSheetBundle {
-                        texture_atlas: tree.clone(),
-                        sprite: bevy::sprite::TextureAtlasSprite::new(index),
-                        transform: Transform {
-                            #[allow(clippy::cast_precision_loss)]
-                            translation: Vec3::new(
-                                (i as f32).mul_add(32.0, jitter),
-                                y_val,
-                                y_val / -100.0,
-                            ),
-                            scale: Vec3::splat(1.0),
-                            ..Default::default()
-                        },
-                        ..Default::default()
-                    },
-                    EnvironmentStuff,
-                ));
-                no_tree = 0.0;
-            } else if rng.gen_bool(0.1) {
-                let index = rng.gen_range(0..=2);
-                let jitter = if index == 0 {
-                    0.
-                } else {
-                    rng.gen_range(-16.0..16.0)
-                };
-                #[allow(clippy::cast_precision_loss)]
-                let y_val = (j as f32).mul_add(32.0, jitter);
-                commands.spawn((
-                    SpriteSheetBundle {
-                        texture_atlas: rock.clone(),
-                        sprite: bevy::sprite::TextureAtlasSprite::new(index),
-                        transform: Transform {
-                            #[allow(clippy::cast_precision_loss)]
-                            translation: Vec3::new(
-                                (i as f32).mul_add(32.0, jitter),
-                                y_val,
-                                y_val / -100.0,
-                            ),
-                            scale: Vec3::splat(1.0),
-                            ..Default::default()
-                        },
-                        ..Default::default()
-                    },
-                    EnvironmentStuff,
-                ));
-            }
-            no_tree += 0.01;
         }
     }
 }

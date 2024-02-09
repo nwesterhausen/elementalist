@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use noise::{NoiseFn, Perlin, Seedable, Simplex};
+use noise::{NoiseFn, Perlin, Simplex};
 use rand::Rng;
 
 use crate::{enums::GenericBiome, state::Game};
@@ -31,6 +31,7 @@ pub(super) fn progress_to_playing(mut state: ResMut<NextState<Game>>) {
 /// how to place trees and other objects based on the biome map. Both should be seedable.
 ///
 /// This system should be called when the game state is `Game::Generating`.
+#[allow(clippy::needless_pass_by_value)]
 pub(super) fn generate_map(seed: Res<GenerationSeed>, mut maps: ResMut<GeneratedMaps>) {
     tracing::info!("Generating map with seed: {}", seed.0);
 
@@ -44,6 +45,8 @@ pub(super) fn generate_map(seed: Res<GenerationSeed>, mut maps: ResMut<Generated
 
     for x in 0..width {
         for y in 0..height {
+            // We allow precision loss here because it's a very edge case where it would matter.
+            #[allow(clippy::cast_precision_loss)]
             let pos = [x as f64 / 100.0, y as f64 / 100.0, 0.0];
             let value = perlin.get(pos);
             let biome = match value {

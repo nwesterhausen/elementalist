@@ -12,7 +12,7 @@ mod spell_collision;
 mod spell_target;
 mod stat;
 
-pub use biome::GenericBiome;
+pub use biome::*;
 pub use cast_category::CastCategory;
 pub use cast_slot::CastSlot;
 pub use cast_type::CastType;

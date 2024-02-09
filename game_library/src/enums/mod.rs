@@ -1,5 +1,6 @@
 //! Enums used in the game library and Elementalist game.
 
+mod biome;
 mod cast_category;
 mod cast_slot;
 mod cast_type;
@@ -11,6 +12,7 @@ mod spell_collision;
 mod spell_target;
 mod stat;
 
+pub use biome::GenericBiome;
 pub use cast_category::CastCategory;
 pub use cast_slot::CastSlot;
 pub use cast_type::CastType;

@@ -31,14 +31,19 @@ pub(super) fn progress_to_playing(mut state: ResMut<NextState<Game>>) {
 /// how to place trees and other objects based on the biome map. Both should be seedable.
 ///
 /// This system should be called when the game state is `Game::Generating`.
-pub(super) fn generate_biome_map(seed: Res<GenerationSeed>, mut maps: ResMut<GeneratedMaps>) {
-    tracing::info!("Generating biome map");
+pub(super) fn generate_map(seed: Res<GenerationSeed>, mut maps: ResMut<GeneratedMaps>) {
+    tracing::info!("Generating map with seed: {}", seed.0);
 
     let perlin = Perlin::new(seed.0);
     let simplex = Simplex::new(seed.0);
 
-    for x in 0..maps.biome_map.len() {
-        for y in 0..maps.biome_map[x].len() {
+    let width = maps.dimensions().0;
+    let height = maps.dimensions().1;
+
+    maps.reset();
+
+    for x in 0..width {
+        for y in 0..height {
             let pos = [x as f64 / 100.0, y as f64 / 100.0, 0.0];
             let value = perlin.get(pos);
             let biome = match value {
@@ -53,7 +58,7 @@ pub(super) fn generate_biome_map(seed: Res<GenerationSeed>, mut maps: ResMut<Gen
                 v if v < 0.3 => GenericBiome::Biome9,
                 _ => GenericBiome::Biome10,
             };
-            maps.biome_map[x][y] = biome;
+            maps.biome_map[x].push(biome);
 
             // Map the simplex noise for position to the object map.
             let value = simplex.get(pos);
@@ -69,7 +74,13 @@ pub(super) fn generate_biome_map(seed: Res<GenerationSeed>, mut maps: ResMut<Gen
                 v if v < 0.3 => 8,
                 _ => 9,
             };
-            maps.object_map[x][y] = object;
+            maps.object_map[x].push(object);
         }
     }
+
+    tracing::info!(
+        "Generated {}x{} map",
+        maps.biome_map.len(),
+        maps.biome_map[0].len()
+    );
 }

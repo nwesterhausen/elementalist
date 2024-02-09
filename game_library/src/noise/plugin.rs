@@ -4,7 +4,7 @@ use crate::state::Game;
 
 use super::{
     beta_info::draw_seed_on_screen,
-    generator::{generate_biome_map, generate_new_seed, progress_to_playing},
+    generator::{generate_map, generate_new_seed, progress_to_playing},
     resources::{GeneratedMaps, GenerationSeed},
 };
 
@@ -19,7 +19,7 @@ impl Plugin for NoisePlugin {
             .add_systems(Update, draw_seed_on_screen.run_if(in_state(Game::Playing)))
             .add_systems(
                 OnEnter(Game::Generating),
-                (generate_new_seed, generate_biome_map, progress_to_playing).chain(),
+                (generate_new_seed, generate_map, progress_to_playing).chain(),
             );
     }
 }

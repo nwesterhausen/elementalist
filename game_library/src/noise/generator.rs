@@ -2,7 +2,7 @@ use bevy::prelude::*;
 use noise::{NoiseFn, Perlin, Simplex};
 use rand::Rng;
 
-use crate::{enums::GenericBiome, state::Game};
+use crate::{enums::BiomeMarker, state::Game};
 
 use super::resources::{GeneratedMaps, GenerationSeed};
 
@@ -50,16 +50,20 @@ pub(super) fn generate_map(seed: Res<GenerationSeed>, mut maps: ResMut<Generated
             let pos = [x as f64 / 100.0, y as f64 / 100.0, 0.0];
             let value = perlin.get(pos);
             let biome = match value {
-                v if v < -0.5 => GenericBiome::Biome1,
-                v if v < -0.4 => GenericBiome::Biome2,
-                v if v < -0.3 => GenericBiome::Biome3,
-                v if v < -0.2 => GenericBiome::Biome4,
-                v if v < -0.1 => GenericBiome::Biome5,
-                v if v < 0.0 => GenericBiome::Biome6,
-                v if v < 0.1 => GenericBiome::Biome7,
-                v if v < 0.2 => GenericBiome::Biome8,
-                v if v < 0.3 => GenericBiome::Biome9,
-                _ => GenericBiome::Biome10,
+                v if v < -0.5 => BiomeMarker::Elevation0,
+                v if v < -0.4 => BiomeMarker::Elevation1,
+                v if v < -0.3 => BiomeMarker::Elevation2,
+                v if v < -0.2 => BiomeMarker::Elevation3,
+                v if v < -0.1 => BiomeMarker::Elevation4,
+                v if v < 0.0 => BiomeMarker::Elevation5,
+                v if v < 0.1 => BiomeMarker::Elevation6,
+                v if v < 0.2 => BiomeMarker::Elevation7,
+                v if v < 0.3 => BiomeMarker::Elevation8,
+                v if v < 0.4 => BiomeMarker::Elevation9,
+                _ => {
+                    tracing::error!("generate_map: biome noise value out of range: {}", value);
+                    BiomeMarker::Empty
+                }
             };
             maps.biome_map[x].push(biome);
 
@@ -75,7 +79,11 @@ pub(super) fn generate_map(seed: Res<GenerationSeed>, mut maps: ResMut<Generated
                 v if v < 0.1 => 6,
                 v if v < 0.2 => 7,
                 v if v < 0.3 => 8,
-                _ => 9,
+                v if v < 0.4 => 9,
+                _ => {
+                    tracing::error!("generate_map: biome noise value out of range: {}", value);
+                    0
+                }
             };
             maps.object_map[x].push(object);
         }

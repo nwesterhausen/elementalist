@@ -14,5 +14,8 @@
       "$ref": "https://schemas.nwest.one/games/elementalist/particle_effect.json"
     }
   },
-  "required": ["header", "data"]
+  "required": [
+    "header",
+    "data"
+  ]
 }

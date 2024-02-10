@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.nwest.one/games/elementalist/realm_data.json",
+  "title": "Elementalist Realm Definition File",
+  "description": "A JSON schema for defining a realm for the Elementalist game",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "A name for the realm. This is displayed to the player.",
+      "type": "string"
+    },
+    "description": {
+      "description": "A short description of the realm. This is displayed to the player.",
+      "type": "string"
+    },
+    "biomes": {
+      "description": "A list of the biomes that appear in this realm. If not biomes are specified, the realm is assumed to be a single biome, and the biome will be random.",
+      "type": "array",
+      "items": {
+        "$ref": "https://schemas.nwest.one/games/elementalist/biome_data.json"
+      }
+    },
+    "primaryElement": {
+      "description": "The primary element of the realm (for now this is limited to magic types)",
+      "$ref": "https://schemas.nwest.one/games/elementalist/magic_school.json"
+    }
+  },
+  "required": [
+    "name",
+    "description",
+    "primaryElement"
+  ]
+}

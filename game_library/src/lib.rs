@@ -41,6 +41,7 @@ mod mana;
 mod movement_bundle;
 mod noise;
 mod particle;
+mod realm_data;
 mod schedule;
 mod shared_traits;
 mod skill;

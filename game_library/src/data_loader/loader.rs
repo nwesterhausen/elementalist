@@ -4,12 +4,12 @@ use std::hash::Hash;
 use walkdir::WalkDir;
 
 use crate::{
-    data_loader::DATA_FILE_DIR, enums::GameSystem, particle::Particle, InternalId, SpellData,
-    Tileset,
+    data_loader::DATA_FILE_DIR, enums::GameSystem, particle::Particle, realm_data::Realm,
+    InternalId, SpellData, Tileset,
 };
 
 use super::{
-    events::{LoadedParticleData, LoadedSpellData, LoadedTilesetData},
+    events::{LoadedParticleData, LoadedRealmData, LoadedSpellData, LoadedTilesetData},
     header_def::{DataFile, DataFileHeader},
     DataFileHeaderOnly,
 };
@@ -76,6 +76,7 @@ pub fn load_data_file_dir(
     mut ew_spell_df: EventWriter<LoadedSpellData>,
     mut ew_tileset_df: EventWriter<LoadedTilesetData>,
     mut ew_particle_df: EventWriter<LoadedParticleData>,
+    mut ew_realm_df: EventWriter<LoadedRealmData>,
 ) {
     // let start = std::time::Instant::now();
 
@@ -95,6 +96,7 @@ pub fn load_data_file_dir(
     let mut spells_read: usize = 0;
     let mut tilesets_read: usize = 0;
     let mut particles_read: usize = 0;
+    let mut realms_read: usize = 0;
 
     for d in &mut possible_ingests {
         let filepath = d.as_str();
@@ -148,14 +150,28 @@ pub fn load_data_file_dir(
                     ew_particle_df.send(LoadedParticleData { particle_data });
                     particles_read += 1;
                 }
+                GameSystem::Realm => {
+                    let realm_data: DataFile<Realm> = if let Some(d) = read_data_file(filepath) {
+                        d
+                    } else {
+                        tracing::debug!(
+                            "load_data_file_dir: failed to read realm data from {}",
+                            header.unique_id
+                        );
+                        continue;
+                    };
+                    ew_realm_df.send(LoadedRealmData { realm_data });
+                    realms_read += 1;
+                }
             }
         }
     }
     // let duration = start.elapsed();
     tracing::info!(
-        "loaded {} spells, {} tilesets, {} particles",
+        "loaded {} spells, {} tilesets, {} particles, {} realms",
         spells_read,
         tilesets_read,
-        particles_read
+        particles_read,
+        realms_read
     );
 }

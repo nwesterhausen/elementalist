@@ -1,18 +1,21 @@
 {
-	"$schema": "https://json-schema.org/draft/2020-12/schema",
-	"$id": "https://schemas.nwest.one/games/elementalist/tileset.json",
-	"title": "Elementalist Tileset",
-	"description": "A tileset to be loaded for the Elementalist game",
-	"type": "object",
-	"properties": {
-		"header": {
-			"description": "Metadata about the spell",
-			"$ref": "https://schemas.nwest.one/games/elementalist/header.json"
-		},
-		"data": {
-			"description": "The spell data",
-			"$ref": "https://schemas.nwest.one/games/elementalist/tileset_data.json"
-		}
-	},
-	"required": ["header", "data"]
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.nwest.one/games/elementalist/tileset.json",
+  "title": "Elementalist Tileset",
+  "description": "A tileset to be loaded for the Elementalist game",
+  "type": "object",
+  "properties": {
+    "header": {
+      "description": "Metadata about the tileset",
+      "$ref": "https://schemas.nwest.one/games/elementalist/header.json"
+    },
+    "data": {
+      "description": "The tileset definition",
+      "$ref": "https://schemas.nwest.one/games/elementalist/tileset_data.json"
+    }
+  },
+  "required": [
+    "header",
+    "data"
+  ]
 }

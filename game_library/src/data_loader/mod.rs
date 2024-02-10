@@ -10,6 +10,7 @@ mod header_def;
 mod loader;
 mod particles;
 mod plugin;
+mod realms;
 mod spells;
 mod tilesets;
 

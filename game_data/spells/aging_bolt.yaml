@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/spell.json
 data:
   name: Aging Bolt
   description: Shoot a bolt of aging magic at a target.

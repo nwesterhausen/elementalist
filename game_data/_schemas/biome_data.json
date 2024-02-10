@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.nwest.one/games/elementalist/biome_data.json",
+  "title": "Elementalist Biome Definition File",
+  "description": "A JSON schema for defining a biome for the Elementalist game",
+  "type": "object",
+  "properties": {
+    "biome": {
+      "type": "string",
+      "$ref": "https://schemas.nwest.one/games/elementalist/biome.json"
+    },
+    "humidity": {
+      "type": "string",
+      "$ref": "https://schemas.nwest.one/games/elementalist/biome_humidity.json"
+    },
+    "altitude": {
+      "type": "string",
+      "$ref": "https://schemas.nwest.one/games/elementalist/biome_altitude.json"
+    },
+    "latitude": {
+      "type": "string",
+      "$ref": "https://schemas.nwest.one/games/elementalist/biome_latitude.json"
+    },
+    "required": [
+      "biome",
+      "humidity",
+      "altitude",
+      "latitude"
+    ]
+  }
+}

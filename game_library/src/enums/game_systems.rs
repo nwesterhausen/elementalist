@@ -11,6 +11,8 @@ pub enum GameSystem {
     Tileset,
     /// A particle effect to use in the game
     Particle,
+    /// The realm system is responsible for loading realms
+    Realm,
 }
 
 /// The order in which the game systems should be loaded.

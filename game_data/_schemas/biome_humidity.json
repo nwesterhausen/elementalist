@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.nwest.one/games/elementalist/biome_humidity.json",
+  "title": "Elementalist Biome Humidity",
+  "description": "The available humidities for biomes in the Elementalist game.",
+  "type": "string",
+  "enum": [
+    "Superarid",
+    "Perarid",
+    "Arid",
+    "Semiarid",
+    "Subhumid",
+    "Humid",
+    "Perhumid",
+    "Superhumid"
+  ]
+}

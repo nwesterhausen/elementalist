@@ -8,7 +8,7 @@
 
 use bevy::ecs::event::Event;
 
-use crate::{particle::Particle, SpellData, Tileset};
+use crate::{particle::Particle, realm_data::Realm, SpellData, Tileset};
 
 use super::DataFile;
 
@@ -31,4 +31,11 @@ pub struct LoadedTilesetData {
 pub struct LoadedParticleData {
     /// The particle data that was loaded.
     pub particle_data: DataFile<Particle>,
+}
+
+#[derive(Event)]
+/// Event that is fired when a realm is loaded.
+pub struct LoadedRealmData {
+    /// The realm data that was loaded.
+    pub realm_data: DataFile<Realm>,
 }

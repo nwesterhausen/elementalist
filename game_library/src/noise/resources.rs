@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::enums::GenericBiome;
+use crate::enums::BiomeMarker;
 
 /// A resource that stores the seed for the generation of the primal realm.
 #[derive(Debug, Default, Clone, Eq, PartialEq, Hash, Resource)]
@@ -13,7 +13,7 @@ pub struct GenerationSeed(pub u32);
 #[derive(Debug, Clone, Eq, PartialEq, Hash, Resource)]
 pub struct GeneratedMaps {
     /// The biome map.
-    pub biome_map: Vec<Vec<GenericBiome>>,
+    pub biome_map: Vec<Vec<BiomeMarker>>,
     /// The object map.
     pub object_map: Vec<Vec<usize>>,
     /// The width of the map. Each tile is 16x16 px.
@@ -50,7 +50,7 @@ impl GeneratedMaps {
     /// The world origin is in the exact center of the map. This is represented by a 0,0
     /// coordinate being at the middle index of the map.
     #[must_use]
-    pub fn get_biome(&self, pos: Vec2) -> GenericBiome {
+    pub fn get_biome(&self, pos: Vec2) -> BiomeMarker {
         let (x, y) = self.world_to_map(Vec3::new(pos.x, pos.y, 0.0));
 
         self.biome_map[x][y]
@@ -155,10 +155,76 @@ impl GeneratedMaps {
         self.biome_map.clear();
         self.object_map.clear();
 
-        for _ in 0..self.width {
-            self.biome_map.push(Vec::with_capacity(self.height));
-            self.object_map.push(Vec::with_capacity(self.height));
+        self.biome_map
+            .resize(self.height, Vec::with_capacity(self.width));
+        self.object_map
+            .resize(self.height, Vec::with_capacity(self.width));
+    }
+
+    /// Resets the maps to be empty and sets the dimensions to the given size.
+    ///
+    /// This will clear the biome and object maps and reset them to be empty. It will also
+    /// add the correct amount of empty vectors to the maps (just like during a `new` call)
+    /// and set the dimensions to the given size.
+    pub fn reset_with_dimensions(&mut self, width: usize, height: usize) {
+        self.width = width;
+        self.height = height;
+
+        self.reset();
+    }
+
+    /// Add a biome to the map at the given position.
+    pub fn insert_biome(&mut self, pos: Vec2, biome: BiomeMarker) {
+        let (x, y) = self.world_to_map(Vec3::new(pos.x, pos.y, 0.0));
+
+        // Find the given x vector and make sure we can insert to y or else add more default
+        // biomes until we can. The vec is already at the correct capacity so we don't need to
+        // resize.
+        while self.biome_map[x].len() <= y {
+            self.biome_map[x].push(BiomeMarker::Empty);
         }
+
+        self.biome_map[x][y] = biome;
+    }
+
+    /// Add an object to the map at the given position.
+    pub fn insert_object(&mut self, pos: Vec2, object: usize) {
+        let (x, y) = self.world_to_map(Vec3::new(pos.x, pos.y, 0.0));
+
+        // Find the given x vector and make sure we can insert to y or else add more default
+        // objects until we can. The vec is already at the correct capacity so we don't need to
+        // resize.
+        while self.object_map[x].len() <= y {
+            self.object_map[x].push(0);
+        }
+
+        self.object_map[x][y] = object;
+    }
+
+    /// Push a biome onto the map.
+    pub fn push_biome(&mut self, x_pos: usize, biome: BiomeMarker) {
+        // Sanity check our biome_map length.
+        if self.biome_map.len() != self.width {
+            tracing::warn!(
+                "push_biome: biome_map length did not match width: {} != {} (fixing)",
+                self.biome_map.len(),
+                self.width
+            );
+            self.biome_map
+                .resize(self.width, Vec::with_capacity(self.height));
+        }
+
+        // Sanity check that x_pos is a valid index.
+        if x_pos >= self.width {
+            tracing::error!(
+                "push_biome: x_pos out of bounds: {} (max: {})",
+                x_pos,
+                self.width - 1
+            );
+            return;
+        }
+
+        self.biome_map[x_pos].push(biome);
     }
 }
 

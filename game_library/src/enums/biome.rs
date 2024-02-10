@@ -6,51 +6,86 @@ use bevy::reflect::Reflect;
 /// to determine the actual biome. This biome is set by the noise generator, and
 /// it describes the "height" of the terrain, and that should then be interpreted
 /// later (see the impls of this enum) to determine the actual biome.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+///
+/// Supports maps with up to 10 different biomes.
+#[derive(
+    Debug, Clone, Copy, PartialEq, Eq, Hash, Default, serde::Serialize, serde::Deserialize,
+)]
+#[serde(rename_all = "camelCase")]
 #[allow(clippy::module_name_repetitions)]
-pub enum GenericBiome {
-    /// The lowest possible biome.
-    Biome1,
+pub enum BiomeMarker {
+    /// An empty marker.
+    #[default]
+    Empty,
+    /// The lowest elevation
+    Elevation0,
     /// The second lowest possible biome.
-    Biome2,
+    Elevation1,
     /// The third lowest possible biome.
-    Biome3,
+    Elevation2,
     /// The fourth lowest possible biome.
-    Biome4,
-    /// The lower-middle possible biome.
-    Biome5,
-    /// The higher-middle possible biome.
-    Biome6,
-    /// The fourth highest possible biome.
-    Biome7,
-    /// The third highest possible biome.
-    Biome8,
-    /// The second highest possible biome.
-    Biome9,
-    /// The highest possible biome.
-    Biome10,
+    Elevation3,
+    /// The fifth lowest possible biome.
+    Elevation4,
+    /// The sixth lowest possible biome.
+    Elevation5,
+    /// The seventh lowest possible biome.
+    Elevation6,
+    /// The eighth lowest possible biome.
+    Elevation7,
+    /// The ninth lowest possible biome.
+    Elevation8,
+    /// The tenth lowest possible biome.
+    Elevation9,
 }
 
 /// The biome system is a list of 1 - 10 "biomes" that are then used to determine the actual
 /// biome of the world. This is then used to determine the type of terrain and the type of
 /// objects that are placed in the world. This is then used to determine the actual biome
 /// of the world.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Resource, Reflect, Default)]
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Hash,
+    Resource,
+    Reflect,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+)]
+#[serde(rename_all = "camelCase")]
 #[allow(clippy::module_name_repetitions)]
 pub struct BiomeData {
     /// The actual biome of the world.
     biome: Biome,
-    /// The humidity of the world.
+    /// The alititude (and temperature) of the biome.
+    altitude: Altitude,
+    /// The humidity of the biome.
     humidity: Humidity,
-    /// The temperature of the world.
-    temperature: Temperature,
+    /// The latitudal band of the biome.
+    latitude: Latitude,
 }
 
 /// The actual biomes that are used in the game. These are then used to draw the terrain
 /// and to determine the type of objects that are placed in the world. Since this the number
 /// of actual biomes is much greater than the number of generic biomes, to determine the actual
 /// biome the Realm type needs to be used with the `biome_for_realm` method.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Resource, Reflect, Default)]
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Hash,
+    Resource,
+    Reflect,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+)]
 pub enum Biome {
     /// Rainforests are forests characterized by a closed and continuous tree canopy, moisture-dependent
     /// vegetation, the presence of epiphytes and lianas and the absence of wildfire.
@@ -67,7 +102,6 @@ pub enum Biome {
     GiantRainforest,
     /// Deciduous or broad-leaf forests are a variety of forest 'dominated' by deciduous trees that lose their
     /// leaves each winter.
-    #[default]
     DecidousForest,
     /// Coniferous forests are made up of coniferous or cone-bearing trees, most of which are evergreens.
     ConiferousForest,
@@ -136,6 +170,7 @@ pub enum Biome {
     /// A very large sheet of ice that permanently covers the land.
     IceSheet,
     /// Nothing
+    #[default]
     Barren,
     /// A biome that represents the inside of a building.
     Indoor,
@@ -150,7 +185,19 @@ pub enum Biome {
 }
 
 /// Humidity of the biome. These are descriptions humidity provinces of the biome.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Resource, Reflect, Default)]
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Hash,
+    Resource,
+    Reflect,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+)]
 enum Humidity {
     /// Extremely dry
     Superarid,
@@ -173,7 +220,19 @@ enum Humidity {
 
 /// Altitude of the biome (altitudinal belts). These are descriptions of the
 /// biotemperature of the biome.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Resource, Reflect, Default)]
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Hash,
+    Resource,
+    Reflect,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+)]
 enum Altitude {
     /// Cooler than 1.5 Celsius
     Alvar,
@@ -191,8 +250,20 @@ enum Altitude {
 }
 
 /// Describes the latitudinal regions of the biome (temperature bands)
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Resource, Reflect, Default)]
-enum Temperature {
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Hash,
+    Resource,
+    Reflect,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+)]
+enum Latitude {
     /// Close to the equator
     Tropical,
     /// 2nd closest to the equator

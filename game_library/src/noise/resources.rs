@@ -79,8 +79,8 @@ impl GeneratedMaps {
     pub fn map_to_world(&self, pos: (usize, usize)) -> Vec3 {
         #[allow(clippy::cast_precision_loss)]
         Vec3::new(
-            (pos.0 as f32).mul_add(16.0, self.width as f32 * 8.0),
-            (pos.1 as f32).mul_add(16.0, self.height as f32 * 8.0),
+            (pos.0 as f32).mul_add(16.0, self.width as f32 * -8.0),
+            (pos.1 as f32).mul_add(16.0, self.height as f32 * -8.0),
             0.0,
         )
     }

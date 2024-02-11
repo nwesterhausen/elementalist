@@ -12,7 +12,7 @@ data:
   description: A simple test realm
   primaryElement: earth
   biomes:
-    - biome: DecidousForest
+    - biome: DeciduousForest
       altitude: LowerMontane
       humidity: Perarid
-      latitude: WarmTemporate
+      latitude: WarmTemperate

@@ -8,8 +8,8 @@ use std::hash::Hash;
 
 use crate::{
     data_loader::DataFile,
-    enums::{BiomeData, GameSystem, MagicType},
-    InternalId,
+    enums::{GameSystem, MagicType},
+    BiomeData, InternalId,
 };
 
 /// Details about a realm.

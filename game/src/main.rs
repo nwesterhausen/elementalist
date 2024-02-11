@@ -10,9 +10,11 @@ use bevy::{
     log::LogPlugin,
     prelude::*,
     render::{render_resource::WgpuFeatures, settings::WgpuSettings, RenderPlugin},
+    utils::HashMap,
 };
 use game_library::{
-    colors, enums::biome::Marker, state::Game, GeneratedMaps, NoisePlugin, SchedulingPlugin,
+    data_loader::storage::GameData, enums::biome::Biome, state::Game, GeneratedMaps,
+    MarkersToBiomes, NoisePlugin, SchedulingPlugin,
 };
 use in_game::InGamePlugin;
 use leafwing_input_manager::plugin::InputManagerPlugin;
@@ -171,19 +173,26 @@ fn spawn_random_environment(
     mut commands: Commands,
     mut materials: ResMut<Assets<ColorMaterial>>,
     mut meshes: ResMut<Assets<Mesh>>,
+    game_data: Res<GameData>,
     generated_map: Res<GeneratedMaps>,
 ) {
-    // add the colors to the materials so we can just use the handles
-    let color1 = materials.add(colors::COSTA_DEL_SOL.into());
-    let color2 = materials.add(colors::LAUREL.into());
-    let color3 = materials.add(colors::OUTER_SPACE.into());
-    let color4 = materials.add(colors::RANGITOTO.into());
-    let color5 = materials.add(colors::MATTERHORN.into());
-    let color6 = materials.add(colors::SAND_DUNE.into());
-    let color7 = materials.add(colors::LIGHTER_SAND_DUNE.into());
-    let color8 = materials.add(colors::HAMPTON.into());
-    let color9 = materials.add(colors::DOWNY.into());
-    let color10 = materials.add(colors::SAN_JUAN.into());
+    // get the biomes for the current map
+    let Some(realm) = game_data.realms.get("simple test realm") else {
+        tracing::error!("No realm found for 'simple test realm'");
+        return;
+    };
+
+    let biomes = &realm.markers_to_biomes(generated_map.biome_map.as_slice());
+    // from the biomes which is vec of vec of Biome, turn that into a flattened, deduped
+    // vec of Biome, and then map with `get_color` to get the colors we will use.
+    let mut color_materials: HashMap<Biome, Handle<ColorMaterial>> = HashMap::new();
+    for biome_row in biomes {
+        for biome in biome_row {
+            let color = biome.get_color();
+            let material = materials.add(color.into());
+            color_materials.insert(*biome, material.clone());
+        }
+    }
 
     // add the 16x16 quad mesh
     let mesh = meshes.add(Mesh::from(shape::Quad {
@@ -192,27 +201,17 @@ fn spawn_random_environment(
     }));
 
     // spawn a colored 16x16 quad for each tile in the biome map.
-    for (i, row) in generated_map.biome_map.iter().enumerate() {
+    for (i, row) in biomes.iter().enumerate() {
         for (j, biome) in row.iter().enumerate() {
-            let material = match biome {
-                Marker::Elevation0 => color1.clone(),
-                Marker::Elevation1 => color2.clone(),
-                Marker::Elevation2 => color3.clone(),
-                Marker::Elevation3 => color4.clone(),
-                Marker::Elevation4 => color5.clone(),
-                Marker::Elevation5 => color6.clone(),
-                Marker::Elevation6 => color7.clone(),
-                Marker::Elevation7 => color8.clone(),
-                Marker::Elevation8 => color9.clone(),
-                Marker::Elevation9 => color10.clone(),
-                _ => color1.clone(),
+            let Some(material) = color_materials.get(biome) else {
+                tracing::error!("No material found for biome: {:?}", biome);
+                continue;
             };
 
-            // spawn a colored 16x16 quad for each tile in the biome map.
             // use the `map_to_world` function to convert the biome map coordinates to world coordinates.
             commands.spawn((
                 ColorMesh2dBundle {
-                    material,
+                    material: material.clone(),
                     transform: Transform::from_translation(generated_map.map_to_world((i, j))),
                     mesh: mesh.clone().into(),
                     ..Default::default()

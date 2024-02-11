@@ -2,7 +2,7 @@ use bevy::prelude::*;
 use noise::{NoiseFn, Perlin, Simplex};
 use rand::Rng;
 
-use crate::{enums::BiomeMarker, state::Game};
+use crate::{enums::biome::Marker, state::Game};
 
 use super::resources::{GeneratedMaps, GenerationSeed};
 
@@ -20,7 +20,7 @@ pub(super) fn generate_new_seed(mut seed: ResMut<GenerationSeed>) {
 /// Progress the game state to the `Generating` state.
 ///
 /// This is the last step in the sequence of events that happen when generating a new realm.
-/// When that sequence is complete, the game state should change from `Game::Generationg` to
+/// When that sequence is complete, the game state should change from `Game::Generating` to
 /// `Game::Playing`.
 pub(super) fn progress_to_playing(mut state: ResMut<NextState<Game>>) {
     state.set(Game::Playing);
@@ -50,19 +50,19 @@ pub(super) fn generate_map(seed: Res<GenerationSeed>, mut maps: ResMut<Generated
             let pos = [x as f64 / 100.0, y as f64 / 100.0, 0.0];
             let value = perlin.get(pos);
             let biome = match value {
-                v if v < -0.5 => BiomeMarker::Elevation0,
-                v if v < -0.4 => BiomeMarker::Elevation1,
-                v if v < -0.3 => BiomeMarker::Elevation2,
-                v if v < -0.2 => BiomeMarker::Elevation3,
-                v if v < -0.1 => BiomeMarker::Elevation4,
-                v if v < 0.0 => BiomeMarker::Elevation5,
-                v if v < 0.1 => BiomeMarker::Elevation6,
-                v if v < 0.2 => BiomeMarker::Elevation7,
-                v if v < 0.3 => BiomeMarker::Elevation8,
-                v if v < 0.4 => BiomeMarker::Elevation9,
+                v if v < -0.5 => Marker::Elevation0,
+                v if v < -0.4 => Marker::Elevation1,
+                v if v < -0.3 => Marker::Elevation2,
+                v if v < -0.2 => Marker::Elevation3,
+                v if v < -0.1 => Marker::Elevation4,
+                v if v < 0.0 => Marker::Elevation5,
+                v if v < 0.1 => Marker::Elevation6,
+                v if v < 0.2 => Marker::Elevation7,
+                v if v < 0.3 => Marker::Elevation8,
+                v if v < 0.4 => Marker::Elevation9,
                 _ => {
                     tracing::error!("generate_map: biome noise value out of range: {}", value);
-                    BiomeMarker::Empty
+                    Marker::Empty
                 }
             };
             maps.biome_map[x].push(biome);

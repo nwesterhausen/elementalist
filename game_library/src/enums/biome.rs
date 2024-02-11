@@ -13,7 +13,7 @@ use bevy::reflect::Reflect;
 )]
 #[serde(rename_all = "camelCase")]
 #[allow(clippy::module_name_repetitions)]
-pub enum BiomeMarker {
+pub enum Marker {
     /// An empty marker.
     #[default]
     Empty,
@@ -37,36 +37,6 @@ pub enum BiomeMarker {
     Elevation8,
     /// The tenth lowest possible biome.
     Elevation9,
-}
-
-/// The biome system is a list of 1 - 10 "biomes" that are then used to determine the actual
-/// biome of the world. This is then used to determine the type of terrain and the type of
-/// objects that are placed in the world. This is then used to determine the actual biome
-/// of the world.
-#[derive(
-    Debug,
-    Clone,
-    Copy,
-    PartialEq,
-    Eq,
-    Hash,
-    Resource,
-    Reflect,
-    Default,
-    serde::Serialize,
-    serde::Deserialize,
-)]
-#[serde(rename_all = "camelCase")]
-#[allow(clippy::module_name_repetitions)]
-pub struct BiomeData {
-    /// The actual biome of the world.
-    biome: Biome,
-    /// The alititude (and temperature) of the biome.
-    altitude: Altitude,
-    /// The humidity of the biome.
-    humidity: Humidity,
-    /// The latitudal band of the biome.
-    latitude: Latitude,
 }
 
 /// The actual biomes that are used in the game. These are then used to draw the terrain
@@ -93,7 +63,7 @@ pub enum Biome {
     /// Seasonal tropical forest, also known as moist deciduous, semi-evergreen seasonal, tropical mixed or
     /// monsoon forest, typically contains a range of tree species: many of which drop some or all of
     /// their leaves during the dry season.
-    SeasonalDecidousRainforest,
+    SeasonalDeciduousRainforest,
     /// Seasonal tropical forest, also known as moist deciduous, semi-evergreen seasonal, tropical mixed or
     /// monsoon forest, typically contains a range of tree species: only some of which drop some or all of
     /// their leaves during the dry season.
@@ -102,7 +72,7 @@ pub enum Biome {
     GiantRainforest,
     /// Deciduous or broad-leaf forests are a variety of forest 'dominated' by deciduous trees that lose their
     /// leaves each winter.
-    DecidousForest,
+    DeciduousForest,
     /// Coniferous forests are made up of coniferous or cone-bearing trees, most of which are evergreens.
     ConiferousForest,
     /// Characterized by coniferous forests consisting mostly of pines, spruces, and larches.
@@ -198,7 +168,7 @@ pub enum Biome {
     serde::Serialize,
     serde::Deserialize,
 )]
-enum Humidity {
+pub enum Humidity {
     /// Extremely dry
     Superarid,
     /// Very dry
@@ -233,7 +203,7 @@ enum Humidity {
     serde::Serialize,
     serde::Deserialize,
 )]
-enum Altitude {
+pub enum Altitude {
     /// Cooler than 1.5 Celsius
     Alvar,
     /// Within 1.5-3 Celsius
@@ -263,14 +233,14 @@ enum Altitude {
     serde::Serialize,
     serde::Deserialize,
 )]
-enum Latitude {
+pub enum Latitude {
     /// Close to the equator
     Tropical,
     /// 2nd closest to the equator
     Subtropical,
     /// 3rd closest to the equator
     #[default]
-    WarmTemporate,
+    WarmTemperate,
     /// 4th closest to the equator and poles
     CoolTemperate,
     /// 3rd closest to the poles

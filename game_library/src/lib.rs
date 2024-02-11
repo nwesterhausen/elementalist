@@ -33,6 +33,7 @@ pub mod state;
 
 mod acceleration;
 mod attribute;
+mod biome;
 mod camera_scale;
 mod cursor_position;
 mod experience;
@@ -59,6 +60,7 @@ mod volume;
 
 pub use acceleration::Acceleration;
 pub use attribute::Attribute;
+pub use biome::BiomeData;
 pub use camera_scale::CameraScaleLevel;
 pub use cursor_position::CursorPosition;
 pub use experience::Xp;
@@ -67,6 +69,7 @@ pub use mana::Mana;
 pub use movement_bundle::MovementBundle;
 pub use noise::GeneratedMaps;
 pub use noise::NoisePlugin;
+pub use realm_data::Realm;
 pub use schedule::*;
 pub use shared_traits::InternalId;
 pub use skill::Skills;

@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::enums::BiomeMarker;
+use crate::enums::biome::Marker;
 
 /// A resource that stores the seed for the generation of the primal realm.
 #[derive(Debug, Default, Clone, Eq, PartialEq, Hash, Resource)]
@@ -13,7 +13,7 @@ pub struct GenerationSeed(pub u32);
 #[derive(Debug, Clone, Eq, PartialEq, Hash, Resource)]
 pub struct GeneratedMaps {
     /// The biome map.
-    pub biome_map: Vec<Vec<BiomeMarker>>,
+    pub biome_map: Vec<Vec<Marker>>,
     /// The object map.
     pub object_map: Vec<Vec<usize>>,
     /// The width of the map. Each tile is 16x16 px.
@@ -50,7 +50,7 @@ impl GeneratedMaps {
     /// The world origin is in the exact center of the map. This is represented by a 0,0
     /// coordinate being at the middle index of the map.
     #[must_use]
-    pub fn get_biome(&self, pos: Vec2) -> BiomeMarker {
+    pub fn get_biome(&self, pos: Vec2) -> Marker {
         let (x, y) = self.world_to_map(Vec3::new(pos.x, pos.y, 0.0));
 
         self.biome_map[x][y]
@@ -174,14 +174,14 @@ impl GeneratedMaps {
     }
 
     /// Add a biome to the map at the given position.
-    pub fn insert_biome(&mut self, pos: Vec2, biome: BiomeMarker) {
+    pub fn insert_biome(&mut self, pos: Vec2, biome: Marker) {
         let (x, y) = self.world_to_map(Vec3::new(pos.x, pos.y, 0.0));
 
         // Find the given x vector and make sure we can insert to y or else add more default
         // biomes until we can. The vec is already at the correct capacity so we don't need to
         // resize.
         while self.biome_map[x].len() <= y {
-            self.biome_map[x].push(BiomeMarker::Empty);
+            self.biome_map[x].push(Marker::Empty);
         }
 
         self.biome_map[x][y] = biome;
@@ -202,7 +202,7 @@ impl GeneratedMaps {
     }
 
     /// Push a biome onto the map.
-    pub fn push_biome(&mut self, x_pos: usize, biome: BiomeMarker) {
+    pub fn push_biome(&mut self, x_pos: usize, biome: Marker) {
         // Sanity check our biome_map length.
         if self.biome_map.len() != self.width {
             tracing::warn!(

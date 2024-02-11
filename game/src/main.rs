@@ -12,7 +12,7 @@ use bevy::{
     render::{render_resource::WgpuFeatures, settings::WgpuSettings, RenderPlugin},
 };
 use game_library::{
-    colors, enums::GenericBiome, state::Game, GeneratedMaps, NoisePlugin, SchedulingPlugin,
+    colors, enums::biome::Marker, state::Game, GeneratedMaps, NoisePlugin, SchedulingPlugin,
 };
 use in_game::InGamePlugin;
 use leafwing_input_manager::plugin::InputManagerPlugin;
@@ -195,16 +195,17 @@ fn spawn_random_environment(
     for (i, row) in generated_map.biome_map.iter().enumerate() {
         for (j, biome) in row.iter().enumerate() {
             let material = match biome {
-                GenericBiome::Biome1 => color1.clone(),
-                GenericBiome::Biome2 => color2.clone(),
-                GenericBiome::Biome3 => color3.clone(),
-                GenericBiome::Biome4 => color4.clone(),
-                GenericBiome::Biome5 => color5.clone(),
-                GenericBiome::Biome6 => color6.clone(),
-                GenericBiome::Biome7 => color7.clone(),
-                GenericBiome::Biome8 => color8.clone(),
-                GenericBiome::Biome9 => color9.clone(),
-                GenericBiome::Biome10 => color10.clone(),
+                Marker::Elevation0 => color1.clone(),
+                Marker::Elevation1 => color2.clone(),
+                Marker::Elevation2 => color3.clone(),
+                Marker::Elevation3 => color4.clone(),
+                Marker::Elevation4 => color5.clone(),
+                Marker::Elevation5 => color6.clone(),
+                Marker::Elevation6 => color7.clone(),
+                Marker::Elevation7 => color8.clone(),
+                Marker::Elevation8 => color9.clone(),
+                Marker::Elevation9 => color10.clone(),
+                _ => color1.clone(),
             };
 
             // spawn a colored 16x16 quad for each tile in the biome map.

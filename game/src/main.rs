@@ -201,23 +201,67 @@ fn spawn_random_environment(
     }));
 
     // spawn a colored 16x16 quad for each tile in the biome map.
+    let mesh_z = -100.0;
     for (i, row) in biomes.iter().enumerate() {
         for (j, biome) in row.iter().enumerate() {
             let Some(material) = color_materials.get(biome) else {
                 tracing::error!("No material found for biome: {:?}", biome);
                 continue;
             };
-
+            let mut mesh_transform =
+                Transform::from_translation(generated_map.map_to_world((i, j)));
+            mesh_transform.translation.z = mesh_z;
             // use the `map_to_world` function to convert the biome map coordinates to world coordinates.
             commands.spawn((
                 ColorMesh2dBundle {
                     material: material.clone(),
-                    transform: Transform::from_translation(generated_map.map_to_world((i, j))),
+                    transform: mesh_transform,
                     mesh: mesh.clone().into(),
                     ..Default::default()
                 },
                 EnvironmentStuff,
             ));
+        }
+    }
+
+    // spawn trees and rocks
+
+    let Some(tree) = game_data.tile_atlas.get("trees") else {
+        tracing::error!("Failed to load tree tile");
+        return;
+    };
+    let Some(rock) = game_data.tile_atlas.get("rock") else {
+        tracing::error!("Failed to load rock tile");
+        return;
+    };
+
+    for (i, row) in generated_map.object_map.iter().enumerate() {
+        for (j, object_id) in row.iter().enumerate() {
+            let obj = match object_id {
+                4 | 8 => Some((tree, 0)),
+                5 | 13 => Some((tree, 1)),
+                0 | 19 => Some((tree, 2)),
+                3 | 7 | 15 => Some((rock, 0)),
+                6 | 12 | 14 => Some((rock, 1)),
+                _ => None,
+            };
+            if let Some(obj) = obj {
+                let mut obj_transform =
+                    Transform::from_translation(generated_map.map_to_world((i, j)));
+                #[allow(clippy::cast_precision_loss)]
+                let z_val = obj_transform.translation.y / -10.0;
+                obj_transform.translation.z = z_val;
+                obj_transform.scale = Vec3::splat(1.0);
+                commands.spawn((
+                    SpriteSheetBundle {
+                        texture_atlas: obj.0.clone(),
+                        sprite: bevy::sprite::TextureAtlasSprite::new(obj.1),
+                        transform: obj_transform,
+                        ..Default::default()
+                    },
+                    EnvironmentStuff,
+                ));
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-//! Defines the BiomeData resource.
+//! Defines the `BiomeData` resource.
 use bevy::prelude::*;
 use bevy::reflect::Reflect;
 
@@ -25,11 +25,11 @@ use crate::enums::biome::{Altitude, Biome, Humidity, Latitude};
 #[allow(clippy::module_name_repetitions)]
 pub struct BiomeData {
     /// The actual biome of the world.
-    biome: Biome,
+    pub biome: Biome,
     /// The altitude (and temperature) of the biome.
-    altitude: Altitude,
+    pub altitude: Altitude,
     /// The humidity of the biome.
-    humidity: Humidity,
+    pub humidity: Humidity,
     /// The latitudinal band of the biome.
-    latitude: Latitude,
+    pub latitude: Latitude,
 }

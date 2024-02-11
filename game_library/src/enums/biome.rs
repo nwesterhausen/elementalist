@@ -2,6 +2,8 @@
 use bevy::prelude::*;
 use bevy::reflect::Reflect;
 
+use crate::colors;
+
 /// A base biome enum. This is then further used with the type of primal realm
 /// to determine the actual biome. This biome is set by the noise generator, and
 /// it describes the "height" of the terrain, and that should then be interpreted
@@ -9,7 +11,17 @@ use bevy::reflect::Reflect;
 ///
 /// Supports maps with up to 10 different biomes.
 #[derive(
-    Debug, Clone, Copy, PartialEq, Eq, Hash, Default, serde::Serialize, serde::Deserialize,
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Hash,
+    Default,
+    serde::Serialize,
+    serde::Deserialize,
+    PartialOrd,
+    Ord,
 )]
 #[serde(rename_all = "camelCase")]
 #[allow(clippy::module_name_repetitions)]
@@ -37,6 +49,100 @@ pub enum Marker {
     Elevation8,
     /// The tenth lowest possible biome.
     Elevation9,
+    /// The 11th lowest possible biome.
+    Elevation10,
+    /// The 12th lowest possible biome.
+    Elevation11,
+    /// The 13th lowest possible biome.
+    Elevation12,
+    /// The 14th lowest possible biome.
+    Elevation13,
+    /// The 15th lowest possible biome.
+    Elevation14,
+    /// The 16th lowest possible biome.
+    Elevation15,
+    /// The 17th lowest possible biome.
+    Elevation16,
+    /// The 18th lowest possible biome.
+    Elevation17,
+    /// The 19th lowest possible biome.
+    Elevation18,
+    /// The 20th lowest possible biome.
+    Elevation19,
+}
+
+impl Marker {
+    /// Convert the marker into an elevation value. If the marker is `Empty`, then
+    /// the elevation is 0. Otherwise, the elevation is the marker as an integer
+    /// which matches the `Marker::Elevation1` variant.
+    ///
+    /// # Returns
+    ///
+    /// The elevation value of the marker.
+    #[must_use]
+    pub const fn as_elevation_idx(&self) -> usize {
+        match self {
+            Self::Empty | Self::Elevation0 => 0,
+            Self::Elevation1 => 1,
+            Self::Elevation2 => 2,
+            Self::Elevation3 => 3,
+            Self::Elevation4 => 4,
+            Self::Elevation5 => 5,
+            Self::Elevation6 => 6,
+            Self::Elevation7 => 7,
+            Self::Elevation8 => 8,
+            Self::Elevation9 => 9,
+            Self::Elevation10 => 10,
+            Self::Elevation11 => 11,
+            Self::Elevation12 => 12,
+            Self::Elevation13 => 13,
+            Self::Elevation14 => 14,
+            Self::Elevation15 => 15,
+            Self::Elevation16 => 16,
+            Self::Elevation17 => 17,
+            Self::Elevation18 => 18,
+            Self::Elevation19 => 19,
+        }
+    }
+
+    /// Given the noise value, returns the biome marker.
+    ///
+    /// # Arguments
+    ///
+    /// * `noise` - The noise value to determine the biome marker for.
+    ///
+    /// # Returns
+    ///
+    /// The biome marker for the given noise value.
+    #[must_use]
+    pub fn from_noise(noise: f64) -> Self {
+        match noise {
+            v if v < -0.9 => Self::Elevation0,
+            v if v < -0.8 => Self::Elevation1,
+            v if v < -0.7 => Self::Elevation2,
+            v if v < -0.6 => Self::Elevation3,
+            v if v < -0.5 => Self::Elevation4,
+            v if v < -0.4 => Self::Elevation5,
+            v if v < -0.3 => Self::Elevation6,
+            v if v < -0.2 => Self::Elevation7,
+            v if v < -0.1 => Self::Elevation8,
+            v if v < 0.0 => Self::Elevation9,
+            v if v < 0.1 => Self::Elevation10,
+            v if v < 0.2 => Self::Elevation11,
+            v if v < 0.3 => Self::Elevation12,
+            v if v < 0.4 => Self::Elevation13,
+            v if v < 0.5 => Self::Elevation14,
+            v if v < 0.6 => Self::Elevation15,
+            v if v < 0.7 => Self::Elevation16,
+            v if v < 0.8 => Self::Elevation17,
+            v if v < 0.9 => Self::Elevation18,
+            v if v <= 1.0 => Self::Elevation19,
+            _ => {
+                tracing::warn!("Noise value out of range: {}", noise);
+                Self::Empty
+            }
+        }
+    }
 }
 
 /// The actual biomes that are used in the game. These are then used to draw the terrain
@@ -154,7 +260,27 @@ pub enum Biome {
     Rangeland,
 }
 
-/// Humidity of the biome. These are descriptions humidity provinces of the biome.
+impl Biome {
+    /// Get the default color for the biome.
+    ///
+    /// This is the color that is used when the biome is not assigned a color.
+    ///
+    /// # Returns
+    ///
+    /// The default color for the biome.
+    #[must_use]
+    pub const fn get_color(&self) -> Color {
+        match self {
+            Self::Barren => colors::HAMPTON,
+            Self::Bog => colors::CONIFER,
+            Self::DeciduousForest => colors::RANGITOTO,
+            //todo: add the rest of the colors
+            _ => colors::DOWNY,
+        }
+    }
+}
+
+/// Humidity of the biome. These are descriptions humidity provinces of the biome. Ordered from driest to wettest.
 #[derive(
     Debug,
     Clone,
@@ -167,6 +293,8 @@ pub enum Biome {
     Default,
     serde::Serialize,
     serde::Deserialize,
+    PartialOrd,
+    Ord,
 )]
 pub enum Humidity {
     /// Extremely dry
@@ -189,7 +317,7 @@ pub enum Humidity {
 }
 
 /// Altitude of the biome (altitudinal belts). These are descriptions of the
-/// biotemperature of the biome.
+/// biotemperature of the biome. Ordered from coldest to warmest.
 #[derive(
     Debug,
     Clone,
@@ -202,6 +330,8 @@ pub enum Humidity {
     Default,
     serde::Serialize,
     serde::Deserialize,
+    PartialOrd,
+    Ord,
 )]
 pub enum Altitude {
     /// Cooler than 1.5 Celsius
@@ -219,7 +349,7 @@ pub enum Altitude {
     Premontane,
 }
 
-/// Describes the latitudinal regions of the biome (temperature bands)
+/// Describes the latitudinal regions of the biome (temperature bands). ordered from warmest to coldest.
 #[derive(
     Debug,
     Clone,
@@ -232,6 +362,8 @@ pub enum Altitude {
     Default,
     serde::Serialize,
     serde::Deserialize,
+    PartialOrd,
+    Ord,
 )]
 pub enum Latitude {
     /// Close to the equator

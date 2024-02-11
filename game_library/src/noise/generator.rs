@@ -49,42 +49,12 @@ pub(super) fn generate_map(seed: Res<GenerationSeed>, mut maps: ResMut<Generated
             #[allow(clippy::cast_precision_loss)]
             let pos = [x as f64 / 100.0, y as f64 / 100.0, 0.0];
             let value = perlin.get(pos);
-            let biome = match value {
-                v if v < -0.5 => Marker::Elevation0,
-                v if v < -0.4 => Marker::Elevation1,
-                v if v < -0.3 => Marker::Elevation2,
-                v if v < -0.2 => Marker::Elevation3,
-                v if v < -0.1 => Marker::Elevation4,
-                v if v < 0.0 => Marker::Elevation5,
-                v if v < 0.1 => Marker::Elevation6,
-                v if v < 0.2 => Marker::Elevation7,
-                v if v < 0.3 => Marker::Elevation8,
-                v if v < 0.4 => Marker::Elevation9,
-                _ => {
-                    tracing::error!("generate_map: biome noise value out of range: {}", value);
-                    Marker::Empty
-                }
-            };
+            let biome = Marker::from_noise(value);
             maps.biome_map[x].push(biome);
 
             // Map the simplex noise for position to the object map.
             let value = simplex.get(pos);
-            let object = match value {
-                v if v < -0.5 => 0,
-                v if v < -0.4 => 1,
-                v if v < -0.3 => 2,
-                v if v < -0.2 => 3,
-                v if v < -0.1 => 4,
-                v if v < 0.0 => 5,
-                v if v < 0.1 => 6,
-                v if v < 0.2 => 7,
-                v if v < 0.3 => 8,
-                v if v < 0.4 => 9,
-                _ => {
-                    tracing::error!("generate_map: biome noise value out of range: {}", value);
-                    0
-                }
-            };
+            let object = noise_to_object(value);
             maps.object_map[x].push(object);
         }
     }
@@ -94,4 +64,43 @@ pub(super) fn generate_map(seed: Res<GenerationSeed>, mut maps: ResMut<Generated
         maps.biome_map.len(),
         maps.biome_map[0].len()
     );
+}
+
+/// Take noise and return a usize between 0 and 19.
+///
+/// # Arguments
+///
+/// * `noise` - The noise value to convert to an object marker.
+///
+/// # Returns
+///
+/// A usize between 0 and 19.
+#[must_use]
+fn noise_to_object(noise: f64) -> usize {
+    match noise {
+        v if v < -0.9 => 0,
+        v if v < -0.8 => 1,
+        v if v < -0.7 => 2,
+        v if v < -0.6 => 3,
+        v if v < -0.5 => 4,
+        v if v < -0.4 => 5,
+        v if v < -0.3 => 6,
+        v if v < -0.2 => 7,
+        v if v < -0.1 => 8,
+        v if v < 0.0 => 9,
+        v if v < 0.1 => 10,
+        v if v < 0.2 => 11,
+        v if v < 0.3 => 12,
+        v if v < 0.4 => 13,
+        v if v < 0.5 => 14,
+        v if v < 0.6 => 15,
+        v if v < 0.7 => 16,
+        v if v < 0.8 => 17,
+        v if v < 0.9 => 18,
+        v if v <= 1.0 => 19,
+        _ => {
+            tracing::error!("noise_to_object: noise value out of range: {}", noise);
+            0
+        }
+    }
 }

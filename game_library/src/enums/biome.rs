@@ -1,4 +1,24 @@
 //! Biome data and enums.
+//!
+//! Biomes are made up of four components: a general biome, a humidity level, an altitude level, and a latitude level.
+//! These are then used during map generation to build a map matching the biome.
+//!
+//! During generation, a bunch of `Marker` biomes are added to a map, and then the `Realm` is used to convert these
+//! markers into actual biomes.
+//!
+//! Currently there are 20 `Marker` biomes which are spread out among elevations. This is very simplistic and will
+//! need a rework in the future to be more flexible and to allow for more biomes. Given that we require the latitude,
+//! altitude and humidity for each biome, the complexity of the actual biome generation system can be a lot more complex
+//! than just assigning biomes based on an elevation value. (Todo..)
+//!
+//! Other things that should be considered later on:
+//!
+//! - Rivers and streams (and lakes)
+//! - Biome transitions
+//! - Biome specific objects (stones, trees, etc)
+//! - Biome specific weather (weather?)
+//! - Biome specific monsters and animals
+//! - Biome specific resources
 use bevy::prelude::*;
 use bevy::reflect::Reflect;
 
@@ -7,7 +27,7 @@ use crate::colors;
 /// A base biome enum. This is then further used with the type of primal realm
 /// to determine the actual biome. This biome is set by the noise generator, and
 /// it describes the "height" of the terrain, and that should then be interpreted
-/// later (see the impls of this enum) to determine the actual biome.
+/// later (see the implementations for this enum) to determine the actual biome.
 ///
 /// Supports maps with up to 10 different biomes.
 #[derive(

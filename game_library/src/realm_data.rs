@@ -1,7 +1,19 @@
 //! Defines a data structure for the realm.
 //!
-//! This allows custom realms to be defined and used in game. Realms will be
-//! loaded from game data and can be set to generate the realm.
+//! This allows custom realms to be defined and used in game. Realms will be loaded from game data and can be set to generate the realm.
+//!
+//! Currently realms are just a collection of biomes and a primary element. This will likely be expanded into more details about the biomes
+//! or possible other elements that can be included in the realm. Since the realm data is what is used to generate the "Elemental Realm" that
+//! the player is able to visit, it will be important to have a good amount of detail about the realm.
+//!
+//! Additional details we will need are possibly special monsters and any pre-designed structures that can be found in the realm. This will
+//! allow for a more unique experience when visiting the realm. The realm will also need to have a unique name and description to give it some
+//! flavor and make it feel like a unique place to visit.
+//!
+//! One thing that would be neat is for the player to be able to choose one or maybe two elements, and a random realm matching those elements
+//! will be chosen from the loaded realms. This will allow for a bit of randomness in the game and give the player a unique experience each time
+//! they visit a realm. This will also allow for the player to have a bit of control over what they are going to face in the realm, as they can
+//! choose the elements that they are strongest against (or that they need to gather resources from).
 use bevy::prelude::*;
 use std::any::Any;
 use std::hash::Hash;

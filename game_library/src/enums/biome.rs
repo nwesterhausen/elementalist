@@ -271,11 +271,37 @@ impl Biome {
     #[must_use]
     pub const fn get_color(&self) -> Color {
         match self {
-            Self::Barren => colors::HAMPTON,
-            Self::Bog => colors::CONIFER,
-            Self::DeciduousForest => colors::RANGITOTO,
-            //todo: add the rest of the colors
-            _ => colors::DOWNY,
+            Self::Rainforest => colors::RANGITOTO,
+            Self::SeasonalDeciduousRainforest
+            | Self::SeasonalSemidecidousRainforest
+            | Self::GiantRainforest
+            | Self::DeciduousForest
+            | Self::ConiferousForest => colors::COSTA_DEL_SOL,
+            Self::Taiga => colors::OLIVINE,
+            Self::Woodland => colors::NANDOR,
+            Self::Shrubland | Self::Savanna | Self::Grassland => colors::SUSHI,
+            Self::Tundra => colors::HAMPTON,
+            Self::Desert => colors::MONGOOSE,
+            Self::Scrub => colors::LAUREL,
+            Self::Bog | Self::FreshwaterSwamp | Self::Wetland | Self::SaltwaterSwamp => {
+                colors::OUTER_SPACE
+            }
+            Self::Saltmarsh
+            | Self::LargeLake
+            | Self::RiverDelta
+            | Self::CoastalRiver
+            | Self::InlandRiver
+            | Self::Floodplain
+            | Self::UplandRiver
+            | Self::EndorheicBasin => colors::STEEL_BLUE,
+            Self::OceanicIsland => colors::CHALKY,
+            Self::Sea | Self::DeepSea | Self::SeaShelf | Self::CoralReef | Self::KelpForest => {
+                colors::CLOUD_BURST
+            }
+            Self::Glacier | Self::IceSheet => colors::MYSTIC,
+            Self::Barren => colors::LIGHTER_SAND_DUNE,
+            Self::Indoor | Self::Urban => colors::KANGAROO,
+            Self::Cultivated | Self::Forested | Self::Rangeland => colors::COCOA_BROWN,
         }
     }
 }

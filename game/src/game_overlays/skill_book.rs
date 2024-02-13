@@ -115,6 +115,7 @@ fn add_skill_to_ui(
     let skill_icon_box = commands
         .spawn(NodeBundle {
             style: Style {
+                // SKILL_HEIGHT - 2 * ICON_MARGIN but rewritten for "faster" multiplication
                 width: Val::Px(2.0f32.mul_add(-ICON_MARGIN, SKILL_HEIGHT)),
                 height: Val::Px(2.0f32.mul_add(-ICON_MARGIN, SKILL_HEIGHT)),
                 margin: UiRect::all(Val::Px(ICON_MARGIN)),

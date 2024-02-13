@@ -26,39 +26,81 @@ fn toggle_skill_screen(mut next_overlay: ResMut<NextState<Overlay>>, input: Res<
 pub struct SkillBlock(pub Skill);
 
 /// Height of the skill "box"
-const SKILL_HEIGHT: f32 = 80.0;
+const SKILL_HEIGHT: f32 = 64.0;
 /// Width of the skill "box"
 const SKILL_WIDTH: f32 = 420.0;
+/// Margin around the skill icon
+const ICON_MARGIN: f32 = 10.0;
 /// Background color of the skill "box"
-const BACKGROUND_COLOR: Color = colors::KANGAROO;
+const BACKGROUND_COLOR: Color = colors::SAND_DUNE;
 /// Text color of the skill "box"
 const TEXT_COLOR: Color = colors::DARKER_THUNDER;
 /// Font size of the skill "box"
-const FONT_SIZE: f32 = 40.0;
+const TITLE_FONT_SIZE: f32 = 32.0;
 /// Gap between the skill "boxes"
-const GAP: f32 = 10.0;
+const GAP: f32 = 4.0;
 /// Border color of the skill "box"
 const BORDER_COLOR: Color = colors::THUNDER;
+/// Skill icon background color
+const SKILL_ICON_BACKGROUND: Color = colors::BRIGHT_GRAY;
+/// Skill icon border width
+const SKILL_ICON_BORDER_WIDTH: f32 = 2.0;
+/// Skill icon border color
+const SKILL_ICON_BORDER: Color = colors::ANZAC;
 
-/// Builds the single skill image
-fn build_skill_image(skill: Skill, font: Handle<Font>) -> (NodeBundle, TextBundle) {
-    (
-        NodeBundle {
+/// Left column skills
+const LEFT_COLUMN_SKILLS: [Skill; 9] = [
+    Skill::Pyromancy,
+    Skill::Fulgomancy,
+    Skill::Hydromancy,
+    Skill::Geomancy,
+    Skill::Aeromancy,
+    Skill::Cryomancy,
+    Skill::Trudomancy,
+    Skill::Photomancy,
+    Skill::Umbramancy,
+];
+
+/// Right column skills
+const RIGHT_COLUMN_SKILLS: [Skill; 9] = [
+    Skill::Arcanomancy,
+    Skill::Vitomancy,
+    Skill::Mortomancy,
+    Skill::Ampiliomancy,
+    Skill::Diminiomancy,
+    Skill::Citomancy,
+    Skill::Necromancy,
+    Skill::Mutatiomancy,
+    Skill::Chronomancy,
+];
+
+fn add_skill_to_ui(
+    font: Handle<Font>,
+    icon_tileset: Handle<TextureAtlas>,
+    skill: Skill,
+    commands: &mut Commands,
+) -> Entity {
+    let skill_box = commands
+        .spawn(NodeBundle {
             style: Style {
                 width: Val::Px(SKILL_WIDTH),
                 height: Val::Px(SKILL_HEIGHT),
                 margin: UiRect::bottom(Val::Px(GAP)),
+                align_content: AlignContent::Stretch,
+                border: UiRect::all(Val::Px(SKILL_ICON_BORDER_WIDTH)),
                 ..default()
             },
             background_color: BACKGROUND_COLOR.into(),
             border_color: BORDER_COLOR.into(),
             ..default()
-        },
-        TextBundle {
+        })
+        .id();
+    let skill_title = commands
+        .spawn(TextBundle {
             text: Text::from_section(
                 skill.to_string(),
                 TextStyle {
-                    font_size: FONT_SIZE,
+                    font_size: TITLE_FONT_SIZE,
                     color: TEXT_COLOR,
                     font,
                 },
@@ -68,124 +110,51 @@ fn build_skill_image(skill: Skill, font: Handle<Font>) -> (NodeBundle, TextBundl
                 ..default()
             },
             ..default()
-        },
-    )
-}
-
-#[must_use]
-fn atlas_bundle(icon_tileset: Handle<TextureAtlas>, index: usize) -> AtlasImageBundle {
-    AtlasImageBundle {
-        texture_atlas: icon_tileset,
-        texture_atlas_image: UiTextureAtlasImage { index, ..default() },
-        style: Style {
-            margin: UiRect::all(Val::Px(1.0)),
+        })
+        .id();
+    let skill_icon_box = commands
+        .spawn(NodeBundle {
+            style: Style {
+                width: Val::Px(SKILL_HEIGHT - 2. * ICON_MARGIN),
+                height: Val::Px(SKILL_HEIGHT - 2. * ICON_MARGIN),
+                margin: UiRect::all(Val::Px(ICON_MARGIN)),
+                border: UiRect::all(Val::Px(SKILL_ICON_BORDER_WIDTH)),
+                padding: UiRect::top(Val::Px(2.0)),
+                ..default()
+            },
+            background_color: SKILL_ICON_BACKGROUND.into(),
+            border_color: SKILL_ICON_BORDER.into(),
             ..default()
-        },
-        ..default()
-    }
-}
+        })
+        .id();
+    let skill_icon = commands
+        .spawn(AtlasImageBundle {
+            texture_atlas: icon_tileset,
+            texture_atlas_image: UiTextureAtlasImage {
+                index: skill.icon_index(),
+                ..default()
+            },
+            ..default()
+        })
+        .id();
 
-/// Builds the left column of the skill book UI.
-fn build_left_column(
-    font: Handle<Font>,
-    icon_tileset: Handle<TextureAtlas>,
-) -> Vec<((NodeBundle, TextBundle), AtlasImageBundle)> {
-    let left_column = vec![
-        (
-            build_skill_image(Skill::Pyromancy, font.clone()),
-            atlas_bundle(icon_tileset.clone(), Skill::Pyromancy.icon_index()),
-        ),
-        (
-            build_skill_image(Skill::Fulgomancy, font.clone()),
-            atlas_bundle(icon_tileset.clone(), Skill::Fulgomancy.icon_index()),
-        ),
-        (
-            build_skill_image(Skill::Hydromancy, font.clone()),
-            atlas_bundle(icon_tileset.clone(), Skill::Hydromancy.icon_index()),
-        ),
-        (
-            build_skill_image(Skill::Geomancy, font.clone()),
-            atlas_bundle(icon_tileset.clone(), Skill::Geomancy.icon_index()),
-        ),
-        (
-            build_skill_image(Skill::Aeromancy, font.clone()),
-            atlas_bundle(icon_tileset.clone(), Skill::Aeromancy.icon_index()),
-        ),
-        (
-            build_skill_image(Skill::Cryomancy, font.clone()),
-            atlas_bundle(icon_tileset.clone(), Skill::Cryomancy.icon_index()),
-        ),
-        (
-            build_skill_image(Skill::Trudomancy, font.clone()),
-            atlas_bundle(icon_tileset.clone(), Skill::Trudomancy.icon_index()),
-        ),
-        (
-            build_skill_image(Skill::Photomancy, font.clone()),
-            atlas_bundle(icon_tileset.clone(), Skill::Photomancy.icon_index()),
-        ),
-        (
-            build_skill_image(Skill::Umbramancy, font),
-            atlas_bundle(icon_tileset, Skill::Umbramancy.icon_index()),
-        ),
-    ];
+    commands.entity(skill_icon_box).push_children(&[skill_icon]);
+    commands
+        .entity(skill_box)
+        .push_children(&[skill_icon_box, skill_title]);
 
-    left_column
-}
-
-/// Builds the right column of the skill book UI.
-fn build_right_column(
-    font: Handle<Font>,
-    icon_tileset: Handle<TextureAtlas>,
-) -> Vec<((NodeBundle, TextBundle), AtlasImageBundle)> {
-    let right_column = vec![
-        (
-            build_skill_image(Skill::Arcanomancy, font.clone()),
-            atlas_bundle(icon_tileset.clone(), Skill::Arcanomancy.icon_index()),
-        ),
-        (
-            build_skill_image(Skill::Vitomancy, font.clone()),
-            atlas_bundle(icon_tileset.clone(), Skill::Vitomancy.icon_index()),
-        ),
-        (
-            build_skill_image(Skill::Mortomancy, font.clone()),
-            atlas_bundle(icon_tileset.clone(), Skill::Mortomancy.icon_index()),
-        ),
-        (
-            build_skill_image(Skill::Ampiliomancy, font.clone()),
-            atlas_bundle(icon_tileset.clone(), Skill::Ampiliomancy.icon_index()),
-        ),
-        (
-            build_skill_image(Skill::Diminiomancy, font.clone()),
-            atlas_bundle(icon_tileset.clone(), Skill::Diminiomancy.icon_index()),
-        ),
-        (
-            build_skill_image(Skill::Citomancy, font.clone()),
-            atlas_bundle(icon_tileset.clone(), Skill::Citomancy.icon_index()),
-        ),
-        (
-            build_skill_image(Skill::Necromancy, font.clone()),
-            atlas_bundle(icon_tileset.clone(), Skill::Necromancy.icon_index()),
-        ),
-        (
-            build_skill_image(Skill::Mutatiomancy, font.clone()),
-            atlas_bundle(icon_tileset.clone(), Skill::Mutatiomancy.icon_index()),
-        ),
-        (
-            build_skill_image(Skill::Chronomancy, font),
-            atlas_bundle(icon_tileset, Skill::Chronomancy.icon_index()),
-        ),
-    ];
-
-    right_column
+    skill_box
 }
 
 /// Spawns the skill book UI.
 fn spawn_skill_book_ui(mut commands: Commands, fonts: Res<FontResource>, game_data: Res<GameData>) {
     let parent_container = NodeBundle {
         style: Style {
-            width: Val::Percent(100.0),
-            height: Val::Percent(100.0),
+            width: Val::Percent(95.0),
+            height: Val::Percent(95.0),
             justify_content: JustifyContent::SpaceAround,
+            align_self: AlignSelf::Center,
+            padding: UiRect::all(Val::Px(32.0)),
             ..default()
         },
         ..default()
@@ -215,27 +184,23 @@ fn spawn_skill_book_ui(mut commands: Commands, fonts: Res<FontResource>, game_da
     let left = commands.spawn(left_column).id();
     let right = commands.spawn(right_column).id();
 
-    let left_column_vec = build_left_column(fonts.interface_font.clone(), icon_tileset.clone());
-    for ((node, text), icon) in left_column_vec {
-        let new_entity = commands
-            .spawn(node)
-            .with_children(|parent| {
-                parent.spawn(icon);
-                parent.spawn(text);
-            })
-            .id();
+    for skill in LEFT_COLUMN_SKILLS.iter() {
+        let new_entity = add_skill_to_ui(
+            fonts.interface_font.clone(),
+            icon_tileset.clone(),
+            *skill,
+            &mut commands,
+        );
         commands.entity(left).push_children(&[new_entity]);
     }
 
-    let right_column_vec = build_right_column(fonts.interface_font.clone(), icon_tileset.clone());
-    for ((node, text), icon) in right_column_vec {
-        let new_entity = commands
-            .spawn(node)
-            .with_children(|parent| {
-                parent.spawn(icon);
-                parent.spawn(text);
-            })
-            .id();
+    for skill in RIGHT_COLUMN_SKILLS.iter() {
+        let new_entity = add_skill_to_ui(
+            fonts.interface_font.clone(),
+            icon_tileset.clone(),
+            *skill,
+            &mut commands,
+        );
         commands.entity(right).push_children(&[new_entity]);
     }
 

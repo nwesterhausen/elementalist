@@ -11,5 +11,5 @@ data:
   path: tileset/rock.png
   tileWidth: 16
   tileHeight: 16
-  tileSetWidth: 2
-  tileSetHeight: 1
+  tilesetWidth: 2
+  tilesetHeight: 1

@@ -17,11 +17,11 @@
 			"description": "Height of each tile in pixels",
 			"type": "integer"
 		},
-		"tileSetWidth": {
+		"tilesetWidth": {
 			"description": "Width of the tileset in tiles (NOT pixels)",
 			"type": "integer"
 		},
-		"tileSetHeight": {
+		"tilesetHeight": {
 			"description": "Height of the tileset in tiles (NOT pixels)",
 			"type": "integer"
 		},

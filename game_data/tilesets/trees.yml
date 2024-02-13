@@ -11,5 +11,5 @@ data:
   path: tileset/trees.png
   tileWidth: 64
   tileHeight: 64
-  tileSetWidth: 3
-  tileSetHeight: 1
+  tilesetWidth: 3
+  tilesetHeight: 1

@@ -11,5 +11,5 @@ data:
   path: tileset/spell_projectiles.png
   tileWidth: 16
   tileHeight: 16
-  tileSetWidth: 5
-  tileSetHeight: 3
+  tilesetWidth: 5
+  tilesetHeight: 3

@@ -11,5 +11,5 @@ data:
   path: tileset/spell_icon_border.png
   tileWidth: 32
   tileHeight: 32
-  tileSetWidth: 4
-  tileSetHeight: 1
+  tilesetWidth: 4
+  tilesetHeight: 1

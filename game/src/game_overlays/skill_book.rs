@@ -115,8 +115,8 @@ fn add_skill_to_ui(
     let skill_icon_box = commands
         .spawn(NodeBundle {
             style: Style {
-                width: Val::Px(SKILL_HEIGHT - 2. * ICON_MARGIN),
-                height: Val::Px(SKILL_HEIGHT - 2. * ICON_MARGIN),
+                width: Val::Px(2.0f32.mul_add(-ICON_MARGIN, SKILL_HEIGHT)),
+                height: Val::Px(2.0f32.mul_add(-ICON_MARGIN, SKILL_HEIGHT)),
                 margin: UiRect::all(Val::Px(ICON_MARGIN)),
                 border: UiRect::all(Val::Px(SKILL_ICON_BORDER_WIDTH)),
                 padding: UiRect::top(Val::Px(2.0)),
@@ -184,7 +184,7 @@ fn spawn_skill_book_ui(mut commands: Commands, fonts: Res<FontResource>, game_da
     let left = commands.spawn(left_column).id();
     let right = commands.spawn(right_column).id();
 
-    for skill in LEFT_COLUMN_SKILLS.iter() {
+    for skill in &LEFT_COLUMN_SKILLS {
         let new_entity = add_skill_to_ui(
             fonts.interface_font.clone(),
             icon_tileset.clone(),
@@ -194,7 +194,7 @@ fn spawn_skill_book_ui(mut commands: Commands, fonts: Res<FontResource>, game_da
         commands.entity(left).push_children(&[new_entity]);
     }
 
-    for skill in RIGHT_COLUMN_SKILLS.iter() {
+    for skill in &RIGHT_COLUMN_SKILLS {
         let new_entity = add_skill_to_ui(
             fonts.interface_font.clone(),
             icon_tileset.clone(),

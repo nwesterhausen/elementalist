@@ -4,9 +4,9 @@
 [![Build & Test](https://github.com/nwesterhausen/elementalist/actions/workflows/rust.yml/badge.svg)](https://github.com/nwesterhausen/elementalist/actions/workflows/rust.yml)
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/8337/badge)](https://www.bestpractices.dev/projects/8337)
 
-|                                     |                        |
-| ----------------------------------- | ---------------------- |
-| ![wizard](./game_assets/Wizard.png) | A game made with bevy. |
+|                                            |                        |
+| ------------------------------------------ | ---------------------- |
+| ![wizard](./game/assets/sprite/Wizard.png) | A game made with bevy. |
 
 - [Design Notes](./design_notes) include info about the gameplay loop and gameplay.
 - [Game](./game) is the bevy app

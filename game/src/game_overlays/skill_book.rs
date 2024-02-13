@@ -72,6 +72,19 @@ fn build_skill_image(skill: Skill, font: Handle<Font>) -> (NodeBundle, TextBundl
     )
 }
 
+#[must_use]
+fn atlas_bundle(icon_tileset: Handle<TextureAtlas>, index: usize) -> AtlasImageBundle {
+    AtlasImageBundle {
+        texture_atlas: icon_tileset,
+        texture_atlas_image: UiTextureAtlasImage { index, ..default() },
+        style: Style {
+            margin: UiRect::all(Val::Px(1.0)),
+            ..default()
+        },
+        ..default()
+    }
+}
+
 /// Builds the left column of the skill book UI.
 fn build_left_column(
     font: Handle<Font>,
@@ -81,124 +94,87 @@ fn build_left_column(
 
     left_column.push((
         build_skill_image(Skill::Pyromancy, font.clone()),
-        AtlasImageBundle {
-            texture_atlas: icon_tileset.clone(),
-            texture_atlas_image: UiTextureAtlasImage {
-                index: Skill::Pyromancy.icon_index(),
-                ..default()
-            },
-            style: Style {
-                align_self: AlignSelf::End,
-                ..default()
-            },
-            ..default()
-        },
+        atlas_bundle(icon_tileset.clone(), Skill::Pyromancy.icon_index()),
     ));
     left_column.push((
         build_skill_image(Skill::Fulgomancy, font.clone()),
-        AtlasImageBundle {
-            texture_atlas: icon_tileset.clone(),
-            texture_atlas_image: UiTextureAtlasImage {
-                index: Skill::Fulgomancy.icon_index(),
-                ..default()
-            },
-            ..default()
-        },
+        atlas_bundle(icon_tileset.clone(), Skill::Fulgomancy.icon_index()),
     ));
     left_column.push((
         build_skill_image(Skill::Hydromancy, font.clone()),
-        AtlasImageBundle {
-            texture_atlas: icon_tileset.clone(),
-            texture_atlas_image: UiTextureAtlasImage {
-                index: Skill::Hydromancy.icon_index(),
-                ..default()
-            },
-            ..default()
-        },
+        atlas_bundle(icon_tileset.clone(), Skill::Hydromancy.icon_index()),
     ));
     left_column.push((
         build_skill_image(Skill::Geomancy, font.clone()),
-        AtlasImageBundle {
-            texture_atlas: icon_tileset.clone(),
-            texture_atlas_image: UiTextureAtlasImage {
-                index: Skill::Geomancy.icon_index(),
-                ..default()
-            },
-            ..default()
-        },
+        atlas_bundle(icon_tileset.clone(), Skill::Geomancy.icon_index()),
     ));
     left_column.push((
         build_skill_image(Skill::Aeromancy, font.clone()),
-        AtlasImageBundle {
-            texture_atlas: icon_tileset.clone(),
-            texture_atlas_image: UiTextureAtlasImage {
-                index: Skill::Aeromancy.icon_index(),
-                ..default()
-            },
-            ..default()
-        },
+        atlas_bundle(icon_tileset.clone(), Skill::Aeromancy.icon_index()),
     ));
     left_column.push((
         build_skill_image(Skill::Cryomancy, font.clone()),
-        AtlasImageBundle {
-            texture_atlas: icon_tileset.clone(),
-            texture_atlas_image: UiTextureAtlasImage {
-                index: Skill::Cryomancy.icon_index(),
-                ..default()
-            },
-            ..default()
-        },
+        atlas_bundle(icon_tileset.clone(), Skill::Cryomancy.icon_index()),
     ));
     left_column.push((
         build_skill_image(Skill::Trudomancy, font.clone()),
-        AtlasImageBundle {
-            texture_atlas: icon_tileset.clone(),
-            texture_atlas_image: UiTextureAtlasImage {
-                index: Skill::Trudomancy.icon_index(),
-                ..default()
-            },
-            ..default()
-        },
+        atlas_bundle(icon_tileset.clone(), Skill::Trudomancy.icon_index()),
     ));
     left_column.push((
         build_skill_image(Skill::Photomancy, font.clone()),
-        AtlasImageBundle {
-            texture_atlas: icon_tileset.clone(),
-            texture_atlas_image: UiTextureAtlasImage {
-                index: Skill::Photomancy.icon_index(),
-                ..default()
-            },
-            ..default()
-        },
+        atlas_bundle(icon_tileset.clone(), Skill::Photomancy.icon_index()),
     ));
     left_column.push((
         build_skill_image(Skill::Umbramancy, font.clone()),
-        AtlasImageBundle {
-            texture_atlas: icon_tileset.clone(),
-            texture_atlas_image: UiTextureAtlasImage {
-                index: Skill::Umbramancy.icon_index(),
-                ..default()
-            },
-            ..default()
-        },
+        atlas_bundle(icon_tileset.clone(), Skill::Umbramancy.icon_index()),
     ));
 
     left_column
 }
 
 /// Builds the right column of the skill book UI.
-fn build_right_column(font: Handle<Font>) -> Vec<(NodeBundle, TextBundle)> {
+fn build_right_column(
+    font: Handle<Font>,
+    icon_tileset: Handle<TextureAtlas>,
+) -> Vec<((NodeBundle, TextBundle), AtlasImageBundle)> {
     let mut right_column = Vec::new();
 
-    right_column.push(build_skill_image(Skill::Arcanomancy, font.clone()));
-    right_column.push(build_skill_image(Skill::Vitomancy, font.clone()));
-    right_column.push(build_skill_image(Skill::Mortomancy, font.clone()));
-    right_column.push(build_skill_image(Skill::Ampiliomancy, font.clone()));
-    right_column.push(build_skill_image(Skill::Diminiomancy, font.clone()));
-    right_column.push(build_skill_image(Skill::Citomancy, font.clone()));
-    right_column.push(build_skill_image(Skill::Necromancy, font.clone()));
-    right_column.push(build_skill_image(Skill::Mutatiomancy, font.clone()));
-    right_column.push(build_skill_image(Skill::Chronomancy, font.clone()));
+    right_column.push((
+        build_skill_image(Skill::Arcanomancy, font.clone()),
+        atlas_bundle(icon_tileset.clone(), Skill::Arcanomancy.icon_index()),
+    ));
+    right_column.push((
+        build_skill_image(Skill::Vitomancy, font.clone()),
+        atlas_bundle(icon_tileset.clone(), Skill::Vitomancy.icon_index()),
+    ));
+    right_column.push((
+        build_skill_image(Skill::Mortomancy, font.clone()),
+        atlas_bundle(icon_tileset.clone(), Skill::Mortomancy.icon_index()),
+    ));
+    right_column.push((
+        build_skill_image(Skill::Ampiliomancy, font.clone()),
+        atlas_bundle(icon_tileset.clone(), Skill::Ampiliomancy.icon_index()),
+    ));
+    right_column.push((
+        build_skill_image(Skill::Diminiomancy, font.clone()),
+        atlas_bundle(icon_tileset.clone(), Skill::Diminiomancy.icon_index()),
+    ));
+    right_column.push((
+        build_skill_image(Skill::Citomancy, font.clone()),
+        atlas_bundle(icon_tileset.clone(), Skill::Citomancy.icon_index()),
+    ));
+    right_column.push((
+        build_skill_image(Skill::Necromancy, font.clone()),
+        atlas_bundle(icon_tileset.clone(), Skill::Necromancy.icon_index()),
+    ));
+    right_column.push((
+        build_skill_image(Skill::Mutatiomancy, font.clone()),
+        atlas_bundle(icon_tileset.clone(), Skill::Mutatiomancy.icon_index()),
+    ));
+    right_column.push((
+        build_skill_image(Skill::Chronomancy, font.clone()),
+        atlas_bundle(icon_tileset.clone(), Skill::Chronomancy.icon_index()),
+    ));
 
     right_column
 }
@@ -251,11 +227,12 @@ fn spawn_skill_book_ui(mut commands: Commands, fonts: Res<FontResource>, game_da
         commands.entity(left).push_children(&[new_entity]);
     }
 
-    let right_column_vec = build_right_column(fonts.interface_font.clone());
-    for (node, text) in right_column_vec {
+    let right_column_vec = build_right_column(fonts.interface_font.clone(), icon_tileset.clone());
+    for ((node, text), icon) in right_column_vec {
         let new_entity = commands
             .spawn(node)
             .with_children(|parent| {
+                parent.spawn(icon);
                 parent.spawn(text);
             })
             .id();

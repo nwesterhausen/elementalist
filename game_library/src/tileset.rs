@@ -15,13 +15,22 @@ pub const DEFAULT_TILESET_PADDING: f32 = 1.0;
 pub const DEFAULT_TILESET_OFFSET: f32 = 1.0;
 
 mod tileset_defaults {
-    use super::{DEFAULT_TILESET_DIMENSION, DEFAULT_TILE_DIMENSION};
+    use super::{
+        DEFAULT_TILESET_DIMENSION, DEFAULT_TILESET_OFFSET, DEFAULT_TILESET_PADDING,
+        DEFAULT_TILE_DIMENSION,
+    };
 
     pub(super) const fn tile_dimension() -> f32 {
         DEFAULT_TILE_DIMENSION
     }
     pub(super) const fn tileset_dimension() -> usize {
         DEFAULT_TILESET_DIMENSION
+    }
+    pub(super) const fn tileset_padding() -> f32 {
+        DEFAULT_TILESET_PADDING
+    }
+    pub(super) const fn tileset_offset() -> f32 {
+        DEFAULT_TILESET_OFFSET
     }
 }
 
@@ -46,13 +55,17 @@ pub struct Tileset {
     #[serde(default = "tileset_defaults::tileset_dimension")]
     pub tileset_height: usize,
     /// The horizontal padding between tiles.
-    pub horizontal_padding: Option<f32>,
+    #[serde(default = "tileset_defaults::tileset_padding")]
+    pub horizontal_padding: f32,
     /// The vertical padding between tiles.
-    pub vertical_padding: Option<f32>,
+    #[serde(default = "tileset_defaults::tileset_padding")]
+    pub vertical_padding: f32,
     /// The horizontal offset for the tileset.
-    pub horizontal_offset: Option<f32>,
+    #[serde(default = "tileset_defaults::tileset_offset")]
+    pub horizontal_offset: f32,
     /// The vertical offset for the tileset.
-    pub vertical_offset: Option<f32>,
+    #[serde(default = "tileset_defaults::tileset_offset")]
+    pub vertical_offset: f32,
 }
 
 impl Hash for Tileset {
@@ -126,10 +139,10 @@ impl Default for Tileset {
             tile_height: DEFAULT_TILE_DIMENSION,
             tileset_width: DEFAULT_TILESET_DIMENSION,
             tileset_height: DEFAULT_TILESET_DIMENSION,
-            horizontal_padding: None,
-            vertical_padding: None,
-            horizontal_offset: None,
-            vertical_offset: None,
+            horizontal_padding: DEFAULT_TILESET_PADDING,
+            vertical_padding: DEFAULT_TILESET_PADDING,
+            horizontal_offset: DEFAULT_TILESET_OFFSET,
+            vertical_offset: DEFAULT_TILESET_OFFSET,
         }
     }
 }
@@ -137,29 +150,25 @@ impl Default for Tileset {
 impl Tileset {
     /// Get the Vec2 padding for the tileset.
     ///
-    /// If the padding is not set, it will default to None.
+    /// This will return None if both paddings are 0.0.
     #[must_use]
     pub fn get_padding(&self) -> Option<Vec2> {
-        if self.horizontal_padding.is_none() && self.vertical_padding.is_none() {
+        if self.horizontal_padding == 0.0 && self.vertical_padding == 0.0 {
             return None;
         }
-        Some(Vec2::new(
-            self.horizontal_padding.unwrap_or(DEFAULT_TILESET_PADDING),
-            self.vertical_padding.unwrap_or(DEFAULT_TILESET_PADDING),
-        ))
+
+        Some(Vec2::new(self.horizontal_padding, self.vertical_padding))
     }
 
     /// Get the Vec2 offset for the tileset.
     ///
-    /// If the offset is not set, it will default to None.
+    /// This will return None if both offsets are 0.0.
     #[must_use]
     pub fn get_offset(&self) -> Option<Vec2> {
-        if self.horizontal_offset.is_none() && self.vertical_offset.is_none() {
+        if self.horizontal_offset == 0.0 && self.vertical_offset == 0.0 {
             return None;
         }
-        Some(Vec2::new(
-            self.horizontal_offset.unwrap_or(DEFAULT_TILESET_OFFSET),
-            self.vertical_offset.unwrap_or(DEFAULT_TILESET_OFFSET),
-        ))
+
+        Some(Vec2::new(self.horizontal_offset, self.vertical_offset))
     }
 }

@@ -6,6 +6,14 @@ use crate::enums::biome::Marker;
 #[derive(Debug, Default, Clone, Eq, PartialEq, Hash, Resource)]
 pub struct GenerationSeed(pub u32);
 
+impl GenerationSeed {
+    /// Get the seed as a `u64` for use in seedable `thread_rng`.
+    #[must_use]
+    pub fn as_u64(&self) -> u64 {
+        u64::from(self.0)
+    }
+}
+
 /// Stores in the generated biome map and generated object map.
 ///
 /// This is used to store the results of the noise generation, and then

@@ -238,11 +238,11 @@ fn spawn_random_environment(
     for (i, row) in generated_map.object_map.iter().enumerate() {
         for (j, object_id) in row.iter().enumerate() {
             let obj = match object_id {
-                4 | 8 => Some((tree, 0)),
-                5 | 13 => Some((tree, 1)),
-                0 | 19 => Some((tree, 2)),
-                3 | 7 | 15 => Some((rock, 0)),
-                6 | 12 | 14 => Some((rock, 1)),
+                4 => Some((tree, 0)),
+                13 => Some((tree, 1)),
+                19 => Some((tree, 2)),
+                3 | 15 => Some((rock, 0)),
+                6 | 17 => Some((rock, 1)),
                 _ => None,
             };
             if let Some(obj) = obj {

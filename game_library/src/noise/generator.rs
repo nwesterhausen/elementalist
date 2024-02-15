@@ -1,6 +1,7 @@
 use bevy::prelude::*;
-use noise::{NoiseFn, Perlin, Simplex};
-use rand::Rng;
+use noise::{NoiseFn, Perlin};
+use rand::rngs::SmallRng;
+use rand::{Rng, SeedableRng};
 
 use crate::{enums::biome::Marker, state::Game};
 
@@ -36,7 +37,7 @@ pub(super) fn generate_map(seed: Res<GenerationSeed>, mut maps: ResMut<Generated
     tracing::info!("Generating map with seed: {}", seed.0);
 
     let perlin = Perlin::new(seed.0);
-    let simplex = Simplex::new(seed.0);
+    let mut small_rng = SmallRng::seed_from_u64(seed.as_u64());
 
     let width = maps.dimensions().0;
     let height = maps.dimensions().1;
@@ -52,8 +53,8 @@ pub(super) fn generate_map(seed: Res<GenerationSeed>, mut maps: ResMut<Generated
             let biome = Marker::from_noise(value);
             maps.biome_map[x].push(biome);
 
-            // Map the simplex noise for position to the object map.
-            let value = simplex.get(pos);
+            // Map the small_rng noise for position to the object map.
+            let value = small_rng.gen_range(-2.0..2.0);
             let object = noise_to_object(value);
             maps.object_map[x].push(object);
         }
@@ -78,7 +79,6 @@ pub(super) fn generate_map(seed: Res<GenerationSeed>, mut maps: ResMut<Generated
 #[must_use]
 fn noise_to_object(noise: f64) -> usize {
     match noise {
-        v if v < -0.9 => 0,
         v if v < -0.8 => 1,
         v if v < -0.7 => 2,
         v if v < -0.6 => 3,
@@ -98,9 +98,6 @@ fn noise_to_object(noise: f64) -> usize {
         v if v < 0.8 => 17,
         v if v < 0.9 => 18,
         v if v <= 1.0 => 19,
-        _ => {
-            tracing::error!("noise_to_object: noise value out of range: {}", noise);
-            0
-        }
+        _ => 0,
     }
 }

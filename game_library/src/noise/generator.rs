@@ -7,6 +7,9 @@ use crate::{enums::biome::Marker, state::Game};
 
 use super::resources::{GeneratedMaps, GenerationSeed};
 
+/// Boundary for the object id noise generation. Lower will result in more objects.
+const OBJECT_BOUNDARY: f64 = 2.5;
+
 /// Generate a new seed for the world generation.
 ///
 /// This should be first in the sequence of events that happen when generating a new realm.
@@ -54,7 +57,7 @@ pub(super) fn generate_map(seed: Res<GenerationSeed>, mut maps: ResMut<Generated
             maps.biome_map[x].push(biome);
 
             // Map the small_rng noise for position to the object map.
-            let value = small_rng.gen_range(-2.0..2.0);
+            let value = small_rng.gen_range(-OBJECT_BOUNDARY..OBJECT_BOUNDARY);
             let object = noise_to_object(value);
             maps.object_map[x].push(object);
         }
@@ -67,7 +70,7 @@ pub(super) fn generate_map(seed: Res<GenerationSeed>, mut maps: ResMut<Generated
     );
 }
 
-/// Take noise and return a usize between 0 and 19.
+/// Take noise and return a usize between 0 and 19. 0 should be considered empty.
 ///
 /// # Arguments
 ///
@@ -75,7 +78,7 @@ pub(super) fn generate_map(seed: Res<GenerationSeed>, mut maps: ResMut<Generated
 ///
 /// # Returns
 ///
-/// A usize between 0 and 19.
+/// A usize between 0 and 19. 0 should be considered empty.
 #[must_use]
 fn noise_to_object(noise: f64) -> usize {
     match noise {

@@ -32,7 +32,7 @@ image = "0.24"
 # Random noise generation library
 rand = "0.8.5"
 # DEBUG ONLY: docking support for the inspector egui
-egui_dock = "0.10.0"
+egui_dock = "0.11.1"
 # DEBUG ONLY: inspector for bevy
 bevy-inspector-egui = "0.22.1"
 # Particle system

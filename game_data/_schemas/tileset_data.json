@@ -1,52 +1,52 @@
 {
-	"$schema": "https://json-schema.org/draft/2020-12/schema",
-	"$id": "https://schemas.nwest.one/games/elementalist/tileset_data.json",
-	"title": "Elementalist Tileset Definition File",
-	"description": "A JSON schema for defining a tileset for the Elementalist game",
-	"type": "object",
-	"properties": {
-		"path": {
-			"description": "The path to the tileset image, inside the assets directory. (e.g. 'tileset/my-tileset.png')",
-			"type": "string"
-		},
-		"tileWidth": {
-			"description": "Width of each tile in pixels",
-			"type": "integer"
-		},
-		"tileHeight": {
-			"description": "Height of each tile in pixels",
-			"type": "integer"
-		},
-		"tilesetWidth": {
-			"description": "Width of the tileset in tiles (NOT pixels)",
-			"type": "integer"
-		},
-		"tilesetHeight": {
-			"description": "Height of the tileset in tiles (NOT pixels)",
-			"type": "integer"
-		},
-		"horizontalPadding": {
-			"description": "The number of pixels of padding between each tile in the tileset. Defaults to 1.0 if not specified.",
-			"type": "integer"
-		},
-		"verticalPadding": {
-			"description": "The number of pixels of padding between each tile in the tileset. Defaults to 1.0 if not specified.",
-			"type": "integer"
-		},
-		"horizontalOffset": {
-			"description": "The number of pixels to offset the tileset by, horizontally. Defaults to 1.0 if not specified.",
-			"type": "integer"
-		},
-		"verticalOffset": {
-			"description": "The number of pixels to offset the tileset by, vertically. Defaults to 1.0 if not specified.",
-			"type": "integer"
-		}
-	},
-	"required": [
-		"path",
-		"tileWidth",
-		"tileHeight",
-		"tileSetWidth",
-		"tileSetHeight"
-	]
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.nwest.one/games/elementalist/tileset_data.json",
+  "title": "Elementalist Tileset Definition File",
+  "description": "A JSON schema for defining a tileset for the Elementalist game",
+  "type": "object",
+  "properties": {
+    "path": {
+      "description": "The path to the tileset image, inside the assets directory. (e.g. 'tileset/my-tileset.png')",
+      "type": "string"
+    },
+    "tileWidth": {
+      "description": "Width of each tile in pixels",
+      "type": "integer"
+    },
+    "tileHeight": {
+      "description": "Height of each tile in pixels",
+      "type": "integer"
+    },
+    "tilesetWidth": {
+      "description": "Width of the tileset in tiles (NOT pixels)",
+      "type": "integer"
+    },
+    "tilesetHeight": {
+      "description": "Height of the tileset in tiles (NOT pixels)",
+      "type": "integer"
+    },
+    "horizontalPadding": {
+      "description": "The number of pixels of padding between each tile in the tileset. Defaults to 1.0 if not specified.",
+      "type": "integer"
+    },
+    "verticalPadding": {
+      "description": "The number of pixels of padding between each tile in the tileset. Defaults to 1.0 if not specified.",
+      "type": "integer"
+    },
+    "horizontalOffset": {
+      "description": "The number of pixels to offset the tileset by, horizontally. Defaults to 1.0 if not specified.",
+      "type": "integer"
+    },
+    "verticalOffset": {
+      "description": "The number of pixels to offset the tileset by, vertically. Defaults to 1.0 if not specified.",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "path",
+    "tileWidth",
+    "tileHeight",
+    "tilesetWidth",
+    "tilesetHeight"
+  ]
 }

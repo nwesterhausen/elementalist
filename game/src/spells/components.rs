@@ -10,7 +10,7 @@ pub fn despawn_expired_spells(
     for (entity, mut lifetime) in &mut query {
         lifetime.update(time.delta_seconds());
         if lifetime.is_expired() {
-            commands.entity(entity).despawn();
+            commands.entity(entity).despawn_recursive();
         }
     }
 }

@@ -8,3 +8,7 @@ node_modules
 
 # hide Mac OS X specific files
 .DS_Store
+
+# special
+game/elementalist
+game/game_data

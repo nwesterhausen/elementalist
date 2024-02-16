@@ -23,7 +23,35 @@ The following generated documentation is available:
 
 A listing of the open source libraries and resources used in this project:
 
-- [github-markdown-css](https://github.com/sindresorhus/github-markdown-css) (MIT) - CSS file for this page.
-- fonts
-- some bevy libraries
-- yaml library
+- CSS
+  - [github-markdown-css](https://github.com/sindresorhus/github-markdown-css) (MIT) - CSS file for this page.
+- Fonts
+  - [Almendra](https://fonts.google.com/specimen/Almendra) (OFL)
+  - [Almendra Display](https://fonts.google.com/specimen/Almendra+Display) (OFL)
+  - [Almendra SC](https://fonts.google.com/specimen/Almendra+SC) (OFL)
+  - [Nanum Gothic Coding](https://fonts.google.com/specimen/Nanum+Gothic+Coding) (OFL)
+  - [Red Hat Display](https://fonts.google.com/specimen/Red+Hat+Text) (OFL)
+  - [Red Hat Text](https://fonts.google.com/specimen/Red+Hat+Text) (OFL)
+  - [Syne Mono](https://fonts.google.com/specimen/Syne+Mono) (OFL)
+  - [Syne Tactile](https://fonts.google.com/specimen/Syne+Tactile) (OFL)
+  - [Open Dyslexic](https://opendyslexic.org/about) (OFL)
+- Bevy Libraries
+  - [bevy](https://crates.io/crates/bevy) (MIT)
+  - [leafwing-input-manager](https://crates.io/crates/leafwing-input-manager) (MIT)
+  - [bevy_hanabi](https://crates.io/crates/bevy_hanabi) (MIT)
+  - [bevy_pkv](https://crates.io/crates/bevy_pkv) (MIT)
+- Bevy Libraries (for debugging/development)
+  - [egui_doc](https://crates.io/crates/egui_dock) (MIT)
+  - [bevy-inspector-egui](https://crates.io/crates/bevy-inspector-egui) (MIT)
+- Other rust dependencies
+  - [tracing](https://crates.io/crates/tracing) (MIT)
+  - [embed-resource](https://crates.io/crates/embed-resource) (MIT)
+  - [built](https://crates.io/crates/built) (MIT)
+  - [winit](https://crates.io/crates/winit) (Apache-2.0)
+  - [image](https://crates.io/crates/image) (MIT)
+  - [rand](https://crates.io/crates/rand) (MIT)
+  - [noise](https://crates.io/crates/noise) (MIT)
+  - [serde](https://crates.io/crates/serde) (MIT)
+  - [serde_default_utils](https://crates.io/crates/serde_default_utils) (MIT)
+  - [serde_yaml](https://crates.io/crates/serde_yaml) (MIT)
+  - [walkdir](https://crates.io/crates/walkdir) (MIT)

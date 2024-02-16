@@ -1,4 +1,5 @@
 use bevy::prelude::*;
+use bevy_rapier2d::control::KinematicCharacterController;
 use game_library::{
     state::{Game, Overlay},
     Acceleration, Velocity,
@@ -24,10 +25,15 @@ fn update_velocity(mut query: Query<(&mut Velocity, &Acceleration)>, time: Res<T
     }
 }
 
-/// System that updates the position of moving things
-fn update_position(mut query: Query<(&mut Transform, &Velocity)>, time: Res<Time>) {
-    for (mut transform, velocity) in &mut query {
-        transform.translation.x += velocity.value.x * time.delta_seconds();
-        transform.translation.y += velocity.value.y * time.delta_seconds();
+/// System that updates the position of moving things (via physics)
+fn update_position(
+    mut query: Query<(&mut KinematicCharacterController, &Velocity)>,
+    time: Res<Time>,
+) {
+    for (mut controller, velocity) in &mut query {
+        controller.translation = Some(Vec2::new(
+            velocity.value.x * time.delta_seconds(),
+            velocity.value.y * time.delta_seconds(),
+        ));
     }
 }

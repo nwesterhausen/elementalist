@@ -24,7 +24,11 @@ impl Plugin for PlayerPlugin {
             .add_systems(OnEnter(Game::Playing), avatar::spawn_player_avatar)
             .add_systems(
                 Update,
-                (movement::player_movement_controls).run_if(in_state(Game::Playing)),
+                (
+                    movement::player_movement_controls,
+                    movement::update_player_z_index,
+                )
+                    .run_if(in_state(Game::Playing)),
             )
             // Remove player when leaving game
             .add_systems(OnExit(Game::Playing), despawn_with_tag::<PlayerAvatar>);

@@ -37,6 +37,8 @@ egui_dock = "0.11.1"
 bevy-inspector-egui = "0.22.1"
 # Particle system
 bevy_hanabi = { version = "0.9.0", default-features = false, features = ["2d"] }
+# Physics engine
+bevy_rapier2d = { version = "0.24.0", features = ["parallel"] }
 
 # Some very strict lints.
 [lints.rust]

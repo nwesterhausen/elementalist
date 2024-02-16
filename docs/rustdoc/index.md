@@ -43,6 +43,7 @@ A listing of the open source libraries and resources used in this project:
 - Bevy Libraries (for debugging/development)
   - [egui_doc](https://crates.io/crates/egui_dock) (MIT)
   - [bevy-inspector-egui](https://crates.io/crates/bevy-inspector-egui) (MIT)
+  - [bevy_rapier2d](https://crates.io/crates/bevy_rapier2d) (Apache-2.0)
 - Other rust dependencies
   - [tracing](https://crates.io/crates/tracing) (MIT)
   - [embed-resource](https://crates.io/crates/embed-resource) (MIT)

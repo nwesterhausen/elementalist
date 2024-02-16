@@ -12,9 +12,10 @@ use bevy::{
     render::{render_resource::WgpuFeatures, settings::WgpuSettings, RenderPlugin},
     utils::HashMap,
 };
+use bevy_rapier2d::prelude::*;
 use game_library::{
     data_loader::storage::GameData, enums::biome::Biome, state::Game, GeneratedMaps,
-    MarkersToBiomes, NoisePlugin, SchedulingPlugin,
+    MarkersToBiomes, NoisePlugin, PhysicsPlugin, SchedulingPlugin,
 };
 use in_game::InGamePlugin;
 use leafwing_input_manager::plugin::InputManagerPlugin;
@@ -126,6 +127,8 @@ impl Plugin for ElementalistDefaultPlugins {
         app.add_plugins(camera::CameraPlugin);
         // Add the schedule plugin
         app.add_plugins(SchedulingPlugin);
+        // Add the physics plugin
+        app.add_plugins(PhysicsPlugin);
     }
 }
 
@@ -248,9 +251,7 @@ fn spawn_random_environment(
             if let Some(obj) = obj {
                 let mut obj_transform =
                     Transform::from_translation(generated_map.map_to_world((i, j)));
-                #[allow(clippy::cast_precision_loss)]
-                let z_val = obj_transform.translation.y / -10.0;
-                obj_transform.translation.z = z_val;
+                obj_transform.translation.z = -obj_transform.translation.y;
                 obj_transform.scale = Vec3::splat(1.0);
                 commands.spawn((
                     SpriteSheetBundle {
@@ -260,6 +261,9 @@ fn spawn_random_environment(
                         ..Default::default()
                     },
                     EnvironmentStuff,
+                    RigidBody::Fixed,
+                    // todo: make this reference the actual size of the sprite
+                    Collider::cuboid(6.0, 4.0),
                 ));
             }
         }

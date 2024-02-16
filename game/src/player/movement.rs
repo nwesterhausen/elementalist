@@ -4,6 +4,8 @@ use leafwing_input_manager::action_state::ActionState;
 
 use crate::{events::PlayerAction, player::Player};
 
+use super::avatar::PlayerAvatar;
+
 /// Handle player input for movement
 pub fn player_movement_controls(
     mut query: Query<&mut Velocity, With<Player>>,
@@ -39,5 +41,12 @@ pub fn player_movement_controls(
         if let Some(axis_pair) = action_state.clamped_axis_pair(PlayerAction::Move) {
             velocity.value = axis_pair.xy().normalize_or_zero() * speed.value();
         }
+    }
+}
+
+/// Plugin that adjust the player's z-index based on their y position
+pub(super) fn update_player_z_index(mut query: Query<&mut Transform, With<PlayerAvatar>>) {
+    for mut transform in &mut query {
+        transform.translation.z = -transform.translation.y;
     }
 }

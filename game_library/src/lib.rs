@@ -74,6 +74,7 @@ pub use mana::Mana;
 pub use markers_to_biomes::MarkersToBiomes;
 pub use movement_bundle::MovementBundle;
 pub use noise::GeneratedMaps;
+pub use noise::GenerationSeed;
 pub use noise::NoisePlugin;
 pub use physics::PhysicsPlugin;
 pub use realm_data::Realm;

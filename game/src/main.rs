@@ -13,7 +13,7 @@ use bevy::{
 };
 use bevy_rapier2d::prelude::*;
 use game_library::{
-    data_loader::storage::GameData, state::Game, GeneratedMaps, Layer, LayerPlugin,
+    data_loader::storage::GameData, state::Game, GeneratedMaps, GenerationSeed, Layer, LayerPlugin,
     MarkersToBiomes, NoisePlugin, PhysicsPlugin, SchedulingPlugin,
 };
 use in_game::InGamePlugin;
@@ -178,6 +178,7 @@ fn spawn_random_environment(
     game_data: Res<GameData>,
     generated_map: Res<GeneratedMaps>,
     asset_server: Res<AssetServer>,
+    seed: Res<GenerationSeed>,
 ) {
     // get the biomes for the current map
     let Some(realm) = game_data.realms.get("simple test realm") else {
@@ -216,7 +217,7 @@ fn spawn_random_environment(
                 Layer::Background(i16::MAX),
             ));
 
-            let object_pool = biome.object_pool();
+            let object_pool = biome.object_pool(seed.as_u64());
             let object_idx = generated_map.object_map[i][j];
             let Some(obj_id) = object_pool.get(object_idx) else {
                 warn!("No object found for object weight {}", object_idx);

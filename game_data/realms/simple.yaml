@@ -29,4 +29,6 @@ data:
               weight: 2
       simpleObjects:
         - id: tree-1
-          weight: 20
+          weight: 2
+        - id: stump
+          weight: 1

@@ -1,7 +1,7 @@
 //! Defines the `BiomeData` resource.
 use bevy::prelude::*;
 use bevy::reflect::Reflect;
-use rand::seq::SliceRandom;
+use rand::{seq::SliceRandom, SeedableRng};
 use std::hash::Hash;
 
 use crate::{
@@ -69,7 +69,7 @@ impl BiomeData {
 
     /// Flat map of objects against the `OJECT_POOL` for the biome.
     #[must_use]
-    pub fn object_pool(&self) -> Vec<Option<&str>> {
+    pub fn object_pool(&self, seed: u64) -> Vec<Option<&str>> {
         let mut pool = Vec::with_capacity(OBJECT_POOL);
 
         for object in &self.simple_objects {
@@ -81,6 +81,10 @@ impl BiomeData {
         while pool.len() < OBJECT_POOL {
             pool.push(None);
         }
+
+        // Shuffle the pool so that the objects are placed randomly. Seeded.
+        let mut rng = rand::rngs::SmallRng::seed_from_u64(seed);
+        pool.shuffle(&mut rng);
 
         pool
     }

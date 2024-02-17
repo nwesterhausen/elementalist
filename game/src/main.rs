@@ -10,12 +10,11 @@ use bevy::{
     log::LogPlugin,
     prelude::*,
     render::{render_resource::WgpuFeatures, settings::WgpuSettings, RenderPlugin},
-    utils::HashMap,
 };
 use bevy_rapier2d::prelude::*;
 use game_library::{
-    data_loader::storage::GameData, enums::biome::Biome, state::Game, GeneratedMaps,
-    MarkersToBiomes, NoisePlugin, PhysicsPlugin, SchedulingPlugin,
+    data_loader::storage::GameData, state::Game, GeneratedMaps, Layer, LayerPlugin, NoisePlugin,
+    PhysicsPlugin, SchedulingPlugin,
 };
 use in_game::InGamePlugin;
 use leafwing_input_manager::plugin::InputManagerPlugin;
@@ -37,6 +36,7 @@ mod splash_screen;
 
 pub use app_systems::despawn_with_tag;
 use events::{MenuInteraction, PlayerAction};
+use rand::RngCore;
 
 fn main() {
     // Set the wgpu settings per bevy_hanabi
@@ -129,6 +129,8 @@ impl Plugin for ElementalistDefaultPlugins {
         app.add_plugins(SchedulingPlugin);
         // Add the physics plugin
         app.add_plugins(PhysicsPlugin);
+        // Add the layer plugin
+        app.add_plugins(LayerPlugin);
     }
 }
 
@@ -174,55 +176,41 @@ impl Plugin for ElementalistGameplayPlugins {
 /// Spawn some trees as a test
 fn spawn_random_environment(
     mut commands: Commands,
-    mut materials: ResMut<Assets<ColorMaterial>>,
-    mut meshes: ResMut<Assets<Mesh>>,
     game_data: Res<GameData>,
     generated_map: Res<GeneratedMaps>,
 ) {
     // get the biomes for the current map
-    let Some(realm) = game_data.realms.get("simple test realm") else {
+    let Some(_realm) = game_data.realms.get("simple test realm") else {
         tracing::error!("No realm found for 'simple test realm'");
         return;
     };
 
-    let biomes = &realm.markers_to_biomes(generated_map.biome_map.as_slice());
-    // from the biomes which is vec of vec of Biome, turn that into a flattened, deduped
-    // vec of Biome, and then map with `get_color` to get the colors we will use.
-    let mut color_materials: HashMap<Biome, Handle<ColorMaterial>> = HashMap::new();
-    for biome_row in biomes {
-        for biome in biome_row {
-            let color = biome.get_color();
-            let material = materials.add(color.into());
-            color_materials.insert(*biome, material.clone());
-        }
-    }
+    let Some(ground) = game_data.tile_atlas.get("ground") else {
+        tracing::error!("Failed to load ground tile");
+        return;
+    };
 
-    // add the 16x16 quad mesh
-    let mesh = meshes.add(Mesh::from(shape::Quad {
-        size: Vec2::new(16.0, 16.0),
-        flip: false,
-    }));
+    let rng = &mut rand::thread_rng();
 
-    // spawn a colored 16x16 quad for each tile in the biome map.
-    let mesh_z = -100.0;
-    for (i, row) in biomes.iter().enumerate() {
-        for (j, biome) in row.iter().enumerate() {
-            let Some(material) = color_materials.get(biome) else {
-                tracing::error!("No material found for biome: {:?}", biome);
-                continue;
-            };
-            let mut mesh_transform =
-                Transform::from_translation(generated_map.map_to_world((i, j)));
-            mesh_transform.translation.z = mesh_z;
-            // use the `map_to_world` function to convert the biome map coordinates to world coordinates.
+    // spawn ground over whole map, random tile from 5,6,7 index
+    for i in 0..generated_map.dimensions().0 {
+        for j in 0..generated_map.dimensions().1 {
+            let ground_translation = generated_map.map_to_world((i, j));
+            #[allow(clippy::cast_possible_truncation)]
+            let ground_id = rng.next_u32() as u8;
+            let ground_id = ground_id as usize;
+            let ground_id = ground_id % 3 + 5;
+            #[allow(clippy::cast_precision_loss)]
+            let ground_transform = Transform::from_translation(ground_translation);
             commands.spawn((
-                ColorMesh2dBundle {
-                    material: material.clone(),
-                    transform: mesh_transform,
-                    mesh: mesh.clone().into(),
+                SpriteSheetBundle {
+                    texture_atlas: ground.clone(),
+                    sprite: bevy::sprite::TextureAtlasSprite::new(ground_id),
+                    transform: ground_transform,
                     ..Default::default()
                 },
                 EnvironmentStuff,
+                Layer::Background(i16::MAX),
             ));
         }
     }
@@ -251,7 +239,13 @@ fn spawn_random_environment(
             if let Some(obj) = obj {
                 let mut obj_transform =
                     Transform::from_translation(generated_map.map_to_world((i, j)));
-                obj_transform.translation.z = -obj_transform.translation.y;
+
+                // create depth from f32 to i16 with the f32 range mapping to i16 range, since translation.y has valid
+                // values between -0.5 * generated_map.dimensions().1 and 0.5 * generated_map.dimensions().1
+                let depth = (obj_transform.translation.y
+                    / (0.5 * generated_map.dimensions().1 as f32)
+                    * f32::from(i16::MAX)) as i16;
+
                 obj_transform.scale = Vec3::splat(1.0);
                 commands.spawn((
                     SpriteSheetBundle {
@@ -264,6 +258,7 @@ fn spawn_random_environment(
                     RigidBody::Fixed,
                     // todo: make this reference the actual size of the sprite
                     Collider::cuboid(6.0, 4.0),
+                    Layer::Foreground(depth),
                 ));
             }
         }

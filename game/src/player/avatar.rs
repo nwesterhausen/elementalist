@@ -5,7 +5,7 @@ use game_library::{
     data_loader::storage::GameData,
     enums::StatEnum,
     progress_bar::{BarState, ProgressBarConfig},
-    Health, Mana, MovementBundle, SpellChoices, StatBundle, Xp,
+    Health, Layer, Mana, MovementBundle, SpellChoices, StatBundle, Xp,
 };
 
 use super::{
@@ -75,6 +75,7 @@ pub fn spawn_player_avatar(
             kinematic_controller: KinematicCharacterController::default(),
             collider: Collider::capsule_y(6.0, 4.0),
             rigid_body: RigidBody::KinematicVelocityBased,
+            layer: Layer::Foreground(i16::MAX),
         },
         ProgressBarConfig::<Xp>::default()
             .with_background_color(colors::BACKGROUND_COLOR_50)

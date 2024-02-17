@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/tileset.json
+header:
+  uniqueId: ground
+  system: Tileset
+  author: Steve Jones
+  description: Ground textures for the environment
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  path: tileset/ground-textures2.png
+  tileWidth: 16
+  tileHeight: 16
+  tilesetWidth: 8
+  tilesetHeight: 1

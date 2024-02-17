@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 use bevy_rapier2d::prelude::*;
-use game_library::{enums::StatEnum, Health, Mana, MovementBundle, StatBundle, Xp};
+use game_library::{enums::StatEnum, Health, Layer, Mana, MovementBundle, StatBundle, Xp};
 
 /// Base stats for the player. These are the stats that the player starts with, and are used to
 /// initiate the [`StatBundle`] for the player.
@@ -81,4 +81,6 @@ pub struct PlayerBundle {
     pub collider: Collider,
     /// Physics rigid body
     pub rigid_body: RigidBody,
+    /// 2d Layer position
+    pub layer: Layer,
 }

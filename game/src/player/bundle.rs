@@ -64,7 +64,7 @@ pub struct PlayerBundle {
     /// The player's movement bundle.
     pub movement: MovementBundle,
     /// The player's sprite bundle.
-    pub sprite: SpriteBundle,
+    pub sprite: SpriteSheetBundle,
     /// The player's health.
     pub health: Health,
     /// The player's mana.

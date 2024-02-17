@@ -8,8 +8,8 @@ header:
   displayVersion: v1.0
   validGameInternalVersion: 1
 data:
-  path: tileset/ground-textures2.png
+  path: tileset/ground-textures3.png
   tileWidth: 16
   tileHeight: 16
-  tilesetWidth: 8
-  tilesetHeight: 1
+  tilesetWidth: 5
+  tilesetHeight: 4

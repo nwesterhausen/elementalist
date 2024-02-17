@@ -19,9 +19,11 @@ data:
       groundTilesets:
         - id: ground
           weights:
-            - tile: 5
+            - tile: 14
               weight: 1
-            - tile: 6
+            - tile: 15
               weight: 1
-            - tile: 7
-              weight: 8
+            - tile: 16
+              weight: 10
+            - tile: 17
+              weight: 2

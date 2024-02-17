@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.nwest.one/games/elementalist/spell.json",
+  "title": "Elementalist Spell",
+  "description": "A spell that can be cast by the Elementalist",
+  "type": "object",
+  "properties": {
+    "header": {
+      "description": "Metadata about the spell",
+      "$ref": "https://schemas.nwest.one/games/elementalist/header.json"
+    },
+    "data": {
+      "description": "The spell data",
+      "$ref": "https://schemas.nwest.one/games/elementalist/spell_data.json"
+    }
+  },
+  "required": ["header", "data"]
+}

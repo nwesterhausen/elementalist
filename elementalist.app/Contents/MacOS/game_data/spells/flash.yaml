@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/spell.json
+header:
+  uniqueId: flash
+  system: Spell
+  author: Nick Westerhausen
+  description: Flash spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Flash
+  description: Create a blinding flash of light.
+  manaCost: 0
+  castSlot: secondary
+  castTime: 0
+  cooldown: 3.50
+  magic: light
+  spellTier: 0

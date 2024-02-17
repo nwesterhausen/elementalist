@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/spell.json
+header:
+  uniqueId: strength-reduction-0
+  system: Spell
+  author: Nick Westerhausen
+  description: Reduce strength spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Reduce Strength
+  description: Reduce the strength of the target.
+  manaCost: 2
+  castSlot: secondary
+  castTime: 0
+  cooldown: 5
+  magic: reduction
+  spellTier: 0

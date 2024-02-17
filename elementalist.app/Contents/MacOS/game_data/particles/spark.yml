@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/particle.json
+header:
+  uniqueId: spark
+  author: Nicholas Westerhausen
+  description: A particle effect for the spark spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+  system: Particle
+data:
+  capacity: 32
+  colorGradients:
+    - index: 0.0
+      color: Anzac
+    - index: 1.0
+      color: Anzac
+      alpha: 0.0

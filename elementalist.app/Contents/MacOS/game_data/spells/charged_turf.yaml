@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/spell.json
+header:
+  uniqueId: charged_turf
+  system: Spell
+  author: Nick Westerhausen
+  description: lightning3
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Charged Turf
+  description: Create an area of electrically charged turf at the target location.
+  manaCost: 3
+  castSlot: secondary
+  castTime: 0
+  cooldown: 6.0
+  magic: lightning
+  spellTier: 3
+  flags:
+    - aoe
+  castType: instant
+  castCategory: ground
+  spriteTileset: tileset/ground_effects.png
+  spriteIndex: 0

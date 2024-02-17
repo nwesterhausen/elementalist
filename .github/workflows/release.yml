@@ -36,7 +36,7 @@ jobs:
   #       with:
   #         egress-policy: audit
   #     - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
-  #     - uses: dtolnay/rust-toolchain@78c6b5541adb5849f5d72d15da722aedb26327ca # stable
+  #     - uses: dtolnay/rust-toolchain@be73d7920c329f220ce78e0234b8f96b7ae60248 # master
   #       with:
   #         targets: wasm32-unknown-unknown
   #         toolchain: ${{ env.nightly_toolchain }}
@@ -89,7 +89,7 @@ jobs:
         with:
           egress-policy: audit
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
-      - uses: dtolnay/rust-toolchain@78c6b5541adb5849f5d72d15da722aedb26327ca # stable
+      - uses: dtolnay/rust-toolchain@be73d7920c329f220ce78e0234b8f96b7ae60248 # master
         with:
           targets: x86_64-unknown-linux-gnu
           toolchain: ${{ env.nightly_toolchain }}
@@ -142,7 +142,7 @@ jobs:
         with:
           egress-policy: audit
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
-      - uses: dtolnay/rust-toolchain@78c6b5541adb5849f5d72d15da722aedb26327ca # stable
+      - uses: dtolnay/rust-toolchain@be73d7920c329f220ce78e0234b8f96b7ae60248 # master
         with:
           targets: x86_64-pc-windows-msvc
           toolchain: ${{ env.nightly_toolchain }}
@@ -179,8 +179,8 @@ jobs:
           tag: ${{ github.ref }}
           overwrite: true
 
-  # Build for MacOS x86_64
-  release-macOS-intel:
+  # Build for MacOS x86_64 and aaarch64
+  release-macOS:
     runs-on: macOS-latest
     # To upload artifacts, contents write permission is required
     permissions:
@@ -191,32 +191,45 @@ jobs:
         with:
           egress-policy: audit
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
-      - uses: dtolnay/rust-toolchain@78c6b5541adb5849f5d72d15da722aedb26327ca # stable
+      - uses: dtolnay/rust-toolchain@be73d7920c329f220ce78e0234b8f96b7ae60248 # master
         with:
-          targets: x86_64-apple-darwin
+          targets: x86_64-apple-darwin, aaarch64-apple-darwin
           toolchain: ${{ env.nightly_toolchain }}
       - name: Environment Setup
         run: |
           export CFLAGS="-fno-stack-check"
           export MACOSX_DEPLOYMENT_TARGET="10.9"
 
-      - name: Build
+      - name: Install Dependencies
         run: |
           brew install llvm
-          cargo build --release --target x86_64-apple-darwin
+          ln -s /opt/homebrew/opt /usr/local/opt
+      - name: Build
+        run: |
+          cargo build --release --target x86_64-apple-darwin # Intel
+          cargo build --release --target aaarch64-apple-darwin # Apple Silicon
 
       - name: Prepare Package
         run: |
           mkdir -p ${{ env.binary }}.app/Contents/MacOS
-          cp target/x86_64-apple-darwin/release/${{ env.binary }} ${{ env.binary }}.app/Contents/MacOS/
+          mkdir -p ${{ env.binary }}.app/Contents/Resources
+
+          cp game_assets/Info.plist ${{ env.binary }}.app/Contents/
+          cp game_assets/Icon/icon.icns ${{ env.binary }}.app/Contents/Resources/
+
           cp -r game/assets ${{ env.binary }}.app/Contents/MacOS/
           cp -r game_data ${{ env.binary }}.app/Contents/MacOS/
-          hdiutil create -fs HFS+ -volname "${{ env.binary }}" -srcfolder ${{ env.binary }}.app ${{ env.binary }}-macOS-intel.dmg
+
+          lipo "target/x86_64-apple-darwin/release/${{ env.binary }}" \
+            "target/aaarch64-apple-darwin/release/${{ env.binary }}" \
+            -create -output ${{ env.binary }}.app/Contents/MacOS/${{ env.binary }}
+
+          hdiutil create -fs HFS+ -volname "${{ env.binary }}" -srcfolder ${{ env.binary }}.app ${{ env.binary }}-macOS.dmg
 
       - name: Upload binaries to artifacts
         uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4
         with:
-          path: ${{ env.binary }}-macOS-intel.dmg
+          path: ${{ env.binary }}-macOS.dmg
           name: macOS-intel
           retention-days: 1
 
@@ -225,64 +238,8 @@ jobs:
         uses: svenstaro/upload-release-action@1beeb572c19a9242f4361f4cee78f8e0d9aec5df # v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{ env.binary }}-macOS-intel.dmg
+          file: ${{ env.binary }}-macOS.dmg
           asset_name: ${{ env.binary }}-macOS-intel-${{ env.tag_name }}.dmg
-          tag: ${{ github.ref }}
-          overwrite: true
-
-  # Build for MacOS Apple Silicon
-  release-macOS-apple-silicon:
-    runs-on: macOS-latest
-    # To upload artifacts, contents write permission is required
-    permissions:
-      contents: write
-    env:
-      # macOS 11 was the first version to support ARM
-      MACOSX_DEPLOYMENT_TARGET: 11
-    steps:
-      - uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142 # v2.7.0
-        with:
-          egress-policy: audit
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
-      - uses: dtolnay/rust-toolchain@78c6b5541adb5849f5d72d15da722aedb26327ca # stable
-        with:
-          targets: aarch64-apple-darwin
-          toolchain: ${{ env.nightly_toolchain }}
-      - name: Setup LLVM
-        run: |
-          # seems to be we need to install LLVM via brew.
-          brew install llvm
-          # Brew suggests a couple other exports during the LLVM install
-          export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
-          export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
-          export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
-      - name: Build
-        run: |
-          # This fails the final linking step with error:
-          # "note: clang: error: invalid linker name in argument '-fuse-ld=/opt/homebrew/opt/llvm/bin/ld64.lld'"
-          cargo build --release --target aarch64-apple-darwin
-      - name: Prepare Package
-        run: |
-          mkdir -p ${{ env.binary }}.app/Contents/MacOS
-          cp target/aarch64-apple-darwin/release/${{ env.binary }} ${{ env.binary }}.app/Contents/MacOS/
-          cp -r game/assets ${{ env.binary }}.app/Contents/MacOS/
-          cp -r game_data ${{ env.binary }}.app/Contents/MacOS/
-          hdiutil create -fs HFS+ -volname "${{ env.binary }}-macOS-apple-silicon" -srcfolder ${{ env.binary }}.app ${{ env.binary }}-macOS-apple-silicon.dmg
-
-      - name: Upload binaries to artifacts
-        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4
-        with:
-          path: ${{ env.binary }}-macOS-apple-silicon.dmg
-          name: macOS-apple-silicon
-          retention-days: 1
-
-      - name: Upload binaries to release
-        if: ${{ env.add_binaries_to_github_release == 'true' }}
-        uses: svenstaro/upload-release-action@1beeb572c19a9242f4361f4cee78f8e0d9aec5df # v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{ env.binary }}-macOS-apple-silicon.dmg
-          asset_name: ${{ env.binary }}-macOS-apple-silicon-${{ env.tag_name }}.dmg
           tag: ${{ github.ref }}
           overwrite: true
 
@@ -307,8 +264,7 @@ jobs:
       # - release-wasm
       - release-linux
       - release-windows
-      - release-macOS-intel
-      - release-macOS-apple-silicon
+      - release-macOS
     if: ${{ needs.check-if-upload-to-itch-is-configured.outputs.should-upload == 'yes' }}
 
     steps:

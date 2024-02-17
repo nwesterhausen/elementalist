@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/spell.json
+header:
+  uniqueId: freeze_ray
+  system: Spell
+  author: Nick Westerhausen
+  description: Freeze ray spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Freeze Ray
+  description: Launch a ray of freezing magic towards your target.
+  manaCost: 2
+  castSlot: secondary
+  castTime: 5.0
+  cooldown: 3.00
+  magic: ice
+  spellTier: 2

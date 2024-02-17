@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.nwest.one/games/elementalist/particle.json",
+  "title": "Elementalist Particle Effect",
+  "description": "A particle effect for the Elementalist game",
+  "type": "object",
+  "properties": {
+    "header": {
+      "description": "Metadata about the particle effect",
+      "$ref": "https://schemas.nwest.one/games/elementalist/header.json"
+    },
+    "data": {
+      "description": "The particle data",
+      "$ref": "https://schemas.nwest.one/games/elementalist/particle_effect.json"
+    }
+  },
+  "required": [
+    "header",
+    "data"
+  ]
+}

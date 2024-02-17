@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/spell.json
+header:
+  uniqueId: geyser
+  system: Spell
+  author: Nick Westerhausen
+  description: Geyser spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Geyser
+  description: Cause a geyser of scalding water to erupt.
+  manaCost: 3
+  castSlot: secondary
+  castTime: .15
+  cooldown: 5.00
+  castType: cast
+  magic: water
+  spellTier: 3

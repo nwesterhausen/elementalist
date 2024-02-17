@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.nwest.one/games/elementalist/game_system.json",
+  "title": "Elementalist Game System",
+  "description": "A system in the Elementalist game",
+  "type": "string",
+  "enum": ["Spell", "Tileset", "Particle", "Realm", "SimpleObject"]
+}

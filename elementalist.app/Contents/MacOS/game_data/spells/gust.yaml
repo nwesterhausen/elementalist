@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/spell.json
+header:
+  uniqueId: gust
+  system: Spell
+  author: Nick Westerhausen
+  description: Gust spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Gust
+  description: Shoot a gust of air at the target.
+  manaCost: 0
+  castSlot: primary
+  castTime: 0
+  cooldown: 5.0
+  magic: air
+  spellTier: 0
+  spriteTileset: spell_projectiles
+  spriteIndex: 3

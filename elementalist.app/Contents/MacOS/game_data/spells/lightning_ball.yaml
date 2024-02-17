@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/spell.json
+header:
+  uniqueId: lightning-ball
+  system: Spell
+  author: Nick Westerhausen
+  description: Lightning ball spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Lightning Ball
+  description: Launch a ball of pure lightning towards a target.
+  manaCost: 0
+  castSlot: primary
+  castTime: 0
+  cooldown: 1.75
+  magic: lightning
+  spellTier: 3
+  long_description: As the ball travels it will launch a lightning bolt at the closest target to it up to 4 times before its exhausted.

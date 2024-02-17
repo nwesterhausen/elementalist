@@ -59,7 +59,6 @@ mod stat_bonus;
 mod stat_bundle;
 mod stat_effect;
 mod tileset;
-mod velocity;
 mod volume;
 
 pub use acceleration::Acceleration;
@@ -91,5 +90,4 @@ pub use stat_bonus::StatBonus;
 pub use stat_bundle::StatBundle;
 pub use stat_effect::StatEffect;
 pub use tileset::Tileset;
-pub use velocity::Velocity;
 pub use volume::Volume;

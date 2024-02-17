@@ -10,7 +10,7 @@ use game_library::{
     enums::Skill,
     font_resource::{FontChoice, FontResource},
     Acceleration, Attribute, CameraScaleLevel, CursorPosition, Health, Mana, MovementBundle,
-    SpellChoices, Stat, StatBonus, Velocity, Volume,
+    SpellChoices, Stat, StatBonus, Volume,
 };
 
 pub struct DevSystemsPlugin;
@@ -27,7 +27,6 @@ impl Plugin for DevSystemsPlugin {
             .register_type::<Mana>()
             .register_type::<Health>()
             .register_type::<Xp>()
-            .register_type::<Velocity>()
             .register_type::<Acceleration>()
             .register_type::<SpellChoices>()
             .register_type::<CursorPosition>()

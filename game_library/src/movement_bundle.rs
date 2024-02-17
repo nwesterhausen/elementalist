@@ -5,8 +5,9 @@
 
 use bevy::prelude::*;
 use bevy_inspector_egui::prelude::*;
+use bevy_rapier2d::dynamics::Velocity;
 
-use crate::{Acceleration, Velocity};
+use crate::Acceleration;
 
 /// Bundle that contains all components needed for moving things
 #[derive(Bundle, Debug, Default, Reflect, InspectorOptions)]

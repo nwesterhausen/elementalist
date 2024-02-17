@@ -6,7 +6,7 @@ use game_library::{enums::StatEnum, Health, Layer, Mana, MovementBundle, StatBun
 /// initiate the [`StatBundle`] for the player.
 pub(super) const fn player_base_stats(stat: &StatEnum) -> f32 {
     match stat {
-        StatEnum::MovementSpeed => 100.0,
+        StatEnum::MovementSpeed => 2.4,
         StatEnum::SpellRange => 50.0,
         StatEnum::Health => 10.0,
         StatEnum::Mana => 4.0,

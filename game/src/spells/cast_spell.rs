@@ -1,9 +1,10 @@
 //! This system listens for the `CastSpell` event and spawns a spell entity based on the spell identifier.
 use bevy::prelude::*;
 use bevy_hanabi::{ParticleEffect, ParticleEffectBundle};
+use bevy_rapier2d::prelude::*;
 use game_library::{
     data_loader::storage::GameData, enums::ParticleAttachment, events::CastSpell, math,
-    CursorPosition, InternalId, MovementBundle, SpellBundle, SpellLifetime, Velocity,
+    CursorPosition, InternalId, Layer, MovementBundle, SpellBundle, SpellLifetime,
 };
 
 use crate::player::Player;
@@ -52,7 +53,10 @@ pub(super) fn cast_spells(
                 SpellBundle {
                     lifetime: SpellLifetime::new(spell.duration),
                     movement: MovementBundle {
-                        velocity: Velocity::new(slope_vec * (spell.speed * SPELL_SPEED_MULTIPLIER)),
+                        velocity: Velocity {
+                            linvel: slope_vec * (spell.speed * SPELL_SPEED_MULTIPLIER),
+                            ..default()
+                        },
                         ..Default::default()
                     },
                     sprite: SpriteSheetBundle {
@@ -67,6 +71,9 @@ pub(super) fn cast_spells(
                     },
                 },
                 SpellEntity,
+                RigidBody::Dynamic,
+                Collider::ball(4.0),
+                Layer::Foreground(10),
             ))
             .id();
 

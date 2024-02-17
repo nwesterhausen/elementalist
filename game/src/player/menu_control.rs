@@ -13,13 +13,13 @@ pub fn menu_input(
 ) {
     let action_state = query.single();
     if action_state.just_pressed(MenuInteraction::Up) {
-        println!("Up (in Menu)");
+        tracing::debug!("Up (in Menu)");
     }
     if action_state.just_pressed(MenuInteraction::Down) {
-        println!("Down (in Menu)");
+        tracing::debug!("Down (in Menu)");
     }
     if action_state.just_pressed(MenuInteraction::Select) {
-        println!("Select (in Menu)");
+        tracing::debug!("Select (in Menu)");
     }
     if action_state.just_pressed(MenuInteraction::Back) {
         if *menu_state == Settings::Main {

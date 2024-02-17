@@ -199,7 +199,10 @@ fn spawn_random_environment(
             #[allow(clippy::cast_possible_truncation)]
             let ground_id = rng.next_u32() as u8;
             let ground_id = ground_id as usize;
-            let ground_id = ground_id % 3 + 5;
+            let mut ground_id = ground_id % 7 + 5;
+            if ground_id > 7 {
+                ground_id = 7;
+            }
             #[allow(clippy::cast_precision_loss)]
             let ground_transform = Transform::from_translation(ground_translation);
             commands.spawn((

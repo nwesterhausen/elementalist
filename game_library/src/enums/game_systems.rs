@@ -28,4 +28,9 @@ pub enum GameSystem {
 /// - Skill perks / trees
 /// - Monsters
 #[allow(dead_code)]
-pub const ORDERED: [GameSystem; 3] = [GameSystem::Tileset, GameSystem::Particle, GameSystem::Spell];
+pub const ORDERED: [GameSystem; 4] = [
+    GameSystem::Tileset,
+    GameSystem::Realm,
+    GameSystem::Particle,
+    GameSystem::Spell,
+];

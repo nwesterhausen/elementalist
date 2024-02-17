@@ -12,6 +12,20 @@ data:
   description: A simple test realm
   primaryElement: earth
   biomes:
+    - altitude: Alpine
+      humidity: Semiarid
+      biome: ConiferousForest
+      latitude: Subpolar
+      groundTilesets:
+        - id: ground
+          weights:
+            - tile: 0
+              weight: 1
+      simpleObjects:
+        - id: rock-1
+          weight: 2
+        - id: tree-2
+          weight: 5
     - biome: DeciduousForest
       altitude: LowerMontane
       humidity: Perarid

@@ -31,8 +31,8 @@ const LAYER_MODIFIER: f32 = 1000.;
 fn update_z_coordinate_based_on_layer(mut query: Query<(&mut Transform, &Layer), Changed<Layer>>) {
     for (mut transform, layer) in &mut query {
         transform.translation.z = match layer {
-            Layer::Background(order_in_layer) => -5. + f32::from(*order_in_layer) / LAYER_MODIFIER,
-            Layer::Foreground(order_in_layer) => 5. + f32::from(*order_in_layer) / LAYER_MODIFIER,
+            Layer::Background(order_in_layer) => -50. + f32::from(*order_in_layer) / LAYER_MODIFIER,
+            Layer::Foreground(order_in_layer) => 50. + f32::from(*order_in_layer) / LAYER_MODIFIER,
         }
     }
 }

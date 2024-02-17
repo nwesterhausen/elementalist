@@ -12,6 +12,6 @@ data:
   tileWidth: 16
   tileHeight: 16
   tilesetWidth: 5
-  tilesetHeight: 4
+  tilesetHeight: 5
   horizontalPadding: 2
   verticalPadding: 2

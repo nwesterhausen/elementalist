@@ -13,8 +13,8 @@ use bevy::{
 };
 use bevy_rapier2d::prelude::*;
 use game_library::{
-    data_loader::storage::GameData, state::Game, GeneratedMaps, Layer, LayerPlugin, NoisePlugin,
-    PhysicsPlugin, SchedulingPlugin,
+    data_loader::storage::GameData, state::Game, GeneratedMaps, Layer, LayerPlugin,
+    MarkersToBiomes, NoisePlugin, PhysicsPlugin, SchedulingPlugin,
 };
 use in_game::InGamePlugin;
 use leafwing_input_manager::plugin::InputManagerPlugin;
@@ -36,7 +36,6 @@ mod splash_screen;
 
 pub use app_systems::despawn_with_tag;
 use events::{MenuInteraction, PlayerAction};
-use rand::RngCore;
 
 fn main() {
     // Set the wgpu settings per bevy_hanabi
@@ -180,30 +179,30 @@ fn spawn_random_environment(
     generated_map: Res<GeneratedMaps>,
 ) {
     // get the biomes for the current map
-    let Some(_realm) = game_data.realms.get("simple test realm") else {
+    let Some(realm) = game_data.realms.get("simple test realm") else {
         tracing::error!("No realm found for 'simple test realm'");
         return;
     };
 
-    let Some(ground) = game_data.tile_atlas.get("ground") else {
-        tracing::error!("Failed to load ground tile");
-        return;
-    };
-
-    let rng = &mut rand::thread_rng();
-
-    // spawn ground over whole map, random tile from 5,6,7 index
-    for i in 0..generated_map.dimensions().0 {
-        for j in 0..generated_map.dimensions().1 {
+    // spawn ground over whole map
+    let biome_map = realm.markers_to_biomes(generated_map.biome_map.clone().as_slice());
+    for (i, row) in biome_map.iter().enumerate() {
+        for (j, biome) in row.iter().enumerate() {
+            // Convert the map coordinates to world coordinates
             let ground_translation = generated_map.map_to_world((i, j));
-            #[allow(clippy::cast_possible_truncation)]
-            let ground_id = rng.next_u32() as u8;
-            let ground_id = ground_id as usize;
-            let mut ground_id = ground_id % 7 + 5;
-            if ground_id > 7 {
-                ground_id = 7;
-            }
-            #[allow(clippy::cast_precision_loss)]
+
+            // Get random info from the biome
+            let Some(rnd_ground) = biome.random_ground_tile() else {
+                tracing::warn!("No ground tile found for biome at ({}, {})", i, j);
+                continue;
+            };
+
+            let Some(ground) = game_data.tile_atlas.get(rnd_ground.0) else {
+                tracing::error!("Failed to load ground tileselt: {}", rnd_ground.0);
+                continue;
+            };
+            let ground_id = rnd_ground.1;
+
             let ground_transform = Transform::from_translation(ground_translation);
             commands.spawn((
                 SpriteSheetBundle {

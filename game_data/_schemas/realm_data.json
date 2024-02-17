@@ -25,9 +25,5 @@
       "$ref": "https://schemas.nwest.one/games/elementalist/magic_school.json"
     }
   },
-  "required": [
-    "name",
-    "description",
-    "primaryElement"
-  ]
+  "required": ["name", "description", "primaryElement"]
 }

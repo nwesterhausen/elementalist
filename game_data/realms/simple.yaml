@@ -16,3 +16,12 @@ data:
       altitude: LowerMontane
       humidity: Perarid
       latitude: WarmTemperate
+      groundTilesets:
+        - id: ground
+          weights:
+            - tile: 5
+              weight: 1
+            - tile: 6
+              weight: 1
+            - tile: 7
+              weight: 8

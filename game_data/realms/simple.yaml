@@ -25,13 +25,15 @@ data:
               weight: 2
       simpleObjects:
         - id: bush
-          weight: 4
+          weight: 3
         - id: bush-red-berry
-          weight: 4
+          weight: 3
         - id: bush-blue-berry
-          weight: 4
+          weight: 3
         - id: bush-purple-berry
-          weight: 4
+          weight: 3
+        - id: shrub-3
+          weight: 3
     - altitude: Alpine
       humidity: Semiarid
       biome: ConiferousForest
@@ -45,9 +47,13 @@ data:
         - id: rock-1
           weight: 1
         - id: tree-2
-          weight: 4
-        - id: bush-red-berry
-          weight: 2
+          weight: 1
+        - id: shrub-2
+          weight: 1
+        - id: shrub-1
+          weight: 1
+        - id: shrub-3-snow
+          weight: 1
     - biome: DeciduousForest
       altitude: LowerMontane
       humidity: Perarid
@@ -68,5 +74,9 @@ data:
           weight: 1
         - id: stump
           weight: 1
-        - id: bush
-          weight: 2
+        - id: shrub-1
+          weight: 1
+        - id: shrub-2
+          weight: 1
+        - id: shrub-3
+          weight: 1

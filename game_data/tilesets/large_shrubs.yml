@@ -1,15 +1,15 @@
 # yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/tileset.json
 header:
-  uniqueId: large_shrubs
+  uniqueId: small_shrubs
   system: Tileset
   author: Steve Jones
-  description: Large shrub sprites for the environment. You like berries?
+  description: Small shrub sprites for the environment. You like berries?
   internalVersion: 1
   displayVersion: v1.0
   validGameInternalVersion: 1
 data:
-  path: tileset/shrubs-lrg.png
+  path: tileset/shrubs-sml.png
   tileWidth: 16
-  tileHeight: 32
-  tilesetWidth: 3
+  tileHeight: 16
+  tilesetWidth: 2
   tilesetHeight: 2

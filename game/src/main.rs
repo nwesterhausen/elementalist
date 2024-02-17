@@ -177,6 +177,7 @@ fn spawn_random_environment(
     mut commands: Commands,
     game_data: Res<GameData>,
     generated_map: Res<GeneratedMaps>,
+    asset_server: Res<AssetServer>,
 ) {
     // get the biomes for the current map
     let Some(realm) = game_data.realms.get("simple test realm") else {
@@ -214,45 +215,50 @@ fn spawn_random_environment(
                 EnvironmentStuff,
                 Layer::Background(i16::MAX),
             ));
-        }
-    }
 
-    // spawn trees and rocks
-
-    let Some(tree) = game_data.tile_atlas.get("trees") else {
-        tracing::error!("Failed to load tree tile");
-        return;
-    };
-    let Some(rock) = game_data.tile_atlas.get("rock") else {
-        tracing::error!("Failed to load rock tile");
-        return;
-    };
-
-    for (i, row) in generated_map.object_map.iter().enumerate() {
-        for (j, object_id) in row.iter().enumerate() {
-            let obj = match object_id {
-                4 => Some((tree, 0)),
-                13 => Some((tree, 1)),
-                19 => Some((tree, 2)),
-                3 | 15 => Some((rock, 0)),
-                6 | 17 => Some((rock, 1)),
-                _ => None,
+            let object_pool = biome.object_pool();
+            let object_idx = generated_map.object_map[i][j];
+            let Some(obj_id) = object_pool.get(object_idx) else {
+                warn!("No object found for object weight {}", object_idx);
+                continue;
             };
-            if let Some(obj) = obj {
-                let mut obj_transform =
-                    Transform::from_translation(generated_map.map_to_world((i, j)));
+            let Some(obj_id) = obj_id else {
+                continue;
+            };
 
-                // create depth from f32 to i16 with the f32 range mapping to i16 range, since translation.y has valid
-                // values between -0.5 * generated_map.dimensions().1 and 0.5 * generated_map.dimensions().1
-                let depth = (obj_transform.translation.y
-                    / (0.5 * generated_map.dimensions().1 as f32)
-                    * f32::from(i16::MAX)) as i16;
+            let Some(obj) = game_data.simple_objects.get(obj_id) else {
+                warn!("No object found for object id {}", obj_id);
+                continue;
+            };
 
-                obj_transform.scale = Vec3::splat(1.0);
+            // create depth from f32 to i16 with the f32 range mapping to i16 range, since translation.y has valid
+            // values between -0.5 * generated_map.dimensions().1 and 0.5 * generated_map.dimensions().1
+            let depth = (ground_translation.y / (0.5 * generated_map.dimensions().1 as f32)
+                * f32::from(i16::MAX)) as i16;
+
+            let mut obj_transform = Transform::from_translation(ground_translation);
+            obj_transform.scale = Vec3::splat(1.0);
+
+            if obj.is_tile() {
+                let tileset = match obj.tileset.clone() {
+                    Some(tileset_id) => {
+                        let Some(tileset) = game_data.tile_atlas.get(&tileset_id) else {
+                            tracing::error!("Failed to load tileset: {}", tileset_id);
+                            continue;
+                        };
+                        tileset
+                    }
+                    None => continue,
+                };
+                let Some(tile_index) = obj.tile_index else {
+                    tracing::error!("No tile index found for tile object");
+                    continue;
+                };
+
                 commands.spawn((
                     SpriteSheetBundle {
-                        texture_atlas: obj.0.clone(),
-                        sprite: bevy::sprite::TextureAtlasSprite::new(obj.1),
+                        texture_atlas: tileset.clone(),
+                        sprite: bevy::sprite::TextureAtlasSprite::new(tile_index),
                         transform: obj_transform,
                         ..Default::default()
                     },
@@ -262,6 +268,26 @@ fn spawn_random_environment(
                     Collider::cuboid(6.0, 4.0),
                     Layer::Foreground(depth),
                 ));
+            } else if obj.is_sprite() {
+                let sprite = match obj.sprite_path.clone() {
+                    Some(sprite_path) => asset_server.load(&sprite_path),
+                    None => continue,
+                };
+
+                commands.spawn((
+                    SpriteBundle {
+                        texture: sprite,
+                        transform: obj_transform,
+                        ..Default::default()
+                    },
+                    EnvironmentStuff,
+                    RigidBody::Fixed,
+                    // todo: make this reference the actual size of the sprite
+                    Collider::cuboid(6.0, 4.0),
+                    Layer::Foreground(depth),
+                ));
+            } else {
+                tracing::error!("Object is neither a tile nor a sprite");
             }
         }
     }

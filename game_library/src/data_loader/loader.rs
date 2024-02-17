@@ -5,11 +5,14 @@ use walkdir::WalkDir;
 
 use crate::{
     data_loader::DATA_FILE_DIR, enums::GameSystem, particle::Particle, realm_data::Realm,
-    InternalId, SpellData, Tileset,
+    simple_object::SimpleObject, InternalId, SpellData, Tileset,
 };
 
 use super::{
-    events::{LoadedParticleData, LoadedRealmData, LoadedSpellData, LoadedTilesetData},
+    events::{
+        LoadedParticleData, LoadedRealmData, LoadedSimpleObjectData, LoadedSpellData,
+        LoadedTilesetData,
+    },
     header_def::{DataFile, DataFileHeader},
     DataFileHeaderOnly,
 };
@@ -71,12 +74,13 @@ pub fn read_data_file<T: serde::de::DeserializeOwned + Hash + InternalId>(
 ///     iv.  Sort the ingest data lists using any specified ordinal constraints
 /// 3. Add the data to the database in system load order (TDB)
 /// 4. Validate skill -> class, magic -> skill,class, and other relationships are valid
-///
+#[allow(clippy::too_many_lines)]
 pub fn load_data_file_dir(
     mut ew_spell_df: EventWriter<LoadedSpellData>,
     mut ew_tileset_df: EventWriter<LoadedTilesetData>,
     mut ew_particle_df: EventWriter<LoadedParticleData>,
     mut ew_realm_df: EventWriter<LoadedRealmData>,
+    mut ew_simple_object_df: EventWriter<LoadedSimpleObjectData>,
 ) {
     // let start = std::time::Instant::now();
 
@@ -97,6 +101,7 @@ pub fn load_data_file_dir(
     let mut tilesets_read: usize = 0;
     let mut particles_read: usize = 0;
     let mut realms_read: usize = 0;
+    let mut simple_objects_read: usize = 0;
 
     for d in &mut possible_ingests {
         let filepath = d.as_str();
@@ -163,15 +168,30 @@ pub fn load_data_file_dir(
                     ew_realm_df.send(LoadedRealmData { realm_data });
                     realms_read += 1;
                 }
+                GameSystem::SimpleObject => {
+                    let object_data: DataFile<SimpleObject> =
+                        if let Some(d) = read_data_file(filepath) {
+                            d
+                        } else {
+                            tracing::debug!(
+                                "load_data_file_dir: failed to read simple object data from {}",
+                                header.unique_id
+                            );
+                            continue;
+                        };
+                    ew_simple_object_df.send(LoadedSimpleObjectData { object_data });
+                    simple_objects_read += 1;
+                }
             }
         }
     }
     // let duration = start.elapsed();
     tracing::info!(
-        "loaded {} spells, {} tilesets, {} particles, {} realms",
+        "loaded {} spells, {} tilesets, {} particles, {} realms, {} simple objects",
         spells_read,
         tilesets_read,
         particles_read,
-        realms_read
+        realms_read,
+        simple_objects_read
     );
 }

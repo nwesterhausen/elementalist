@@ -23,6 +23,7 @@ mod generator;
 mod plugin;
 mod resources;
 
+pub use generator::OBJECT_POOL;
 #[allow(clippy::module_name_repetitions)]
 pub use plugin::NoisePlugin;
 pub use resources::GeneratedMaps;

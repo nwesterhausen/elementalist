@@ -28,6 +28,13 @@
         "$ref": "https://schemas.nwest.one/games/elementalist/biome_ground_tileset.json"
       }
     },
+    "simpleObjects": {
+      "description": "The simple objects to use in this biome",
+      "type": "array",
+      "items": {
+        "$ref": "https://schemas.nwest.one/games/elementalist/biome_simple_object.json"
+      }
+    },
     "required": ["biome", "humidity", "altitude", "latitude", "groundTilesets"]
   }
 }

@@ -4,7 +4,10 @@ use bevy::reflect::Reflect;
 use rand::seq::SliceRandom;
 use std::hash::Hash;
 
-use crate::enums::biome::{Altitude, Biome, Humidity, Latitude};
+use crate::{
+    enums::biome::{Altitude, Biome, Humidity, Latitude},
+    noise::OBJECT_POOL,
+};
 
 /// The biome system is a list of 1 - 10 "biomes" that are then used to determine the actual
 /// biome of the world. This is then used to determine the type of terrain and the type of
@@ -24,6 +27,8 @@ pub struct BiomeData {
     pub latitude: Latitude,
     /// Details about the ground tileset for the biome
     pub ground_tilesets: Vec<TilesetDetail>,
+    /// Details about the various "single-tile" objects that can be placed in the biome.
+    pub simple_objects: Vec<SimpleObjectDetail>,
 }
 
 impl BiomeData {
@@ -36,6 +41,7 @@ impl BiomeData {
             humidity: Humidity::Arid,
             latitude: Latitude::WarmTemperate,
             ground_tilesets: Vec::new(),
+            simple_objects: Vec::new(),
         }
     }
     /// Return a random tile from the ground tilesets.
@@ -59,6 +65,24 @@ impl BiomeData {
             return None;
         };
         Some((tileset.id.as_str(), tile.tile))
+    }
+
+    /// Flat map of objects against the `OJECT_POOL` for the biome.
+    #[must_use]
+    pub fn object_pool(&self) -> Vec<Option<&str>> {
+        let mut pool = Vec::with_capacity(OBJECT_POOL);
+
+        for object in &self.simple_objects {
+            for _ in 0..object.weight {
+                pool.push(Some(object.id.as_str()));
+            }
+        }
+
+        while pool.len() < OBJECT_POOL {
+            pool.push(None);
+        }
+
+        pool
     }
 }
 
@@ -89,4 +113,15 @@ impl Hash for BiomeData {
         self.humidity.hash(state);
         self.latitude.hash(state);
     }
+}
+
+/// Details about the various "simple" objects that can be placed in the biome.
+#[derive(Debug, Clone, Resource, Reflect, Default, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SimpleObjectDetail {
+    /// The unique identifier for the object.
+    pub id: String,
+    /// The "objective" weight for the object. This is some value that is weighted against
+    /// a total of [`crate::noise::OBJECT_POOL`] to be spawned in the world.
+    pub weight: usize,
 }

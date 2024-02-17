@@ -4,10 +4,5 @@
   "title": "Elementalist Game System",
   "description": "A system in the Elementalist game",
   "type": "string",
-  "enum": [
-    "Spell",
-    "Tileset",
-    "Particle",
-    "Realm"
-  ]
+  "enum": ["Spell", "Tileset", "Particle", "Realm", "SimpleObject"]
 }

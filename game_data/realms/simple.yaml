@@ -27,3 +27,6 @@ data:
               weight: 10
             - tile: 17
               weight: 2
+      simpleObjects:
+        - id: tree-1
+          weight: 20

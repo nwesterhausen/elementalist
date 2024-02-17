@@ -1,10 +1,14 @@
 use bevy::prelude::*;
 
 use super::{
-    events::{LoadedParticleData, LoadedRealmData, LoadedSpellData, LoadedTilesetData},
+    events::{
+        LoadedParticleData, LoadedRealmData, LoadedSimpleObjectData, LoadedSpellData,
+        LoadedTilesetData,
+    },
     load_data_file_dir,
     particles::load_particle_effects,
     realms::load_realms,
+    simple_objects::load_simple_objects,
     spells::load_spells,
     storage::GameData,
     tilesets::load_tilesets,
@@ -21,13 +25,15 @@ impl Plugin for DataLoaderPlugin {
         app.add_event::<LoadedSpellData>()
             .add_event::<LoadedTilesetData>()
             .add_event::<LoadedParticleData>()
-            .add_event::<LoadedRealmData>();
+            .add_event::<LoadedRealmData>()
+            .add_event::<LoadedSimpleObjectData>();
 
         // Set up the resources used and the systems to store the data
         app.init_resource::<GameData>().add_systems(
             Update,
             (
                 load_tilesets,
+                load_simple_objects,
                 load_particle_effects,
                 load_realms,
                 load_spells,

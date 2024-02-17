@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.nwest.one/games/elementalist/simple_object_data.json",
+  "title": "Elementalist Simple Object Schema",
+  "description": "Data about an object that can be placed in the world",
+  "type": "object",
+  "properties": {
+    "spritePath": {
+      "type": "string",
+      "description": "The path to the sprite for this object"
+    },
+    "tileset": {
+      "type": "string",
+      "description": "The unique id of the tileset to use for this object"
+    },
+    "tileIndex": {
+      "type": "number",
+      "description": "The index of the tile to use for this object"
+    }
+  }
+}

@@ -7,8 +7,15 @@ use crate::{enums::biome::Marker, state::Game};
 
 use super::resources::{GeneratedMaps, GenerationSeed};
 
-/// Boundary for the object id noise generation. Lower will result in more objects.
-const OBJECT_BOUNDARY: f64 = 2.5;
+/// Boundary for the object id noise generation. This is set as both the upper and lower bounds,
+/// with the lower bound being negative.
+pub const OBJECT_BOUNDARY: f64 = 2.5;
+/// Weight pool for object generation. We turn the noise into a usize that is within the range
+/// of zero to this value.
+///
+/// It should be taken into account that some of the pool space should be used for empty space,
+/// otherwise the map will be too cluttered.
+pub const OBJECT_POOL: usize = 200;
 
 /// Generate a new seed for the world generation.
 ///
@@ -70,37 +77,23 @@ pub(super) fn generate_map(seed: Res<GenerationSeed>, mut maps: ResMut<Generated
     );
 }
 
-/// Take noise and return a usize between 0 and 19. 0 should be considered empty.
+/// Take noise and return a usize between 0 and `OBJECT_POOL`.
 ///
 /// # Arguments
 ///
-/// * `noise` - The noise value to convert to an object marker.
+/// * `noise` - The noise value to convert to an object marker. This is expected to be
+/// between -`OBJECT_BOUNDARY` and `OBJECT_BOUNDARY`. Anything outside of this range will
+/// be clamped to the nearest boundary.
 ///
 /// # Returns
 ///
-/// A usize between 0 and 19. 0 should be considered empty.
+/// A usize between 0 and `OBJECT_POOL`.
 #[must_use]
 fn noise_to_object(noise: f64) -> usize {
-    match noise {
-        v if v < -0.8 => 1,
-        v if v < -0.7 => 2,
-        v if v < -0.6 => 3,
-        v if v < -0.5 => 4,
-        v if v < -0.4 => 5,
-        v if v < -0.3 => 6,
-        v if v < -0.2 => 7,
-        v if v < -0.1 => 8,
-        v if v < 0.0 => 9,
-        v if v < 0.1 => 10,
-        v if v < 0.2 => 11,
-        v if v < 0.3 => 12,
-        v if v < 0.4 => 13,
-        v if v < 0.5 => 14,
-        v if v < 0.6 => 15,
-        v if v < 0.7 => 16,
-        v if v < 0.8 => 17,
-        v if v < 0.9 => 18,
-        v if v <= 1.0 => 19,
-        _ => 0,
-    }
+    let noise = noise.clamp(-OBJECT_BOUNDARY, OBJECT_BOUNDARY);
+    let noise = (noise + OBJECT_BOUNDARY) / (OBJECT_BOUNDARY * 2.0);
+    #[allow(clippy::cast_sign_loss)]
+    let object = (noise * OBJECT_POOL as f64) as usize;
+
+    object
 }

@@ -11,6 +11,7 @@ mod loader;
 mod particles;
 mod plugin;
 mod realms;
+mod simple_objects;
 mod spells;
 mod tilesets;
 

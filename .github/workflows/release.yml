@@ -193,7 +193,7 @@ jobs:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
       - uses: dtolnay/rust-toolchain@be73d7920c329f220ce78e0234b8f96b7ae60248 # master
         with:
-          targets: x86_64-apple-darwin, aaarch64-apple-darwin
+          targets: x86_64-apple-darwin, aarch64-apple-darwin
           toolchain: ${{ env.nightly_toolchain }}
       - name: Environment Setup
         run: |

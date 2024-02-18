@@ -1,8 +1,0 @@
-{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://schemas.nwest.one/games/elementalist/collider.json",
-  "title": "Elementalist Collider Schema",
-  "description": "The collider of the spell, used to determine how it interacts with the world",
-  "type": "string",
-  "enum": ["circle", "square", "line", "cone", "point"]
-}

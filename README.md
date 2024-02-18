@@ -6,7 +6,7 @@
 
 |                                            |                        |
 | ------------------------------------------ | ---------------------- |
-| ![wizard](./game/assets/sprite/Wizard.png) | A game made with bevy. |
+| ![wizard](./game/assets/sprite/wizard.png) | A game made with bevy. |
 
 - [Design Notes](./design_notes) include info about the gameplay loop and gameplay.
 - [Game](./game) is the bevy app

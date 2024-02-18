@@ -179,7 +179,7 @@ jobs:
           tag: ${{ github.ref }}
           overwrite: true
 
-  # Build for MacOS x86_64 and aaarch64
+  # Build for MacOS x86_64 and aarch64
   release-macOS:
     runs-on: macOS-latest
     # To upload artifacts, contents write permission is required
@@ -207,7 +207,7 @@ jobs:
       - name: Build
         run: |
           cargo build --release --target x86_64-apple-darwin # Intel
-          cargo build --release --target aaarch64-apple-darwin # Apple Silicon
+          cargo build --release --target aarch64-apple-darwin # Apple Silicon
 
       - name: Prepare Package
         run: |
@@ -221,7 +221,7 @@ jobs:
           cp -r game_data ${{ env.binary }}.app/Contents/MacOS/
 
           lipo "target/x86_64-apple-darwin/release/${{ env.binary }}" \
-            "target/aaarch64-apple-darwin/release/${{ env.binary }}" \
+            "target/aarch64-apple-darwin/release/${{ env.binary }}" \
             -create -output ${{ env.binary }}.app/Contents/MacOS/${{ env.binary }}
 
           hdiutil create -fs HFS+ -volname "${{ env.binary }}" -srcfolder ${{ env.binary }}.app ${{ env.binary }}-macOS.dmg

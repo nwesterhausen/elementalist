@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/particle.json
+header:
+  uniqueId: water-bolt
+  author: Nicholas Westerhausen
+  description: A particle effect for the water bolt spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+  system: Particle
+data:
+  capacity: 32
+  colorGradients:
+    - index: 0.0
+      color: SteelBlue
+    - index: 1.0
+      color: SteelBlue
+      alpha: 0.0

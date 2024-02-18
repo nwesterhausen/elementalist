@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/spell.json
+header:
+  uniqueId: charm-zone
+  system: Spell
+  author: Nick Westerhausen
+  description: Zone of charming spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Zone of Charming
+  description: Create an area with an aura of charm magic at the target location.
+  manaCost: 3
+  castSlot: secondary
+  castTime: .25
+  cooldown: 5.00
+  castType: cast
+  magic: arcane
+  spellTier: 3
+  long_description:
+    Entities already in the zone when it's cast become charmed instantly, fighting for the caster. Entities entering after the zone has been
+    created take a bit of time before becoming charmed.

@@ -24,6 +24,27 @@ impl Plugin for PhysicsPlugin {
         });
 
         app.add_systems(Update, display_events.run_if(in_state(Game::Playing)));
+
+        #[cfg(debug_assertions)]
+        {
+            // debug renderer
+            app.add_plugins(RapierDebugRenderPlugin {
+                enabled: false,
+                ..default()
+            });
+            // debug renderer toggle
+            app.add_systems(Update, toggle_debug_rendering);
+        }
+    }
+}
+
+#[allow(clippy::needless_pass_by_value)]
+fn toggle_debug_rendering(
+    mut debug_render_context: ResMut<DebugRenderContext>,
+    keyboard_input: Res<Input<KeyCode>>,
+) {
+    if keyboard_input.just_pressed(KeyCode::F3) {
+        debug_render_context.enabled = !debug_render_context.enabled;
     }
 }
 

@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/spell.json
+header:
+  uniqueId: fire_pillar
+  system: Spell
+  author: Nick Westerhausen
+  description: Fire Pillar spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Fire Pillar
+  description: Create a pillar of flames at the target location.
+  manaCost: 2
+  castSlot: secondary
+  castTime: 0
+  cooldown: 3.30
+  magic: fire
+  spellTier: 2
+  flags:
+    - wall
+  castType: instant
+  castCategory: ground
+  spriteTileset: tileset/ground_effects.png
+  spriteIndex: 0

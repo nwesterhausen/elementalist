@@ -1,9 +1,6 @@
 //! Trait to convert a map of `Marker` to appropriate biomes from a `Realm`
 
-use crate::{
-    enums::biome::{Biome, Marker},
-    BiomeData, Realm,
-};
+use crate::{enums::biome::Marker, BiomeData, Realm};
 
 /// Trait to convert a map of `Marker` to appropriate biomes from a `Realm`
 pub trait MarkersToBiomes {
@@ -13,11 +10,11 @@ pub trait MarkersToBiomes {
     /// which is elevation based. First we look at what biomes are available in the
     /// `Realm` and then come up with how to match them to the 20 possible elevations
     /// from the `Marker` map.
-    fn markers_to_biomes(&self, marker_map: &[Vec<Marker>]) -> Vec<Vec<Biome>>;
+    fn markers_to_biomes(&self, marker_map: &[Vec<Marker>]) -> Vec<Vec<BiomeData>>;
 }
 
 impl MarkersToBiomes for Realm {
-    fn markers_to_biomes(&self, marker_map: &[Vec<Marker>]) -> Vec<Vec<Biome>> {
+    fn markers_to_biomes(&self, marker_map: &[Vec<Marker>]) -> Vec<Vec<BiomeData>> {
         // Determine what biomes are available in the realm, and order them by altitude
         // and humidity.
         let mut biomes = self.biomes.clone();
@@ -28,19 +25,19 @@ impl MarkersToBiomes for Realm {
         });
         // todo: capture the other biome details when we transform to a map..
         // align the biomes to the markers
-        let aligned = align_biomes_to_markers(biomes);
+        let aligned = align_biomes_to_markers(biomes.as_slice());
 
         // Convert the markers to biomes
-        let mut result = Vec::<Vec<Biome>>::new();
+        let mut result = Vec::<Vec<BiomeData>>::new();
         for row in marker_map {
-            let mut row_biomes = Vec::<Biome>::new();
+            let mut row_biomes = Vec::<BiomeData>::new();
             for marker in row {
                 let idx = marker.as_elevation_idx();
                 if idx >= aligned.len() {
                     tracing::error!("markers_to_biomes: idx out of bounds {idx}");
-                    row_biomes.push(aligned[0]);
+                    row_biomes.push(aligned[0].clone());
                 } else {
-                    row_biomes.push(aligned[idx]);
+                    row_biomes.push(aligned[idx].clone());
                 }
             }
             result.push(row_biomes);
@@ -63,8 +60,8 @@ impl MarkersToBiomes for Realm {
 ///
 /// A list of biomes aligned to the `Marker` enum.
 #[must_use]
-pub fn align_biomes_to_markers(biomes: Vec<BiomeData>) -> [Biome; 20] {
-    let mut aligned = Vec::<Biome>::new();
+pub fn align_biomes_to_markers(biomes: &[BiomeData]) -> Vec<BiomeData> {
+    let mut aligned = Vec::<BiomeData>::new();
 
     // If there are less than 20 biomes, evenly distribute them across the elevations
     if biomes.len() < 20 {
@@ -75,21 +72,9 @@ pub fn align_biomes_to_markers(biomes: Vec<BiomeData>) -> [Biome; 20] {
                 tracing::warn!("align_biomes_to_markers: idx unexpectedly out of bounds: {idx}");
                 break;
             }
-            aligned.push(biomes[idx].biome);
-        }
-    } else {
-        for biome in biomes {
-            aligned.push(biome.biome);
+            aligned.push(biomes[idx].clone());
         }
     }
 
-    // Convert the vector to an array
-    let mut array = [Biome::Barren; 20];
-    for (i, biome) in aligned.iter().enumerate() {
-        if i >= 20 {
-            break;
-        }
-        array[i] = *biome;
-    }
-    array
+    aligned
 }

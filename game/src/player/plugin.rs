@@ -2,6 +2,7 @@ use bevy::prelude::*;
 use game_library::{state::Game, Health, Xp};
 
 use super::{
+    animation,
     avatar::{self, PlayerAvatar},
     menu_control, movement,
     player_control::PlayerControlsPlugin,
@@ -27,11 +28,23 @@ impl Plugin for PlayerPlugin {
                 (
                     movement::player_movement_controls,
                     movement::update_player_z_index,
+                    animation::advance_animation_timer,
+                    animation::set_casting_animation,
+                    animation::update_avatar_animation,
                 )
                     .run_if(in_state(Game::Playing)),
             )
             // Remove player when leaving game
-            .add_systems(OnExit(Game::Playing), despawn_with_tag::<PlayerAvatar>);
+            .add_systems(OnExit(Game::Playing), despawn_with_tag::<PlayerAvatar>)
+            // Animation stuff
+            .add_state::<animation::PlayerAnimation>()
+            .add_state::<animation::PlayerAnimationSupplemental>()
+            .add_state::<animation::PlayerFacing>()
+            .init_resource::<animation::AnimationFrame>()
+            .insert_resource(animation::PlayerAnimationTimer(Timer::from_seconds(
+                0.1,
+                TimerMode::Repeating,
+            )));
 
         // Testing stuff
         app.add_systems(Update, subtract_health)

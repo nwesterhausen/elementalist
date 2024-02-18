@@ -1,3 +1,0 @@
-name: Instant
-description: There is not delay between casting and affect being applied.
-extendedDescription: Instant spells are meant to be "hit scan"-like and have no travel time from caster to target.

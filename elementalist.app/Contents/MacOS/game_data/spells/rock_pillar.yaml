@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/spell.json
+header:
+  uniqueId: rock-pillar
+  system: Spell
+  author: Nick Westerhausen
+  description: Rock pillar spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Rock Pillar
+  description: Summon a pillar of rock at the target location.
+  manaCost: 2
+  castSlot: secondary
+  castTime: 0
+  cooldown: 2.50
+  magic: earth
+  spellTier: 2

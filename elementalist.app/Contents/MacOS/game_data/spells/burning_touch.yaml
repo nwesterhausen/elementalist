@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/spell.json
+header:
+  uniqueId: burning_touch
+  system: Spell
+  author: Nick Westerhausen
+  description: Basic Touch-based Fire Spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Burning Touch
+  description: Ignite a target by touch
+  manaCost: 0
+  spellTier: 0
+  castSlot: primary
+  castTime: 0
+  cooldown: 2.00
+  magic: fire
+  flags:
+    - touch
+    - instant
+  castType: instant
+  castCategory: touch
+  spriteTileset: tileset/spell_icons.png
+  spriteIndex: 0

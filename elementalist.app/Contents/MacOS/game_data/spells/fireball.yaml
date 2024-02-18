@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/spell.json
+header:
+  uniqueId: fireball
+  system: Spell
+  author: Nick Westerhausen
+  description: Fireball spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Fireball
+  description: Launch a ball of fire that explodes on contact.
+  manaCost: 3
+  castSlot: secondary
+  castTime: 0
+  cooldown: 5
+  magic: fire
+  spellTier: 3

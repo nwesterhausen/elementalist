@@ -1,6 +1,6 @@
 [package]
 name = "game_library"
-version = "1.4.0"
+version = "1.5.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -17,7 +17,10 @@ serde_default_utils = "0.2.1"
 serde_yaml = "0.9.31"
 tracing = "0.1.40"
 walkdir = "2.4.0"
-bevy_rapier2d = { version = "0.24.0", features = ["parallel"] }
+bevy_rapier2d = { version = "0.24.0", features = [
+    "parallel",
+    "debug-render-2d",
+] }
 
 [dependencies.rand]
 version = "0.8.5"
@@ -35,3 +38,5 @@ enum_glob_use = "deny"
 pedantic = "deny"
 nursery = "deny"
 unwrap_used = "deny"
+cast_possible_truncation = "allow"
+cast_precision_loss = "allow"

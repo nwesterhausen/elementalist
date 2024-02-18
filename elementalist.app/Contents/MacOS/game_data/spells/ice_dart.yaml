@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/spell.json
+header:
+  uniqueId: ice_dart
+  system: Spell
+  author: Nick Westerhausen
+  description: Ice Dart spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Ice Dart
+  description: Shoot a dart of ice at your target.
+  manaCost: 0
+  castSlot: primary
+  castTime: 0
+  cooldown: .33
+  magic: ice
+  spellTier: 0
+  spriteTileset: spell_projectiles
+  spriteIndex: 4
+  flags: []
+  castType: instant
+  castCategory: projectile
+  particles:
+    - attachment: Projectile
+      particleId: ice-dart

@@ -1,12 +1,12 @@
 use bevy::prelude::*;
 use bevy_rapier2d::prelude::*;
-use game_library::{enums::StatEnum, Health, Mana, MovementBundle, StatBundle, Xp};
+use game_library::{enums::StatEnum, Health, Layer, Mana, MovementBundle, StatBundle, Xp};
 
 /// Base stats for the player. These are the stats that the player starts with, and are used to
 /// initiate the [`StatBundle`] for the player.
 pub(super) const fn player_base_stats(stat: &StatEnum) -> f32 {
     match stat {
-        StatEnum::MovementSpeed => 100.0,
+        StatEnum::MovementSpeed => 2.4,
         StatEnum::SpellRange => 50.0,
         StatEnum::Health => 10.0,
         StatEnum::Mana => 4.0,
@@ -64,7 +64,7 @@ pub struct PlayerBundle {
     /// The player's movement bundle.
     pub movement: MovementBundle,
     /// The player's sprite bundle.
-    pub sprite: SpriteBundle,
+    pub sprite: SpriteSheetBundle,
     /// The player's health.
     pub health: Health,
     /// The player's mana.
@@ -81,4 +81,6 @@ pub struct PlayerBundle {
     pub collider: Collider,
     /// Physics rigid body
     pub rigid_body: RigidBody,
+    /// 2d Layer position
+    pub layer: Layer,
 }

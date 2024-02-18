@@ -1,0 +1,196 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://schemas.nwest.one/games/elementalist/spell_data.json",
+	"title": "Elementalist Spell Data",
+	"description": "The supporting spell data",
+	"type": "object",
+	"properties": {
+		"name": {
+			"description": "The name of the spell",
+			"type": "string"
+		},
+		"description": {
+			"description": "A description of the spell",
+			"type": "string"
+		},
+		"longDescription": {
+			"description": "A longer, more thematic description of the spell that can be used in-game to add lore and flavor",
+			"type": "string"
+		},
+		"manaCost": {
+			"description": "The cost of the spell",
+			"type": "integer"
+		},
+		"castSlot": {
+			"description": "The slot the spell is cast in",
+			"type": "string",
+			"enum": ["primary", "secondary", "defensive", "ultimate"]
+		},
+		"castTime": {
+			"description": "The time it takes to cast the spell",
+			"type": "number",
+			"inclusiveMinimum": 0
+		},
+		"cooldown": {
+			"description": "The time it takes to cool down after casting the spell",
+			"type": "number",
+			"inclusiveMinimum": 0
+		},
+		"magic": {
+			"description": "The family of magic the spell belongs to",
+			"$ref": "https://schemas.nwest.one/games/elementalist/magic_school.json"
+		},
+		"flags": {
+			"description": "Flags to specify general behavior",
+			"type": "array",
+			"items": {
+				"type": "string",
+				"enum": [
+					"aoe",
+					"self",
+					"target",
+					"projectile",
+					"instant",
+					"homing",
+					"cone",
+					"line",
+					"beam",
+					"wall",
+					"ground",
+					"summon",
+					"buff",
+					"debuff",
+					"heal",
+					"damage",
+					"movement",
+					"touch",
+					"sustained",
+					"dot",
+					"circle",
+					"square"
+				]
+			}
+		},
+		"spellTier": {
+			"description": "The tier of the spell, used to indicate how soon it can be unlocked or learned. One of the tier 0 spells will be a free choice when learning a type of magic.",
+			"type": "integer",
+			"enum": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+		},
+		"speed": {
+			"description": "The speed of the spell, used to determine how quickly it travels",
+			"type": "number",
+			"inclusiveMinimum": 0
+		},
+		"range": {
+			"description": "The range of the spell, used to determine how far it can travel",
+			"type": "number",
+			"inclusiveMinimum": 0
+		},
+		"duration": {
+			"description": "The duration of the spell, used to determine how long it lasts",
+			"type": "number",
+			"inclusiveMinimum": 0
+		},
+		"damage": {
+			"description": "The damage of the spell, used to determine how much damage it does",
+			"type": "number",
+			"inclusiveMinimum": 0
+		},
+		"healing": {
+			"description": "The healing of the spell, used to determine how much healing it does",
+			"type": "number",
+			"inclusiveMinimum": 0
+		},
+		"radius": {
+			"description": "The radius of the spell, used to determine how large the area of effect is",
+			"type": "number",
+			"inclusiveMinimum": 0
+		},
+		"angle": {
+			"description": "The angle of the spell, used to determine how wide the area of effect is",
+			"type": "number",
+			"inclusiveMinimum": 0
+		},
+		"collider": {
+			"description": "The collider of the spell, used to determine how it interacts with the world",
+			"$ref": "https://schemas.nwest.one/games/elementalist/collider.json"
+		},
+		"debuffs": {
+			"description": "The debuffs applied by the spell",
+			"$ref": "https://schemas.nwest.one/games/elementalist/stat_effect.json"
+		},
+		"buffs": {
+			"description": "The buffs applied by the spell",
+			"$ref": "https://schemas.nwest.one/games/elementalist/stat_effect.json"
+		},
+		"castType": {
+			"description": "The type of cast the spell uses",
+			"type": "string",
+			"enum": ["instant", "channeled", "cast"]
+		},
+		"castCategory": {
+			"description": "The broad category of the spell",
+			"type": "string",
+			"enum": ["touch", "projectile", "ground", "summon", "onSelf"]
+		},
+		"particles": {
+			"required": ["particleId", "attachment"],
+			"description": "Particles to attach to the spell",
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"particleId": {
+						"description": "The unique_id for the particle effect",
+						"type": "string"
+					},
+					"attachment": {
+						"description": "The attachment point of the particle",
+						"type": "string",
+						"enum": [
+							"Cast",
+							"Projectile",
+							"Impact",
+							"Target",
+							"Caster",
+							"Ground",
+							"Summon"
+						]
+					}
+				}
+			}
+		},
+		"iconTileset": {
+			"description": "The tileset with the icon of the spell (path in the assets folder)",
+			"type": "string"
+		},
+		"iconIndex": {
+			"description": "The index of the icon in the tileset",
+			"type": "integer",
+			"inclusiveMinimum": 0
+		},
+		"spriteTileset": {
+			"description": "The sprite of the spell (path in the assets folder)",
+			"type": "string"
+		},
+		"spriteIndex": {
+			"description": "The index of the sprite in the tileset",
+			"type": "integer",
+			"inclusiveMinimum": 0
+		}
+	},
+	"required": [
+		"name",
+		"description",
+		"manaCost",
+		"castSlot",
+		"castTime",
+		"cooldown",
+		"spellTier",
+		"flags",
+		"castType",
+		"castCategory",
+		"spriteTileset",
+		"spriteIndex"
+	]
+}

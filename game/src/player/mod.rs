@@ -14,6 +14,7 @@ mod player_control;
 mod player_creation;
 mod player_sprite;
 mod plugin;
+mod animation;
 
 pub use bundle::Player;
 pub use plugin::PlayerPlugin;

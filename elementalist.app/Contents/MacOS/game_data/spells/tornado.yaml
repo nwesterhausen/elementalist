@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/spell.json
+header:
+  uniqueId: tornado
+  system: Spell
+  author: Nick Westerhausen
+  description: tornado spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Tornado
+  description: Summon a tornado at the target location.
+  manaCost: 2
+  castSlot: secondary
+  castTime: 5.0
+  cooldown: 5.00
+  castType: cast
+  magic: air
+  spellTier: 2

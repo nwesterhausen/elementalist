@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/simple_object.json
+header:
+  uniqueId: bush-blue-berry
+  system: SimpleObject
+  author: Nicholas Westerhausen
+  description: A plain old bush with blue berries
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  tileset: small_shrubs
+  tileIndex: 2

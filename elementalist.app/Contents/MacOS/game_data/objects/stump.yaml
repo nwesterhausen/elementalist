@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/simple_object.json
+header:
+  uniqueId: stump
+  system: SimpleObject
+  author: Nicholas Westerhausen
+  description: A tree stump
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  tileset: trees
+  tileIndex: 2

@@ -113,3 +113,13 @@ impl Hash for Realm {
         self.primary_element.hash(state);
     }
 }
+
+impl PartialEq for Realm {
+    fn eq(&self, other: &Self) -> bool {
+        self.name == other.name
+            && self.description == other.description
+            && self.primary_element == other.primary_element
+    }
+}
+
+impl Eq for Realm {}

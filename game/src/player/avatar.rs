@@ -5,7 +5,7 @@ use game_library::{
     data_loader::storage::GameData,
     enums::StatEnum,
     progress_bar::{BarState, ProgressBarConfig},
-    Health, Mana, MovementBundle, SpellChoices, StatBundle, Xp,
+    Health, Layer, Mana, MovementBundle, SpellChoices, StatBundle, Xp,
 };
 
 use super::{
@@ -29,7 +29,6 @@ pub struct PlayerAvatar;
 /// This will put the avatar as a child of the player entity, which should exist already.
 pub fn spawn_player_avatar(
     mut commands: Commands,
-    asset_server: Res<AssetServer>,
     mut spell_choices: ResMut<SpellChoices>,
     game_data: Res<GameData>,
     existing_players: Query<&PlayerAvatar>,
@@ -49,14 +48,24 @@ pub fn spawn_player_avatar(
         }
     }
 
+    // Load wizard tileset
+    let Some(tileset) = game_data.tile_atlas.get("wizard") else {
+        error!("Failed to load wizard tileset");
+        return;
+    };
+
     commands.spawn((
         PlayerBundle {
             movement: MovementBundle::default(),
-            sprite: SpriteBundle {
-                texture: asset_server.load("sprite/wizard.png"),
+            sprite: SpriteSheetBundle {
+                texture_atlas: tileset.clone(),
+                sprite: TextureAtlasSprite {
+                    index: 3,
+                    ..default()
+                },
                 transform: Transform {
-                    translation: Vec3::new(0.0, 0.0, 50.0),
-                    scale: Vec3::splat(0.75),
+                    translation: Vec3::new(0.0, 0.0, 150.0),
+                    scale: Vec3::splat(0.85),
                     ..Default::default()
                 },
                 ..Default::default()
@@ -75,6 +84,7 @@ pub fn spawn_player_avatar(
             kinematic_controller: KinematicCharacterController::default(),
             collider: Collider::capsule_y(6.0, 4.0),
             rigid_body: RigidBody::KinematicVelocityBased,
+            layer: Layer::Foreground(i16::MAX),
         },
         ProgressBarConfig::<Xp>::default()
             .with_background_color(colors::BACKGROUND_COLOR_50)

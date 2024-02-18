@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/tileset.json
+header:
+  uniqueId: wizard
+  system: Tileset
+  author: Steve Jones
+  description: The elementalist wizard sprites
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  path: tileset/wizard.png
+  tileWidth: 16
+  tileHeight: 32
+  tilesetWidth: 3
+  tilesetHeight: 3

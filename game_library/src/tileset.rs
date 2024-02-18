@@ -77,11 +77,11 @@ impl Hash for Tileset {
 }
 
 impl InternalId for Tileset {
-    /// Update the spell's internal ID.
+    /// Update the tileset's internal ID.
     fn update_internal_id(&mut self) {
         self.internal_id = Some(self.get_internal_id());
     }
-    /// Get the spell's internal ID.
+    /// Get the tileset's internal ID.
     #[must_use]
     fn get_internal_id(&self) -> String {
         if self.internal_id.is_some() {

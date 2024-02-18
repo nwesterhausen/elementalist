@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/spell.json
+header:
+  uniqueId: ice_pillar
+  system: Spell
+  author: Nick Westerhausen
+  description: ice pillar spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Ice Pillar
+  description: A frozen pillar of ice forms at a target location.
+  castSlot: secondary
+  castTime: 1
+  cooldown: 5
+  manaCost: 1
+  spellTier: 1
+  magic: ice
+  flags:
+    - target
+    - aoe
+    - ground
+    - wall

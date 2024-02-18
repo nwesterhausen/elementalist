@@ -1,0 +1,32 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/particle.json
+header:
+  uniqueId: 2d
+  system: Particle
+  author: Nicholas Westerhausen
+  description: The sample particle effect from bevy_hanabi
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  lifetime: 15.0
+  sizeGradients:
+    - index: 1.0
+      width: 0.52
+    - index: 0.0
+      width: 0.52
+  colorGradients:
+    - index: 0.0
+      color: CostaDelSol
+    - index: 1.0
+      color: SeaPink
+      alpha: 0.0
+  capacity: 256
+  initialPosition:
+    modifierType: circle
+    radius: 10.05
+    shapeDimension: surface
+  initialVelocity:
+    centerX: 0
+    centerY: 0
+    speed: 3.1
+  spawnRate: 24.0

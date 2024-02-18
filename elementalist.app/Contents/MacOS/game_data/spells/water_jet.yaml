@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/spell.json
+header:
+  uniqueId: water-jet
+  system: Spell
+  author: Nick Westerhausen
+  description: Water jet spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Water Jet
+  description: Spray a powerful jet of water at your target.
+  manaCost: 1
+  castSlot: secondary
+  castTime: 0
+  cooldown: 2.50
+  magic: water
+  spellTier: 2

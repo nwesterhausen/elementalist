@@ -10,11 +10,10 @@ use bevy::{
     log::LogPlugin,
     prelude::*,
     render::{render_resource::WgpuFeatures, settings::WgpuSettings, RenderPlugin},
-    utils::HashMap,
 };
 use bevy_rapier2d::prelude::*;
 use game_library::{
-    data_loader::storage::GameData, enums::biome::Biome, state::Game, GeneratedMaps,
+    data_loader::storage::GameData, state::Game, GeneratedMaps, GenerationSeed, Layer, LayerPlugin,
     MarkersToBiomes, NoisePlugin, PhysicsPlugin, SchedulingPlugin,
 };
 use in_game::InGamePlugin;
@@ -129,6 +128,8 @@ impl Plugin for ElementalistDefaultPlugins {
         app.add_plugins(SchedulingPlugin);
         // Add the physics plugin
         app.add_plugins(PhysicsPlugin);
+        // Add the layer plugin
+        app.add_plugins(LayerPlugin);
     }
 }
 
@@ -174,10 +175,10 @@ impl Plugin for ElementalistGameplayPlugins {
 /// Spawn some trees as a test
 fn spawn_random_environment(
     mut commands: Commands,
-    mut materials: ResMut<Assets<ColorMaterial>>,
-    mut meshes: ResMut<Assets<Mesh>>,
     game_data: Res<GameData>,
     generated_map: Res<GeneratedMaps>,
+    asset_server: Res<AssetServer>,
+    seed: Res<GenerationSeed>,
 ) {
     // get the biomes for the current map
     let Some(realm) = game_data.realms.get("simple test realm") else {
@@ -185,78 +186,80 @@ fn spawn_random_environment(
         return;
     };
 
-    let biomes = &realm.markers_to_biomes(generated_map.biome_map.as_slice());
-    // from the biomes which is vec of vec of Biome, turn that into a flattened, deduped
-    // vec of Biome, and then map with `get_color` to get the colors we will use.
-    let mut color_materials: HashMap<Biome, Handle<ColorMaterial>> = HashMap::new();
-    for biome_row in biomes {
-        for biome in biome_row {
-            let color = biome.get_color();
-            let material = materials.add(color.into());
-            color_materials.insert(*biome, material.clone());
-        }
-    }
-
-    // add the 16x16 quad mesh
-    let mesh = meshes.add(Mesh::from(shape::Quad {
-        size: Vec2::new(16.0, 16.0),
-        flip: false,
-    }));
-
-    // spawn a colored 16x16 quad for each tile in the biome map.
-    let mesh_z = -100.0;
-    for (i, row) in biomes.iter().enumerate() {
+    // spawn ground over whole map
+    let biome_map = realm.markers_to_biomes(generated_map.biome_map.clone().as_slice());
+    for (i, row) in biome_map.iter().enumerate() {
         for (j, biome) in row.iter().enumerate() {
-            let Some(material) = color_materials.get(biome) else {
-                tracing::error!("No material found for biome: {:?}", biome);
+            // Convert the map coordinates to world coordinates
+            let ground_translation = generated_map.map_to_world((i, j));
+
+            // Get random info from the biome
+            let Some(rnd_ground) = biome.random_ground_tile() else {
+                tracing::warn!("No ground tile found for biome at ({}, {})", i, j);
                 continue;
             };
-            let mut mesh_transform =
-                Transform::from_translation(generated_map.map_to_world((i, j)));
-            mesh_transform.translation.z = mesh_z;
-            // use the `map_to_world` function to convert the biome map coordinates to world coordinates.
+
+            let Some(ground) = game_data.tile_atlas.get(rnd_ground.0) else {
+                tracing::error!("Failed to load ground tileselt: {}", rnd_ground.0);
+                continue;
+            };
+            let ground_id = rnd_ground.1;
+
+            let ground_transform = Transform::from_translation(ground_translation);
             commands.spawn((
-                ColorMesh2dBundle {
-                    material: material.clone(),
-                    transform: mesh_transform,
-                    mesh: mesh.clone().into(),
+                SpriteSheetBundle {
+                    texture_atlas: ground.clone(),
+                    sprite: bevy::sprite::TextureAtlasSprite::new(ground_id),
+                    transform: ground_transform,
                     ..Default::default()
                 },
                 EnvironmentStuff,
+                Layer::Background(i16::MAX),
             ));
-        }
-    }
 
-    // spawn trees and rocks
-
-    let Some(tree) = game_data.tile_atlas.get("trees") else {
-        tracing::error!("Failed to load tree tile");
-        return;
-    };
-    let Some(rock) = game_data.tile_atlas.get("rock") else {
-        tracing::error!("Failed to load rock tile");
-        return;
-    };
-
-    for (i, row) in generated_map.object_map.iter().enumerate() {
-        for (j, object_id) in row.iter().enumerate() {
-            let obj = match object_id {
-                4 => Some((tree, 0)),
-                13 => Some((tree, 1)),
-                19 => Some((tree, 2)),
-                3 | 15 => Some((rock, 0)),
-                6 | 17 => Some((rock, 1)),
-                _ => None,
+            let object_pool = biome.object_pool(seed.as_u64());
+            let object_idx = generated_map.object_map[i][j];
+            let Some(obj_id) = object_pool.get(object_idx) else {
+                warn!("No object found for object weight {}", object_idx);
+                continue;
             };
-            if let Some(obj) = obj {
-                let mut obj_transform =
-                    Transform::from_translation(generated_map.map_to_world((i, j)));
-                obj_transform.translation.z = -obj_transform.translation.y;
-                obj_transform.scale = Vec3::splat(1.0);
+            let Some(obj_id) = obj_id else {
+                continue;
+            };
+
+            let Some(obj) = game_data.simple_objects.get(obj_id) else {
+                warn!("No object found for object id {}", obj_id);
+                continue;
+            };
+
+            // create depth from f32 to i16 with the f32 range mapping to i16 range, since translation.y has valid
+            // values between -0.5 * generated_map.dimensions().1 and 0.5 * generated_map.dimensions().1
+            let depth = (ground_translation.y / (0.5 * generated_map.dimensions().1 as f32)
+                * f32::from(i16::MAX)) as i16;
+
+            let mut obj_transform = Transform::from_translation(ground_translation);
+            obj_transform.scale = Vec3::splat(1.0);
+
+            if obj.is_tile() {
+                let tileset = match obj.tileset.clone() {
+                    Some(tileset_id) => {
+                        let Some(tileset) = game_data.tile_atlas.get(&tileset_id) else {
+                            tracing::error!("Failed to load tileset: {}", tileset_id);
+                            continue;
+                        };
+                        tileset
+                    }
+                    None => continue,
+                };
+                let Some(tile_index) = obj.tile_index else {
+                    tracing::error!("No tile index found for tile object");
+                    continue;
+                };
+
                 commands.spawn((
                     SpriteSheetBundle {
-                        texture_atlas: obj.0.clone(),
-                        sprite: bevy::sprite::TextureAtlasSprite::new(obj.1),
+                        texture_atlas: tileset.clone(),
+                        sprite: bevy::sprite::TextureAtlasSprite::new(tile_index),
                         transform: obj_transform,
                         ..Default::default()
                     },
@@ -264,7 +267,28 @@ fn spawn_random_environment(
                     RigidBody::Fixed,
                     // todo: make this reference the actual size of the sprite
                     Collider::cuboid(6.0, 4.0),
+                    Layer::Foreground(depth),
                 ));
+            } else if obj.is_sprite() {
+                let sprite = match obj.sprite_path.clone() {
+                    Some(sprite_path) => asset_server.load(&sprite_path),
+                    None => continue,
+                };
+
+                commands.spawn((
+                    SpriteBundle {
+                        texture: sprite,
+                        transform: obj_transform,
+                        ..Default::default()
+                    },
+                    EnvironmentStuff,
+                    RigidBody::Fixed,
+                    // todo: make this reference the actual size of the sprite
+                    Collider::cuboid(6.0, 4.0),
+                    Layer::Foreground(depth),
+                ));
+            } else {
+                tracing::error!("Object is neither a tile nor a sprite");
             }
         }
     }

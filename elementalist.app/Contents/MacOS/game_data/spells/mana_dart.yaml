@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/spell.json
+header:
+  uniqueId: mana-dart
+  system: Spell
+  author: Nick Westerhausen
+  description: mana dart spell
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Mana Dart
+  description: Shoot a dart of compressed mana at the target.
+  manaCost: 1
+  castSlot: primary
+  castTime: 0
+  cooldown: .10
+  magic: arcane
+  spellTier: 0
+  long_description: It takes mana to make mana.
+  spriteTileset: spell_projectiles
+  spriteIndex: 7

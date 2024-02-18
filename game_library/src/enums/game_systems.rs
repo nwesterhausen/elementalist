@@ -13,6 +13,8 @@ pub enum GameSystem {
     Particle,
     /// The realm system is responsible for loading realms
     Realm,
+    /// The simple object system is responsible for loading simple objects
+    SimpleObject,
 }
 
 /// The order in which the game systems should be loaded.
@@ -28,4 +30,13 @@ pub enum GameSystem {
 /// - Skill perks / trees
 /// - Monsters
 #[allow(dead_code)]
-pub const ORDERED: [GameSystem; 3] = [GameSystem::Tileset, GameSystem::Particle, GameSystem::Spell];
+pub const ORDERED: [GameSystem; 5] = [
+    GameSystem::Tileset,
+    // Simple objects can reference tilesets
+    GameSystem::SimpleObject,
+    // Realms reference simple objects and tilesets
+    GameSystem::Realm,
+    GameSystem::Particle,
+    // Spells reference tilesets
+    GameSystem::Spell,
+];

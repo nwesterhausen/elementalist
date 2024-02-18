@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.nwest.one/games/elementalist/realm.json",
+  "title": "Elementalist Realm",
+  "description": "A a realm to be used in the Elementalist game",
+  "type": "object",
+  "properties": {
+    "header": {
+      "description": "Metadata about the realm",
+      "$ref": "https://schemas.nwest.one/games/elementalist/header.json"
+    },
+    "data": {
+      "description": "The realm definition",
+      "$ref": "https://schemas.nwest.one/games/elementalist/realm_data.json"
+    }
+  },
+  "required": [
+    "header",
+    "data"
+  ]
+}

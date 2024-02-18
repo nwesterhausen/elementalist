@@ -5,17 +5,18 @@ use leafwing_input_manager::action_state::ActionState;
 
 use crate::{events::PlayerAction, player::Player};
 
-use super::avatar::PlayerAvatar;
-
-pub(super) const STANDING_FORWARD_IDX: usize = 3;
-pub(super) const FACING_SIDEWAYS_IDX: usize = 0;
+use super::{
+    animation::{PlayerAnimation, PlayerFacing},
+    avatar::PlayerAvatar,
+};
 
 /// Handle player input for movement
 pub fn player_movement_controls(
     mut query: Query<&mut KinematicCharacterController, With<Player>>,
     action_query: Query<&ActionState<PlayerAction>, With<Player>>,
     stat_query: Query<&StatBundle, With<Player>>,
-    mut sprite_query: Query<&mut TextureAtlasSprite, With<PlayerAvatar>>,
+    mut sprite_state_next: ResMut<NextState<PlayerAnimation>>,
+    mut player_facing_next: ResMut<NextState<PlayerFacing>>,
 ) {
     let Ok(action_state) = action_query.get_single() else {
         tracing::error!("player_movement_controls: failed to get action state");
@@ -32,11 +33,6 @@ pub fn player_movement_controls(
         return;
     };
 
-    let Ok(mut sprite) = sprite_query.get_single_mut() else {
-        tracing::error!("player_movement_controls: failed to get player sprite");
-        return;
-    };
-
     // we expect just one `KinematicCharacterController` for the player
     let Ok(mut controller) = query.get_single_mut() else {
         tracing::error!("player_movement_controls: failed to get player controller");
@@ -44,14 +40,18 @@ pub fn player_movement_controls(
     };
 
     if action_state.pressed(PlayerAction::Move) {
+        sprite_state_next.set(PlayerAnimation::Walking);
         if let Some(axis_pair) = action_state.clamped_axis_pair(PlayerAction::Move) {
-            sprite.index = FACING_SIDEWAYS_IDX;
             controller.translation = Some(axis_pair.xy().normalize_or_zero() * (speed.value()));
 
-            sprite.flip_x = axis_pair.x() < 0.0;
+            if axis_pair.x() < 0.0 {
+                player_facing_next.set(PlayerFacing::Left);
+            } else {
+                player_facing_next.set(PlayerFacing::Right);
+            }
         }
     } else {
-        sprite.index = STANDING_FORWARD_IDX;
+        sprite_state_next.set(PlayerAnimation::Idle);
     }
 }
 

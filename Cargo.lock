@@ -1797,9 +1797,9 @@ dependencies = [
 
 [[package]]
 name = "egui_dock"
-version = "0.11.1"
+version = "0.11.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "00b5bd1db0a840b6f8717728ea957e76f4b6a761b85511a4f6cadbca2273991b"
+checksum = "d14beb118bc4d114bb875f14d1d437736be7010939cedf60c9ee002d7d02d09f"
 dependencies = [
  "duplicate",
  "egui 0.26.1",
@@ -1814,7 +1814,7 @@ checksum = "11157ac094ffbdde99aa67b23417ebdd801842852b500e395a45a9c0aac03e4a"
 
 [[package]]
 name = "elementalist"
-version = "0.4.1"
+version = "0.6.0"
 dependencies = [
  "bevy",
  "bevy-inspector-egui",
@@ -2733,27 +2733,26 @@ checksum = "830d08ce1d1d941e6b30645f1a0eb5643013d835ce3779a5fc208261dbe10f55"
 
 [[package]]
 name = "leafwing-input-manager"
-version = "0.11.2"
+version = "0.12.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "61e0ad1622a1664b055990aac9efd90a9012b82737847e6a85d36ce38d2bf7c4"
+checksum = "e97bc429fc847c2102e112629caaf6ee967027bdd5f61b2ff7d16c3a6c140d81"
 dependencies = [
  "bevy",
  "derive_more",
  "fixedbitset",
  "itertools",
  "leafwing_input_manager_macros",
- "multimap",
  "once_cell",
  "serde",
 ]
 
 [[package]]
 name = "leafwing_input_manager_macros"
-version = "0.11.0"
+version = "0.12.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cde8ae98d45607e4015d0b772d4a234788ebd7a41f09879f408c7f772b81e5bf"
+checksum = "87fcf2d3032b817dc043c936673ac1a2c6bbe8d77007db1c76c30af2b1bea396"
 dependencies = [
- "proc-macro-crate 2.0.2",
+ "proc-macro-crate 3.1.0",
  "proc-macro2",
  "quote",
  "syn 2.0.48",
@@ -2991,15 +2990,6 @@ dependencies = [
  "log",
  "wasi 0.11.0+wasi-snapshot-preview1",
  "windows-sys 0.48.0",
-]
-
-[[package]]
-name = "multimap"
-version = "0.9.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e1a5d38b9b352dbd913288736af36af41c48d61b1a8cd34bcecd727561b7d511"
-dependencies = [
- "serde",
 ]
 
 [[package]]
@@ -3586,12 +3576,11 @@ dependencies = [
 
 [[package]]
 name = "proc-macro-crate"
-version = "2.0.2"
+version = "3.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b00f26d3400549137f92511a46ac1cd8ce37cb5598a96d382381458b992a5d24"
+checksum = "6d37c51ca738a55da99dc0c4a34860fd675453b8b36209178c2249bb13651284"
 dependencies = [
- "toml_datetime",
- "toml_edit 0.20.2",
+ "toml_edit 0.21.1",
 ]
 
 [[package]]
@@ -4432,9 +4421,9 @@ dependencies = [
 
 [[package]]
 name = "toml_datetime"
-version = "0.6.3"
+version = "0.6.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7cda73e2f1397b1262d6dfdcef8aafae14d1de7748d66822d3bfeeb6d03e5e4b"
+checksum = "3550f4e9685620ac18a50ed434eb3aec30db8ba93b0287467bca5826ea25baf1"
 dependencies = [
  "serde",
 ]
@@ -4459,6 +4448,17 @@ dependencies = [
  "indexmap 2.2.2",
  "serde",
  "serde_spanned",
+ "toml_datetime",
+ "winnow",
+]
+
+[[package]]
+name = "toml_edit"
+version = "0.21.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6a8534fd7f78b5405e860340ad6575217ce99f38d4d5c8f2442cb5ecb50090e1"
+dependencies = [
+ "indexmap 2.2.2",
  "toml_datetime",
  "winnow",
 ]

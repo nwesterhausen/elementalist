@@ -65,7 +65,7 @@ jobs:
             target/
           key: ${{ runner.os }}-rust-${{ hashFiles('**/Cargo.toml') }}
       - name: Install Nightly Toolchain
-        uses: dtolnay/rust-toolchain@78c6b5541adb5849f5d72d15da722aedb26327ca # stable
+        uses: dtolnay/rust-toolchain@be73d7920c329f220ce78e0234b8f96b7ae60248 # stable
         with:
           components: clippy
           toolchain: nightly-2024-01-17

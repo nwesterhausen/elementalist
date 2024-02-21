@@ -12,9 +12,9 @@ bevy_hanabi = "0.9.0"
 # Local disk storage in a key-value store. Settings are stored with this.
 bevy_pkv = "0.9.1"
 noise = "0.8.2"
-serde = "1.0.196"
+serde = "1.0.197"
 serde_default_utils = "0.2.1"
-serde_yaml = "0.9.31"
+serde_yaml = "0.9.32"
 tracing = "0.1.40"
 walkdir = "2.4.0"
 bevy_rapier2d = { version = "0.24.0", features = [

@@ -12,6 +12,9 @@ env:
   itch_target: nwesterhausen/elementalist
   tag_name: ${{ github.ref_name }}
   nightly_toolchain: nightly-2024-01-17
+  # sccache enablement
+  SCCACHE_GHA_ENABLED: true
+  RUSTC_WRAPPER: sccache
 
 permissions:
   contents: read
@@ -24,58 +27,6 @@ jobs:
     steps:
       - id: trim
         run: echo "tag_name=$(echo ${{ github.ref_name }} | sed -nre 's/^[^0-9]*(([0-9]+\.)*[0-9]+).*/\1/p')" >> $GITHUB_OUTPUT
-  # Build for wasm
-  # release-wasm:
-  #   runs-on: ubuntu-latest
-  #   # To upload artifacts, contents write permission is required
-  #   permissions:
-  #     contents: write
-
-  #   steps:
-  #     - uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142 # v2.7.0
-  #       with:
-  #         egress-policy: audit
-  #     - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
-  #     - uses: dtolnay/rust-toolchain@be73d7920c329f220ce78e0234b8f96b7ae60248 # master
-  #       with:
-  #         targets: wasm32-unknown-unknown
-  #         toolchain: ${{ env.nightly_toolchain }}
-  #     - name: Install wasm-bindgen-cli
-  #       run: |
-  #         cargo install wasm-bindgen-cli
-
-  #     - name: Build
-  #       run: |
-  #         cargo build --release --target wasm32-unknown-unknown
-
-  #     - name: Prepare package
-  #       run: |
-  #         wasm-bindgen --no-typescript --out-name bevy_game --out-dir wasm --target web target/wasm32-unknown-unknown/release/${{ env.binary }}.wasm
-  #         cp -r game/assets wasm/
-  #         cp -r game_data wasm/
-  #         cp game/web/index.html wasm/
-
-  #     - name: Package as a zip
-  #       working-directory: ./wasm
-  #       run: |
-  #         zip --recurse-paths ../${{ env.binary }}.zip .
-
-  #     - name: Upload binaries to artifacts
-  #       uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4
-  #       with:
-  #         path: ${{ env.binary }}.zip
-  #         name: wasm
-  #         retention-days: 1
-
-  #     - name: Upload binaries to release
-  #       if: ${{ env.add_binaries_to_github_release == 'true' }}
-  #       uses: svenstaro/upload-release-action@1beeb572c19a9242f4361f4cee78f8e0d9aec5df # v2
-  #       with:
-  #         repo_token: ${{ secrets.GITHUB_TOKEN }}
-  #         file: ${{ env.binary }}.zip
-  #         asset_name: ${{ env.binary }}-wasm-${{ env.tag_name }}.zip
-  #         tag: ${{ github.ref }}
-  #         overwrite: true
 
   # Build for Linux
   release-linux:
@@ -89,6 +40,8 @@ jobs:
         with:
           egress-policy: audit
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+      - name: Run sccache-cache
+        uses: mozilla-actions/sccache-action@2e7f9ec7921547d4b46598398ca573513895d0bd # 0.0.4
       - uses: dtolnay/rust-toolchain@be73d7920c329f220ce78e0234b8f96b7ae60248 # master
         with:
           targets: x86_64-unknown-linux-gnu
@@ -101,6 +54,9 @@ jobs:
         run: |
           cargo build --release --target x86_64-unknown-linux-gnu
 
+      - name: Show sccache stats
+        shell: bash
+        run: ${SCCACHE_PATH} --show-stats >> $GITHUB_STEP_SUMMARY
       - name: Prepare package
         run: |
           mkdir linux
@@ -142,6 +98,8 @@ jobs:
         with:
           egress-policy: audit
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+      - name: Run sccache-cache
+        uses: mozilla-actions/sccache-action@2e7f9ec7921547d4b46598398ca573513895d0bd # 0.0.4
       - uses: dtolnay/rust-toolchain@be73d7920c329f220ce78e0234b8f96b7ae60248 # master
         with:
           targets: x86_64-pc-windows-msvc
@@ -151,6 +109,9 @@ jobs:
         run: |
           cargo build --release --target x86_64-pc-windows-msvc
 
+      - name: Show sccache stats
+        shell: bash
+        run: ${SCCACHE_PATH} --show-stats >> $GITHUB_STEP_SUMMARY
       - name: Prepare package
         run: |
           mkdir windows
@@ -191,6 +152,8 @@ jobs:
         with:
           egress-policy: audit
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+      - name: Run sccache-cache
+        uses: mozilla-actions/sccache-action@2e7f9ec7921547d4b46598398ca573513895d0bd # 0.0.4
       - uses: dtolnay/rust-toolchain@be73d7920c329f220ce78e0234b8f96b7ae60248 # master
         with:
           targets: x86_64-apple-darwin, aarch64-apple-darwin
@@ -209,6 +172,9 @@ jobs:
           cargo build --release --target x86_64-apple-darwin # Intel
           cargo build --release --target aarch64-apple-darwin # Apple Silicon
 
+      - name: Show sccache stats
+        shell: bash
+        run: ${SCCACHE_PATH} --show-stats >> $GITHUB_STEP_SUMMARY
       - name: Prepare Package
         run: |
           mkdir -p ${{ env.binary }}.app/Contents/MacOS
@@ -239,7 +205,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ env.binary }}-macOS.dmg
-          asset_name: ${{ env.binary }}-macOS-intel-${{ env.tag_name }}.dmg
+          asset_name: ${{ env.binary }}-macOS-${{ env.tag_name }}.dmg
           tag: ${{ github.ref }}
           overwrite: true
 

@@ -54,6 +54,9 @@ jobs:
         run: |
           cargo build --release --target x86_64-unknown-linux-gnu
 
+      - name: Show sccache stats
+        shell: bash
+        run: ${SCCACHE_PATH} --show-stats >> $GITHUB_STEP_SUMMARY
       - name: Prepare package
         run: |
           mkdir linux
@@ -106,6 +109,9 @@ jobs:
         run: |
           cargo build --release --target x86_64-pc-windows-msvc
 
+      - name: Show sccache stats
+        shell: bash
+        run: ${SCCACHE_PATH} --show-stats >> $GITHUB_STEP_SUMMARY
       - name: Prepare package
         run: |
           mkdir windows
@@ -166,6 +172,9 @@ jobs:
           cargo build --release --target x86_64-apple-darwin # Intel
           cargo build --release --target aarch64-apple-darwin # Apple Silicon
 
+      - name: Show sccache stats
+        shell: bash
+        run: ${SCCACHE_PATH} --show-stats >> $GITHUB_STEP_SUMMARY
       - name: Prepare Package
         run: |
           mkdir -p ${{ env.binary }}.app/Contents/MacOS

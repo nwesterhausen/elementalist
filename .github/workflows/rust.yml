@@ -42,9 +42,9 @@ jobs:
           toolchain: ${{ env.nightly_toolchain }}
       - name: Build
         run: cargo build
-      - name: Run sccache stat for check
+      - name: Show sccache stats
         shell: bash
-        run: ${SCCACHE_PATH} --show-stats
+        run: ${SCCACHE_PATH} --show-stats >> $GITHUB_STEP_SUMMARY
   clippy:
     name: Clippy Check
     timeout-minutes: 30

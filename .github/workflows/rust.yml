@@ -69,7 +69,7 @@ jobs:
           targets: x86_64-unknown-linux-gnu
           toolchain: ${{ env.nightly_toolchain }}
       - name: Install Nightly Toolchain
-        uses: dtolnay/rust-toolchain@78c6b5541adb5849f5d72d15da722aedb26327ca # stable
+        uses: dtolnay/rust-toolchain@be73d7920c329f220ce78e0234b8f96b7ae60248 # stable
         with:
           components: clippy
           toolchain: nightly-2024-01-17
@@ -93,7 +93,7 @@ jobs:
         with:
           targets: x86_64-unknown-linux-gnu
           toolchain: ${{ env.nightly_toolchain }}
-      - uses: taiki-e/install-action@5794068c211bc8f5f4514b7c3f03d6adbe66f1b7 # v2.26.18
+      - uses: taiki-e/install-action@12af778b97addf4c562c75a0564dc7e7dc5339a5 # v2.27.4
         with:
           tool: cargo-nextest
       - name: Run tests

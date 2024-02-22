@@ -44,7 +44,12 @@ jobs:
         run: cargo build
       - name: Show sccache stats
         shell: bash
-        run: ${SCCACHE_PATH} --show-stats >> $GITHUB_STEP_SUMMARY
+        run: |
+          echo '## SCCACHE STATS' >> $GITHUB_STEP_SUMMARY
+          echo '| Metric | Value |' >> $GITHUB_STEP_SUMMARY
+          echo '|--------|-------|' >> $GITHUB_STEP_SUMMARY
+          ${SCCACHE_PATH} --show-stats | awk -F'[[:space:]][[:space:]]+' 'NR<=22{ print "| "$1" | "$2" |"}' >> $GITHUB_STEP_SUMMARY
+          echo '</hr>' >> $GITHUB_STEP_SUMMARY
   clippy:
     name: Clippy Check
     timeout-minutes: 30

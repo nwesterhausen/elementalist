@@ -40,7 +40,7 @@ fn player_cast_primary_spell_system(
         return;
     };
 
-    if action_state.just_pressed(PlayerAction::CastPrimary) {
+    if action_state.just_pressed(&PlayerAction::CastPrimary) {
         // Cast a the primary spell
         if let Some(spell_id) = spell_choices.primary() {
             ew_cast_spell.send(CastSpell(spell_id));
@@ -61,7 +61,7 @@ fn player_cast_secondary_spell_system(
         return;
     };
 
-    if action_state.just_pressed(PlayerAction::CastSecondary) {
+    if action_state.just_pressed(&PlayerAction::CastSecondary) {
         // Cast a the secondary spell
         if let Some(spell_id) = spell_choices.secondary() {
             ew_cast_spell.send(CastSpell(spell_id));
@@ -82,7 +82,7 @@ fn player_cast_defensive_spell_system(
         return;
     };
 
-    if action_state.just_pressed(PlayerAction::CastDefensive) {
+    if action_state.just_pressed(&PlayerAction::CastDefensive) {
         // Cast a the defensive spell
         if let Some(spell_id) = spell_choices.tertiary() {
             ew_cast_spell.send(CastSpell(spell_id));
@@ -103,7 +103,7 @@ fn player_cast_ultimate_spell_system(
         return;
     };
 
-    if action_state.just_pressed(PlayerAction::CastUltimate) {
+    if action_state.just_pressed(&PlayerAction::CastUltimate) {
         // Cast a the ultimate spell
         if let Some(spell_id) = spell_choices.ultimate() {
             ew_cast_spell.send(CastSpell(spell_id));
@@ -120,14 +120,14 @@ fn player_control_system(query: Query<&ActionState<PlayerAction>, With<Player>>)
         return;
     };
 
-    if action_state.pressed(PlayerAction::Look) {
-        if let Some(axis_pair) = action_state.clamped_axis_pair(PlayerAction::Look) {
+    if action_state.pressed(&PlayerAction::Look) {
+        if let Some(axis_pair) = action_state.clamped_axis_pair(&PlayerAction::Look) {
             println!("Look: {axis_pair:?}");
         } else {
             println!("Look");
         }
     }
-    if action_state.just_pressed(PlayerAction::Interact) {
+    if action_state.just_pressed(&PlayerAction::Interact) {
         println!("Interact");
     }
 }
@@ -142,10 +142,10 @@ fn player_toggle_auto_system(
         return;
     };
 
-    if action_state.just_pressed(PlayerAction::ToggleAutoCast) {
+    if action_state.just_pressed(&PlayerAction::ToggleAutoCast) {
         gameplay_settings.auto_cast = !gameplay_settings.auto_cast;
     }
-    if action_state.just_pressed(PlayerAction::ToggleAutoAim) {
+    if action_state.just_pressed(&PlayerAction::ToggleAutoAim) {
         gameplay_settings.auto_aim = !gameplay_settings.auto_aim;
     }
 }
@@ -165,7 +165,7 @@ fn player_press_pause_system(
         return;
     };
 
-    if action_state.just_pressed(PlayerAction::Pause) {
+    if action_state.just_pressed(&PlayerAction::Pause) {
         // Pause the game (automatically happens when in [`Overlay::Settings`]) and open the settings menu
         next_overlay_state.set(Overlay::Settings);
     }

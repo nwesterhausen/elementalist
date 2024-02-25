@@ -57,11 +57,20 @@ pub struct GameData {
     /// The spells that have been loaded into the game.
     pub spells: Vault<Spell>,
     /// The tile atlases that have been loaded into the game.
-    pub tile_atlas: Vault<Handle<TextureAtlas>>,
+    pub tile_atlas: Vault<StoredTextureAtlas>,
     /// The particles that have been loaded into the game.
     pub particles: Vault<Handle<EffectAsset>>,
     /// Loaded realm definitions
     pub realms: Vault<Realm>,
     /// Loaded simple objects
     pub simple_objects: Vault<SimpleObject>,
+}
+
+/// `TextureAtlas` has been changed in bevy 0.13 so we need to track the texture handle and the texture atlas.
+#[derive(Resource, Debug, Clone, Default)]
+pub struct StoredTextureAtlas {
+    /// The texture handle of the texture atlas layout.
+    pub atlas_handle: Handle<TextureAtlasLayout>,
+    /// The texture handle used by the atlas.
+    pub texture_handle: Handle<Image>,
 }

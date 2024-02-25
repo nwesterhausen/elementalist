@@ -35,23 +35,23 @@ pub enum PlayerAction {
 
 impl PlayerAction {
     /// Returns the default keybinds for this action on keyboard & mouse.
-    pub fn default_keyboard_mouse_input(self) -> UserInput {
+    pub const fn default_keyboard_mouse_input(self) -> UserInput {
         match self {
             Self::Move => UserInput::VirtualDPad(VirtualDPad::wasd()),
             Self::Look => UserInput::VirtualDPad(VirtualDPad::arrow_keys()),
             Self::CastPrimary => UserInput::Single(InputKind::Mouse(MouseButton::Left)),
             Self::CastSecondary => UserInput::Single(InputKind::Mouse(MouseButton::Right)),
-            Self::CastDefensive => UserInput::Single(InputKind::Keyboard(KeyCode::Space)),
-            Self::CastUltimate => UserInput::Single(InputKind::Keyboard(KeyCode::E)),
-            Self::ToggleAutoCast => UserInput::Single(InputKind::Keyboard(KeyCode::Q)),
-            Self::ToggleAutoAim => UserInput::Single(InputKind::Keyboard(KeyCode::T)),
-            Self::Interact => UserInput::Single(InputKind::Keyboard(KeyCode::F)),
-            Self::Pause => UserInput::Single(InputKind::Keyboard(KeyCode::Escape)),
-            Self::StatusOverlay => UserInput::Single(InputKind::Keyboard(KeyCode::Tab)),
+            Self::CastDefensive => UserInput::Single(InputKind::PhysicalKey(KeyCode::Space)),
+            Self::CastUltimate => UserInput::Single(InputKind::PhysicalKey(KeyCode::KeyE)),
+            Self::ToggleAutoCast => UserInput::Single(InputKind::PhysicalKey(KeyCode::KeyQ)),
+            Self::ToggleAutoAim => UserInput::Single(InputKind::PhysicalKey(KeyCode::KeyT)),
+            Self::Interact => UserInput::Single(InputKind::PhysicalKey(KeyCode::KeyF)),
+            Self::Pause => UserInput::Single(InputKind::PhysicalKey(KeyCode::Escape)),
+            Self::StatusOverlay => UserInput::Single(InputKind::PhysicalKey(KeyCode::Tab)),
         }
     }
     /// Returns the default gamepad input for this action.
-    pub fn default_gamepad_input(self) -> UserInput {
+    pub const fn default_gamepad_input(self) -> UserInput {
         match self {
             Self::Move => UserInput::Single(InputKind::DualAxis(DualAxis::left_stick())),
             Self::Look => UserInput::Single(InputKind::DualAxis(DualAxis::right_stick())),
@@ -80,14 +80,31 @@ impl PlayerAction {
             }
         }
     }
+    /// Returns the variants of this enum.
+    #[must_use]
+    pub const fn variants() -> [Self; 11] {
+        [
+            Self::Move,
+            Self::Look,
+            Self::CastPrimary,
+            Self::CastSecondary,
+            Self::CastDefensive,
+            Self::CastUltimate,
+            Self::ToggleAutoCast,
+            Self::ToggleAutoAim,
+            Self::Interact,
+            Self::Pause,
+            Self::StatusOverlay,
+        ]
+    }
 
     /// Returns the default input map for this action.
     pub fn default_input_map() -> InputMap<Self> {
         let mut input_map = InputMap::default();
 
         for variant in Self::variants() {
-            input_map.insert(variant.default_keyboard_mouse_input(), variant);
-            input_map.insert(variant.default_gamepad_input(), variant);
+            input_map.insert(variant, variant.default_keyboard_mouse_input());
+            input_map.insert(variant, variant.default_gamepad_input());
         }
 
         input_map

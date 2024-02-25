@@ -39,9 +39,9 @@ pub fn player_movement_controls(
         return;
     };
 
-    if action_state.pressed(PlayerAction::Move) {
+    if action_state.pressed(&PlayerAction::Move) {
         sprite_state_next.set(PlayerAnimation::Walking);
-        if let Some(axis_pair) = action_state.clamped_axis_pair(PlayerAction::Move) {
+        if let Some(axis_pair) = action_state.clamped_axis_pair(&PlayerAction::Move) {
             controller.translation = Some(axis_pair.xy().normalize_or_zero() * (speed.value()));
 
             if axis_pair.x() < 0.0 {

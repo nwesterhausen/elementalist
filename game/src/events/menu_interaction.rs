@@ -34,10 +34,10 @@ impl MenuInteraction {
     /// Returns the default keybinds for this action on keyboard & mouse.
     pub const fn default_keyboard_mouse_input(self) -> UserInput {
         match self {
-            Self::Up => UserInput::Single(InputKind::Keyboard(KeyCode::W)),
-            Self::Down => UserInput::Single(InputKind::Keyboard(KeyCode::S)),
-            Self::Select => UserInput::Single(InputKind::Keyboard(KeyCode::Space)),
-            Self::Back => UserInput::Single(InputKind::Keyboard(KeyCode::Escape)),
+            Self::Up => UserInput::Single(InputKind::PhysicalKey(KeyCode::KeyW)),
+            Self::Down => UserInput::Single(InputKind::PhysicalKey(KeyCode::KeyS)),
+            Self::Select => UserInput::Single(InputKind::PhysicalKey(KeyCode::Space)),
+            Self::Back => UserInput::Single(InputKind::PhysicalKey(KeyCode::Escape)),
         }
     }
     /// Returns the default gamepad input for this action.
@@ -49,14 +49,19 @@ impl MenuInteraction {
             Self::Back => UserInput::Single(InputKind::GamepadButton(GamepadButtonType::South)),
         }
     }
+    /// Returns the variants of this enum.
+    #[must_use]
+    pub const fn variants() -> [Self; 4] {
+        [Self::Up, Self::Down, Self::Select, Self::Back]
+    }
 
     /// Returns the default input mapping for this action.
     pub fn default_input_map() -> InputMap<Self> {
         let mut input_map = InputMap::default();
 
         for variant in Self::variants() {
-            input_map.insert(variant.default_keyboard_mouse_input(), variant);
-            input_map.insert(variant.default_gamepad_input(), variant);
+            input_map.insert(variant, variant.default_keyboard_mouse_input());
+            input_map.insert(variant, variant.default_gamepad_input());
         }
 
         input_map

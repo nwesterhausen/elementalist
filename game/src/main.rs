@@ -82,10 +82,12 @@ fn main() {
                 .set(LogPlugin {
                     level: log_level,
                     filter: log_filter.to_string(),
+                    update_subscriber: None,
                 })
                 // Add our the wgpu settings per bevy_hanabi
                 .set(RenderPlugin {
                     render_creation: wgpu_settings.into(),
+                    ..default()
                 }),
         )
         // Add the gameplay plugins
@@ -200,7 +202,7 @@ fn spawn_random_environment(
             };
 
             let Some(ground) = game_data.tile_atlas.get(rnd_ground.0) else {
-                tracing::error!("Failed to load ground tileselt: {}", rnd_ground.0);
+                tracing::error!("Failed to load ground tileset: {}", rnd_ground.0);
                 continue;
             };
             let ground_id = rnd_ground.1;
@@ -208,8 +210,11 @@ fn spawn_random_environment(
             let ground_transform = Transform::from_translation(ground_translation);
             commands.spawn((
                 SpriteSheetBundle {
-                    texture_atlas: ground.clone(),
-                    sprite: bevy::sprite::TextureAtlasSprite::new(ground_id),
+                    atlas: TextureAtlas {
+                        layout: ground.atlas_handle.clone(),
+                        index: ground_id,
+                    },
+                    texture: ground.texture_handle.clone(),
                     transform: ground_transform,
                     ..Default::default()
                 },
@@ -258,8 +263,11 @@ fn spawn_random_environment(
 
                 commands.spawn((
                     SpriteSheetBundle {
-                        texture_atlas: tileset.clone(),
-                        sprite: bevy::sprite::TextureAtlasSprite::new(tile_index),
+                        atlas: TextureAtlas {
+                            layout: tileset.atlas_handle.clone(),
+                            index: tile_index,
+                        },
+                        texture: tileset.texture_handle.clone(),
                         transform: obj_transform,
                         ..Default::default()
                     },

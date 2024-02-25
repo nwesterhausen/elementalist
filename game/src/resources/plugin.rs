@@ -37,10 +37,10 @@ pub struct ElementalistResourcesPlugin;
 impl Plugin for ElementalistResourcesPlugin {
     fn build(&self, app: &mut App) {
         // The app states
-        app.add_state::<AppState>()
-            .add_state::<Game>()
-            .add_state::<Settings>()
-            .add_state::<Save>();
+        app.init_state::<AppState>()
+            .init_state::<Game>()
+            .init_state::<Settings>()
+            .init_state::<Save>();
 
         // Data loading plugin
         app.add_plugins(DataLoaderPlugin);

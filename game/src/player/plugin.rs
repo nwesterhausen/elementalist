@@ -37,9 +37,9 @@ impl Plugin for PlayerPlugin {
             // Remove player when leaving game
             .add_systems(OnExit(Game::Playing), despawn_with_tag::<PlayerAvatar>)
             // Animation stuff
-            .add_state::<animation::PlayerAnimation>()
-            .add_state::<animation::PlayerAnimationSupplemental>()
-            .add_state::<animation::PlayerFacing>()
+            .init_state::<animation::PlayerAnimation>()
+            .init_state::<animation::PlayerAnimationSupplemental>()
+            .init_state::<animation::PlayerFacing>()
             .init_resource::<animation::AnimationFrame>()
             .insert_resource(animation::PlayerAnimationTimer(Timer::from_seconds(
                 0.1,
@@ -73,14 +73,14 @@ fn camera_movement(
 fn subtract_health(
     mut player_health: Query<&mut Health, With<PlayerAvatar>>,
     mut player_xp: Query<&mut Xp, With<PlayerAvatar>>,
-    keyboard_input: Res<Input<KeyCode>>,
+    keyboard_input: Res<ButtonInput<KeyCode>>,
 ) {
-    if keyboard_input.just_pressed(KeyCode::H) {
+    if keyboard_input.just_pressed(KeyCode::KeyH) {
         for mut health in &mut player_health {
             health.value -= 1;
         }
     }
-    if keyboard_input.just_pressed(KeyCode::X) {
+    if keyboard_input.just_pressed(KeyCode::KeyX) {
         for mut xp in &mut player_xp {
             xp.add(1);
         }

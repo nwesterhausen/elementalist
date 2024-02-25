@@ -14,6 +14,8 @@ use super::{
     Player,
 };
 
+const INITIAL_SPRITE_INDEX: usize = 3;
+
 /// `PlayerAvatar` is a marker component for the player's avatar, i.e. the entity that the player
 /// controls. This is used to ensure that only one player avatar is spawned at a time. It also
 /// lets us allow a player controller to continue to control the menu and other things without
@@ -59,11 +61,11 @@ pub fn spawn_player_avatar(
         PlayerBundle {
             movement: MovementBundle::default(),
             sprite: SpriteSheetBundle {
-                texture_atlas: tileset.clone(),
-                sprite: TextureAtlasSprite {
-                    index: 3,
-                    ..default()
+                atlas: TextureAtlas {
+                    layout: tileset.atlas_handle.clone(),
+                    index: INITIAL_SPRITE_INDEX,
                 },
+                texture: tileset.texture_handle.clone(),
                 transform: Transform {
                     translation: Vec3::new(0.0, 0.0, 150.0),
                     scale: Vec3::splat(0.85),

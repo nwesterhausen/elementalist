@@ -87,7 +87,7 @@ fn toggle_status_screen(
     query: Query<&ActionState<PlayerAction>, With<Player>>,
 ) {
     if let Ok(action_state) = query.get_single() {
-        if action_state.just_pressed(PlayerAction::StatusOverlay) {
+        if action_state.just_pressed(&PlayerAction::StatusOverlay) {
             if *state == Overlay::Status {
                 next_state.set(Overlay::None);
             } else {

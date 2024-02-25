@@ -41,7 +41,7 @@ impl Plugin for PhysicsPlugin {
 #[allow(clippy::needless_pass_by_value)]
 fn toggle_debug_rendering(
     mut debug_render_context: ResMut<DebugRenderContext>,
-    keyboard_input: Res<Input<KeyCode>>,
+    keyboard_input: Res<ButtonInput<KeyCode>>,
 ) {
     if keyboard_input.just_pressed(KeyCode::F3) {
         debug_render_context.enabled = !debug_render_context.enabled;

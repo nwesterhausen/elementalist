@@ -23,7 +23,7 @@ pub struct SettingsMenuPlugin;
 
 impl Plugin for SettingsMenuPlugin {
     fn build(&self, app: &mut App) {
-        app.add_state::<Settings>();
+        app.init_state::<Settings>();
         app.add_event::<ChangeSetting>();
         // Add system to setup the menu
         app.add_systems(

@@ -103,7 +103,7 @@ pub(super) fn advance_animation_timer(
 /// Tracks a local "frame" that goes from 0 to 3, and updates the sprite index based on the current
 /// state. We advance the frame every 0.1 seconds.
 pub fn update_avatar_animation(
-    mut sprite_query: Query<&mut TextureAtlasSprite, With<PlayerAvatar>>,
+    mut sprite_query: Query<(&mut TextureAtlas, &mut Sprite), With<PlayerAvatar>>,
     state: Res<State<PlayerAnimation>>,
     supplemental_state: Res<State<PlayerAnimationSupplemental>>,
     facing: Res<State<PlayerFacing>>,
@@ -111,7 +111,7 @@ pub fn update_avatar_animation(
     frame: Res<AnimationFrame>,
 ) {
     // should be just one player avatar & sprite
-    let Ok(mut sprite) = sprite_query.get_single_mut() else {
+    let Ok((mut atlas, mut sprite)) = sprite_query.get_single_mut() else {
         tracing::error!("update_avatar_animation: failed to get player sprite");
         return;
     };
@@ -121,16 +121,16 @@ pub fn update_avatar_animation(
 
     match (state.get(), supplemental_state.get()) {
         (PlayerAnimation::Walking, PlayerAnimationSupplemental::None) => {
-            sprite.index = WALKING_ANIMATION[frame.get(WALKING_ANIMATION.len())];
+            atlas.index = WALKING_ANIMATION[frame.get(WALKING_ANIMATION.len())];
         }
         (PlayerAnimation::Walking, PlayerAnimationSupplemental::Casting) => {
-            sprite.index = CASTING_WALKING_ANIMATION[frame.get(CASTING_WALKING_ANIMATION.len())];
+            atlas.index = CASTING_WALKING_ANIMATION[frame.get(CASTING_WALKING_ANIMATION.len())];
         }
         (PlayerAnimation::Idle, PlayerAnimationSupplemental::None) => {
-            sprite.index = IDLE_ANIMATION[frame.get(IDLE_ANIMATION.len())];
+            atlas.index = IDLE_ANIMATION[frame.get(IDLE_ANIMATION.len())];
         }
         (PlayerAnimation::Idle, PlayerAnimationSupplemental::Casting) => {
-            sprite.index = CASTING_IDLE_ANIMATION[frame.get(CASTING_IDLE_ANIMATION.len())];
+            atlas.index = CASTING_IDLE_ANIMATION[frame.get(CASTING_IDLE_ANIMATION.len())];
         }
     }
 

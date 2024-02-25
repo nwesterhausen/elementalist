@@ -64,8 +64,11 @@ pub(super) fn cast_spells(
                         acceleration: Acceleration::new(slope_vec * spell.acceleration()),
                     },
                     sprite: SpriteSheetBundle {
-                        texture_atlas: texture_atlas.clone(),
-                        sprite: TextureAtlasSprite::new(spell.sprite_tileset_index()),
+                        atlas: TextureAtlas {
+                            layout: texture_atlas.atlas_handle.clone(),
+                            index: spell.sprite_tileset_index(),
+                        },
+                        texture: texture_atlas.texture_handle.clone(),
                         transform: Transform {
                             translation: player_transform.translation - Vec3::new(0.0, 0.0, 0.1),
                             rotation: Quat::from_rotation_z(slope_vec.y.atan2(slope_vec.x)),

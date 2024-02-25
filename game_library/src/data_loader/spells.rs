@@ -1,7 +1,5 @@
 use bevy::prelude::*;
 
-use crate::InternalId;
-
 use super::{events::LoadedSpellData, storage::GameData};
 
 pub(super) fn load_spells(

@@ -8,15 +8,8 @@ data:
     tier: Mundane
   manaCost: 1
   castSlot: Cantrip
-  castTime: 0
   cooldown: 2.50
-  magic: time
-  skill: chronomancy
-  spellTier: 0
-  flags:
-    - debuff
-    - projectile
-  castCategory: projectile
+  skill: Chronomancy
   castType: Instant
   spriteTileset: spell_projectiles
   spriteIndex: 11

@@ -10,10 +10,14 @@ header:
 data:
   name: Vine Whip
   description: Create a vine and whip it towards the target.
-  manaCost: 0
-  castSlot: primary
-  castTime: 0
   cooldown: 1.25
-  magic: life
-  spellTier: 1
-  long_description: Can be whipped up to 3 times.
+  lore: Can be whipped up to 3 times.
+  talisman:
+    shaping: Melee
+    behavior: Damage
+    tier: Mundane
+  skill: Vitomancy
+  castSlot: Cantrip
+  castType: Instant
+  spriteTileset: placeholder
+  spriteIndex: 0

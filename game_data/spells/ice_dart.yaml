@@ -10,17 +10,16 @@ header:
 data:
   name: Ice Dart
   description: Shoot a dart of ice at your target.
-  manaCost: 0
-  castSlot: primary
-  castTime: 0
   cooldown: .33
-  magic: ice
-  spellTier: 0
   spriteTileset: spell_projectiles
   spriteIndex: 4
-  flags: []
-  castType: instant
-  castCategory: projectile
+  talisman:
+    shaping: Projectile
+    behavior: Damage
+    tier: Mundane
+  skill: Cryomancy
+  castSlot: Cantrip
+  castType: Instant
   particles:
     - attachment: Projectile
       particleId: ice-dart

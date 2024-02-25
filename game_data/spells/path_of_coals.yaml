@@ -11,8 +11,13 @@ data:
   name: Path of Coals
   description: Create an area of burning hot coals on the ground.
   manaCost: 2
-  castSlot: secondary
-  castTime: 0
+  castSlot: Slot
   cooldown: 2.50
-  magic: fire
-  spellTier: 2
+  talisman:
+    shaping: AreaOfEffect
+    behavior: Damage
+    tier: Uncommon
+  skill: Pyromancy
+  castType: Instant
+  spriteTileset: placeholder
+  spriteIndex: 0

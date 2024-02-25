@@ -11,9 +11,14 @@ data:
   name: Lightning Storm
   description: Create a localized storm of lightning at a target location.
   manaCost: 2
-  castSlot: secondary
-  castTime: 0
+  castSlot: Slot
   cooldown: 4
-  magic: lightning
-  spellTier: 2
   long_description: Constantly has lightning coming down for a short duration.
+  talisman:
+    shaping: AreaOfEffect
+    behavior: Damage
+    tier: Uncommon
+  skill: Fulgomancy
+  castType: Instant
+  spriteTileset: placeholder
+  spriteIndex: 0

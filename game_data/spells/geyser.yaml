@@ -11,9 +11,14 @@ data:
   name: Geyser
   description: Cause a geyser of scalding water to erupt.
   manaCost: 3
-  castSlot: secondary
+  castSlot: Slot
   castTime: .15
   cooldown: 5.00
-  castType: cast
-  magic: water
-  spellTier: 3
+  castType: Cast
+  talisman:
+    shaping: AreaOfEffect
+    behavior: Utility
+    tier: Uncommon
+  skill: Hydromancy
+  spriteTileset: placeholder
+  spriteIndex: 0

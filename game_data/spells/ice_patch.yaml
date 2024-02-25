@@ -11,9 +11,14 @@ data:
   name: Ice Patch
   description: Conjure a sheet of ice on the ground.
   manaCost: 3
-  castSlot: secondary
+  castSlot: Slot
   castTime: .25
   cooldown: 6.00
-  castType: cast
-  magic: ice
-  spellTier: 3
+  castType: Cast
+  talisman:
+    shaping: AreaOfEffect
+    behavior: Debuff
+    tier: Rare
+  skill: Cryomancy
+  spriteTileset: placeholder
+  spriteIndex: 0

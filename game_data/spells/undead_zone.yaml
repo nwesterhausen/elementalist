@@ -11,8 +11,14 @@ data:
   name: Zone of Undeath
   description: Create an area with a necrotic area. Enemies that die within have a chance to turn into your undead.
   manaCost: 3
-  castSlot: secondary
   castTime: 1
   cooldown: 7
-  magic: necromancy
-  spellTier: 3
+  talisman:
+    shaping: AreaOfEffect
+    behavior: Debuff
+    tier: Uncommon
+  skill: Necromancy
+  castSlot: Slot
+  castType: Cast
+  spriteTileset: placeholder
+  spriteIndex: 0

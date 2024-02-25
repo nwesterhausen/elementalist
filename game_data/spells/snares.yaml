@@ -9,11 +9,16 @@ header:
   validGameInternalVersion: 1
 data:
   name: Snares
-  description: Create an area of excellerated root growth, ensnaring entities that walk through.
+  description: Create an area of accelerated root growth, ensnaring entities that walk through.
   manaCost: 3
-  castSlot: secondary
   castTime: .15
   cooldown: 5.00
-  castType: cast
-  magic: life
-  spellTier: 1
+  talisman:
+    shaping: AreaOfEffect
+    behavior: Debuff
+    tier: Rare
+  skill: Vitomancy
+  castSlot: Slot
+  castType: Instant
+  spriteTileset: placeholder
+  spriteIndex: 0

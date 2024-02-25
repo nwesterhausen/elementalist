@@ -10,9 +10,15 @@ header:
 data:
   name: Freeze Ray
   description: Launch a ray of freezing magic towards your target.
+  talisman:
+    shaping: Line
+    behavior: Damage
+    tier: Uncommon
+  skill: Cryomancy
+  castType: Cast
+  spriteTileset: placeholder
+  spriteIndex: 0
   manaCost: 2
-  castSlot: secondary
+  castSlot: Slot
   castTime: 5.0
   cooldown: 3.00
-  magic: ice
-  spellTier: 2

@@ -10,11 +10,13 @@ header:
 data:
   name: Nature Bolt
   description: Shoot a bundle of razor sharp leaves at the target.
-  manaCost: 0
-  castSlot: primary
-  castTime: 0
   cooldown: 5.0
-  magic: life
-  spellTier: 0
   spriteTileset: spell_projectiles
   spriteIndex: 8
+  talisman:
+    shaping: Projectile
+    behavior: Damage
+    tier: Mundane
+  skill: Vitomancy
+  castSlot: Cantrip
+  castType: Instant

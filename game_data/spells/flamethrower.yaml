@@ -10,13 +10,15 @@ header:
 data:
   name: Flamethrower
   description: Sustain a fiery stream of flames.
-  magic: fire
-  spellTier: 2
+  talisman:
+    shaping: Line
+    behavior: Damage
+    tier: Uncommon
+  skill: Pyromancy
+  castType: Channel
+  spriteTileset: placeholder
+  spriteIndex: 0
   cooldown: 5.00
   castTime: 1.50
   manaCost: 1
-  castSlot: secondary
-  flags:
-    - sustained
-    - line
-    - aoe
+  castSlot: Slot

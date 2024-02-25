@@ -19,11 +19,11 @@
 		},
 		"talisman": {
 			"description": "The spell talisman which creates this spell",
-			"ref": "https://schemas.nwest.one/games/elementalist/spell_talisman.json"
+			"$ref": "https://schemas.nwest.one/games/elementalist/spell_talisman.json"
 		},
 		"skill": {
 			"description": "The skill which powers this spell",
-			"ref": "https://schemas.nwest.one/games/elementalist/skill.json"
+			"$ref": "https://schemas.nwest.one/games/elementalist/skill.json"
 		},
 		"castSlot": {
 			"description": "The slot the spell can fit in",

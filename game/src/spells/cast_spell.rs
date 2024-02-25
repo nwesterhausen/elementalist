@@ -3,8 +3,12 @@ use bevy::prelude::*;
 use bevy_hanabi::{ParticleEffect, ParticleEffectBundle};
 use bevy_rapier2d::prelude::*;
 use game_library::{
-    data_loader::storage::GameData, enums::ParticleAttachment, events::CastSpell, math,
-    Acceleration, CursorPosition, InternalId, Layer, MovementBundle, SpellBundle, SpellLifetime,
+    data_loader::storage::GameData,
+    enums::ParticleAttachment,
+    events::CastSpell,
+    math,
+    spells::{SpellBundle, SpellLifetime},
+    Acceleration, CursorPosition, InternalId, Layer, MovementBundle,
 };
 
 use crate::player::Player;
@@ -13,7 +17,6 @@ use super::components::SpellEntity;
 
 const SPELL_SPRITE_SCALE: f32 = 0.5;
 const SPELL_SPEED_MULTIPLIER: f32 = 100.0;
-const SPELL_ACCELERATION: f32 = 5.0;
 
 pub(super) fn cast_spells(
     mut commands: Commands,
@@ -33,10 +36,10 @@ pub(super) fn cast_spells(
             continue;
         };
 
-        let Some(texture_atlas) = game_data.tile_atlas.get(&spell.sprite_tileset) else {
+        let Some(texture_atlas) = game_data.tile_atlas.get(&spell.sprite_tileset()) else {
             tracing::error!(
                 "cast_spells: No texture atlas found for {} (spell:{})",
-                spell.sprite_tileset,
+                spell.sprite_tileset(),
                 spell.get_internal_id()
             );
             continue;
@@ -52,17 +55,17 @@ pub(super) fn cast_spells(
         let spell_projectile = commands
             .spawn((
                 SpellBundle {
-                    lifetime: SpellLifetime::new(spell.duration),
+                    lifetime: SpellLifetime::new(spell.duration()),
                     movement: MovementBundle {
                         velocity: Velocity {
-                            linvel: slope_vec * (spell.speed * SPELL_SPEED_MULTIPLIER),
+                            linvel: slope_vec * (spell.speed() * SPELL_SPEED_MULTIPLIER),
                             ..default()
                         },
-                        acceleration: Acceleration::new(slope_vec * SPELL_ACCELERATION),
+                        acceleration: Acceleration::new(slope_vec * spell.acceleration()),
                     },
                     sprite: SpriteSheetBundle {
                         texture_atlas: texture_atlas.clone(),
-                        sprite: spell.texture_atlas_index(),
+                        sprite: TextureAtlasSprite::new(spell.sprite_tileset_index()),
                         transform: Transform {
                             translation: player_transform.translation - Vec3::new(0.0, 0.0, 0.1),
                             rotation: Quat::from_rotation_z(slope_vec.y.atan2(slope_vec.x)),
@@ -80,7 +83,7 @@ pub(super) fn cast_spells(
 
         // check for any particles that go on the projectile
         let projectile_particles = spell
-            .particles
+            .particles()
             .iter()
             .filter_map(|particle_link| {
                 if particle_link.attachment == ParticleAttachment::Projectile {

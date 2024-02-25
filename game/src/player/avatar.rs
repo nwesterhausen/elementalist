@@ -5,7 +5,8 @@ use game_library::{
     data_loader::storage::GameData,
     enums::StatEnum,
     progress_bar::{BarState, ProgressBarConfig},
-    Health, Layer, Mana, MovementBundle, SpellChoices, StatBundle, Xp,
+    spells::SpellSelection,
+    Health, Layer, Mana, MovementBundle, StatBundle, Xp,
 };
 
 use super::{
@@ -29,7 +30,7 @@ pub struct PlayerAvatar;
 /// This will put the avatar as a child of the player entity, which should exist already.
 pub fn spawn_player_avatar(
     mut commands: Commands,
-    mut spell_choices: ResMut<SpellChoices>,
+    mut spell_choices: ResMut<SpellSelection>,
     game_data: Res<GameData>,
     existing_players: Query<&PlayerAvatar>,
 ) {

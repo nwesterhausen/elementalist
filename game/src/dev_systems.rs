@@ -9,8 +9,8 @@ use game_library::Xp;
 use game_library::{
     enums::Skill,
     font_resource::{FontChoice, FontResource},
-    Acceleration, Attribute, CameraScaleLevel, CursorPosition, Health, Mana, MovementBundle,
-    SpellChoices, Stat, StatBonus, Volume,
+    Acceleration, Attribute, CameraScaleLevel, CursorPosition, Health, Mana, MovementBundle, Stat,
+    StatBonus, Volume,
 };
 
 pub struct DevSystemsPlugin;
@@ -28,7 +28,6 @@ impl Plugin for DevSystemsPlugin {
             .register_type::<Health>()
             .register_type::<Xp>()
             .register_type::<Acceleration>()
-            .register_type::<SpellChoices>()
             .register_type::<CursorPosition>()
             .register_type::<CameraScaleLevel>()
             .register_type::<MovementBundle>()
@@ -59,14 +58,6 @@ fn inspector_ui(world: &mut World) {
         .show(egui_context.get_mut(), |ui| {
             // The world inspector plugin
             bevy_inspector_egui::bevy_inspector::ui_for_world(world, ui);
-
-            // Add a collapsable section for the SpellChoices resource.
-            egui::CollapsingHeader::new("Spell Choices")
-                .default_open(false)
-                .show(ui, |ui| {
-                    // The resource inspector plugin
-                    bevy_inspector_egui::bevy_inspector::ui_for_resource::<SpellChoices>(world, ui);
-                });
             // Add collapsable sections for the settings resources.
             egui::CollapsingHeader::new("Volume Settings")
                 .default_open(false)

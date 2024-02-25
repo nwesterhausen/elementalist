@@ -1814,7 +1814,7 @@ checksum = "11157ac094ffbdde99aa67b23417ebdd801842852b500e395a45a9c0aac03e4a"
 
 [[package]]
 name = "elementalist"
-version = "0.6.0"
+version = "0.7.0"
 dependencies = [
  "bevy",
  "bevy-inspector-egui",

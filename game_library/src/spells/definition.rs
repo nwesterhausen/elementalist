@@ -33,7 +33,7 @@ pub struct Spell {
     /// The skill that the spell uses
     #[serde(default = "spell_defaults::skill")]
     skill: Skill,
-    /// The spell slot that the spell is cast from
+    /// The slot that the spell can be cast from
     #[serde(default = "spell_defaults::cast_slot")]
     cast_slot: CastSlot,
     /// The type of casting that the spell uses
@@ -112,7 +112,7 @@ impl Default for Spell {
             lore: String::new(),
             talisman: SpellTalisman::default(),
             skill: Skill::Arcanomancy,
-            cast_slot: CastSlot::Primary,
+            cast_slot: CastSlot::Cantrip,
             cast_type: CastType::Instant,
             cooldown: 0.0,
             cast_time: 0.0,
@@ -482,7 +482,7 @@ mod spell_defaults {
         Skill::Arcanomancy
     }
     pub(super) const fn cast_slot() -> CastSlot {
-        CastSlot::Primary
+        CastSlot::Cantrip
     }
     pub(super) fn talisman() -> SpellTalisman {
         SpellTalisman::default()

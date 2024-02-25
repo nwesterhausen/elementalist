@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.nwest.one/games/elementalist/skill.json",
+  "title": "Skill in the Elementalist game",
+  "description": "A skill governs the player's magical abilities for the various schools of magic.",
+  "type": "string",
+  "oneOf": [
+    {
+      "title": "Pyromancy is the school of fire magic.",
+      "const": "Pyromancy"
+    },
+    {
+      "title": "Fulgomancy is the school of lightning magic.",
+      "const": "Fulgomancy"
+    },
+    {
+      "title": "Hydromancy is the school of water magic.",
+      "const": "Hydromancy"
+    },
+    {
+      "title": "Geomancy is the school of earth magic.",
+      "const": "Geomancy"
+    },
+    {
+      "title": "Aeromancy is the school of air magic.",
+      "const": "Aeromancy"
+    },
+    {
+      "title": "Cryomancy is the school of ice magic.",
+      "const": "Cryomancy"
+    },
+    {
+      "title": "Trudomancy is the school of force magic.",
+      "const": "Trudomancy"
+    },
+    {
+      "title": "Photomancy is the school of light magic.",
+      "const": "Photomancy"
+    },
+    {
+      "title": "Umbramancy is the school of dark magic.",
+      "const": "Umbramancy"
+    },
+    {
+      "title": "Arcanomancy is the school of arcane magic.",
+      "const": "Arcanomancy"
+    },
+    {
+      "title": "Vitomancy is the school of life magic.",
+      "const": "Vitomancy"
+    },
+    {
+      "title": "Mortomancy is the school of death magic.",
+      "const": "Mortomancy"
+    },
+    {
+      "title": "Ampiliomancy is the school of enhancement magic.",
+      "const": "Ampiliomancy"
+    },
+    {
+      "title": "Diminiomancy is the school of reduction magic.",
+      "const": "Diminiomancy"
+    },
+    {
+      "title": "Citomancy is the school of summoning magic.",
+      "const": "Citomancy"
+    },
+    {
+      "title": "Necromancy is the school of necromancy.",
+      "const": "Necromancy"
+    },
+    {
+      "title": "Mutatiomancy is the school of polymorph magic.",
+      "const": "Mutatiomancy"
+    },
+    {
+      "title": "Chronomancy is the school of time magic.",
+      "const": "Chronomancy"
+    }
+  ]
+}

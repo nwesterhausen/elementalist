@@ -10,16 +10,12 @@ use serde::{Deserialize, Serialize};
 )]
 #[serde(rename_all = "camelCase")]
 pub enum CastSlot {
-    /// Primary spells typically have no mana cost and a short cooldown. Typically used for basic
-    /// attacks.
-    Primary,
-    /// Secondary spells will have a mana cost (usually) and can range from really powerful to
-    /// other kinds of spells. Typically used for something that is not a basic attack.
-    Secondary,
-    /// Defensive spells are typically used to defend against attacks or to heal. The common
-    /// type of spell used for this slot is a shield or barrier. Other things might generate a
-    /// wall or other obstacle.
-    Defensive,
+    /// Cantrips are typically basic attacks that don't cost mana and are a player's primary means
+    /// of dealing damage. They are typically the most spammable spell in a player's arsenal.
+    Cantrip,
+    /// Slotted spells are the primary spells a player uses. They are typically more powerful than
+    /// cantrips and have a variety of effects.
+    Slot,
     /// Ultimate spells are not in the player's spellbook, instead they are learned organically
     /// while in the "primal realm." They are typically very powerful and have a long cooldown.
     Ultimate,
@@ -28,10 +24,9 @@ pub enum CastSlot {
 impl std::fmt::Display for CastSlot {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Self::Primary => write!(f, "Primary"),
-            Self::Secondary => write!(f, "Secondary"),
-            Self::Defensive => write!(f, "Defensive"),
-            Self::Ultimate => write!(f, "Ultimate"),
+            CastSlot::Cantrip => write!(f, "Cantrip"),
+            CastSlot::Slot => write!(f, "Slot"),
+            CastSlot::Ultimate => write!(f, "Ultimate"),
         }
     }
 }

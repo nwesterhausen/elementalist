@@ -7,6 +7,7 @@ use serde::{Deserialize, Serialize};
 #[derive(
     Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize, Reflect, Component, Resource,
 )]
+#[allow(clippy::module_name_repetitions)]
 pub struct SpellTalisman {
     /// The shaping of the spell talisman. This defines the shape of the spell.
     shaping: Shaping,
@@ -95,28 +96,28 @@ impl Default for SpellTalisman {
 impl SpellTalisman {
     /// Set the shaping of the spell talisman.
     #[must_use]
-    pub fn with_shaping(mut self, shaping: Shaping) -> Self {
+    pub const fn with_shaping(mut self, shaping: Shaping) -> Self {
         self.shaping = shaping;
         self
     }
 
     /// Set the behavior of the spell talisman.
     #[must_use]
-    pub fn with_behavior(mut self, behavior: Behavior) -> Self {
+    pub const fn with_behavior(mut self, behavior: Behavior) -> Self {
         self.behavior = behavior;
         self
     }
 
     /// Set the tier of the spell talisman.
     #[must_use]
-    pub fn with_tier(mut self, tier: Tier) -> Self {
+    pub const fn with_tier(mut self, tier: Tier) -> Self {
         self.tier = tier;
         self
     }
 
     /// Create a new spell talisman with the given shaping, behavior, and tier.
     #[must_use]
-    pub fn new(shaping: Shaping, behavior: Behavior, tier: Tier) -> Self {
+    pub const fn new(shaping: Shaping, behavior: Behavior, tier: Tier) -> Self {
         Self {
             shaping,
             behavior,
@@ -126,19 +127,19 @@ impl SpellTalisman {
 
     /// Get the shaping of the spell talisman.
     #[must_use]
-    pub fn shaping(&self) -> Shaping {
+    pub const fn shaping(&self) -> Shaping {
         self.shaping
     }
 
     /// Get the behavior of the spell talisman.
     #[must_use]
-    pub fn behavior(&self) -> Behavior {
+    pub const fn behavior(&self) -> Behavior {
         self.behavior
     }
 
     /// Get the tier of the spell talisman.
     #[must_use]
-    pub fn tier(&self) -> Tier {
+    pub const fn tier(&self) -> Tier {
         self.tier
     }
 }

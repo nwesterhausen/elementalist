@@ -173,100 +173,100 @@ impl Spell {
         }
     }
 
-    /// Set the unique_id of the spell.
+    /// Set the `unique_id` of the spell.
     #[must_use]
     pub fn with_unique_id(mut self, unique_id: &str) -> Self {
         self.unique_id = unique_id.to_string();
         self
     }
 
-    /// Set the lore of the spell.
+    /// Set the `lore` of the spell.
     #[must_use]
     pub fn with_lore(mut self, lore: &str) -> Self {
         self.lore = lore.to_string();
         self
     }
 
-    /// Set the talisman of the spell.
+    /// Set the `talisman` of the spell.
     #[must_use]
-    pub fn with_talisman(mut self, talisman: SpellTalisman) -> Self {
+    pub const fn with_talisman(mut self, talisman: SpellTalisman) -> Self {
         self.talisman = talisman;
         self
     }
 
     /// Set the skill of the spell.
     #[must_use]
-    pub fn with_skill(mut self, skill: Skill) -> Self {
+    pub const fn with_skill(mut self, skill: Skill) -> Self {
         self.skill = skill;
         self
     }
 
     /// Set the cast slot of the spell.
     #[must_use]
-    pub fn with_cast_slot(mut self, cast_slot: CastSlot) -> Self {
+    pub const fn with_cast_slot(mut self, cast_slot: CastSlot) -> Self {
         self.cast_slot = cast_slot;
         self
     }
 
     /// Set the cooldown of the spell.
     #[must_use]
-    pub fn with_cooldown(mut self, cooldown: f32) -> Self {
+    pub const fn with_cooldown(mut self, cooldown: f32) -> Self {
         self.cooldown = cooldown;
         self
     }
 
     /// Set the cast time of the spell.
     #[must_use]
-    pub fn with_cast_time(mut self, cast_time: f32) -> Self {
+    pub const fn with_cast_time(mut self, cast_time: f32) -> Self {
         self.cast_time = cast_time;
         self
     }
 
     /// Set the mana cost of the spell.
     #[must_use]
-    pub fn with_mana_cost(mut self, mana_cost: f32) -> Self {
+    pub const fn with_mana_cost(mut self, mana_cost: f32) -> Self {
         self.mana_cost = mana_cost;
         self
     }
 
     /// Set the range of the spell.
     #[must_use]
-    pub fn with_range(mut self, range: f32) -> Self {
+    pub const fn with_range(mut self, range: f32) -> Self {
         self.range = range;
         self
     }
 
     /// Set the speed of the spell.
     #[must_use]
-    pub fn with_speed(mut self, speed: f32) -> Self {
+    pub const fn with_speed(mut self, speed: f32) -> Self {
         self.speed = speed;
         self
     }
 
     /// Set the acceleration of the spell.
     #[must_use]
-    pub fn with_acceleration(mut self, acceleration: f32) -> Self {
+    pub const fn with_acceleration(mut self, acceleration: f32) -> Self {
         self.acceleration = acceleration;
         self
     }
 
     /// Set the duration of the spell.
     #[must_use]
-    pub fn with_duration(mut self, duration: f32) -> Self {
+    pub const fn with_duration(mut self, duration: f32) -> Self {
         self.duration = duration;
         self
     }
 
     /// Set the base damage of the spell.
     #[must_use]
-    pub fn with_base_damage(mut self, base_damage: f32) -> Self {
+    pub const fn with_base_damage(mut self, base_damage: f32) -> Self {
         self.base_damage = base_damage;
         self
     }
 
     /// Set the base healing of the spell.
     #[must_use]
-    pub fn with_base_healing(mut self, base_healing: f32) -> Self {
+    pub const fn with_base_healing(mut self, base_healing: f32) -> Self {
         self.base_healing = base_healing;
         self
     }
@@ -287,14 +287,14 @@ impl Spell {
 
     /// Set the radius of the spell.
     #[must_use]
-    pub fn with_radius(mut self, radius: f32) -> Self {
+    pub const fn with_radius(mut self, radius: f32) -> Self {
         self.radius = radius;
         self
     }
 
     /// Set the angle of the spell.
     #[must_use]
-    pub fn with_angle(mut self, angle: f32) -> Self {
+    pub const fn with_angle(mut self, angle: f32) -> Self {
         self.angle = angle;
         self
     }
@@ -322,99 +322,99 @@ impl Spell {
         self
     }
 
-    /// Get the unique_id of the spell.
+    /// Get the `unique_id` of the spell.
     #[must_use]
     pub fn unique_id(&self) -> &str {
         &self.unique_id
     }
 
-    /// Get the name of the spell.
+    /// Get the `name` of the spell.
     #[must_use]
     pub fn name(&self) -> &str {
         &self.name
     }
 
-    /// Get the description of the spell.
+    /// Get the `description` of the spell.
     #[must_use]
     pub fn description(&self) -> &str {
         &self.description
     }
 
-    /// Get the lore of the spell.
+    /// Get the `lore` of the spell.
     #[must_use]
     pub fn lore(&self) -> &str {
         &self.lore
     }
 
-    /// Get the talisman of the spell.
+    /// Get the `talisman` of the spell.
     #[must_use]
-    pub fn talisman(&self) -> &SpellTalisman {
+    pub const fn talisman(&self) -> &SpellTalisman {
         &self.talisman
     }
 
-    /// Get the skill of the spell.
+    /// Get the `skill` of the spell.
     #[must_use]
-    pub fn skill(&self) -> Skill {
+    pub const fn skill(&self) -> Skill {
         self.skill
     }
 
     /// Get the cast slot of the spell.
     #[must_use]
-    pub fn cast_slot(&self) -> CastSlot {
+    pub const fn cast_slot(&self) -> CastSlot {
         self.cast_slot
     }
 
     /// Get the cooldown of the spell.
     #[must_use]
-    pub fn cooldown(&self) -> f32 {
+    pub const fn cooldown(&self) -> f32 {
         self.cooldown
     }
 
     /// Get the cast time of the spell.
     #[must_use]
-    pub fn cast_time(&self) -> f32 {
+    pub const fn cast_time(&self) -> f32 {
         self.cast_time
     }
 
     /// Get the mana cost of the spell.
     #[must_use]
-    pub fn mana_cost(&self) -> f32 {
+    pub const fn mana_cost(&self) -> f32 {
         self.mana_cost
     }
 
     /// Get the range of the spell.
     #[must_use]
-    pub fn range(&self) -> f32 {
+    pub const fn range(&self) -> f32 {
         self.range
     }
 
     /// Get the speed of the spell.
     #[must_use]
-    pub fn speed(&self) -> f32 {
+    pub const fn speed(&self) -> f32 {
         self.speed
     }
 
     /// Get the acceleration of the spell.
     #[must_use]
-    pub fn acceleration(&self) -> f32 {
+    pub const fn acceleration(&self) -> f32 {
         self.acceleration
     }
 
     /// Get the duration of the spell.
     #[must_use]
-    pub fn duration(&self) -> f32 {
+    pub const fn duration(&self) -> f32 {
         self.duration
     }
 
     /// Get the base damage of the spell.
     #[must_use]
-    pub fn base_damage(&self) -> f32 {
+    pub const fn base_damage(&self) -> f32 {
         self.base_damage
     }
 
     /// Get the base healing of the spell.
     #[must_use]
-    pub fn base_healing(&self) -> f32 {
+    pub const fn base_healing(&self) -> f32 {
         self.base_healing
     }
 
@@ -432,13 +432,13 @@ impl Spell {
 
     /// Get the radius of the spell.
     #[must_use]
-    pub fn radius(&self) -> f32 {
+    pub const fn radius(&self) -> f32 {
         self.radius
     }
 
     /// Get the angle of the spell.
     #[must_use]
-    pub fn angle(&self) -> f32 {
+    pub const fn angle(&self) -> f32 {
         self.angle
     }
 
@@ -450,7 +450,7 @@ impl Spell {
 
     /// Get the icon tileset and index of the spell.
     #[must_use]
-    pub fn icon_tileset_index(&self) -> usize {
+    pub const fn icon_tileset_index(&self) -> usize {
         self.icon_index
     }
 
@@ -462,7 +462,7 @@ impl Spell {
 
     /// Get the sprite tileset and index of the spell.
     #[must_use]
-    pub fn sprite_tileset_index(&self) -> usize {
+    pub const fn sprite_tileset_index(&self) -> usize {
         self.sprite_index
     }
 

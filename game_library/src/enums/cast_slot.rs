@@ -24,9 +24,9 @@ pub enum CastSlot {
 impl std::fmt::Display for CastSlot {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            CastSlot::Cantrip => write!(f, "Cantrip"),
-            CastSlot::Slot => write!(f, "Slot"),
-            CastSlot::Ultimate => write!(f, "Ultimate"),
+            Self::Cantrip => write!(f, "Cantrip"),
+            Self::Slot => write!(f, "Slot"),
+            Self::Ultimate => write!(f, "Ultimate"),
         }
     }
 }

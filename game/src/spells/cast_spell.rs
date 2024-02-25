@@ -36,7 +36,7 @@ pub(super) fn cast_spells(
             continue;
         };
 
-        let Some(texture_atlas) = game_data.tile_atlas.get(&spell.sprite_tileset()) else {
+        let Some(texture_atlas) = game_data.tile_atlas.get(spell.sprite_tileset()) else {
             tracing::error!(
                 "cast_spells: No texture atlas found for {} (spell:{})",
                 spell.sprite_tileset(),

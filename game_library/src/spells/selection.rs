@@ -8,6 +8,7 @@ use crate::InternalId;
 
 /// A resource that stores the player's spell choices.
 #[derive(Resource, Default, Debug, Reflect, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[allow(clippy::module_name_repetitions)]
 pub struct SpellSelection {
     /// The spell to cast when the player presses the primary cast button.
     primary: Option<String>,
@@ -22,7 +23,7 @@ pub struct SpellSelection {
 impl SpellSelection {
     /// Create a new spell selection with no spells chosen.
     #[must_use]
-    pub fn new() -> Self {
+    pub const fn new() -> Self {
         Self {
             primary: None,
             secondary: None,

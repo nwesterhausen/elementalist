@@ -9,6 +9,7 @@ use bevy::prelude::*;
 ///
 /// This has the information to move the spell, display it, and despawn it when it's lifetime expires.
 #[derive(Bundle)]
+#[allow(clippy::module_name_repetitions)]
 pub struct SpellBundle {
     /// The movement bundle (velocity and acceleration)
     ///

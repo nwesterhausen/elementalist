@@ -9,6 +9,7 @@ use crate::enums::ParticleAttachment;
     Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize, Reflect, Component, Resource,
 )]
 #[serde(rename_all = "camelCase")]
+#[allow(clippy::module_name_repetitions)]
 pub struct SpellParticles {
     /// The unique_id for the particle effect
     pub particle_id: String,

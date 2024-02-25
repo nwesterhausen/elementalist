@@ -34,6 +34,8 @@ pub enum Shaping {
     Touch,
     /// A spell with the `OnSelf` shaping affects the caster.
     OnSelf,
+    /// A spell with the `Melee` shaping acts as a melee attack.
+    Melee,
 }
 
 /// The behavior of the spell talisman. This defines the behavior of the spell.
@@ -53,6 +55,10 @@ pub enum Behavior {
     Utility,
     /// A spell with the `Summon` behavior summons a creature.
     Summon,
+    /// A spell with the `Polymorph` behavior transforms the target.
+    Polymorph,
+    /// A spell with the `Teleport` behavior teleports the target.
+    Teleport,
 }
 
 /// The tier of the spell talisman. This defines the power level of the spell.

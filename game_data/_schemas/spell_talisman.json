@@ -32,6 +32,10 @@
         {
           "const": "OnSelf",
           "title": "On Self spells affect the caster."
+        },
+        {
+          "const": "Melee",
+          "title": "Melee spells are cast at a target within melee range."
         }
       ]
     },
@@ -62,6 +66,14 @@
         {
           "const": "Summon",
           "title": "Summon spells summon a creature to fight for the caster."
+        },
+        {
+          "const": "Polymorph",
+          "title": "Polymorph spells change the form of the target."
+        },
+        {
+          "const": "Teleport",
+          "title": "Teleport spells move the target to a different location."
         }
       ]
     },

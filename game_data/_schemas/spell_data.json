@@ -28,6 +28,7 @@
 		"castSlot": {
 			"description": "The slot the spell can fit in",
 			"type": "string",
+			"default": "Cantrip",
 			"oneOf": [
 				{
 					"const": "Cantrip",
@@ -46,6 +47,7 @@
 		"castType": {
 			"description": "The type of cast the spell uses",
 			"type": "string",
+			"default": "Instant",
 			"oneOf": [
 				{
 					"const": "Instant",
@@ -63,47 +65,56 @@
 		},
 		"cooldown": {
 			"description": "The time it takes to cool down after casting the spell",
+			"default": 0,
 			"type": "number",
 			"inclusiveMinimum": 0
 		},
 		"castTime": {
 			"description": "The time it takes to cast the spell",
+			"default": 0,
 			"type": "number",
 			"inclusiveMinimum": 0
 		},
 		"manaCost": {
 			"description": "The cost of the spell",
+			"default": 0,
 			"type": "number",
 			"inclusiveMinimum": 0
 		},
 		"range": {
 			"description": "The range of the spell, used to determine how far it can travel",
 			"type": "number",
+			"default": 100,
 			"inclusiveMinimum": 0
 		},
 		"speed": {
 			"description": "The speed of the spell, used to determine how quickly it travels",
 			"type": "number",
+			"default": 100,
 			"inclusiveMinimum": 0
 		},
 		"acceleration": {
 			"description": "The acceleration of the spell, used to determine how quickly it gets up to max speed.",
 			"type": "number",
+			"default": 20,
 			"inclusiveMinimum": 0
 		},
 		"duration": {
 			"description": "The duration of the spell, used to determine how long it lasts",
 			"type": "number",
+			"default": 5,
 			"inclusiveMinimum": 0
 		},
 		"baseDamage": {
 			"description": "The damage of the spell, used to determine how much damage it does",
 			"type": "number",
+			"default": 0,
 			"inclusiveMinimum": 0
 		},
 		"baseHealing": {
 			"description": "The healing of the spell, used to determine how much healing it does",
 			"type": "number",
+			"default": 0,
 			"inclusiveMinimum": 0
 		},
 		"buffs": {
@@ -117,29 +128,35 @@
 		"radius": {
 			"description": "The radius of the spell, used to determine how large the area of effect is",
 			"type": "number",
+			"default": 0,
 			"inclusiveMinimum": 0
 		},
 		"angle": {
 			"description": "The angle of the spell, used to determine how wide the area of effect is",
 			"type": "number",
+			"default": 0,
 			"inclusiveMinimum": 0
 		},
 		"iconTileset": {
 			"description": "The tileset with the icon of the spell (path in the assets folder)",
-			"type": "string"
+			"type": "string",
+			"default": "placeholder"
 		},
 		"iconIndex": {
 			"description": "The index of the icon in the tileset",
 			"type": "integer",
+			"default": 0,
 			"inclusiveMinimum": 0
 		},
 		"spriteTileset": {
 			"description": "The sprite of the spell (path in the assets folder)",
+			"default": "placeholder",
 			"type": "string"
 		},
 		"spriteIndex": {
 			"description": "The index of the sprite in the tileset",
 			"type": "integer",
+			"default": 0,
 			"inclusiveMinimum": 0
 		},
 		"particles": {
@@ -159,17 +176,49 @@
 					"attachment": {
 						"description": "The attachment point of the particle",
 						"type": "string",
-						"enum": [
-							"Cast",
-							"Projectile",
-							"Impact",
-							"Target",
-							"Caster",
-							"Ground",
-							"Summon"
+						"default": "Projectile",
+						"oneOf": [
+							{
+								"const": "Cast",
+								"description": "Emit particles from the caster when the spell is cast."
+							},
+							{
+								"const": "Projectile",
+								"description": "The particles emitted by the projectile."
+							},
+							{
+								"const": "Impact",
+								"description": "The particles emitted when the spell impacts."
+							},
+							{
+								"const": "Target",
+								"description": "The particles emitted from the target when impacted."
+							},
+							{
+								"const": "Caster",
+								"description": "The particles emitted from the caster while casting (sustained)."
+							},
+							{
+								"const": "Ground",
+								"description": "The particles emitted from the ground."
+							},
+							{
+								"const": "Summon",
+								"description": "The particles emitted from the summoned entity."
+							}
 						]
 					}
 				}
+			},
+			"spellTier": {
+				"depreciated": true,
+				"description": "The tier of the spell (covered by the Talisman now)",
+				"type": "string"
+			},
+			"magic": {
+				"deprecated": true,
+				"description": "The magic type of the spell (defined in Skill now)",
+				"type": "string"
 			}
 		}
 	},

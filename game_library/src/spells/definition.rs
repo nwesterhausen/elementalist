@@ -442,16 +442,28 @@ impl Spell {
         self.angle
     }
 
+    /// Get the icon tileset id
+    #[must_use]
+    pub fn icon_tileset(&self) -> &str {
+        &self.icon_tileset
+    }
+
     /// Get the icon tileset and index of the spell.
     #[must_use]
-    pub fn icon_tileset_index(&self) -> (&str, usize) {
-        (&self.icon_tileset, self.icon_index)
+    pub fn icon_tileset_index(&self) -> usize {
+        self.icon_index
+    }
+
+    /// Get the sprite tileset id
+    #[must_use]
+    pub fn sprite_tileset(&self) -> &str {
+        &self.sprite_tileset
     }
 
     /// Get the sprite tileset and index of the spell.
     #[must_use]
-    pub fn sprite_tileset_index(&self) -> (&str, usize) {
-        (&self.sprite_tileset, self.sprite_index)
+    pub fn sprite_tileset_index(&self) -> usize {
+        self.sprite_index
     }
 
     /// Get the particles of the spell.

@@ -128,4 +128,25 @@ impl SpellSelection {
     pub fn clear_ultimate(&mut self) {
         self.ultimate = None;
     }
+
+    /// Get the primary spell choice.
+    #[must_use]
+    pub fn primary(&self) -> Option<String> {
+        self.primary.clone()
+    }
+    /// Get the secondary spell choice.
+    #[must_use]
+    pub fn secondary(&self) -> Option<String> {
+        self.secondary.clone()
+    }
+    /// Get the tertiary spell choice.
+    #[must_use]
+    pub fn tertiary(&self) -> Option<String> {
+        self.tertiary.clone()
+    }
+    /// Get the ultimate spell choice.
+    #[must_use]
+    pub fn ultimate(&self) -> Option<String> {
+        self.ultimate.clone()
+    }
 }

@@ -6,63 +6,78 @@
   "type": "string",
   "oneOf": [
     {
-      "title": "Pyromancy is the school of fire magic.",
+      "title": "Fire magic",
+      "description": "Pyromancy is the school of fire magic.",
       "const": "Pyromancy"
     },
     {
-      "title": "Fulgomancy is the school of lightning magic.",
+      "title": "Lightning magic",
+      "description": "Fulgomancy is the school of lightning magic.",
       "const": "Fulgomancy"
     },
     {
-      "title": "Hydromancy is the school of water magic.",
+      "title": "Water magic",
+      "description": "Hydromancy is the school of water magic.",
       "const": "Hydromancy"
     },
     {
-      "title": "Geomancy is the school of earth magic.",
+      "title": "Earth magic",
+      "description": "Geomancy is the school of earth magic.",
       "const": "Geomancy"
     },
     {
-      "title": "Aeromancy is the school of air magic.",
+      "title": "Air magic",
+      "description": "Aeromancy is the school of air magic.",
       "const": "Aeromancy"
     },
     {
-      "title": "Cryomancy is the school of ice magic.",
+      "title": "Ice magic",
+      "description": "Cryomancy is the school of ice magic.",
       "const": "Cryomancy"
     },
     {
-      "title": "Trudomancy is the school of force magic.",
+      "title": "Force magic",
+      "description": "Trudomancy is the school of force magic.",
       "const": "Trudomancy"
     },
     {
-      "title": "Photomancy is the school of light magic.",
+      "title": "Light magic",
+      "description": "Photomancy is the school of light magic.",
       "const": "Photomancy"
     },
     {
-      "title": "Umbramancy is the school of dark magic.",
+      "title": "Dark magic",
+      "description": "Umbramancy is the school of dark magic.",
       "const": "Umbramancy"
     },
     {
-      "title": "Arcanomancy is the school of arcane magic.",
+      "title": "Arcane magic",
+      "description": "Arcanomancy is the school of arcane magic.",
       "const": "Arcanomancy"
     },
     {
-      "title": "Vitomancy is the school of life magic.",
+      "title": "Life magic",
+      "description": "Vitomancy is the school of life magic.",
       "const": "Vitomancy"
     },
     {
-      "title": "Mortomancy is the school of death magic.",
+      "title": "Death magic",
+      "description": "Mortomancy is the school of death magic.",
       "const": "Mortomancy"
     },
     {
-      "title": "Ampiliomancy is the school of enhancement magic.",
+      "title": "Enhancement magic",
+      "description": "Ampiliomancy is the school of enhancement magic.",
       "const": "Ampiliomancy"
     },
     {
-      "title": "Diminiomancy is the school of reduction magic.",
+      "title": "Reduction magic",
+      "description": "Diminiomancy is the school of reduction magic.",
       "const": "Diminiomancy"
     },
     {
-      "title": "Citomancy is the school of summoning magic.",
+      "title": "Summoning magic",
+      "description": "Citomancy is the school of summoning magic.",
       "const": "Citomancy"
     },
     {
@@ -70,11 +85,13 @@
       "const": "Necromancy"
     },
     {
-      "title": "Mutatiomancy is the school of polymorph magic.",
+      "title": "Polymorph magic",
+      "description": "Mutatiomancy is the school of polymorph magic.",
       "const": "Mutatiomancy"
     },
     {
-      "title": "Chronomancy is the school of time magic.",
+      "title": "Time magic",
+      "description": "Chronomancy is the school of time magic.",
       "const": "Chronomancy"
     }
   ]

@@ -66,48 +66,50 @@
       ]
     },
     "tier": {
-      "description": "The tier of the spell talisman. This defines the power of the spell.",
+      "description": "The tier of the spell talisman. This (loosely) defines the power of the spell.",
       "type": "string",
       "oneOf": [
         {
           "const": "Mundane",
-          "title": "Mundane or Tier 0"
+          "title": "Tier 0: Mundane"
         },
         {
           "const": "Common",
-          "title": "Common or Tier 1"
+          "title": "Tier 1: Common"
         },
         {
           "const": "Uncommon",
-          "title": "Uncommon or Tier 2"
+          "title": "Tier 2: Uncommon"
         },
         {
           "const": "Rare",
-          "title": "Rare or Tier 3"
+          "title": "Tier 3: Rare"
         },
         {
           "const": "Epic",
-          "title": "Epic or Tier 4"
+          "title": "Tier 4: Epic"
         },
         {
           "const": "Legendary",
-          "title": "Legendary or Tier 5"
+          "title": "Tier 5: Legendary"
         },
         {
           "const": "Mythic",
-          "title": "Mythic or Tier 6"
+          "title": "Tier 6: Mythic"
         },
         {
           "const": "Divine",
-          "title": "Divine or Tier 7 (highest)"
+          "title": "Tier 7 (highest): Divine"
         },
         {
           "const": "Unique",
-          "title": "Unique tier should only be used for restricted spells that are unique to a specific character or have other requirements. It cannot be inscribed by the player."
+          "title": "Special tier: Unique",
+          "description": "Unique tier should only be used for restricted spells that are unique to a specific character or have other requirements. It cannot be inscribed by the player."
         },
         {
           "const": "Astral",
-          "title": "Astral tier spells are a step above divine. An astral talisman is not possible in the normal game."
+          "title": "Special tier: Astral",
+          "description": "Astral tier spells are a step above divine. An astral talisman is not possible in the normal game."
         }
       ]
     }

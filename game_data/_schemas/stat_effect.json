@@ -26,7 +26,28 @@
     "affectedEntity": {
       "description": "The entities affected by the effect",
       "type": "string",
-      "enum": ["any", "player", "enemy", "ally", "none"]
+      "oneOf": [
+        {
+          "const": "Any",
+          "description": "Affects any entity type (player, enemy, ally)"
+        },
+        {
+          "const": "Player",
+          "description": "Affects only the player"
+        },
+        {
+          "const": "Enemy",
+          "description": "Affects only enemies"
+        },
+        {
+          "const": "Ally",
+          "description": "Affects only allies"
+        },
+        {
+          "const": "None",
+          "description": "Affects no entities"
+        }
+      ]
     },
     "affectedStats": {
       "description": "The stats affected by the effect",
@@ -36,41 +57,7 @@
         "properties": {
           "stat": {
             "description": "The affected stat",
-            "type": "string",
-            "enum": [
-              "health",
-              "mana",
-              "damageReduction",
-              "damageResistance",
-              "damageReflection",
-              "damageAmplification",
-              "criticalStrikeChance",
-              "criticalStrikeDamage",
-              "lifeSteal",
-              "manaSteal",
-              "movementSpeed",
-              "stunResistance",
-              "healthRegeneration",
-              "manaRegeneration",
-              "projectileSpeed",
-              "projectileSize",
-              "projectileLifetime",
-              "dodgeChance",
-              "attackDamage",
-              "attackSpeed",
-              "attackRange",
-              "physicalDamageReduction",
-              "physicalDamageResistance",
-              "physicalDamageReflection",
-              "physicalDamageAmplification",
-              "magicDamage",
-              "cooldownReduction",
-              "spellRange",
-              "magicDamageReduction",
-              "magicDamageResistance",
-              "magicDamageReflection",
-              "magicDamageAmplification"
-            ]
+            "$ref": "https://schemas.nwest.one/games/elementalist/stat.json"
           },
           "amount": {
             "description": "The amount the stat is affected by (can be negative)",
@@ -79,12 +66,32 @@
           "affectType": {
             "description": "The type of affect the debuff has on the stat",
             "type": "string",
-            "enum": ["add", "multiply"]
+            "oneOf": [
+              {
+                "const": "add",
+                "description": "Add the amount to the stat"
+              },
+              {
+                "const": "multiply",
+                "description": "Multiply the stat by the amount"
+              }
+            ]
           }
         }
       },
-      "required": ["stat", "amount", "affectType"]
+      "required": [
+        "stat",
+        "amount",
+        "affectType"
+      ]
     }
   },
-  "required": ["affectedEntity", "affectedStats", "name", "description", "duration", "maxStacks"]
+  "required": [
+    "affectedEntity",
+    "affectedStats",
+    "name",
+    "description",
+    "duration",
+    "maxStacks"
+  ]
 }

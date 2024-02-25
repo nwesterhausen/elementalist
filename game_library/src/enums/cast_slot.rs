@@ -8,7 +8,6 @@ use serde::{Deserialize, Serialize};
 #[derive(
     Debug, Clone, Copy, PartialEq, Eq, Hash, Component, Resource, Serialize, Deserialize, Reflect,
 )]
-#[serde(rename_all = "camelCase")]
 pub enum CastSlot {
     /// Cantrips are typically basic attacks that don't cost mana and are a player's primary means
     /// of dealing damage. They are typically the most spammable spell in a player's arsenal.

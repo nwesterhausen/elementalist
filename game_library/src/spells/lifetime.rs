@@ -9,9 +9,9 @@ use bevy::prelude::*;
 #[derive(Debug, Clone, Copy, PartialEq, Component, Default, Reflect)]
 pub struct SpellLifetime {
     /// The remaining lifetime of the spell in seconds
-    pub remaining: f32,
+    remaining: f32,
     /// The maximum lifetime of the spell in seconds
-    pub max: f32,
+    max: f32,
 }
 
 impl SpellLifetime {
@@ -31,5 +31,16 @@ impl SpellLifetime {
     #[must_use]
     pub fn is_expired(&self) -> bool {
         self.remaining <= 0.0
+    }
+
+    /// Returns the remaining lifetime of the spell
+    #[must_use]
+    pub fn remaining(&self) -> f32 {
+        self.remaining
+    }
+    /// Returns the maximum lifetime of the spell
+    #[must_use]
+    pub fn max(&self) -> f32 {
+        self.max
     }
 }

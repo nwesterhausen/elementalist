@@ -2,7 +2,7 @@
 use bevy::{prelude::*, utils::hashbrown::HashMap};
 use bevy_hanabi::EffectAsset;
 
-use crate::{realm_data::Realm, SimpleObject, SpellData};
+use crate::{realm_data::Realm, spells::Spell, SimpleObject};
 
 /// The vault resource is a generic resource that holds data that is stored by a unique id.
 ///
@@ -55,7 +55,7 @@ impl<T> Vault<T> {
 #[derive(Resource, Default, Debug, Clone)]
 pub struct GameData {
     /// The spells that have been loaded into the game.
-    pub spells: Vault<SpellData>,
+    pub spells: Vault<Spell>,
     /// The tile atlases that have been loaded into the game.
     pub tile_atlas: Vault<Handle<TextureAtlas>>,
     /// The particles that have been loaded into the game.

@@ -5,7 +5,7 @@ use walkdir::WalkDir;
 
 use crate::{
     data_loader::DATA_FILE_DIR, enums::GameSystem, particle::Particle, realm_data::Realm,
-    simple_object::SimpleObject, InternalId, SpellData, Tileset,
+    simple_object::SimpleObject, spells::Spell, InternalId, Tileset,
 };
 
 use super::{
@@ -114,8 +114,7 @@ pub fn load_data_file_dir(
             );
             match header.system {
                 GameSystem::Spell => {
-                    let spell_data: DataFile<SpellData> = if let Some(d) = read_data_file(filepath)
-                    {
+                    let spell_data: DataFile<Spell> = if let Some(d) = read_data_file(filepath) {
                         d
                     } else {
                         tracing::debug!(

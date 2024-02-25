@@ -1,8 +1,8 @@
-//! This file contains the spell bundle, which is a bundle of components that are needed for a spell.
+//! The spell bundle used when spawning a spell in game.
 //!
 //! This bundle contains the movement bundle, the sprite sheet bundle, and the spell lifetime component.
-
-use crate::{MovementBundle, SpellLifetime};
+use super::SpellLifetime;
+use crate::MovementBundle;
 use bevy::prelude::*;
 
 /// Bundle that contains all components needed for a spell

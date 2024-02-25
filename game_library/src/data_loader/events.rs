@@ -9,7 +9,7 @@
 use bevy::ecs::event::Event;
 
 use crate::{
-    particle::Particle, realm_data::Realm, simple_object::SimpleObject, SpellData, Tileset,
+    particle::Particle, realm_data::Realm, simple_object::SimpleObject, spells::Spell, Tileset,
 };
 
 use super::DataFile;
@@ -18,7 +18,7 @@ use super::DataFile;
 /// Event that is fired when a spell is loaded.
 pub struct LoadedSpellData {
     /// The spell data that was loaded.
-    pub spell_data: DataFile<SpellData>,
+    pub spell_data: DataFile<Spell>,
 }
 
 #[derive(Event)]

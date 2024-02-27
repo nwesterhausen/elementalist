@@ -13,8 +13,9 @@ use bevy::{
 };
 use bevy_rapier2d::prelude::*;
 use game_library::{
-    data_loader::storage::GameData, state::Game, GeneratedMaps, GenerationSeed, Layer, LayerPlugin,
-    MarkersToBiomes, NoisePlugin, PhysicsPlugin, SchedulingPlugin,
+    data_loader::storage::GameData, images::ImagesPlugin, state::Game, GeneratedMaps,
+    GenerationSeed, Layer, LayerPlugin, MarkersToBiomes, NoisePlugin, PhysicsPlugin,
+    SchedulingPlugin,
 };
 use in_game::InGamePlugin;
 use leafwing_input_manager::plugin::InputManagerPlugin;
@@ -132,6 +133,8 @@ impl Plugin for ElementalistDefaultPlugins {
         app.add_plugins(PhysicsPlugin);
         // Add the layer plugin
         app.add_plugins(LayerPlugin);
+        // Add the images plugin
+        app.add_plugins(ImagesPlugin);
     }
 }
 

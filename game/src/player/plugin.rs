@@ -28,23 +28,12 @@ impl Plugin for PlayerPlugin {
                 (
                     movement::player_movement_controls,
                     movement::update_player_z_index,
-                    animation::advance_animation_timer,
                     animation::set_casting_animation,
-                    animation::update_avatar_animation,
                 )
                     .run_if(in_state(Game::Playing)),
             )
             // Remove player when leaving game
-            .add_systems(OnExit(Game::Playing), despawn_with_tag::<PlayerAvatar>)
-            // Animation stuff
-            .init_state::<animation::PlayerAnimation>()
-            .init_state::<animation::PlayerAnimationSupplemental>()
-            .init_state::<animation::PlayerFacing>()
-            .init_resource::<animation::AnimationFrame>()
-            .insert_resource(animation::PlayerAnimationTimer(Timer::from_seconds(
-                0.1,
-                TimerMode::Repeating,
-            )));
+            .add_systems(OnExit(Game::Playing), despawn_with_tag::<PlayerAvatar>);
 
         // Testing stuff
         app.add_systems(Update, subtract_health)

@@ -4,6 +4,7 @@ use game_library::{
     colors,
     data_loader::storage::GameData,
     enums::StatEnum,
+    images::AnimationBundle,
     progress_bar::{BarState, ProgressBarConfig},
     spells::SpellSelection,
     Health, Layer, Mana, MovementBundle, StatBundle, Xp,
@@ -59,6 +60,7 @@ pub fn spawn_player_avatar(
 
     commands.spawn((
         PlayerBundle {
+            animation: AnimationBundle::new("player-avatar"),
             movement: MovementBundle::default(),
             sprite: SpriteSheetBundle {
                 atlas: TextureAtlas {

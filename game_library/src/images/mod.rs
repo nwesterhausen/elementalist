@@ -10,7 +10,7 @@ mod texture_atlas;
 mod tileset;
 
 pub use animation::{Animation, AnimationDefinition};
-pub use animation_bundle::{AnimationBundle, EntitySpriteId};
+pub use animation_bundle::{AnimationBundle, AnimationStatus, EntitySpriteId};
 pub use animation_frame::AnimationFrame;
 pub use animation_timer::AnimationTimer;
 pub use entity_sprite::EntitySprite;

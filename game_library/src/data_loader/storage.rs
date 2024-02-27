@@ -2,7 +2,12 @@
 use bevy::{prelude::*, utils::hashbrown::HashMap};
 use bevy_hanabi::EffectAsset;
 
-use crate::{realm_data::Realm, spells::Spell, SimpleObject};
+use crate::{
+    images::{EntitySprite, StoredTextureAtlas},
+    realm_data::Realm,
+    spells::Spell,
+    SimpleObject,
+};
 
 /// The vault resource is a generic resource that holds data that is stored by a unique id.
 ///
@@ -64,13 +69,6 @@ pub struct GameData {
     pub realms: Vault<Realm>,
     /// Loaded simple objects
     pub simple_objects: Vault<SimpleObject>,
-}
-
-/// `TextureAtlas` has been changed in bevy 0.13 so we need to track the texture handle and the texture atlas.
-#[derive(Resource, Debug, Clone, Default)]
-pub struct StoredTextureAtlas {
-    /// The texture handle of the texture atlas layout.
-    pub atlas_handle: Handle<TextureAtlasLayout>,
-    /// The texture handle used by the atlas.
-    pub texture_handle: Handle<Image>,
+    /// Loaded entity sprites
+    pub entity_sprites: Vault<EntitySprite>,
 }

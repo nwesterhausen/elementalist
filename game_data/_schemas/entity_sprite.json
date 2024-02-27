@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.nwest.one/games/elementalist/entity_sprite.json",
+  "title": "Elementalist Entity Sprite Schema",
+  "description": "Definition of an entity sprite for the Elementalist game",
+  "type": "object",
+  "properties": {
+    "animations": {
+      "title": "Animation Definitions",
+      "description": "Animations for the sprite",
+      "type": "array",
+      "items": {
+        "$ref": "https://schemas.nwest.one/games/elementalist/sprite_animation.json"
+      }
+    }
+  }
+}

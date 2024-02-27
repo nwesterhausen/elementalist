@@ -2,10 +2,9 @@
 
 use bevy::prelude::*;
 
-use super::{
-    events::LoadedTilesetData,
-    storage::{GameData, StoredTextureAtlas},
-};
+use crate::images::StoredTextureAtlas;
+
+use super::{events::LoadedTilesetData, storage::GameData};
 
 /// Load the tilesets into the game and store a handle under the `unique_id`.
 #[allow(clippy::needless_pass_by_value, clippy::module_name_repetitions)]

@@ -839,7 +839,7 @@ dependencies = [
 [[package]]
 name = "bevy_pkv"
 version = "0.9.1"
-source = "git+https://github.com/johanhelsing/bevy_pkv#af0b750b1dbfc8db58dbb2bd07c5eda72e714b79#af0b750b1dbfc8db58dbb2bd07c5eda72e714b79"
+source = "git+https://github.com/johanhelsing/bevy_pkv?rev=af0b750b1dbfc8db58dbb2bd07c5eda72e714b79#af0b750b1dbfc8db58dbb2bd07c5eda72e714b79"
 dependencies = [
  "bevy_ecs",
  "cfg_aliases",
@@ -2169,7 +2169,7 @@ dependencies = [
 
 [[package]]
 name = "game_library"
-version = "2.1.1"
+version = "2.2.0"
 dependencies = [
  "bevy",
  "bevy-inspector-egui",

@@ -15,6 +15,8 @@ pub enum GameSystem {
     Realm,
     /// The simple object system is responsible for loading simple objects
     SimpleObject,
+    /// Entity sprites define the sprites for entities. They reference tilesets.
+    EntitySprite,
 }
 
 /// The order in which the game systems should be loaded.
@@ -30,13 +32,17 @@ pub enum GameSystem {
 /// - Skill perks / trees
 /// - Monsters
 #[allow(dead_code)]
-pub const ORDERED: [GameSystem; 5] = [
+pub const ORDERED: [GameSystem; 6] = [
+    // Tilesets have no dependencies
     GameSystem::Tileset,
+    // Particles have no dependencies
+    GameSystem::Particle,
     // Simple objects can reference tilesets
     GameSystem::SimpleObject,
+    // Entity sprites reference tilesets
+    GameSystem::EntitySprite,
+    // Spells reference tilesets and particle effects
+    GameSystem::Spell,
     // Realms reference simple objects and tilesets
     GameSystem::Realm,
-    GameSystem::Particle,
-    // Spells reference tilesets
-    GameSystem::Spell,
 ];

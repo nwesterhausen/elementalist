@@ -24,6 +24,10 @@
     {
       "const": "SimpleObject",
       "title": "A simple object that can be placed in a realm"
+    },
+    {
+      "const": "EntitySprite",
+      "title": "A sprite that can be used to represent an entity. Includes animations and other visual effects"
     }
   ]
 }

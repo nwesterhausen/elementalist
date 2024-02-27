@@ -6,6 +6,7 @@
 pub mod events;
 pub mod storage;
 
+mod entity_sprites;
 mod header_def;
 mod loader;
 mod particles;

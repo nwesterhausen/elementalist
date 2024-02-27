@@ -31,6 +31,7 @@ mod bundle;
 mod definition;
 mod lifetime;
 mod particles;
+mod polymorph;
 mod selection;
 pub mod talisman;
 
@@ -38,4 +39,5 @@ pub use bundle::SpellBundle;
 pub use definition::Spell;
 pub use lifetime::SpellLifetime;
 pub use particles::SpellParticles;
+pub use polymorph::*;
 pub use selection::SpellSelection;

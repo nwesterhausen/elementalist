@@ -4,14 +4,14 @@ use std::hash::Hash;
 use walkdir::WalkDir;
 
 use crate::{
-    data_loader::DATA_FILE_DIR, enums::GameSystem, particle::Particle, realm_data::Realm,
-    simple_object::SimpleObject, spells::Spell, InternalId, Tileset,
+    data_loader::DATA_FILE_DIR, enums::GameSystem, images::EntitySprite, particle::Particle,
+    realm_data::Realm, simple_object::SimpleObject, spells::Spell, InternalId, Tileset,
 };
 
 use super::{
     events::{
-        LoadedParticleData, LoadedRealmData, LoadedSimpleObjectData, LoadedSpellData,
-        LoadedTilesetData,
+        LoadedEntitySpriteData, LoadedParticleData, LoadedRealmData, LoadedSimpleObjectData,
+        LoadedSpellData, LoadedTilesetData,
     },
     header_def::{DataFile, DataFileHeader},
     DataFileHeaderOnly,
@@ -81,6 +81,7 @@ pub fn load_data_file_dir(
     mut ew_particle_df: EventWriter<LoadedParticleData>,
     mut ew_realm_df: EventWriter<LoadedRealmData>,
     mut ew_simple_object_df: EventWriter<LoadedSimpleObjectData>,
+    mut ew_entity_sprite_df: EventWriter<LoadedEntitySpriteData>,
 ) {
     // let start = std::time::Instant::now();
 
@@ -102,6 +103,7 @@ pub fn load_data_file_dir(
     let mut particles_read: usize = 0;
     let mut realms_read: usize = 0;
     let mut simple_objects_read: usize = 0;
+    let mut entity_sprites_read: usize = 0;
 
     for d in &mut possible_ingests {
         let filepath = d.as_str();
@@ -181,16 +183,31 @@ pub fn load_data_file_dir(
                     ew_simple_object_df.send(LoadedSimpleObjectData { object_data });
                     simple_objects_read += 1;
                 }
+                GameSystem::EntitySprite => {
+                    let entity_sprite_data: DataFile<EntitySprite> =
+                        if let Some(d) = read_data_file(filepath) {
+                            d
+                        } else {
+                            tracing::debug!(
+                                "load_data_file_dir: failed to read entity sprite data from {}",
+                                header.unique_id
+                            );
+                            continue;
+                        };
+                    ew_entity_sprite_df.send(LoadedEntitySpriteData { entity_sprite_data });
+                    entity_sprites_read += 1;
+                }
             }
         }
     }
     // let duration = start.elapsed();
     tracing::info!(
-        "loaded {} spells, {} tilesets, {} particles, {} realms, {} simple objects",
+        "loaded {} spells, {} tilesets, {} particles, {} realms, {} simple objects, and {} entity sprites from data files",
         spells_read,
         tilesets_read,
         particles_read,
         realms_read,
-        simple_objects_read
+        simple_objects_read,
+        entity_sprites_read
     );
 }

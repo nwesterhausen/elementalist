@@ -9,7 +9,8 @@
 use bevy::ecs::event::Event;
 
 use crate::{
-    particle::Particle, realm_data::Realm, simple_object::SimpleObject, spells::Spell, Tileset,
+    images::EntitySprite, particle::Particle, realm_data::Realm, simple_object::SimpleObject,
+    spells::Spell, Tileset,
 };
 
 use super::DataFile;
@@ -47,4 +48,11 @@ pub struct LoadedRealmData {
 pub struct LoadedSimpleObjectData {
     /// The realm data that was loaded.
     pub object_data: DataFile<SimpleObject>,
+}
+
+#[derive(Event)]
+/// Event that is fired when an entity sprite is loaded.
+pub struct LoadedEntitySpriteData {
+    /// The realm data that was loaded.
+    pub entity_sprite_data: DataFile<EntitySprite>,
 }

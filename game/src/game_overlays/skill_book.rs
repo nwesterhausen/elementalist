@@ -1,11 +1,8 @@
 //! The skill book UI overlay.
 use bevy::prelude::*;
 use game_library::{
-    colors,
-    data_loader::storage::{GameData, StoredTextureAtlas},
-    enums::Skill,
-    font_resource::FontResource,
-    state::Overlay,
+    colors, data_loader::storage::GameData, enums::Skill, font_resource::FontResource,
+    images::StoredTextureAtlas, state::Overlay,
 };
 
 pub struct SkillBookUiPlugin;

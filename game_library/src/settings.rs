@@ -54,6 +54,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::{
     font_resource::{FontChoice, FontFamily},
+    save_file::settings_directory,
     CameraScaleLevel, Volume,
 };
 
@@ -221,10 +222,7 @@ impl Default for SettingsPlugin {
 impl Plugin for SettingsPlugin {
     fn build(&self, app: &mut App) {
         // Initialize the PKV store
-        app.insert_resource(PkvStore::new(
-            self.organization.as_str(),
-            self.application.as_str(),
-        ));
+        app.insert_resource(PkvStore::new_in_dir(settings_directory()));
 
         app
             // SettingChanged is a helper event for responding to button interaction

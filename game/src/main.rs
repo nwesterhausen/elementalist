@@ -15,7 +15,7 @@ use bevy_rapier2d::prelude::*;
 use game_library::{
     data_loader::storage::GameData, images::ImagesPlugin, state::Game, GeneratedMaps,
     GenerationSeed, Layer, LayerPlugin, MarkersToBiomes, NoisePlugin, PhysicsPlugin,
-    SchedulingPlugin,
+    SaveFilePlugin, SchedulingPlugin,
 };
 use in_game::InGamePlugin;
 use leafwing_input_manager::plugin::InputManagerPlugin;
@@ -125,6 +125,8 @@ impl Plugin for ElementalistDefaultPlugins {
         app.insert_resource(ClearColor(game_library::colors::CLEAR_COLOR));
         // Add the window icon
         app.add_systems(Startup, app_systems::set_window_icon);
+        // Add the save game system
+        app.add_plugins(SaveFilePlugin);
         // Add camera plugin
         app.add_plugins(camera::CameraPlugin);
         // Add the schedule plugin

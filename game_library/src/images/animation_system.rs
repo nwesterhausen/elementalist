@@ -10,6 +10,7 @@ use super::{
 };
 
 /// System that handles the drawing and animation of sprites.
+#[allow(clippy::needless_pass_by_value)]
 pub(super) fn draw_sprites(
     time: Res<Time>,
     mut query: Query<(
@@ -54,29 +55,27 @@ pub(super) fn draw_sprites(
         if timer.advance(&time) {
             // Advance the frame.
             frame.next();
-        } else {
-            // If the timer didn't advance, we don't need to update the texture atlas.
-            continue;
-        }
 
-        // Get the current frame index.
-        let frame_index = frame.get(current_animation.tile_indices.len());
-        if let Some(texture_index) = current_animation.tile_indices.get(frame_index) {
-            texture_atlas.index = *texture_index;
-        } else {
-            warn!(
-                "Frame index {} not found in animation {:?}",
-                frame_index, animation_state
-            );
-        }
+            // Get the current frame index.
+            let frame_index = frame.get(current_animation.tile_indices.len());
+            if let Some(texture_index) = current_animation.tile_indices.get(frame_index) {
+                texture_atlas.index = *texture_index;
+            } else {
+                warn!(
+                    "Frame index {} not found in animation {:?}",
+                    frame_index, animation_state
+                );
+            }
 
-        // Set the sprite's flip_x based on the facing direction.
-        sprite.flip_x = status.facing_left;
+            // Set the sprite's flip_x based on the facing direction.
+            sprite.flip_x = status.facing_left;
+        }
     }
 }
 
-/// Transitions the animation state based on the AnimationStatus. This automatically transitions from
+/// Transitions the animation state based on the `AnimationStatus`. This automatically transitions from
 /// an active state to idle when the action is no longer active.
+#[allow(clippy::needless_pass_by_value)]
 pub(super) fn transition_to_idle(
     mut query: Query<
         (

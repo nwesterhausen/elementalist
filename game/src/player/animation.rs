@@ -12,7 +12,7 @@ pub(super) fn set_casting_animation(
     // If the player is casting a spell, set the supplemental state to casting.
     if er_cast_spell.read().next().is_some() {
         for mut animation in &mut player_animation {
-            match animation.clone() {
+            match *animation {
                 Animation::Idle => *animation = Animation::Cast,
                 Animation::Walk => *animation = Animation::WalkCast,
                 Animation::Run => *animation = Animation::RunCast,

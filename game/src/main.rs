@@ -13,9 +13,9 @@ use bevy::{
 };
 use bevy_rapier2d::prelude::*;
 use game_library::{
-    data_loader::storage::GameData, images::ImagesPlugin, state::Game, GeneratedMaps,
-    GenerationSeed, Layer, LayerPlugin, MarkersToBiomes, NoisePlugin, PhysicsPlugin,
-    SaveFilePlugin, SchedulingPlugin,
+    data_loader::storage::GameData, images::ImagesPlugin, save_file::SaveFilePlugin, state::Game,
+    GeneratedMaps, GenerationSeed, Layer, LayerPlugin, MarkersToBiomes, NoisePlugin, PhysicsPlugin,
+    SchedulingPlugin,
 };
 use in_game::InGamePlugin;
 use leafwing_input_manager::plugin::InputManagerPlugin;

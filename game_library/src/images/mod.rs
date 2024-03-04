@@ -6,6 +6,7 @@ mod animation_system;
 mod animation_timer;
 mod entity_sprite;
 mod plugin;
+mod state;
 mod texture_atlas;
 mod tileset;
 

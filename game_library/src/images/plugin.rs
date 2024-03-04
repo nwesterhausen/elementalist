@@ -4,7 +4,7 @@ use bevy::prelude::*;
 
 use crate::state::Game;
 
-use super::animation_system::{draw_sprites, transition_to_idle};
+use super::animation_system::{draw_sprites, update_current_animation, update_tile_atlas_textures};
 
 /// Plugin for the image modules (animations, etc)
 ///
@@ -21,7 +21,12 @@ impl Plugin for ImagesPlugin {
     fn build(&self, app: &mut App) {
         app.add_systems(
             Update,
-            (draw_sprites, transition_to_idle).run_if(in_state(Game::Playing)),
+            (
+                update_tile_atlas_textures,
+                draw_sprites,
+                update_current_animation,
+            )
+                .run_if(in_state(Game::Playing)),
         );
     }
 }

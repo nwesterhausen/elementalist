@@ -1,6 +1,10 @@
 use bevy::prelude::*;
 use bevy_rapier2d::prelude::*;
-use game_library::{enums::StatEnum, images::AnimationStatus, StatBundle};
+use game_library::{
+    enums::StatEnum,
+    images::{AnimationMovementState, AnimationStatus},
+    StatBundle,
+};
 use leafwing_input_manager::action_state::ActionState;
 
 use crate::{events::PlayerAction, player::Player};
@@ -36,15 +40,17 @@ pub fn player_movement_controls(
 
     if action_state.pressed(&PlayerAction::Move) {
         // update the animation only when needed
-        status.walking = true;
+        status.movement = AnimationMovementState::Walk;
 
         if let Some(axis_pair) = action_state.clamped_axis_pair(&PlayerAction::Move) {
             controller.translation = Some(axis_pair.xy().normalize_or_zero() * (speed.value()));
 
-            status.facing_left = axis_pair.x() < 0.0;
+            if axis_pair.x() > 0.0 || axis_pair.x() < 0.0 {
+                status.facing_left = axis_pair.x() < 0.0;
+            }
         }
     } else {
-        status.walking = false;
+        status.movement = AnimationMovementState::Idle;
     }
 }
 

@@ -17,5 +17,8 @@ pub use animation_timer::AnimationTimer;
 pub use entity_sprite::EntitySprite;
 #[allow(clippy::module_name_repetitions)]
 pub use plugin::ImagesPlugin;
+pub use state::Action as AnimationActionState;
+pub use state::Movement as AnimationMovementState;
+pub use state::Reaction as AnimationReactionState;
 pub use texture_atlas::StoredTextureAtlas;
 pub use tileset::Tileset;

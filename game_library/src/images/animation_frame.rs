@@ -6,7 +6,7 @@ const MAX_SUPPORTED_ANIMATION_FRAMES: usize = 30;
 /// The frame of the animation that the sprite is currently on.
 ///
 /// This is used to track the current frame of an animation, and to advance the frame.
-#[derive(Debug, Resource, Clone, Copy, PartialEq, Eq, Hash, Component)]
+#[derive(Debug, Default, Resource, Clone, Copy, PartialEq, Eq, Hash, Component)]
 pub struct AnimationFrame {
     /// The current frame of the animation.
     pub frame: usize,

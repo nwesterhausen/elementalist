@@ -26,6 +26,9 @@ data:
       tileset: wizard
       tileIndices:
         - 4
+        - 4
+        - 4
+        - 4
       frameDuration: 0.1
     - state: WalkCast
       tileset: wizard

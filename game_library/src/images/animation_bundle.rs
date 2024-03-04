@@ -45,7 +45,7 @@ impl AnimationBundle {
     /// Create a new animation bundle.
     #[must_use]
     pub fn new(entity_sprite_id: &str) -> Self {
-        let mut timer = AnimationTimer::new(1.0);
+        let mut timer = AnimationTimer::new(2.0);
         timer.pause();
         Self {
             entity_sprite_id: EntitySpriteId {

@@ -11,7 +11,7 @@ use super::{
     Animation, AnimationFrame, AnimationTimer, EntitySpriteId,
 };
 
-/// System that updates the tile_atlas texture based on the current animation state.
+/// System that updates the `tile_atlas` texture based on the current animation state.
 #[allow(clippy::needless_pass_by_value)]
 pub(super) fn update_tile_atlas_textures(
     mut query: Query<
@@ -189,7 +189,11 @@ pub(super) fn update_current_animation(
 ///
 /// The current animation state.
 #[must_use]
-fn get_current_animation(reaction: Reaction, action: Action, movement: Movement) -> Animation {
+const fn get_current_animation(
+    reaction: Reaction,
+    action: Action,
+    movement: Movement,
+) -> Animation {
     match reaction {
         Reaction::None => match action {
             Action::None => match movement {

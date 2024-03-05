@@ -15,9 +15,7 @@ mod realms;
 mod simple_objects;
 mod spells;
 mod tilesets;
-
-/// The directory where the game data files are stored
-pub const DATA_FILE_DIR: &str = "game_data";
+mod resources;
 
 pub use header_def::*;
 pub use loader::*;

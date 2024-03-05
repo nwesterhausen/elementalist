@@ -4,8 +4,8 @@ use std::hash::Hash;
 use walkdir::WalkDir;
 
 use crate::{
-    data_loader::DATA_FILE_DIR, enums::GameSystem, images::EntitySprite, particle::Particle,
-    realm_data::Realm, simple_object::SimpleObject, spells::Spell, InternalId, Tileset,
+    enums::GameSystem, images::EntitySprite, particle::Particle, realm_data::Realm,
+    simple_object::SimpleObject, spells::Spell, InternalId, Tileset,
 };
 
 use super::{
@@ -14,6 +14,7 @@ use super::{
         LoadedSpellData, LoadedTilesetData,
     },
     header_def::{DataFile, DataFileHeader},
+    resources::DATA_FILE_DIR,
     DataFileHeaderOnly,
 };
 

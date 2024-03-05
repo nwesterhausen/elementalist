@@ -11,7 +11,7 @@ env:
   add_binaries_to_github_release: true
   itch_target: nwesterhausen/elementalist
   tag_name: ${{ github.ref_name }}
-  nightly_toolchain: nightly-2024-01-17
+  nightly_toolchain: nightly-2024-03-03
   # sccache enablement
   SCCACHE_GHA_ENABLED: true
   RUSTC_WRAPPER: sccache

@@ -7,8 +7,12 @@ use crate::save_file::SaveFileDirectories;
 /// The (relative) directory where the game data files are stored
 pub const DATA_FILE_DIR: &str = "game_data";
 
-/// A 'mods' directory that can be used to store mods for the game.
+/// A 'mods' directory that can be used to store mods for the game. It is located in the game
+/// directory itself (by the game executable).
 pub const MODS_DIR: &str = "mods";
+
+/// Plugins directory should be inserted into the 'settings' directory.
+pub const PLUGIN_DIR_NAME: &str = "plugins";
 
 /// Resource for the directories to check for data recursively.
 ///
@@ -56,6 +60,7 @@ impl DataFileDirs {
             if dir.is_dir() {
                 true
             } else if create {
+                info!("Creating directory: {}", dir.display());
                 std::fs::create_dir_all(dir).is_ok()
             } else {
                 removed += 1;
@@ -85,7 +90,7 @@ pub(super) fn validate_data_file_dirs(
     }
 
     // Add a 'plugins' directory to the list of directories to check for data files.
-    data_file_dirs.add_directory(directory_paths.settings.join("plugins"));
+    data_file_dirs.add_directory(directory_paths.settings.join(PLUGIN_DIR_NAME));
 
     let removed = data_file_dirs.validate_directories(create_dirs);
     if removed > 0 {
@@ -93,8 +98,5 @@ pub(super) fn validate_data_file_dirs(
             "Removed {} non-existent directories from the list of data file directories",
             removed
         );
-    }
-    if create_dirs {
-        info!("Created missing data file directories");
     }
 }

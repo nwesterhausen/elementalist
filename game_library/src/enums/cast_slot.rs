@@ -24,8 +24,8 @@ impl std::fmt::Display for CastSlot {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             Self::Cantrip => write!(f, "Cantrip"),
-            Self::Slot => write!(f, "Slot"),
-            Self::Ultimate => write!(f, "Ultimate"),
+            Self::Slot => write!(f, "Spell"),
+            Self::Ultimate => write!(f, "Ultimate Spell"),
         }
     }
 }

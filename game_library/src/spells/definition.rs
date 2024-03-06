@@ -4,7 +4,7 @@ use super::{talisman::SpellTalisman, SpellParticles};
 use crate::{
     data_loader::DataFile,
     enums::{CastSlot, CastType, GameSystem, Skill},
-    InternalId, StatEffect,
+    DisplayInformation, InternalId, StatEffect,
 };
 use bevy::prelude::*;
 use serde::{Deserialize, Serialize};
@@ -470,6 +470,41 @@ impl Spell {
     #[must_use]
     pub fn particles(&self) -> &[SpellParticles] {
         &self.particles
+    }
+}
+
+impl DisplayInformation for Spell {
+    fn tooltip(&self) -> String {
+        format!(
+            "{}\n{} {} {}\n{}",
+            self.name,
+            self.talisman.tier(),
+            self.skill,
+            self.cast_slot,
+            self.description
+        )
+    }
+
+    fn more_info(&self) -> String {
+        format!("{}\n{}", self.description(), self.lore())
+    }
+
+    fn summarized_one_liner(&self) -> String {
+        format!("{self}")
+    }
+}
+
+impl std::fmt::Display for Spell {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        // Include name, tier, magic type, and cast slot
+        write!(
+            f,
+            "{}: {} {} {}",
+            self.name,
+            self.talisman.tier(),
+            self.skill,
+            self.cast_slot
+        )
     }
 }
 

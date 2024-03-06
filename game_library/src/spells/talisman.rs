@@ -89,6 +89,23 @@ pub enum Tier {
     Unique,
 }
 
+impl std::fmt::Display for Tier {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Mundane => write!(f, "Mundane"),
+            Self::Common => write!(f, "Common"),
+            Self::Uncommon => write!(f, "Uncommon"),
+            Self::Rare => write!(f, "Rare"),
+            Self::Epic => write!(f, "Epic"),
+            Self::Legendary => write!(f, "Legendary"),
+            Self::Mythic => write!(f, "Mythic"),
+            Self::Divine => write!(f, "Divine"),
+            Self::Astral => write!(f, "Astral"),
+            Self::Unique => write!(f, "Unique"),
+        }
+    }
+}
+
 impl Default for SpellTalisman {
     fn default() -> Self {
         Self {

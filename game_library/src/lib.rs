@@ -77,6 +77,7 @@ pub use noise::NoisePlugin;
 pub use physics::PhysicsPlugin;
 pub use realm_data::Realm;
 pub use schedule::*;
+pub use shared_traits::DisplayInformation;
 pub use shared_traits::InternalId;
 pub use simple_object::SimpleObject;
 pub use skill::Skills;

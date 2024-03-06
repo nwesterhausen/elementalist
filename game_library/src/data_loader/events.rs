@@ -6,6 +6,8 @@
 //!
 //! * [`LoadedSpellData`] - Fired when spell data is loaded.
 
+use std::path::PathBuf;
+
 use bevy::ecs::event::Event;
 
 use crate::{
@@ -13,45 +15,54 @@ use crate::{
     spells::Spell, Tileset,
 };
 
-use super::DataFile;
+use super::{DataFile, DataFileHeader};
 
+/// Event that is fired when a valid data file is found.
 #[derive(Event)]
+pub struct DataFileFound {
+    /// The header of the data file
+    pub header: DataFileHeader,
+    /// The path to the data file
+    pub filepath: PathBuf,
+}
+
 /// Event that is fired when a spell is loaded.
+#[derive(Event)]
 pub struct LoadedSpellData {
     /// The spell data that was loaded.
     pub spell_data: DataFile<Spell>,
 }
 
-#[derive(Event)]
 /// Event that is fired when a tileset is loaded.
+#[derive(Event)]
 pub struct LoadedTilesetData {
     /// The tileset data that was loaded.
     pub tileset_data: DataFile<Tileset>,
 }
 
-#[derive(Event)]
 /// Event that is fired when a particle is loaded.
+#[derive(Event)]
 pub struct LoadedParticleData {
     /// The particle data that was loaded.
     pub particle_data: DataFile<Particle>,
 }
 
-#[derive(Event)]
 /// Event that is fired when a realm is loaded.
+#[derive(Event)]
 pub struct LoadedRealmData {
     /// The realm data that was loaded.
     pub realm_data: DataFile<Realm>,
 }
 
-#[derive(Event)]
 /// Event that is fired when a realm is loaded.
+#[derive(Event)]
 pub struct LoadedSimpleObjectData {
     /// The realm data that was loaded.
     pub object_data: DataFile<SimpleObject>,
 }
 
-#[derive(Event)]
 /// Event that is fired when an entity sprite is loaded.
+#[derive(Event)]
 pub struct LoadedEntitySpriteData {
     /// The realm data that was loaded.
     pub entity_sprite_data: DataFile<EntitySprite>,

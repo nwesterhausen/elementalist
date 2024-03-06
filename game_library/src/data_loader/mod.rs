@@ -12,12 +12,12 @@ mod loader;
 mod particles;
 mod plugin;
 mod realms;
+mod resources;
 mod simple_objects;
 mod spells;
 mod tilesets;
-mod resources;
 
 pub use header_def::*;
-pub use loader::*;
 #[allow(clippy::module_name_repetitions)]
 pub use plugin::DataLoaderPlugin;
+pub use resources::DataFileDirs;

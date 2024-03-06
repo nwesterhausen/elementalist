@@ -1,6 +1,13 @@
 use bevy::prelude::*;
 
-use super::{events::LoadedSpellData, storage::GameData};
+use crate::{enums::GameSystem, spells::Spell};
+
+use super::{
+    events::{DataFileFound, LoadedSpellData},
+    loader::read_data_file,
+    storage::GameData,
+    DataFile,
+};
 
 pub(super) fn load_spells(
     mut events: EventReader<LoadedSpellData>,
@@ -21,5 +28,25 @@ pub(super) fn load_spells(
             event.spell_data.data.name(),
             unique_id
         );
+    }
+}
+
+pub(super) fn parse_spell_file(
+    mut er_df_found: EventReader<DataFileFound>,
+    mut ew_spell_df: EventWriter<LoadedSpellData>,
+) {
+    for event in er_df_found.read() {
+        if event.header.system == GameSystem::Spell {
+            let spell_data: DataFile<Spell> = if let Some(d) = read_data_file(&event.filepath) {
+                d
+            } else {
+                warn!(
+                    "load_data_file_dir: failed to read spell data from {}",
+                    event.header.unique_id
+                );
+                continue;
+            };
+            ew_spell_df.send(LoadedSpellData { spell_data });
+        }
     }
 }

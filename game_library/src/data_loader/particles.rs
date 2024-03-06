@@ -2,7 +2,14 @@
 use bevy::prelude::*;
 use bevy_hanabi::prelude::*;
 
-use super::{events::LoadedParticleData, storage::GameData};
+use crate::{enums::GameSystem, particle::Particle};
+
+use super::{
+    events::{DataFileFound, LoadedParticleData},
+    loader::read_data_file,
+    storage::GameData,
+    DataFile,
+};
 
 /// System to load a particle effect.
 pub(super) fn load_particle_effects(
@@ -56,5 +63,27 @@ pub(super) fn load_particle_effects(
         );
 
         game_data.particles.insert(String::from(unique_id), effect);
+    }
+}
+
+/// System to parse a particle data file.
+pub(super) fn parse_particle_file(
+    mut er_df_found: EventReader<DataFileFound>,
+    mut ew_particle_df: EventWriter<LoadedParticleData>,
+) {
+    for event in er_df_found.read() {
+        if event.header.system == GameSystem::Particle {
+            let particle_data: DataFile<Particle> = if let Some(d) = read_data_file(&event.filepath)
+            {
+                d
+            } else {
+                warn!(
+                    "load_data_file_dir: failed to read particle data from {}",
+                    event.header.unique_id
+                );
+                continue;
+            };
+            ew_particle_df.send(LoadedParticleData { particle_data });
+        }
     }
 }

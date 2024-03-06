@@ -20,4 +20,5 @@ mod tilesets;
 pub use header_def::*;
 #[allow(clippy::module_name_repetitions)]
 pub use plugin::DataLoaderPlugin;
+pub use resources::CreateMissingDirs;
 pub use resources::DataFileDirs;

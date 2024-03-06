@@ -28,4 +28,6 @@ mod save_load;
 pub use data::SaveFile;
 pub use paths::settings_directory;
 #[allow(clippy::module_name_repetitions)]
+pub use paths::SaveFileDirectories;
+#[allow(clippy::module_name_repetitions)]
 pub use plugin::SaveFilePlugin;

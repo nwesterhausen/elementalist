@@ -9,6 +9,7 @@ use super::{
     loader::read_data_file_dirs,
     particles::{load_particle_effects, parse_particle_file},
     realms::{load_realms, parse_realm_file},
+    resources::validate_data_file_dirs,
     simple_objects::{load_simple_objects, parse_simple_object_file},
     spells::{load_spells, parse_spell_file},
     storage::GameData,
@@ -54,6 +55,6 @@ impl Plugin for DataLoaderPlugin {
             );
 
         // Add the system to load the data
-        app.add_systems(Startup, (read_data_file_dirs,));
+        app.add_systems(Startup, (validate_data_file_dirs, read_data_file_dirs));
     }
 }

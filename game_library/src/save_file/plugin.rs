@@ -2,7 +2,7 @@
 
 use bevy::prelude::*;
 
-use super::{data::SaveFile, events::SaveFileEvent, save_load};
+use super::{data::SaveFile, events::SaveFileEvent, initialize, save_load};
 
 /// Plugin for the save file system.
 #[allow(clippy::module_name_repetitions)]
@@ -11,7 +11,7 @@ pub struct SaveFilePlugin;
 impl Plugin for SaveFilePlugin {
     fn build(&self, app: &mut App) {
         // Initialize the save file system
-        app.add_systems(PreStartup, super::initialize::save_file_directories);
+        app.add_systems(PreStartup, initialize::save_file_directories);
         // Add the save file resource
         app.init_resource::<SaveFile>();
         // Add the events for loading and saving save files

@@ -2,6 +2,8 @@
 use bevy::prelude::*;
 use std::path::PathBuf;
 
+use crate::save_file::SaveFileDirectories;
+
 /// The (relative) directory where the game data files are stored
 pub const DATA_FILE_DIR: &str = "game_data";
 
@@ -34,5 +36,65 @@ impl DataFileDirs {
     #[must_use]
     pub fn directories(&self) -> &[PathBuf] {
         self.directories.as_slice()
+    }
+
+    /// Validate that the directories exist. Optionally create them if they don't.
+    ///
+    /// If they don't exist and we aren't creating them, remove them from the list.
+    ///
+    /// ## Parameters
+    ///
+    /// - `create`: If true, create the directories if they don't exist.
+    ///
+    /// ## Returns
+    ///
+    /// The number of directories that were removed from the list.
+    #[must_use]
+    pub fn validate_directories(&mut self, create: bool) -> usize {
+        let mut removed = 0;
+        self.directories.retain(|dir| {
+            if dir.is_dir() {
+                true
+            } else if create {
+                std::fs::create_dir_all(dir).is_ok()
+            } else {
+                removed += 1;
+                false
+            }
+        });
+        removed
+    }
+}
+
+/// Resource to indicate if we should create missing directories.
+#[derive(Debug, Default, Resource, Clone, Reflect)]
+pub struct CreateMissingDirs(pub bool);
+
+/// System to add any new directories from our directory resource and also validate them.
+#[allow(clippy::needless_pass_by_value)]
+pub(super) fn validate_data_file_dirs(
+    create_missing_dirs: Option<Res<CreateMissingDirs>>,
+    directory_paths: Res<SaveFileDirectories>,
+    mut data_file_dirs: ResMut<DataFileDirs>,
+) {
+    // No reason not to create the directories if they don't exist.
+    let mut create_dirs = true;
+    // Always prefer the value from the resource if it exists.
+    if let Some(create) = create_missing_dirs {
+        create_dirs = create.0;
+    }
+
+    // Add a 'plugins' directory to the list of directories to check for data files.
+    data_file_dirs.add_directory(directory_paths.settings.join("plugins"));
+
+    let removed = data_file_dirs.validate_directories(create_dirs);
+    if removed > 0 {
+        info!(
+            "Removed {} non-existent directories from the list of data file directories",
+            removed
+        );
+    }
+    if create_dirs {
+        info!("Created missing data file directories");
     }
 }

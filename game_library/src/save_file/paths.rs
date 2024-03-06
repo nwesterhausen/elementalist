@@ -30,8 +30,10 @@ pub fn save_directory() -> PathBuf {
 }
 
 /// Resource to hold the directory paths for settings and save files.
-#[derive(Debug, Default, Clone, Resource, Component, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Resource, Component, PartialEq, Eq, Hash)]
 pub struct SaveFileDirectories {
+    /// Directory for settings files and plugins.
     pub settings: PathBuf,
+    /// Directory for save files.
     pub save: PathBuf,
 }

@@ -108,6 +108,8 @@ fn main() {
         // Some test plugins for environment stuff
         .add_systems(OnEnter(Game::Playing), spawn_random_environment)
         .add_systems(OnExit(Game::Playing), despawn_with_tag::<EnvironmentStuff>)
+        // For the generated map, with a 32x32 tile size.
+        .insert_resource(GeneratedMaps::new((120, 120)).with_tile_dimension(32.0))
         // Launch
         .run();
 }
@@ -188,8 +190,8 @@ fn spawn_random_environment(
     seed: Res<GenerationSeed>,
 ) {
     // get the biomes for the current map
-    let Some(realm) = game_data.realms.get("simple test realm") else {
-        tracing::error!("No realm found for 'simple test realm'");
+    let Some(realm) = game_data.realms.get("backterria-simple") else {
+        tracing::error!("No realm found for 'backterria-simple'");
         return;
     };
 

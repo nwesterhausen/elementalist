@@ -10,7 +10,7 @@ header:
 data:
   name: Simple Realm
   description: A simple test realm
-  primaryElement: earth
+  primaryElement: Earth
   biomes:
     - biome: Floodplain
       altitude: LowerMontane

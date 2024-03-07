@@ -36,6 +36,7 @@ pub mod state;
 
 mod acceleration;
 mod attribute;
+mod audio;
 mod biome;
 mod camera_scale;
 mod cursor_position;

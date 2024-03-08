@@ -5,8 +5,8 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+
 [dependencies]
-bevy = "0.13"
 bevy-inspector-egui = "0.23.2"
 bevy_hanabi = "0.10.0"
 # Local disk storage in a key-value store. Settings are stored with this. Has to track main until next release.
@@ -23,6 +23,34 @@ bevy_rapier2d = { version = "0.25.0", features = [
 ] }
 platform-dirs = "0.3.0"
 bevy_kira_audio = "0.19.0"
+
+[dependencies.bevy]
+version = "0.13"
+default-features = false
+features = [
+    "animation",
+    "bevy_asset",
+    "bevy_gilrs",
+    "bevy_scene",
+    "bevy_winit",
+    "bevy_core_pipeline",
+    "bevy_pbr",
+    "bevy_gltf",
+    "bevy_render",
+    "bevy_sprite",
+    "bevy_text",
+    "bevy_ui",
+    "multi-threaded",
+    "png",
+    "hdr",
+    "x11",
+    "bevy_gizmos",
+    "android_shared_stdcxx",
+    "tonemapping_luts",
+    "default_font",
+    "webgl2",
+    "bevy_debug_stepping",
+]
 
 [dependencies.rand]
 version = "0.8.5"

@@ -62,6 +62,7 @@ mod volume;
 
 pub use acceleration::Acceleration;
 pub use attribute::Attribute;
+pub use audio::AudioPlugin;
 pub use biome::BiomeData;
 pub use camera_scale::CameraScaleLevel;
 pub use cursor_position::CursorPosition;

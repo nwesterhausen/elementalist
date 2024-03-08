@@ -16,9 +16,6 @@ features = ["git2"]
 embed-resource = "2.4.1"
 
 [dependencies]
-# When running the game in development, use the dynamic linking feature of Bevy to speed
-# up compilation times. `cargo run --features bevy/dynamic_linking` will enable this.
-bevy = "0.13.0"
 # Input abstraction layer, makes for easy input handling and rebinding.
 leafwing-input-manager = "0.13.3"
 # Used for logging. This might be able to be replaced with a re-pub from bevy.
@@ -41,6 +38,36 @@ bevy_hanabi = { version = "0.10.0", default-features = false, features = [
 ] }
 # Physics engine
 bevy_rapier2d = { version = "0.25.0", features = ["parallel"] }
+# Audio system plugin
+bevy_kira_audio = "0.19"
+
+[dependencies.bevy]
+version = "0.13"
+default-features = false
+features = [
+  "animation",
+  "bevy_asset",
+  "bevy_gilrs",
+  "bevy_scene",
+  "bevy_winit",
+  "bevy_core_pipeline",
+  "bevy_pbr",
+  "bevy_gltf",
+  "bevy_render",
+  "bevy_sprite",
+  "bevy_text",
+  "bevy_ui",
+  "multi-threaded",
+  "png",
+  "hdr",
+  "x11",
+  "bevy_gizmos",
+  "android_shared_stdcxx",
+  "tonemapping_luts",
+  "default_font",
+  "webgl2",
+  "bevy_debug_stepping",
+]
 
 # Some very strict lints.
 [lints.rust]

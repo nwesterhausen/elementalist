@@ -1,5 +1,4 @@
-//! Plugin for audio
-
+//! Plugin for audio. Adds any systems, events, resources used for our audio system.
 use bevy::prelude::*;
 use bevy_kira_audio::AudioPlugin as KiraAudioPlugin;
 

@@ -38,6 +38,36 @@ pub enum Shaping {
     Melee,
 }
 
+impl std::fmt::Display for Shaping {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Projectile => write!(f, "Projectile"),
+            Self::AreaOfEffect => write!(f, "Area of Effect"),
+            Self::Cone => write!(f, "Cone"),
+            Self::Line => write!(f, "Line"),
+            Self::Touch => write!(f, "Touch"),
+            Self::OnSelf => write!(f, "Self"),
+            Self::Melee => write!(f, "Melee"),
+        }
+    }
+}
+
+impl Shaping {
+    /// Get the index of the shaping in the engraving tileset.
+    #[must_use]
+    pub const fn engraving_index(&self) -> usize {
+        match self {
+            Self::Projectile => 0,
+            Self::AreaOfEffect => 1,
+            Self::Cone => 2,
+            Self::Line => 3,
+            Self::Touch => 4,
+            Self::OnSelf => 6,
+            Self::Melee => 5,
+        }
+    }
+}
+
 /// The behavior of the spell talisman. This defines the behavior of the spell.
 #[derive(
     Debug, Copy, Clone, PartialEq, Eq, Hash, Serialize, Deserialize, Reflect, Component, Resource,
@@ -59,6 +89,38 @@ pub enum Behavior {
     Polymorph,
     /// A spell with the `Teleport` behavior teleports the target.
     Teleport,
+}
+
+impl std::fmt::Display for Behavior {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Damage => write!(f, "Damage"),
+            Self::Heal => write!(f, "Heal"),
+            Self::Buff => write!(f, "Buff"),
+            Self::Debuff => write!(f, "Debuff"),
+            Self::Utility => write!(f, "Utility"),
+            Self::Summon => write!(f, "Summon"),
+            Self::Polymorph => write!(f, "Polymorph"),
+            Self::Teleport => write!(f, "Teleport"),
+        }
+    }
+}
+
+impl Behavior {
+    /// Get the index of the behavior in the engraving tileset.
+    #[must_use]
+    pub const fn engraving_index(&self) -> usize {
+        match self {
+            Self::Damage => 7,
+            Self::Heal => 8,
+            Self::Buff => 9,
+            Self::Debuff => 10,
+            Self::Utility => 11,
+            Self::Summon => 12,
+            Self::Polymorph => 13,
+            Self::Teleport => 14,
+        }
+    }
 }
 
 /// The tier of the spell talisman. This defines the power level of the spell.
@@ -102,6 +164,25 @@ impl std::fmt::Display for Tier {
             Self::Divine => write!(f, "Divine"),
             Self::Astral => write!(f, "Astral"),
             Self::Unique => write!(f, "Unique"),
+        }
+    }
+}
+
+impl Tier {
+    /// Get the index of the talisman for this tier.
+    #[must_use]
+    pub const fn talisman_index(&self) -> usize {
+        match self {
+            Self::Mundane => 9,
+            Self::Common => 8,
+            Self::Uncommon => 7,
+            Self::Rare => 6,
+            Self::Epic => 5,
+            Self::Legendary => 4,
+            Self::Mythic => 3,
+            Self::Divine => 2,
+            Self::Astral => 1,
+            Self::Unique => 0,
         }
     }
 }
@@ -164,5 +245,15 @@ impl SpellTalisman {
     #[must_use]
     pub const fn tier(&self) -> Tier {
         self.tier
+    }
+}
+
+impl std::fmt::Display for SpellTalisman {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{} Talisman of {} {}",
+            self.tier, self.shaping, self.behavior
+        )
     }
 }

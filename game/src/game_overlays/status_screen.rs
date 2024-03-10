@@ -7,7 +7,7 @@ use game_library::{
 };
 use leafwing_input_manager::action_state::ActionState;
 
-use crate::{despawn_with_tag, events::PlayerAction, player::Player, resources::style_prefab};
+use crate::{despawn_with_tag, events::PlayerAction, player::Player, style_prefab};
 
 pub(super) struct StatusScreenPlugin;
 

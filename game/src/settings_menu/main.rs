@@ -3,7 +3,7 @@ use bevy::prelude::*;
 use game_library::font_resource::FontResource;
 use game_library::state::AppState;
 
-use crate::resources::style_prefab;
+use crate::style_prefab;
 
 use super::{
     base::SettingsMenuEntity,

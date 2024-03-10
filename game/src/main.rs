@@ -34,6 +34,7 @@ mod resources;
 mod settings_menu;
 mod spells;
 mod splash_screen;
+mod style_prefab;
 
 pub use app_systems::despawn_with_tag;
 use events::{MenuInteraction, PlayerAction};

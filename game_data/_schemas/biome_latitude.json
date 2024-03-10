@@ -4,13 +4,34 @@
 	"title": "Elementalist Biome Latitude",
 	"description": "The available latitudinal regions for biomes in the Elementalist game.",
 	"type": "string",
-	"enum": [
-		"Tropical",
-		"Subtropical",
-		"WarmTemperate",
-		"CoolTemperate",
-		"Boreal",
-		"Subpolar",
-		"Polar"
+	"oneOf": [
+		{
+			"const": "Tropical",
+			"description": "Found closest to the equator, tropical biomes are hot and humid, with a wide variety of plant and animal life."
+		},
+		{
+			"const": "Subtropical",
+			"description": "Slightly further from the equator, subtropical biomes are still warm and humid, but with a wider range of seasonal variation."
+		},
+		{
+			"const": "WarmTemperate",
+			"description": "Warm temperate biomes are found in the middle latitudes, with warm summers and mild winters."
+		},
+		{
+			"const": "CoolTemperate",
+			"description": "Cool temperate biomes are found in the higher middle latitudes, with warm summers and cold winters."
+		},
+		{
+			"const": "Boreal",
+			"description": "Boreal biomes are found in the subarctic regions, with short, cool summers and long, cold winters."
+		},
+		{
+			"const": "Subpolar",
+			"description": "Subpolar biomes are found in the arctic regions, with short, cool summers and long, very cold winters."
+		},
+		{
+			"const": "Polar",
+			"description": "Polar biomes are found at the poles, with very cold temperatures year-round."
+		}
 	]
 }

@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/tileset.json
+header:
+  uniqueId: backterria_ground
+  system: Tileset
+  author: Backterria
+  description: 32x32 Ground Tiles
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  path: backterria/ground_32.png
+  tileWidth: 32
+  tileHeight: 32
+  tilesetWidth: 42
+  tilesetHeight: 12
+  horizontalOffset: 0
+  horizontalPadding: 0
+  verticalOffset: 0
+  verticalPadding: 0

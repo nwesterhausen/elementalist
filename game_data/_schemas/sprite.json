@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.nwest.one/games/elementalist/sprite.json",
+  "title": "Elementalist Sprite Schema",
+  "description": "A sprite describes the animations and appearance of a game object.",
+  "type": "object",
+  "properties": {
+    "header": {
+      "description": "Metadata about the sprite",
+      "$ref": "https://schemas.nwest.one/games/elementalist/header.json"
+    },
+    "data": {
+      "description": "The sprite data",
+      "$ref": "https://schemas.nwest.one/games/elementalist/entity_sprite.json"
+    }
+  },
+  "required": [
+    "header",
+    "data"
+  ]
+}

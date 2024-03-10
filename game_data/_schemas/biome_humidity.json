@@ -4,14 +4,38 @@
   "title": "Elementalist Biome Humidity",
   "description": "The available humidities for biomes in the Elementalist game.",
   "type": "string",
-  "enum": [
-    "Superarid",
-    "Perarid",
-    "Arid",
-    "Semiarid",
-    "Subhumid",
-    "Humid",
-    "Perhumid",
-    "Superhumid"
+  "oneOf": [
+    {
+      "const": "Superaird",
+      "description": "Superarid - less than 100mm of precipitation per year."
+    },
+    {
+      "const": "Perarid",
+      "description": "Perarid - 100-200mm of precipitation per year."
+    },
+    {
+      "const": "Arid",
+      "description": "Arid - 200-400mm of precipitation per year."
+    },
+    {
+      "const": "Semiarid",
+      "description": "Semiarid - 400-800mm of precipitation per year."
+    },
+    {
+      "const": "Subhumid",
+      "description": "Subhumid - 800-1600mm of precipitation per year."
+    },
+    {
+      "const": "Humid",
+      "description": "Humid - 1600-3200mm of precipitation per year."
+    },
+    {
+      "const": "Perhumid",
+      "description": "Perhumid - 3200-6400mm of precipitation per year."
+    },
+    {
+      "const": "Superhumid",
+      "description": "Superhumid - more than 6400mm of precipitation per year."
+    }
   ]
 }

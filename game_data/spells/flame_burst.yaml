@@ -10,12 +10,15 @@ header:
 data:
   name: Flame Burst
   description: Send a cloud of flame towards your target
-  castSlot: secondary
+  castSlot: Slot
   spellTier: 1
   manaCost: 1
-  castTime: 0
   cooldown: 3
-  magic: fire
-  tags:
-    - cone
-    - aoe
+  talisman:
+    shaping: Cone
+    behavior: Damage
+    tier: Common
+  skill: Pyromancy
+  castType: Instant
+  spriteTileset: placeholder
+  spriteIndex: 0

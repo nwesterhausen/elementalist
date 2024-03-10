@@ -11,8 +11,13 @@ data:
   name: Summon Imp
   description: Summon an imp to fight for you.
   manaCost: 1
-  castSlot: primary
-  castTime: 0
   cooldown: 2
-  magic: summoning
-  spellTier: 0
+  talisman:
+    shaping: OnSelf
+    behavior: Summon
+    tier: Mundane
+  skill: Citomancy
+  castSlot: Cantrip
+  castType: Instant
+  spriteTileset: placeholder
+  spriteIndex: 0

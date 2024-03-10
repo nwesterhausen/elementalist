@@ -1,0 +1,40 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/sprite.json
+header:
+  uniqueId: player-avatar
+  system: EntitySprite
+  author: Nicholas Westerhausen
+  description: The sprite animation details for the player's avatar
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  animations:
+    - state: Idle
+      tileset: wizard
+      tileIndices:
+        - 3
+      frameDuration: 0.1
+    - state: Walk
+      tileset: wizard
+      tileIndices:
+        - 0
+        - 1
+        - 0
+        - 2
+      frameDuration: 0.1
+    - state: Cast
+      tileset: wizard
+      tileIndices:
+        - 4
+        - 4
+        - 4
+        - 4
+      frameDuration: 0.1
+    - state: WalkCast
+      tileset: wizard
+      tileIndices:
+        - 5
+        - 6
+        - 7
+        - 8
+      frameDuration: 0.1

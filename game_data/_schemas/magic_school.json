@@ -4,24 +4,78 @@
   "title": "The schools of magic in the Elementalist game",
   "description": "The family of magic the spell belongs to",
   "type": "string",
-  "enum": [
-    "fire",
-    "lightning",
-    "water",
-    "earth",
-    "air",
-    "ice",
-    "force",
-    "light",
-    "dark",
-    "arcane",
-    "life",
-    "death",
-    "enhancement",
-    "reduction",
-    "summoning",
-    "necromancy",
-    "polymorph",
-    "time"
+  "oneOf": [
+    {
+      "const": "Fire",
+      "description": "The school of fire magic"
+    },
+    {
+      "const": "Lightning",
+      "description": "The school of lightning magic"
+    },
+    {
+      "const": "Water",
+      "description": "The school of water magic"
+    },
+    {
+      "const": "Earth",
+      "description": "The school of earth magic"
+    },
+    {
+      "const": "Air",
+      "description": "The school of air magic"
+    },
+    {
+      "const": "Ice",
+      "description": "The school of ice magic"
+    },
+    {
+      "const": "Force",
+      "description": "The school of force magic"
+    },
+    {
+      "const": "Light",
+      "description": "The school of light magic"
+    },
+    {
+      "const": "Dark",
+      "description": "The school of dark magic"
+    },
+    {
+      "const": "Arcane",
+      "description": "The school of arcane magic"
+    },
+    {
+      "const": "Life",
+      "description": "The school of life magic"
+    },
+    {
+      "const": "Death",
+      "description": "The school of death magic"
+    },
+    {
+      "const": "Enhancement",
+      "description": "The school of enhancement magic"
+    },
+    {
+      "const": "Reduction",
+      "description": "The school of reduction magic"
+    },
+    {
+      "const": "Summoning",
+      "description": "The school of summoning magic"
+    },
+    {
+      "const": "Necromancy",
+      "description": "The school of necromancy magic"
+    },
+    {
+      "const": "Polymorph",
+      "description": "The school of polymorph magic"
+    },
+    {
+      "const": "Time",
+      "description": "The school of time magic"
+    }
   ]
 }

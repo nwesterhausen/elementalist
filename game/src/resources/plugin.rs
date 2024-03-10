@@ -6,8 +6,9 @@ use game_library::{
     font_resource::{change_font, ChangeFont, FontResource},
     progress_bar::ProgressBarPlugin,
     settings::SettingsPlugin,
+    spells::SpellSelection,
     state::{AppState, Game, Save, Settings},
-    CursorPosition, Health, Mana, SpellChoices, Xp,
+    CursorPosition, Health, Mana, Xp,
 };
 
 use crate::{app_systems, resources::buttons};
@@ -36,10 +37,10 @@ pub struct ElementalistResourcesPlugin;
 impl Plugin for ElementalistResourcesPlugin {
     fn build(&self, app: &mut App) {
         // The app states
-        app.add_state::<AppState>()
-            .add_state::<Game>()
-            .add_state::<Settings>()
-            .add_state::<Save>();
+        app.init_state::<AppState>()
+            .init_state::<Game>()
+            .init_state::<Settings>()
+            .init_state::<Save>();
 
         // Data loading plugin
         app.add_plugins(DataLoaderPlugin);
@@ -65,7 +66,7 @@ impl Plugin for ElementalistResourcesPlugin {
             // The cursor position resource, used to aim spells or know cursor coordinates easily
             .insert_resource(CursorPosition::default())
             // The player's spell choices
-            .insert_resource(SpellChoices::default())
+            .insert_resource(SpellSelection::default())
             // The font resource has handles to the fonts used in the game to save loading assets constantly
             // and to easily allow the user to change the font (e.g. for accessibility)
             .add_event::<ChangeFont>()

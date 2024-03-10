@@ -11,8 +11,13 @@ data:
   name: Magic Mirror
   description: Create a wall of arcane energy which negates magic that passes through it.
   manaCost: 1
-  castSlot: secondary
-  castTime: 0
+  castSlot: Slot
   cooldown: 4.25
-  magic: arcane
-  spellTier: 0
+  talisman:
+    shaping: AreaOfEffect
+    behavior: Utility
+    tier: Common
+  skill: Arcanomancy
+  castType: Instant
+  spriteTileset: placeholder
+  spriteIndex: 0

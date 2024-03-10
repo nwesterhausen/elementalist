@@ -4,7 +4,7 @@ use bevy::prelude::*;
 use game_library::font_resource::FontResource;
 use game_library::state::Settings;
 
-use crate::{despawn_with_tag, resources::style_prefab};
+use crate::{despawn_with_tag, style_prefab};
 
 use super::{
     base::SettingsMenuEntity,

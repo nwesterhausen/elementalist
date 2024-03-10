@@ -11,8 +11,14 @@ data:
   name: Wind
   description: Sustain a gust of wind away from the caster.
   manaCost: 1
-  castSlot: secondary
-  castTime: 0
+  castTime: 0.5
   cooldown: 2.50
-  magic: air
-  spellTier: 1
+  talisman:
+    shaping: Cone
+    behavior: Damage
+    tier: Uncommon
+  skill: Aeromancy
+  castSlot: Slot
+  castType: Channel
+  spriteTileset: placeholder
+  spriteIndex: 0

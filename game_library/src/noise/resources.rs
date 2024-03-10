@@ -18,7 +18,7 @@ impl GenerationSeed {
 ///
 /// This is used to store the results of the noise generation, and then
 /// used to generate the actual realm. The default map size is 1000x1000.
-#[derive(Debug, Clone, Eq, PartialEq, Hash, Resource)]
+#[derive(Debug, Clone, Resource)]
 pub struct GeneratedMaps {
     /// The biome map.
     pub biome_map: Vec<Vec<Marker>>,
@@ -28,11 +28,15 @@ pub struct GeneratedMaps {
     width: usize,
     /// The height of the map. Each tile is 16x16 px.
     height: usize,
+    /// Default dimension for an individual tile (one side).
+    tile_dimension: f32,
 }
 
 impl GeneratedMaps {
     /// The default size of the map.
     pub const DEFAULT_SIZE: (usize, usize) = (100, 100);
+    /// Tile size in pixels. One side because they are square.
+    pub const DEFAULT_TILE_SIZE: f32 = 16.0;
 
     /// Create a new Empty `GeneratedMaps` with the given size.
     #[must_use]
@@ -42,6 +46,7 @@ impl GeneratedMaps {
             object_map: Vec::with_capacity(size.0),
             width: size.0,
             height: size.1,
+            tile_dimension: Self::DEFAULT_TILE_SIZE,
         };
         for _ in 0..size.0 {
             empty_map.biome_map.push(Vec::with_capacity(size.1));
@@ -49,6 +54,13 @@ impl GeneratedMaps {
         }
 
         empty_map
+    }
+
+    /// Update the tile dimension.
+    #[must_use]
+    pub const fn with_tile_dimension(mut self, tile_dimension: f32) -> Self {
+        self.tile_dimension = tile_dimension;
+        self
     }
 
     /// Ask for the biome at the given position.
@@ -87,8 +99,14 @@ impl GeneratedMaps {
     pub fn map_to_world(&self, pos: (usize, usize)) -> Vec3 {
         #[allow(clippy::cast_precision_loss)]
         Vec3::new(
-            (pos.0 as f32).mul_add(16.0, self.width as f32 * -8.0),
-            (pos.1 as f32).mul_add(16.0, self.height as f32 * -8.0),
+            (pos.0 as f32).mul_add(
+                self.tile_dimension,
+                self.width as f32 * (self.tile_dimension * -0.5),
+            ),
+            (pos.1 as f32).mul_add(
+                self.tile_dimension,
+                self.height as f32 * (self.tile_dimension * -0.5),
+            ),
             0.0,
         )
     }
@@ -142,8 +160,14 @@ impl GeneratedMaps {
             clippy::cast_sign_loss
         )]
         (
-            pos.x.mul_add(1. / 16.0, self.width as f32 * -8.0) as usize,
-            pos.y.mul_add(1. / 16.0, self.height as f32 * -8.0) as usize,
+            pos.x.mul_add(
+                1. / self.tile_dimension,
+                self.width as f32 * (self.tile_dimension * -0.5),
+            ) as usize,
+            pos.y.mul_add(
+                1. / self.tile_dimension,
+                self.height as f32 * (self.tile_dimension * -0.5),
+            ) as usize,
         )
     }
 

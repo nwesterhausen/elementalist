@@ -10,11 +10,13 @@ header:
 data:
   name: Stone Dart
   description: Shoot a dart of rock at your target.
-  manaCost: 0
-  castSlot: primary
-  castTime: 0
   cooldown: .33
-  magic: earth
-  spellTier: 0
   spriteTileset: spell_projectiles
   spriteIndex: 10
+  talisman:
+    shaping: Projectile
+    behavior: Damage
+    tier: Mundane
+  skill: Geomancy
+  castSlot: Cantrip
+  castType: Instant

@@ -10,15 +10,14 @@ header:
 data:
   name: Fire Bolt
   description: Propel a mote of flame at your target.
-  manaCost: 0
-  spellTier: 0
-  magic: fire
-  castSlot: primary
-  castTime: 0
+  castSlot: Cantrip
   cooldown: 1.50
   spriteTileset: spell_projectiles
   spriteIndex: 2
-  flags:
-    - projectile
-  castType: instant
-  castCategory: projectile
+  castType: Instant
+  talisman:
+    shaping: Projectile
+    behavior: Damage
+    tier: Common
+  baseDamage: 2
+  skill: Pyromancy

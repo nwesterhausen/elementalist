@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/realm.json
+header:
+  uniqueId: backterria-simple
+  system: Realm
+  author: Nicholas Westerhausen
+  description: A simple test realm using the backterria sprites/tilesets.
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  name: Simple Backterria-drawn Realm
+  description: A realm of grasslands and small hills.
+  primaryElement: Earth
+  biomes:
+    - altitude: Alpine
+      biome: Tundra
+      humidity: Arid
+      latitude: Subpolar
+      simpleObjects: []
+      groundTilesets:
+        - id: backterria_ground
+          weights:
+            - tile: 420
+              weight: 1

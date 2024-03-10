@@ -4,58 +4,164 @@
   "title": "Elementalist Color",
   "description": "The supported colors for the Elementalist game. See https://nwesterhausen.github.io/elementalist/game_library/colors",
   "type": "string",
-  "enum": [
-    "Rangitoto",
-    "CostaDelSol",
-    "Sushi",
-    "Conifer",
-    "Manz",
-    "Hampton",
-    "Olivine",
-    "Laurel",
-    "Nandor",
-    "OuterSpace",
-    "EbonyClay",
-    "Mirage",
-    "CloudBurst",
-    "SanJuan",
-    "SteelBlue",
-    "Downy",
-    "WaterLeaf",
-    "Mystic",
-    "Loblolly",
-    "RegentGray",
-    "PaleSky",
-    "BrightGray",
-    "LondonHue",
-    "SandDune",
-    "Bossanova",
-    "Jacarta",
-    "Revolver",
-    "WineBerry",
-    "PurpleAlternateDark",
-    "TawnyPort",
-    "ChestnutRose",
-    "SeaPink",
-    "Chalky",
-    "Anzac",
-    "Copper",
-    "MuleFawn",
-    "Terracotta",
-    "Mojo",
-    "SolidPink",
-    "Buccaneer",
-    "CocoaBrown",
-    "Millbrook",
-    "SpicyMix",
-    "SantaFe",
-    "Russett",
-    "Matterhorn",
-    "Thunder",
-    "DarkerThunder",
-    "Ferra",
-    "LighterSandDune",
-    "Mongoose",
-    "Kangaroo"
+  "oneOf": [
+    {
+      "const": "Rangitoto",
+      "description": "A dark green-brown, #3f4328"
+    },
+    {
+      "const": "CostaDelSol",
+      "description": "A deeper green, #5f7132"
+    },
+    {
+      "const": "Sushi"
+    },
+    {
+      "const": "Conifer"
+    },
+    {
+      "const": "Manz"
+    },
+    {
+      "const": "Hampton"
+    },
+    {
+      "const": "Olivine"
+    },
+    {
+      "const": "Laurel"
+    },
+    {
+      "const": "Nandor"
+    },
+    {
+      "const": "OuterSpace"
+    },
+    {
+      "const": "EbonyClay"
+    },
+    {
+      "const": "Mirage"
+    },
+    {
+      "const": "CloudBurst"
+    },
+    {
+      "const": "SanJuan"
+    },
+    {
+      "const": "SteelBlue"
+    },
+    {
+      "const": "Downy"
+    },
+    {
+      "const": "WaterLeaf"
+    },
+    {
+      "const": "Mystic"
+    },
+    {
+      "const": "Loblolly"
+    },
+    {
+      "const": "RegentGray"
+    },
+    {
+      "const": "PaleSky"
+    },
+    {
+      "const": "BrightGray"
+    },
+    {
+      "const": "LondonHue"
+    },
+    {
+      "const": "SandDune"
+    },
+    {
+      "const": "Bossanova"
+    },
+    {
+      "const": "Jacarta"
+    },
+    {
+      "const": "Revolver"
+    },
+    {
+      "const": "WineBerry"
+    },
+    {
+      "const": "PurpleAlternateDark"
+    },
+    {
+      "const": "TawnyPort"
+    },
+    {
+      "const": "ChestnutRose"
+    },
+    {
+      "const": "SeaPink"
+    },
+    {
+      "const": "Chalky"
+    },
+    {
+      "const": "Anzac"
+    },
+    {
+      "const": "Copper"
+    },
+    {
+      "const": "MuleFawn"
+    },
+    {
+      "const": "Terracotta"
+    },
+    {
+      "const": "Mojo"
+    },
+    {
+      "const": "SolidPink"
+    },
+    {
+      "const": "Buccaneer"
+    },
+    {
+      "const": "CocoaBrown"
+    },
+    {
+      "const": "Millbrook"
+    },
+    {
+      "const": "SpicyMix"
+    },
+    {
+      "const": "SantaFe"
+    },
+    {
+      "const": "Russett"
+    },
+    {
+      "const": "Matterhorn"
+    },
+    {
+      "const": "Thunder"
+    },
+    {
+      "const": "DarkerThunder"
+    },
+    {
+      "const": "Ferra"
+    },
+    {
+      "const": "LighterSandDune"
+    },
+    {
+      "const": "Mongoose"
+    },
+    {
+      "const": "Kangaroo"
+    }
   ]
 }

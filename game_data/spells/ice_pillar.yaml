@@ -10,14 +10,16 @@ header:
 data:
   name: Ice Pillar
   description: A frozen pillar of ice forms at a target location.
-  castSlot: secondary
+  castSlot: Slot
   castTime: 1
   cooldown: 5
   manaCost: 1
+  talisman:
+    shaping: AreaOfEffect
+    behavior: Utility
+    tier: Uncommon
+  skill: Cryomancy
+  castType: Cast
+  spriteTileset: placeholder
+  spriteIndex: 0
   spellTier: 1
-  magic: ice
-  flags:
-    - target
-    - aoe
-    - ground
-    - wall

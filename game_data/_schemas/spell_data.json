@@ -13,128 +13,157 @@
 			"description": "A description of the spell",
 			"type": "string"
 		},
-		"longDescription": {
+		"lore": {
 			"description": "A longer, more thematic description of the spell that can be used in-game to add lore and flavor",
 			"type": "string"
 		},
-		"manaCost": {
-			"description": "The cost of the spell",
-			"type": "integer"
+		"talisman": {
+			"description": "The spell talisman which creates this spell",
+			"$ref": "https://schemas.nwest.one/games/elementalist/spell_talisman.json"
+		},
+		"skill": {
+			"description": "The skill which powers this spell",
+			"$ref": "https://schemas.nwest.one/games/elementalist/skill.json"
 		},
 		"castSlot": {
-			"description": "The slot the spell is cast in",
+			"description": "The slot the spell can fit in",
 			"type": "string",
-			"enum": ["primary", "secondary", "defensive", "ultimate"]
+			"default": "Cantrip",
+			"oneOf": [
+				{
+					"const": "Cantrip",
+					"title": "Cantrips are typically basic attacks that don't cost mana and are a player's primary means of dealing damage. They are typically the most spammable spell in a player's arsenal."
+				},
+				{
+					"const": "Slot",
+					"title": "Slotted spells are the primary spells a player uses. They are typically more powerful than cantrips and have a variety of effects."
+				},
+				{
+					"const": "Ultimate",
+					"title": "Ultimate spells are the most powerful spells a player can cast. They are typically on a long cooldown and have a variety of powerful effects."
+				}
+			]
 		},
-		"castTime": {
-			"description": "The time it takes to cast the spell",
-			"type": "number",
-			"inclusiveMinimum": 0
+		"castType": {
+			"description": "The type of cast the spell uses",
+			"type": "string",
+			"default": "Instant",
+			"oneOf": [
+				{
+					"const": "Instant",
+					"title": "Instant spells are cast immediately."
+				},
+				{
+					"const": "Channel",
+					"title": "Channel spells must be maintained to be active."
+				},
+				{
+					"const": "Cast",
+					"title": "Cast spells are cast over a period of time and can be interrupted. Only when the cast is complete does the spell take effect."
+				}
+			]
 		},
 		"cooldown": {
 			"description": "The time it takes to cool down after casting the spell",
+			"default": 0,
 			"type": "number",
 			"inclusiveMinimum": 0
 		},
-		"magic": {
-			"description": "The family of magic the spell belongs to",
-			"$ref": "https://schemas.nwest.one/games/elementalist/magic_school.json"
+		"castTime": {
+			"description": "The time it takes to cast the spell",
+			"default": 0,
+			"type": "number",
+			"inclusiveMinimum": 0
 		},
-		"flags": {
-			"description": "Flags to specify general behavior",
-			"type": "array",
-			"items": {
-				"type": "string",
-				"enum": [
-					"aoe",
-					"self",
-					"target",
-					"projectile",
-					"instant",
-					"homing",
-					"cone",
-					"line",
-					"beam",
-					"wall",
-					"ground",
-					"summon",
-					"buff",
-					"debuff",
-					"heal",
-					"damage",
-					"movement",
-					"touch",
-					"sustained",
-					"dot",
-					"circle",
-					"square"
-				]
-			}
-		},
-		"spellTier": {
-			"description": "The tier of the spell, used to indicate how soon it can be unlocked or learned. One of the tier 0 spells will be a free choice when learning a type of magic.",
-			"type": "integer",
-			"enum": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-		},
-		"speed": {
-			"description": "The speed of the spell, used to determine how quickly it travels",
+		"manaCost": {
+			"description": "The cost of the spell",
+			"default": 0,
 			"type": "number",
 			"inclusiveMinimum": 0
 		},
 		"range": {
 			"description": "The range of the spell, used to determine how far it can travel",
 			"type": "number",
+			"default": 100,
+			"inclusiveMinimum": 0
+		},
+		"speed": {
+			"description": "The speed of the spell, used to determine how quickly it travels",
+			"type": "number",
+			"default": 100,
+			"inclusiveMinimum": 0
+		},
+		"acceleration": {
+			"description": "The acceleration of the spell, used to determine how quickly it gets up to max speed.",
+			"type": "number",
+			"default": 20,
 			"inclusiveMinimum": 0
 		},
 		"duration": {
 			"description": "The duration of the spell, used to determine how long it lasts",
 			"type": "number",
+			"default": 5,
 			"inclusiveMinimum": 0
 		},
-		"damage": {
+		"baseDamage": {
 			"description": "The damage of the spell, used to determine how much damage it does",
 			"type": "number",
+			"default": 0,
 			"inclusiveMinimum": 0
 		},
-		"healing": {
+		"baseHealing": {
 			"description": "The healing of the spell, used to determine how much healing it does",
 			"type": "number",
+			"default": 0,
 			"inclusiveMinimum": 0
-		},
-		"radius": {
-			"description": "The radius of the spell, used to determine how large the area of effect is",
-			"type": "number",
-			"inclusiveMinimum": 0
-		},
-		"angle": {
-			"description": "The angle of the spell, used to determine how wide the area of effect is",
-			"type": "number",
-			"inclusiveMinimum": 0
-		},
-		"collider": {
-			"description": "The collider of the spell, used to determine how it interacts with the world",
-			"$ref": "https://schemas.nwest.one/games/elementalist/collider.json"
-		},
-		"debuffs": {
-			"description": "The debuffs applied by the spell",
-			"$ref": "https://schemas.nwest.one/games/elementalist/stat_effect.json"
 		},
 		"buffs": {
 			"description": "The buffs applied by the spell",
 			"$ref": "https://schemas.nwest.one/games/elementalist/stat_effect.json"
 		},
-		"castType": {
-			"description": "The type of cast the spell uses",
-			"type": "string",
-			"enum": ["instant", "channeled", "cast"]
+		"debuffs": {
+			"description": "The debuffs applied by the spell",
+			"$ref": "https://schemas.nwest.one/games/elementalist/stat_effect.json"
 		},
-		"castCategory": {
-			"description": "The broad category of the spell",
+		"radius": {
+			"description": "The radius of the spell, used to determine how large the area of effect is",
+			"type": "number",
+			"default": 0,
+			"inclusiveMinimum": 0
+		},
+		"angle": {
+			"description": "The angle of the spell, used to determine how wide the area of effect is",
+			"type": "number",
+			"default": 0,
+			"inclusiveMinimum": 0
+		},
+		"iconTileset": {
+			"description": "The tileset with the icon of the spell (path in the assets folder)",
 			"type": "string",
-			"enum": ["touch", "projectile", "ground", "summon", "onSelf"]
+			"default": "placeholder"
+		},
+		"iconIndex": {
+			"description": "The index of the icon in the tileset",
+			"type": "integer",
+			"default": 0,
+			"inclusiveMinimum": 0
+		},
+		"spriteTileset": {
+			"description": "The sprite of the spell (path in the assets folder)",
+			"default": "placeholder",
+			"type": "string"
+		},
+		"spriteIndex": {
+			"description": "The index of the sprite in the tileset",
+			"type": "integer",
+			"default": 0,
+			"inclusiveMinimum": 0
 		},
 		"particles": {
-			"required": ["particleId", "attachment"],
+			"required": [
+				"particleId",
+				"attachment"
+			],
 			"description": "Particles to attach to the spell",
 			"type": "array",
 			"items": {
@@ -147,49 +176,59 @@
 					"attachment": {
 						"description": "The attachment point of the particle",
 						"type": "string",
-						"enum": [
-							"Cast",
-							"Projectile",
-							"Impact",
-							"Target",
-							"Caster",
-							"Ground",
-							"Summon"
+						"default": "Projectile",
+						"oneOf": [
+							{
+								"const": "Cast",
+								"description": "Emit particles from the caster when the spell is cast."
+							},
+							{
+								"const": "Projectile",
+								"description": "The particles emitted by the projectile."
+							},
+							{
+								"const": "Impact",
+								"description": "The particles emitted when the spell impacts."
+							},
+							{
+								"const": "Target",
+								"description": "The particles emitted from the target when impacted."
+							},
+							{
+								"const": "Caster",
+								"description": "The particles emitted from the caster while casting (sustained)."
+							},
+							{
+								"const": "Ground",
+								"description": "The particles emitted from the ground."
+							},
+							{
+								"const": "Summon",
+								"description": "The particles emitted from the summoned entity."
+							}
 						]
 					}
 				}
+			},
+			"spellTier": {
+				"depreciated": true,
+				"description": "The tier of the spell (covered by the Talisman now)",
+				"type": "string"
+			},
+			"magic": {
+				"deprecated": true,
+				"description": "The magic type of the spell (defined in Skill now)",
+				"type": "string"
 			}
-		},
-		"iconTileset": {
-			"description": "The tileset with the icon of the spell (path in the assets folder)",
-			"type": "string"
-		},
-		"iconIndex": {
-			"description": "The index of the icon in the tileset",
-			"type": "integer",
-			"inclusiveMinimum": 0
-		},
-		"spriteTileset": {
-			"description": "The sprite of the spell (path in the assets folder)",
-			"type": "string"
-		},
-		"spriteIndex": {
-			"description": "The index of the sprite in the tileset",
-			"type": "integer",
-			"inclusiveMinimum": 0
 		}
 	},
 	"required": [
 		"name",
 		"description",
-		"manaCost",
+		"talisman",
+		"skill",
 		"castSlot",
-		"castTime",
-		"cooldown",
-		"spellTier",
-		"flags",
 		"castType",
-		"castCategory",
 		"spriteTileset",
 		"spriteIndex"
 	]

@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.nwest.one/games/elementalist/stat.json",
+  "title": "Elementalist Entity Stat",
+  "description": "A statistic for an entity in the Elementalist game",
+  "type": "string",
+  "oneOf": [
+    {
+      "const": "health",
+      "description": "The amount of health an entity has"
+    },
+    {
+      "const": "mana",
+      "description": "The amount of mana an entity has"
+    },
+    {
+      "const": "damageReduction",
+      "description": "The amount of damage reduction an entity has"
+    },
+    {
+      "const": "damageResistance",
+      "description": "The amount of damage resistance an entity has"
+    },
+    {
+      "const": "damageReflection",
+      "description": "The amount of damage reflection an entity has"
+    },
+    {
+      "const": "damageAmplification",
+      "description": "The amount of damage amplification an entity has"
+    },
+    {
+      "const": "criticalStrikeChance",
+      "description": "The chance of a critical strike"
+    },
+    {
+      "const": "criticalStrikeDamage",
+      "description": "The amount of damage a critical strike does"
+    },
+    {
+      "const": "lifeSteal",
+      "description": "The amount of life stolen from an attack"
+    },
+    {
+      "const": "manaSteal",
+      "description": "The amount of mana stolen from an attack"
+    },
+    {
+      "const": "movementSpeed",
+      "description": "The speed at which an entity moves"
+    },
+    {
+      "const": "stunResistance",
+      "description": "The resistance to being stunned"
+    },
+    {
+      "const": "healthRegeneration",
+      "description": "The amount of health regenerated per second"
+    },
+    {
+      "const": "manaRegeneration",
+      "description": "The amount of mana regenerated per second"
+    },
+    {
+      "const": "projectileSpeed",
+      "description": "The speed of a projectile"
+    },
+    {
+      "const": "projectileSize",
+      "description": "The size of a projectile"
+    },
+    {
+      "const": "projectileLifetime",
+      "description": "The lifetime of a projectile"
+    },
+    {
+      "const": "dodgeChance",
+      "description": "The chance to dodge an attack"
+    },
+    {
+      "const": "attackDamage",
+      "description": "The amount of damage an attack does"
+    },
+    {
+      "const": "attackSpeed",
+      "description": "The speed at which an entity attacks"
+    },
+    {
+      "const": "attackRange",
+      "description": "The range of an attack"
+    },
+    {
+      "const": "physicalDamageReduction",
+      "description": "The amount of physical damage reduction an entity has"
+    },
+    {
+      "const": "physicalDamageResistance",
+      "description": "The amount of physical damage resistance an entity has"
+    },
+    {
+      "const": "physicalDamageReflection",
+      "description": "The amount of physical damage reflection an entity has"
+    },
+    {
+      "const": "physicalDamageAmplification",
+      "description": "The amount of physical damage amplification an entity has"
+    },
+    {
+      "const": "magicDamage",
+      "description": "The amount of magic damage an entity does"
+    },
+    {
+      "const": "cooldownReduction",
+      "description": "The amount of cooldown reduction an entity has"
+    },
+    {
+      "const": "spellRange",
+      "description": "The range of a spell"
+    },
+    {
+      "const": "magicDamageReduction",
+      "description": "The amount of magic damage reduction an entity has"
+    },
+    {
+      "const": "magicDamageResistance",
+      "description": "The amount of magic damage resistance an entity has"
+    },
+    {
+      "const": "magicDamageReflection",
+      "description": "The amount of magic damage reflection an entity has"
+    },
+    {
+      "const": "magicDamageAmplification",
+      "description": "The amount of magic damage amplification an entity has"
+    }
+  ]
+}

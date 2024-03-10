@@ -10,18 +10,17 @@ header:
 data:
   name: Death Bolt
   description: Launch a homing bolt of death energy at a target.
-  manaCost: 0
-  castSlot: primary
-  castTime: 0
+  castSlot: Cantrip
   cooldown: 7.5
-  magic: death
-  spellTier: 2
+  baseDamage: 3
+  talisman:
+    shaping: Projectile
+    behavior: Damage
+    tier: Common
+  skill: Mortomancy
   spriteTileset: spell_projectiles
   spriteIndex: 0
-  flags:
-    - projectile
-  castType: instant
-  castCategory: projectile
+  castType: Instant
   particles:
     - attachment: Projectile
       particleId: death-bolt

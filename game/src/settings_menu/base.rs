@@ -36,7 +36,7 @@ pub(super) fn clear_background(
     commands.spawn((
         MaterialMesh2dBundle {
             mesh: meshes
-                .add(shape::Quad::new(Vec2::new(window.width(), window.height())).into())
+                .add(Rectangle::new(window.width(), window.height()))
                 .into(),
             material: materials.add(ColorMaterial::from(BACKGROUND_COLOR_50)),
             transform: Transform::from_xyz(0., 0., 10.),

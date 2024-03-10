@@ -11,8 +11,13 @@ data:
   name: Transform into Ogre
   description: Polymorph yourself into an ogre.
   manaCost: 4
-  castSlot: secondary
-  castTime: 0
+  castSlot: Slot
   cooldown: .20
-  magic: polymorph
-  spellTier: 0
+  talisman:
+    shaping: OnSelf
+    behavior: Buff
+    tier: Uncommon
+  skill: Mutatiomancy
+  castType: Instant
+  spriteTileset: placeholder
+  spriteIndex: 0

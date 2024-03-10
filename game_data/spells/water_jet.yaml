@@ -11,8 +11,13 @@ data:
   name: Water Jet
   description: Spray a powerful jet of water at your target.
   manaCost: 1
-  castSlot: secondary
-  castTime: 0
   cooldown: 2.50
-  magic: water
-  spellTier: 2
+  talisman:
+    shaping: Cone
+    behavior: Damage
+    tier: Uncommon
+  skill: Hydromancy
+  castSlot: Slot
+  castType: Instant
+  spriteTileset: placeholder
+  spriteIndex: 0

@@ -38,16 +38,27 @@
         "modifierType": {
           "description": "The type of modifier to use for the initial position",
           "type": "string",
-          "enum": ["circle"]
+          "enum": [
+            "circle"
+          ]
         },
         "radius": {
           "description": "The radius of the circle to spawn particles in",
           "type": "number"
         },
         "shapeDimension": {
-          "description": "The shape dimension to use for the initial position. Volume is anywhere within the circle, Surface is only on the edge of the circle.",
+          "description": "The shape dimension to use for the initial position.",
           "type": "string",
-          "enum": ["volume", "surface"]
+          "oneOf": [
+            {
+              "const": "volume",
+              "description": "Volume is anywhere within the circle"
+            },
+            {
+              "const": "surface",
+              "description": "Surface is only on the edge of the circle"
+            }
+          ]
         }
       }
     },

@@ -11,12 +11,15 @@ data:
   name: Miniature Black Hole
   description: Launch a magically stable, miniature black hole towards a target.
   manaCost: 2
-  castSlot: secondary
-  castTime: 0
+  castSlot: Slot
   cooldown: 5.75
-  magic: dark
-  spellTier: 3
   spriteTileset: spell_projectiles
   spriteIndex: 0
-  long_description:
+  lore:
     As the black hole travels, the area it affects becomes larger and larger. Though magically stable, it can also affect the caster.
+  talisman:
+    shaping: Projectile
+    behavior: Damage
+    tier: Uncommon
+  skill: Umbramancy
+  castType: Instant

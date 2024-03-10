@@ -11,12 +11,17 @@ data:
   name: Zone of Charming
   description: Create an area with an aura of charm magic at the target location.
   manaCost: 3
-  castSlot: secondary
+  castSlot: Slot
   castTime: .25
   cooldown: 5.00
-  castType: cast
-  magic: arcane
-  spellTier: 3
-  long_description:
+  castType: Cast
+  talisman:
+    shaping: AreaOfEffect
+    behavior: Debuff
+    tier: Rare
+  skill: Arcanomancy
+  spriteTileset: placeholder
+  spriteIndex: 0
+  lore:
     Entities already in the zone when it's cast become charmed instantly, fighting for the caster. Entities entering after the zone has been
     created take a bit of time before becoming charmed.

@@ -27,7 +27,6 @@ use crate::enums::MagicType;
     Reflect,
     InspectorOptions,
 )]
-#[serde(rename_all = "camelCase")]
 pub enum Skill {
     /// Pyromancy is the school of fire magic.
     Pyromancy,

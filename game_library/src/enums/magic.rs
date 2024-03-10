@@ -12,7 +12,6 @@ use crate::enums::Skill;
 #[derive(
     Debug, Clone, Copy, PartialEq, Eq, Hash, Component, Resource, Serialize, Deserialize, Reflect,
 )]
-#[serde(rename_all = "camelCase")]
 #[allow(clippy::module_name_repetitions)]
 pub enum MagicType {
     /// Fire magic, pyromancy

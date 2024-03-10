@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/tileset.json
+header:
+  uniqueId: talismans
+  author: Nicholas Westerhausen
+  description: Base talismans before engravings
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+  system: Tileset
+data:
+  path: tileset/talismans.png
+  tileWidth: 32
+  tileHeight: 32
+  tilesetWidth: 4
+  tilesetHeight: 3

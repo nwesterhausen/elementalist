@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.nwest.one/games/elementalist/animation_state.json",
+  "title": "Elementalist Sprite Animation State",
+  "description": "An available state of an animation for an elementalist sprite",
+  "type": "string",
+  "oneOf": [
+    {
+      "const": "Idle",
+      "description": "The idle animation"
+    },
+    {
+      "const": "Walk",
+      "description": "The walking animation"
+    },
+    {
+      "const": "Run",
+      "description": "The running animation"
+    },
+    {
+      "const": "Jump",
+      "description": "The jumping animation"
+    },
+    {
+      "const": "Cast",
+      "description": "The casting animation"
+    },
+    {
+      "const": "Attack",
+      "description": "The attacking animation"
+    },
+    {
+      "const": "WalkCast",
+      "description": "The casting animation that occurs while walking"
+    },
+    {
+      "const": "WalkAttack",
+      "description": "The attacking animation that occurs while walking"
+    },
+    {
+      "const": "RunCast",
+      "description": "The casting animation that occurs while running"
+    },
+    {
+      "const": "RunAttack",
+      "description": "The attacking animation that occurs while running"
+    },
+    {
+      "const": "Death",
+      "description": "The death animation"
+    },
+    {
+      "const": "Hurt",
+      "description": "The hurt animation"
+    },
+    {
+      "const": "Stun",
+      "description": "The stunned animation"
+    },
+    {
+      "const": "Dead",
+      "description": "The dead animation (for when the character is dead)"
+    }
+  ]
+}

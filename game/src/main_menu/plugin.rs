@@ -40,7 +40,7 @@ impl Plugin for MainMenuPlugin {
     fn build(&self, app: &mut App) {
         app
             // Add a resource to track which menu state we are in
-            .add_state::<MenuState>()
+            .init_state::<MenuState>()
             // Transition to the main menu when entering the main menu state (starts tracking our MenuState at Main)
             .add_systems(OnEnter(AppState::MainMenu), transition_to_main_menu)
             // Add system to update the buttons on hover, etc

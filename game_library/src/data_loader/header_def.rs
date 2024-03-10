@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use std::hash::Hash;
 
-use crate::{enums::GameSystem, InternalId, Tileset};
+use crate::{enums::GameSystem, spells::Spell, InternalId, Tileset};
 
 /// Each data file includes header information about the data in the file.
 #[derive(Debug, Serialize, Deserialize)]
@@ -75,7 +75,7 @@ impl<D: Hash + InternalId + 'static> DataFile<D> {
     }
     /// Get the data file as a spell. Otherwise, return None.
     #[must_use]
-    pub fn as_spell(&self) -> Option<crate::SpellData> {
+    pub fn as_spell(&self) -> Option<Spell> {
         if self.header.system != GameSystem::Spell {
             return None;
         }

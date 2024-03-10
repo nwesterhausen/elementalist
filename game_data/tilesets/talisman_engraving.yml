@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/tileset.json
+header:
+  uniqueId: talisman_engraving
+  author: Nicholas Westerhausen
+  description: Engravings which go on talismans
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+  system: Tileset
+data:
+  path: tileset/talisman_engraving.png
+  tileWidth: 16
+  tileHeight: 16
+  tilesetWidth: 8
+  tilesetHeight: 2

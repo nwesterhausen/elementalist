@@ -10,11 +10,13 @@ header:
 data:
   name: Gust
   description: Shoot a gust of air at the target.
-  manaCost: 0
-  castSlot: primary
-  castTime: 0
+  castSlot: Cantrip
   cooldown: 5.0
-  magic: air
-  spellTier: 0
   spriteTileset: spell_projectiles
   spriteIndex: 3
+  talisman:
+    shaping: Projectile
+    behavior: Damage
+    tier: Mundane
+  skill: Aeromancy
+  castType: Instant

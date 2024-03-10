@@ -34,7 +34,13 @@
       "items": {
         "$ref": "https://schemas.nwest.one/games/elementalist/biome_simple_object.json"
       }
-    },
-    "required": ["biome", "humidity", "altitude", "latitude", "groundTilesets"]
-  }
+    }
+  },
+  "required": [
+    "biome",
+    "humidity",
+    "altitude",
+    "latitude",
+    "groundTilesets"
+  ]
 }

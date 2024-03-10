@@ -10,9 +10,13 @@ header:
 data:
   name: Flash
   description: Create a blinding flash of light.
-  manaCost: 0
-  castSlot: secondary
-  castTime: 0
+  castSlot: Slot
   cooldown: 3.50
-  magic: light
-  spellTier: 0
+  talisman:
+    shaping: AreaOfEffect
+    behavior: Utility
+    tier: Mundane
+  skill: Photomancy
+  castType: Instant
+  spriteTileset: placeholder
+  spriteIndex: 0

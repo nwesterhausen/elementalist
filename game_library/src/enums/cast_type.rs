@@ -8,7 +8,6 @@ use serde::{Deserialize, Serialize};
 #[derive(
     Debug, Clone, Copy, PartialEq, Eq, Hash, Component, Resource, Serialize, Deserialize, Reflect,
 )]
-#[serde(rename_all = "camelCase")]
 pub enum CastType {
     /// The spell is cast instantly
     Instant,

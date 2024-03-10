@@ -10,18 +10,17 @@ header:
 data:
   name: Death Dart
   description: Launch a dart of death energy at the target.
-  manaCost: 0
-  castSlot: primary
-  castTime: 0
+  castSlot: Cantrip
   cooldown: 7.5
-  magic: death
-  spellTier: 0
+  skill: Mortomancy
   spriteTileset: spell_projectiles
   spriteIndex: 1
-  flags:
-    - projectile
-  castType: instant
-  castCategory: projectile
+  baseDamage: 1
+  talisman:
+    shaping: Projectile
+    behavior: Damage
+    tier: Mundane
+  castType: Instant
   particles:
     - attachment: Projectile
       particleId: death-dart

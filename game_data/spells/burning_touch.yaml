@@ -10,16 +10,13 @@ header:
 data:
   name: Burning Touch
   description: Ignite a target by touch
-  manaCost: 0
-  spellTier: 0
-  castSlot: primary
-  castTime: 0
+  castSlot: Cantrip
   cooldown: 2.00
-  magic: fire
-  flags:
-    - touch
-    - instant
-  castType: instant
-  castCategory: touch
+  talisman:
+    shaping: Touch
+    behavior: Damage
+    tier: Mundane
+  skill: Pyromancy
+  castType: Instant
   spriteTileset: tileset/spell_icons.png
   spriteIndex: 0

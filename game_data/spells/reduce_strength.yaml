@@ -11,8 +11,13 @@ data:
   name: Reduce Strength
   description: Reduce the strength of the target.
   manaCost: 2
-  castSlot: secondary
-  castTime: 0
+  castSlot: Slot
   cooldown: 5
-  magic: reduction
-  spellTier: 0
+  talisman:
+    shaping: Projectile
+    behavior: Debuff
+    tier: Common
+  skill: Diminiomancy
+  castType: Instant
+  spriteTileset: placeholder
+  spriteIndex: 0

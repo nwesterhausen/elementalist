@@ -10,11 +10,13 @@ header:
 data:
   name: Lightning Bolt
   description: Shoot a bolt of lightning at a target.
-  manaCost: 0
-  castSlot: primary
-  castTime: 0
+  castSlot: Cantrip
   cooldown: 1
-  magic: lightning
-  spellTier: 1
   spriteTileset: spell_projectiles
   spriteIndex: 9
+  talisman:
+    shaping: Projectile
+    behavior: Damage
+    tier: Common
+  skill: Fulgomancy
+  castType: Instant

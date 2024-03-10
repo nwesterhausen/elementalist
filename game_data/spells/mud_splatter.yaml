@@ -11,8 +11,13 @@ data:
   name: Mud Splatter
   description: Launch a bunch of mud and rocks towards the target.
   manaCost: 2
-  castSlot: secondary
-  castTime: 0
   cooldown: 5
-  magic: earth
-  spellTier: 3
+  talisman:
+    shaping: Projectile
+    behavior: Damage
+    tier: Uncommon
+  skill: Geomancy
+  castSlot: Slot
+  castType: Instant
+  spriteTileset: placeholder
+  spriteIndex: 0

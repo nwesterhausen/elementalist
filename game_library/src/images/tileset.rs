@@ -1,4 +1,6 @@
 //! Tileset data. Instructions for what tilesets to load.
+//!
+//! This is the basic data required for us to be able to load in a tileset.
 use bevy::math::Vec2;
 use bevy::reflect::Reflect;
 use std::{any::Any, hash::Hash};

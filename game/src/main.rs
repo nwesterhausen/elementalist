@@ -139,8 +139,6 @@ impl Plugin for ElementalistDefaultPlugins {
         app.add_plugins(LayerPlugin);
         // Add the images plugin
         app.add_plugins(ImagesPlugin);
-        // Add our audio plugin
-        app.add_plugins(AudioPlugin);
     }
 }
 
@@ -169,6 +167,8 @@ struct ElementalistGameplayPlugins;
 impl Plugin for ElementalistGameplayPlugins {
     fn build(&self, app: &mut App) {
         app.add_plugins((
+            // Add the audio plugin
+            AudioPlugin,
             // Add the plugin for the player
             player::PlayerPlugin,
             // Add the plugin for the spells

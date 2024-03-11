@@ -13,7 +13,7 @@ features = ["git2"]
 
 [build-dependencies]
 # Used to set the icon of the .exe file on Windows.
-embed-resource = "2.4.1"
+embed-resource = "2.4.2"
 
 [dependencies]
 # When running the game in development, use the dynamic linking feature of Bevy to speed
@@ -28,11 +28,11 @@ game_library = { path = "../game_library" }
 # For setting the icon on Windows, we use this, which must match the version in bevy.
 winit = "0.28"
 # Used to load our icon for the window.
-image = "0.24"
+image = "0.25"
 # Random noise generation library
 rand = "0.8.5"
 # DEBUG ONLY: docking support for the inspector egui
-egui_dock = "0.11.2"
+egui_dock = "0.11.3"
 # DEBUG ONLY: inspector for bevy
 bevy-inspector-egui = "0.22.1"
 # Particle system

@@ -3,6 +3,8 @@
 use bevy::prelude::*;
 use serde::{Deserialize, Serialize};
 
+use crate::data_loader::storage::GameData;
+
 /// The spell talisman defines how the spell behaves. It contains a shaping, a behavior, and a tier.
 #[derive(
     Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize, Reflect, Component, Resource,
@@ -197,7 +199,25 @@ impl Default for SpellTalisman {
     }
 }
 
+/// Spell talisman ui nodes
+#[derive(Debug)]
+pub struct SpellTalismanUi {
+    /// Base node bundle
+    base: NodeBundle,
+    /// The background talisman image
+    background: AtlasImageBundle,
+    /// The shaping engraving
+    shaping: AtlasImageBundle,
+    /// The behavior engraving
+    behavior: AtlasImageBundle,
+}
+
 impl SpellTalisman {
+    /// Talisman sprite sheet identifier.
+    pub const SPRITE_SHEET: &'static str = "talismans";
+    /// Engraving sprite sheet identifier.
+    pub const ENGRAVING_SHEET: &'static str = "talisman_engraving";
+
     /// Set the shaping of the spell talisman.
     #[must_use]
     pub const fn with_shaping(mut self, shaping: Shaping) -> Self {
@@ -221,7 +241,7 @@ impl SpellTalisman {
 
     /// Create a new spell talisman with the given shaping, behavior, and tier.
     #[must_use]
-    pub const fn new(shaping: Shaping, behavior: Behavior, tier: Tier) -> Self {
+    pub const fn new(tier: Tier, shaping: Shaping, behavior: Behavior) -> Self {
         Self {
             shaping,
             behavior,
@@ -245,6 +265,77 @@ impl SpellTalisman {
     #[must_use]
     pub const fn tier(&self) -> Tier {
         self.tier
+    }
+
+    /// Get a UI Node drawing this talisman.
+    ///
+    /// The node will draw the talisman sprite and engravings.
+    #[must_use]
+    pub fn ui_nodes(&self, game_data: GameData) -> Option<SpellTalismanUi> {
+        let mut node = NodeBundle {
+            background_color: Color::NONE,
+            style: Style {
+                width: Val::Px(32.0),
+                height: Val::Px(32.0),
+                ..default()
+            },
+            ..default()
+        };
+
+        // need to get the `AtlasImageBundle` for the talisman sprite
+        let Some(talisman_tileset) = game_data.tile_atlas.get(Self::SPRITE_SHEET) else {
+            error!("Failed to get talisman tileset");
+            return None;
+        };
+        let talisman_index = self.tier.talisman_index();
+        let talisman_atlas_sprite = AtlasImageBundle {
+            texture_atlas: TextureAtlas {
+                index: talisman_index,
+                layout: talisman_tileset.atlas_handle.clone(),
+            },
+            image: UiImage {
+                texture: talisman_tileset.texture_handle.clone(),
+                ..default()
+            },
+            ..default()
+        };
+
+        // get the engraving sprite
+        let Some(engraving_tileset) = game_data.tile_atlas.get(Self::ENGRAVING_SHEET) else {
+            error!("Failed to get engraving tileset");
+            return None;
+        };
+        let shaping_index = self.shaping as usize;
+        let behavior_index = self.behavior as usize;
+        let shaping_atlas_sprite = AtlasImageBundle {
+            texture_atlas: TextureAtlas {
+                index: shaping_index,
+                layout: engraving_tileset.atlas_handle.clone(),
+            },
+            image: UiImage {
+                texture: engraving_tileset.texture_handle.clone(),
+                ..default()
+            },
+            ..default()
+        };
+        let behavior_atlas_sprite = AtlasImageBundle {
+            texture_atlas: TextureAtlas {
+                index: behavior_index,
+                layout: engraving_tileset.atlas_handle.clone(),
+            },
+            image: UiImage {
+                texture: engraving_tileset.texture_handle.clone(),
+                ..default()
+            },
+            ..default()
+        };
+
+        Some(SpellTalismanUi {
+            base: node,
+            background: talisman_atlas_sprite,
+            shaping: shaping_atlas_sprite,
+            behavior: behavior_atlas_sprite,
+        })
     }
 }
 

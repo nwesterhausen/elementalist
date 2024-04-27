@@ -87,7 +87,7 @@ jobs:
       - uses: dtolnay/rust-toolchain@be73d7920c329f220ce78e0234b8f96b7ae60248 # master
         with:
           targets: x86_64-unknown-linux-gnu
-          toolchain: ${{ env.nightly_toolchain }}
+          toolchain: stable
       - uses: taiki-e/install-action@e553ccd87e21fd7eeca7478760ec8dbf0bd45831 # v2.33.3
         with:
           tool: cargo-nextest

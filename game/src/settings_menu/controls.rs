@@ -8,14 +8,18 @@ use crate::{despawn_with_tag, style_prefab};
 
 use super::{
     base::SettingsMenuEntity,
-    button_actions::{ButtonAction, SettingsMenuButton},
+    button_actions::{SettingsButtons, SettingsMenuButton},
 };
 
 /// Component for tagging entities that are part of the display settings menu.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Component)]
 struct ControlsSettingsMenuEntity;
 
-fn show_controls_settings(mut commands: Commands, fonts: Res<FontResource>) {
+fn show_controls_settings(
+    mut commands: Commands,
+    settings_buttons: Res<SettingsButtons>,
+    fonts: Res<FontResource>,
+) {
     commands
         .spawn((
             style_prefab::settings_menu_full_node_bundle(),
@@ -36,7 +40,7 @@ fn show_controls_settings(mut commands: Commands, fonts: Res<FontResource>) {
                     menu_buttons
                         .spawn((
                             style_prefab::menu_button_bundle(),
-                            ButtonAction::BackToMenu,
+                            settings_buttons.back_to_menu.clone(),
                             SettingsMenuButton,
                         ))
                         .with_children(|button| {

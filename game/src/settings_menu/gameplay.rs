@@ -11,7 +11,7 @@ use crate::{despawn_with_tag, style_prefab};
 
 use super::{
     base::SettingsMenuEntity,
-    button_actions::{ButtonAction, SettingsMenuButton},
+    button_actions::{SettingsButtons, SettingsMenuButton},
     events::{ChangeSetting, IndividualSetting},
 };
 
@@ -22,6 +22,7 @@ struct GameplaySettingsMenuEntity;
 fn show_gameplay_settings(
     mut commands: Commands,
     fonts: Res<FontResource>,
+    settings_buttons: Res<SettingsButtons>,
     gameplay_settings: Res<GameplaySettings>,
 ) {
     commands
@@ -47,7 +48,7 @@ fn show_gameplay_settings(
                             // Button for auto-aim
                             row.spawn((
                                 style_prefab::menu_button_bundle(),
-                                ButtonAction::ToggleAutoAim,
+                                settings_buttons.toggle_auto_aim.clone(),
                                 SettingsMenuButton,
                             ))
                             .with_children(|button| {
@@ -72,7 +73,7 @@ fn show_gameplay_settings(
                             // Button for auto-cast
                             row.spawn((
                                 style_prefab::menu_button_bundle(),
-                                ButtonAction::ToggleAutoCast,
+                                settings_buttons.toggle_auto_cast.clone(),
                                 SettingsMenuButton,
                             ))
                             .with_children(|button| {
@@ -94,7 +95,7 @@ fn show_gameplay_settings(
                     menu_buttons
                         .spawn((
                             style_prefab::menu_button_bundle(),
-                            ButtonAction::BackToMenu,
+                            settings_buttons.back_to_menu.clone(),
                             SettingsMenuButton,
                         ))
                         .with_children(|button| {

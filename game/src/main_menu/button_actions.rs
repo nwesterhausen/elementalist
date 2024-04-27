@@ -1,53 +1,59 @@
 use bevy::prelude::*;
 
 use super::MenuState;
-use game_library::state::{AppState, Overlay};
+use game_library::{
+    buttons::ButtonSystem,
+    state::{AppState, Overlay},
+};
 
-/// All of the various "buttons" that can be clicked in any of the main menu screens
-#[derive(Component, Debug, Eq, PartialEq, Hash, Clone, Copy)]
-pub enum ButtonAction {
-    StartGame,
-    Settings,
-    Quit,
-}
-
+/// Component to identify buttons that are part of the main menu.
 #[derive(Component, Debug, Clone, PartialEq, Eq, Hash)]
 pub(super) struct MainMenuButton;
 
-/// System to handle the main menu button actions
-///
-/// * `interaction_query`: grabs all the buttons that have been interacted with, with the components
-///    Interaction and `ButtonAction` that have a changed interaction value (i.e. the button has been
-///   pressed)
-/// * `app_exit_events`: can be used to send an `AppExit` event to exit the game
-/// * `menu_state(next)`: lets us change the menu state for the next frame
-/// * `game_state(next)`: lets us change the game state for the next frame
-#[allow(clippy::type_complexity)]
-pub fn menu_actions(
-    interaction_query: Query<
-        (&Interaction, &ButtonAction),
-        (Changed<Interaction>, With<Button>, With<MainMenuButton>),
-    >,
+/// System to handle pressing the Start Game button in the main menu.
+pub(super) fn start_game_oneshot(
     mut menu_state: ResMut<NextState<MenuState>>,
     mut game_state: ResMut<NextState<AppState>>,
-    mut overlay_state: ResMut<NextState<Overlay>>,
 ) {
-    // Loop through all the buttons that have been interacted with
-    for (interaction, menu_button_action) in &interaction_query {
-        // If the button has been pressed, match the button action
-        if *interaction == Interaction::Pressed {
-            // Check which button action has been pressed (i.e. what action we attached to the button)
-            match menu_button_action {
-                ButtonAction::Quit => game_state.set(AppState::CleanUp),
-                ButtonAction::StartGame => {
-                    game_state.set(AppState::InGame);
-                    menu_state.set(MenuState::Disabled);
-                }
-                ButtonAction::Settings => {
-                    // Set the game state to the settings menu
-                    overlay_state.set(Overlay::Settings);
-                }
-            }
-        }
-    }
+    game_state.set(AppState::InGame);
+    menu_state.set(MenuState::Disabled);
+}
+
+/// System to handle pressing the Settings button in the main menu.
+pub(super) fn settings_oneshot(mut overlay_state: ResMut<NextState<Overlay>>) {
+    overlay_state.set(Overlay::Settings);
+}
+
+/// System to handle pressing the Quit button in the main menu.
+pub(super) fn quit_button_oneshot(mut game_state: ResMut<NextState<AppState>>) {
+    game_state.set(AppState::CleanUp)
+}
+
+/// Resource for storing the buttons for future reference, instead of re-registering the systems
+/// whenever we enter the main menu.
+#[derive(Resource)]
+pub(super) struct MenuButtons {
+    pub start: ButtonSystem,
+    pub settings: ButtonSystem,
+    pub quit: ButtonSystem,
+}
+
+/// System to register the buttons for future reference.
+///
+/// This inserts a resource with the button systems, which can be used to handle button presses in other systems.
+pub(super) fn register_buttons(world: &mut World) {
+    let start = ButtonSystem {
+        pressed_event: Some(world.register_system(start_game_oneshot)),
+    };
+    let settings = ButtonSystem {
+        pressed_event: Some(world.register_system(settings_oneshot)),
+    };
+    let quit = ButtonSystem {
+        pressed_event: Some(world.register_system(quit_button_oneshot)),
+    };
+    world.insert_resource(MenuButtons {
+        start,
+        settings,
+        quit,
+    });
 }

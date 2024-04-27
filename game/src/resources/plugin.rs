@@ -2,6 +2,7 @@ use bevy::prelude::*;
 
 use bevy_hanabi::HanabiPlugin;
 use game_library::{
+    buttons,
     data_loader::DataLoaderPlugin,
     font_resource::{change_font, ChangeFont, FontResource},
     progress_bar::ProgressBarPlugin,
@@ -11,7 +12,7 @@ use game_library::{
     CursorPosition, Health, Mana, Xp,
 };
 
-use crate::{app_systems, resources::buttons};
+use crate::app_systems;
 
 use super::{
     cleanup::cleanup_then_exit, cursor_position::update_cursor_position, fonts::set_initial_fonts,
@@ -86,9 +87,9 @@ impl Plugin for ElementalistResourcesPlugin {
                 update_cursor_position,
                 // Changes the font when the user changes the font (responds to [`ChangeFont`])
                 change_font,
-                // Handles the button VISUAL interactions (e.g. hover, click, pressed, etc.) but not the logic attached
-                // to the button (e.g. what happens when you click the button)
-                buttons::interaction_system,
+                // Handles the button VISUAL interactions (e.g. hover, click, pressed, etc.)
+                // Also handles the logic
+                buttons::handle_button_events,
             ),
         )
         .add_systems(

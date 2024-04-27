@@ -20,6 +20,7 @@
 //! The remaining items are specific to the Elementalist game.
 //!
 
+pub mod buttons;
 pub mod colors;
 pub mod data_loader;
 pub mod enums;

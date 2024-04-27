@@ -1,6 +1,6 @@
 mod button_actions;
+mod main_screen;
 mod plugin;
-mod screens;
 
 pub use plugin::MainMenuPlugin;
 pub use plugin::MenuState;

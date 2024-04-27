@@ -8,7 +8,6 @@ mod cursor_position;
 mod fonts;
 mod plugin;
 
-pub mod buttons;
 pub mod movement;
 
 pub use plugin::ElementalistResourcesPlugin;

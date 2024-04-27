@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 use bevy::winit::WinitWindows;
-use game_library::colors;
-use game_library::font_resource::FontResource;
+use elementalist_game_library::colors;
+use elementalist_game_library::font_resource::FontResource;
 use winit::window::Icon;
 
 use crate::app_info;

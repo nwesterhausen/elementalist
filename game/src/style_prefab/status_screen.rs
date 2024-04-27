@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use game_library::colors;
+use elementalist_game_library::colors;
 
 /// The stats node style for the status screen. We want the stats to be in a column down the left
 /// side of the screen.

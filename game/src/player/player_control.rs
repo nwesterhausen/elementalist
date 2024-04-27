@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use game_library::{
+use elementalist_game_library::{
     events::CastSpell,
     settings::GameplaySettings,
     spells::SpellSelection,

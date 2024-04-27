@@ -20,7 +20,7 @@
 //!
 //! ```no_run
 //! use bevy::prelude::*;
-//! use game_library::CameraScaleLevel;
+//! use elementalist_game_library::CameraScaleLevel;
 //!
 //! #[derive(Component)]
 //! struct MainCamera;
@@ -104,7 +104,7 @@ impl CameraScaleLevel {
     /// # Example
     ///
     /// ```no_run
-    /// use game_library::CameraScaleLevel;
+    /// use elementalist_game_library::CameraScaleLevel;
     ///
     /// let level = CameraScaleLevel::default();
     ///
@@ -121,7 +121,7 @@ impl CameraScaleLevel {
     /// # Example
     ///
     /// ```no_run
-    /// use game_library::CameraScaleLevel;
+    /// use elementalist_game_library::CameraScaleLevel;
     ///
     /// let mut level = CameraScaleLevel::default();
     ///
@@ -147,7 +147,7 @@ impl CameraScaleLevel {
     /// # Example
     ///
     /// ```no_run
-    /// use game_library::CameraScaleLevel;
+    /// use elementalist_game_library::CameraScaleLevel;
     ///
     /// let mut level = CameraScaleLevel::default();
     ///

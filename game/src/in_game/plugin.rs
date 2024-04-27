@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use game_library::state::{AppState, Game};
+use elementalist_game_library::state::{AppState, Game};
 
 /// Plugin and control flow for the settings menu.
 pub struct InGamePlugin;

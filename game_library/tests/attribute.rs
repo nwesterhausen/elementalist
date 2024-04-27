@@ -1,4 +1,4 @@
-use game_library::Attribute;
+use elementalist_game_library::Attribute;
 
 #[test]
 fn new() {

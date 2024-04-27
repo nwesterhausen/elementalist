@@ -1,4 +1,4 @@
-use game_library::spells;
+use elementalist_game_library::spells;
 
 #[test]
 fn spell_talisman_default() {

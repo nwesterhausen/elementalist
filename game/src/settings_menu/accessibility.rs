@@ -1,7 +1,7 @@
 //! Has systems for the display settings menu.
 
 use bevy::prelude::*;
-use game_library::{
+use elementalist_game_library::{
     font_resource::{ChangeFont, FontChoice, FontResource},
     settings::{next_font_family, AccessibilitySettings, SettingCategory, SettingChanged},
     state::Settings,

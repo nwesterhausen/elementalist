@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use game_library::spells::SpellLifetime;
+use elementalist_game_library::spells::SpellLifetime;
 
 /// Despawns spells when their lifetime expires, and updates their lifetime
 pub fn despawn_expired_spells(

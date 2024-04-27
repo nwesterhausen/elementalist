@@ -1,8 +1,8 @@
 //! Has systems for the display settings menu.
 
 use bevy::prelude::*;
-use game_library::font_resource::FontResource;
-use game_library::state::Settings;
+use elementalist_game_library::font_resource::FontResource;
+use elementalist_game_library::state::Settings;
 
 use crate::{despawn_with_tag, style_prefab};
 

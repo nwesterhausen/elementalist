@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 
 use super::resources::SplashTimer;
-use game_library::state::AppState;
+use elementalist_game_library::state::AppState;
 
 // Tick the timer, and change state when finished
 pub fn countdown(

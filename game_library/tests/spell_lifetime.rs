@@ -1,4 +1,4 @@
-use game_library::spells::SpellLifetime;
+use elementalist_game_library::spells::SpellLifetime;
 
 #[test]
 fn spell_lifetime() {

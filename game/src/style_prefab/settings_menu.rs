@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use game_library::colors;
+use elementalist_game_library::colors;
 
 /// Shared node style for the settings menus.
 ///

@@ -1,4 +1,4 @@
-use game_library::Health;
+use elementalist_game_library::Health;
 
 #[test]
 fn health() {

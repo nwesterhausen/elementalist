@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use game_library::state::Overlay;
+use elementalist_game_library::state::Overlay;
 
 use super::{skill_book::SkillBookUiPlugin, status_screen::StatusScreenPlugin};
 

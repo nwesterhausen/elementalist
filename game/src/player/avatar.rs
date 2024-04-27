@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 use bevy_rapier2d::prelude::*;
-use game_library::{
+use elementalist_game_library::{
     colors,
     data_loader::storage::GameData,
     enums::StatEnum,

@@ -2,7 +2,7 @@
 
 use bevy::prelude::*;
 
-use game_library::{
+use elementalist_game_library::{
     buttons::ButtonSystem,
     state::{AppState, Overlay, Settings},
 };

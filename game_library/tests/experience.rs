@@ -1,4 +1,4 @@
-use game_library::Xp;
+use elementalist_game_library::Xp;
 
 #[test]
 fn test_xp_required() {

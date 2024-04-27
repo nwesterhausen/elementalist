@@ -12,7 +12,7 @@ use bevy::{
     render::{render_resource::WgpuFeatures, settings::WgpuSettings, RenderPlugin},
 };
 use bevy_rapier2d::prelude::*;
-use game_library::{
+use elementalist_game_library::{
     data_loader::storage::GameData, images::ImagesPlugin, save_file::SaveFilePlugin, state::Game,
     AudioPlugin, GeneratedMaps, GenerationSeed, Layer, LayerPlugin, MarkersToBiomes, NoisePlugin,
     PhysicsPlugin, SchedulingPlugin,
@@ -125,7 +125,7 @@ impl Plugin for ElementalistDefaultPlugins {
         // Never attempts to look up meta files. The default meta configuration will be used for each asset.
         app.insert_resource(AssetMetaCheck::Never);
         // The clear color is the color the screen is cleared to before each frame is drawn
-        app.insert_resource(ClearColor(game_library::colors::CLEAR_COLOR));
+        app.insert_resource(ClearColor(elementalist_game_library::colors::CLEAR_COLOR));
         // Add the window icon
         app.add_systems(Startup, app_systems::set_window_icon);
         // Add the save game system

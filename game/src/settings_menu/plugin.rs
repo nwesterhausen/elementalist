@@ -4,7 +4,7 @@
 use bevy::prelude::*;
 
 use crate::despawn_with_tag;
-use game_library::state::{Overlay, Settings};
+use elementalist_game_library::state::{Overlay, Settings};
 
 use super::{
     accessibility::AccessibilitySettingsMenuPlugin,

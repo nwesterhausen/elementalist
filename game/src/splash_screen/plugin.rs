@@ -2,7 +2,7 @@ use bevy::prelude::*;
 
 use super::{components::OnSplashScreen, scene::splash_setup, systems::countdown};
 use crate::despawn_with_tag;
-use game_library::state::AppState;
+use elementalist_game_library::state::AppState;
 
 // This plugin will display a splash screen with Bevy logo for 1 second before switching to the menu
 pub struct SplashScreenPlugin;

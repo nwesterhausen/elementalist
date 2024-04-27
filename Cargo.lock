@@ -1973,13 +1973,33 @@ dependencies = [
  "bevy_kira_audio",
  "bevy_rapier2d",
  "built",
+ "elementalist_game_library",
  "embed-resource",
- "game_library",
  "image 0.25.1",
  "leafwing-input-manager",
  "rand",
  "tracing",
  "winit",
+]
+
+[[package]]
+name = "elementalist_game_library"
+version = "2.6.0"
+dependencies = [
+ "bevy",
+ "bevy-inspector-egui",
+ "bevy_hanabi",
+ "bevy_kira_audio",
+ "bevy_pkv",
+ "bevy_rapier2d",
+ "noise",
+ "platform-dirs",
+ "rand",
+ "serde",
+ "serde_default_utils",
+ "serde_yaml",
+ "tracing",
+ "walkdir",
 ]
 
 [[package]]
@@ -2298,26 +2318,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "54614a3312934d066701a80f20f15fa3b56d67ac7722b39eea5b4c9dd1d66c94"
 dependencies = [
  "thread_local",
-]
-
-[[package]]
-name = "game_library"
-version = "2.6.0"
-dependencies = [
- "bevy",
- "bevy-inspector-egui",
- "bevy_hanabi",
- "bevy_kira_audio",
- "bevy_pkv",
- "bevy_rapier2d",
- "noise",
- "platform-dirs",
- "rand",
- "serde",
- "serde_default_utils",
- "serde_yaml",
- "tracing",
- "walkdir",
 ]
 
 [[package]]

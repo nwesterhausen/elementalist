@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use game_library::CameraScaleLevel;
+use elementalist_game_library::CameraScaleLevel;
 
 #[derive(Component)]
 pub struct MainCamera;

@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use game_library::state::{Overlay, Settings};
+use elementalist_game_library::state::{Overlay, Settings};
 use leafwing_input_manager::action_state::ActionState;
 
 use crate::{events::MenuInteraction, player::Player};

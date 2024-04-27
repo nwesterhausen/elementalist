@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use game_library::{state::Game, Health, Xp};
+use elementalist_game_library::{state::Game, Health, Xp};
 
 use super::{
     animation,

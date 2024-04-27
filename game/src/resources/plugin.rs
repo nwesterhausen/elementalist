@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 
 use bevy_hanabi::HanabiPlugin;
-use game_library::{
+use elementalist_game_library::{
     buttons,
     data_loader::DataLoaderPlugin,
     font_resource::{change_font, ChangeFont, FontResource},

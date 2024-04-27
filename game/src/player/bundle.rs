@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 use bevy_rapier2d::prelude::*;
-use game_library::{
+use elementalist_game_library::{
     enums::StatEnum, images::AnimationBundle, Health, Layer, Mana, MovementBundle, StatBundle, Xp,
 };
 

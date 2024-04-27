@@ -8,7 +8,7 @@
 //!
 //! ```no_run
 //! use bevy::prelude::*;
-//! use game_library::Attribute;
+//! use elementalist_game_library::Attribute;
 //!
 //! #[derive(Component)]
 //! struct Health(Attribute);
@@ -93,7 +93,7 @@ impl Attribute {
     /// # Examples
     ///
     /// ```no_run
-    /// use game_library::Attribute;
+    /// use elementalist_game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new(10_u32);
     /// assert_eq!(attribute.is_empty(), false);
@@ -116,7 +116,7 @@ impl Attribute {
     /// # Examples
     ///
     /// ```no_run
-    /// use game_library::Attribute;
+    /// use elementalist_game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new(10_u32);
     /// assert_eq!(attribute.is_full(), true);
@@ -142,7 +142,7 @@ impl Attribute {
     /// # Examples
     ///
     /// ```no_run
-    /// use game_library::Attribute;
+    /// use elementalist_game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new(10_u32);
     /// assert_eq!(attribute.remaining(), 1.0);
@@ -182,7 +182,7 @@ impl Attribute {
     /// # Examples
     ///
     /// ```no_run
-    /// use game_library::Attribute;
+    /// use elementalist_game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new(10_u32);
     /// assert_eq!(attribute.percentage_remaining(), 100);
@@ -221,7 +221,7 @@ impl Attribute {
     /// # Examples
     ///
     /// ```no_run
-    /// use game_library::Attribute;
+    /// use elementalist_game_library::Attribute;
     ///
     /// let attribute = Attribute::new(10_u32);
     /// ```
@@ -247,7 +247,7 @@ impl Attribute {
     /// # Examples
     ///
     /// ```no_run
-    /// use game_library::Attribute;
+    /// use elementalist_game_library::Attribute;
     ///
     /// let attribute = Attribute::new_with_current(5_u32, 10_u32);
     ///
@@ -280,7 +280,7 @@ impl Attribute {
     /// # Examples
     ///
     /// ```no_run
-    /// use game_library::Attribute;
+    /// use elementalist_game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new(10_u32);
     ///
@@ -330,7 +330,7 @@ impl Attribute {
     /// # Examples
     ///
     /// ```no_run
-    /// use game_library::Attribute;
+    /// use elementalist_game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new(10_u32);
     ///
@@ -384,7 +384,7 @@ impl Attribute {
     /// # Examples
     ///
     /// ```no_run
-    /// use game_library::Attribute;
+    /// use elementalist_game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new(10_u32);
     ///
@@ -411,7 +411,7 @@ impl Attribute {
     /// # Examples
     ///
     /// ```no_run
-    /// use game_library::Attribute;
+    /// use elementalist_game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new_with_current(5_u32, 10_u32);
     ///
@@ -451,7 +451,7 @@ impl Attribute {
     /// # Examples
     ///
     /// ```no_run
-    /// use game_library::Attribute;
+    /// use elementalist_game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new_with_current(5_u32, 10_u32);
     ///
@@ -499,7 +499,7 @@ impl Attribute {
     /// # Examples
     ///
     /// ```no_run
-    /// use game_library::Attribute;
+    /// use elementalist_game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new_with_current(5_u32, 10_u32);
     ///
@@ -529,7 +529,7 @@ impl Attribute {
     /// # Examples
     ///
     /// ```no_run
-    /// use game_library::Attribute;
+    /// use elementalist_game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new_with_current(5_u32, 100_u32);
     ///
@@ -567,7 +567,7 @@ impl Attribute {
     /// # Examples
     ///
     /// ```no_run
-    /// use game_library::Attribute;
+    /// use elementalist_game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new_with_current(5_u32, 100_u32);
     ///
@@ -592,7 +592,7 @@ impl Attribute {
     /// # Examples
     ///
     /// ```no_run
-    /// use game_library::Attribute;
+    /// use elementalist_game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new(10_u32);
     ///
@@ -620,7 +620,7 @@ impl Attribute {
     /// # Examples
     ///
     /// ```no_run
-    /// use game_library::Attribute;
+    /// use elementalist_game_library::Attribute;
     ///
     /// let mut attribute = Attribute::new(10_u32);
     ///

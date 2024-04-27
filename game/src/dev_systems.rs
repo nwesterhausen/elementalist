@@ -1,10 +1,10 @@
 use bevy::prelude::*;
 
-use game_library::settings::{
+use elementalist_game_library::settings::{
     AccessibilitySettings, GameplaySettings, VideoSettings, VolumeSettings,
 };
-use game_library::Xp;
-use game_library::{
+use elementalist_game_library::Xp;
+use elementalist_game_library::{
     enums::Skill,
     font_resource::{FontChoice, FontResource},
     Acceleration, Attribute, CameraScaleLevel, CursorPosition, Health, Mana, MovementBundle, Stat,

@@ -10,12 +10,12 @@ use bevy::prelude::*;
 ///
 /// # Internal Value
 ///
-/// * `String` - The `get_internal_id()` of the [`game_library::Spell`]
+/// * `String` - The `get_internal_id()` of the [`elementalist_game_library::Spell`]
 ///
 /// # Examples
 ///
 /// ```no_run
-/// use game_library::events::CastSpell;
+/// use elementalist_game_library::events::CastSpell;
 ///
 /// let event = CastSpell("Firebolt01Primary".to_string());
 /// ```

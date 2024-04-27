@@ -1,6 +1,6 @@
-use game_library::data_loader::*;
-use game_library::enums::GameSystem;
-use game_library::{spells::Spell, Tileset};
+use elementalist_game_library::data_loader::*;
+use elementalist_game_library::enums::GameSystem;
+use elementalist_game_library::{spells::Spell, Tileset};
 
 #[test]
 fn try_into() {

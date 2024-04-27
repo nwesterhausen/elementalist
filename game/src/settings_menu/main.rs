@@ -1,7 +1,7 @@
 //! Main menu systems.
 use bevy::prelude::*;
-use game_library::font_resource::FontResource;
-use game_library::state::AppState;
+use elementalist_game_library::font_resource::FontResource;
+use elementalist_game_library::state::AppState;
 
 use crate::style_prefab;
 

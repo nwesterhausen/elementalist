@@ -1,6 +1,6 @@
 //! This may end up a full module. It is the plugin/systems for the status screen overlay.
 use bevy::prelude::*;
-use game_library::{
+use elementalist_game_library::{
     font_resource::FontResource,
     state::{AppState, Overlay},
     StatBundle,

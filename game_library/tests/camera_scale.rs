@@ -1,4 +1,4 @@
-use game_library::CameraScaleLevel;
+use elementalist_game_library::CameraScaleLevel;
 
 #[test]
 fn value() {

@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use game_library::font_resource::FontResource;
+use elementalist_game_library::font_resource::FontResource;
 
 use crate::{
     main_menu::{button_actions::MainMenuButton, plugin::OnMainMenuScreen},

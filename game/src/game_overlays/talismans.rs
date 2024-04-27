@@ -1,6 +1,6 @@
 //! Draw some talismans
 
-use game_library::spells::talisman::{Behavior, Shaping, SpellTalisman, Tier};
+use elementalist_game_library::spells::talisman::{Behavior, Shaping, SpellTalisman, Tier};
 
 /// A few sample talismans to display
 pub const SAMPLE_TALISMANS: [SpellTalisman; 9] = [

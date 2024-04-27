@@ -1,6 +1,6 @@
 //! Animation states and systems for the player's avatar.
 use bevy::prelude::*;
-use game_library::{
+use elementalist_game_library::{
     events::CastSpell,
     images::{AnimationActionState, AnimationStatus},
 };

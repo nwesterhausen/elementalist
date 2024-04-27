@@ -1,4 +1,4 @@
-use game_library::Stat;
+use elementalist_game_library::Stat;
 
 #[test]
 fn new() {

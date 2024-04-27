@@ -1,5 +1,5 @@
 use bevy::math::Vec2;
-use game_library::Acceleration;
+use elementalist_game_library::Acceleration;
 
 #[test]
 fn acceleration() {

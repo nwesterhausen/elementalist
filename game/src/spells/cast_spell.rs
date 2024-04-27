@@ -2,7 +2,7 @@
 use bevy::prelude::*;
 use bevy_hanabi::{ParticleEffect, ParticleEffectBundle};
 use bevy_rapier2d::prelude::*;
-use game_library::{
+use elementalist_game_library::{
     data_loader::storage::GameData,
     enums::ParticleAttachment,
     events::CastSpell,

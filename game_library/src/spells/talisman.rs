@@ -212,6 +212,44 @@ pub struct SpellTalismanUi {
     behavior: AtlasImageBundle,
 }
 
+impl SpellTalismanUi {
+    /// Get the base node bundle
+    #[must_use]
+    pub fn base(&self) -> NodeBundle {
+        self.base.clone()
+    }
+
+    /// Get the background talisman image
+    #[must_use]
+    pub fn background(&self) -> AtlasImageBundle {
+        AtlasImageBundle {
+            texture_atlas: self.background.texture_atlas.clone(),
+            image: self.background.image.clone(),
+            ..default()
+        }
+    }
+
+    /// Get the shaping engraving
+    #[must_use]
+    pub fn shaping(&self) -> AtlasImageBundle {
+        AtlasImageBundle {
+            texture_atlas: self.shaping.texture_atlas.clone(),
+            image: self.shaping.image.clone(),
+            ..default()
+        }
+    }
+
+    /// Get the behavior engraving
+    #[must_use]
+    pub fn behavior(&self) -> AtlasImageBundle {
+        AtlasImageBundle {
+            texture_atlas: self.behavior.texture_atlas.clone(),
+            image: self.behavior.image.clone(),
+            ..default()
+        }
+    }
+}
+
 impl SpellTalisman {
     /// Talisman sprite sheet identifier.
     pub const SPRITE_SHEET: &'static str = "talismans";

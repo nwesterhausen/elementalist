@@ -272,8 +272,8 @@ impl SpellTalisman {
     /// The node will draw the talisman sprite and engravings.
     #[must_use]
     pub fn ui_nodes(&self, game_data: GameData) -> Option<SpellTalismanUi> {
-        let mut node = NodeBundle {
-            background_color: Color::NONE,
+        let node = NodeBundle {
+            background_color: BackgroundColor(Color::NONE),
             style: Style {
                 width: Val::Px(32.0),
                 height: Val::Px(32.0),

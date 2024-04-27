@@ -38,9 +38,9 @@ fn spell_talisman_with_tier() {
 #[test]
 fn spell_talisman_new() {
     let talisman = spells::talisman::SpellTalisman::new(
+        spells::talisman::Tier::Epic,
         spells::talisman::Shaping::AreaOfEffect,
         spells::talisman::Behavior::Debuff,
-        spells::talisman::Tier::Epic,
     );
     assert_eq!(talisman.shaping(), spells::talisman::Shaping::AreaOfEffect);
     assert_eq!(talisman.behavior(), spells::talisman::Behavior::Debuff);

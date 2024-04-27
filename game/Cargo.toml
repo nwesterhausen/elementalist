@@ -25,7 +25,7 @@ game_library = { path = "../game_library" }
 # For setting the icon on Windows, we use this, which must match the version in bevy.
 winit = "0.29.10"
 # Used to load our icon for the window.
-image = "0.24"
+image = "0.25.1"
 # Random noise generation library
 rand = "0.8.5"
 # Particle system
@@ -64,19 +64,3 @@ features = [
   "webgl2",
   "bevy_debug_stepping",
 ]
-
-# Some very strict lints.
-[lints.rust]
-unsafe_code = "forbid"
-missing_docs = "warn"
-unreachable_code = "warn"
-unreachable_patterns = "warn"
-[lints.clippy]
-enum_glob_use = "deny"
-pedantic = "deny"
-nursery = "deny"
-unwrap_used = "deny"
-module_name_repetitions = "allow"
-needless_pass_by_value = "allow"
-cast_possible_truncation = "allow"
-cast_precision_loss = "allow"

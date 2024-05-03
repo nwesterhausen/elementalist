@@ -1,19 +1,22 @@
 use bevy::prelude::*;
-use game_library::font_resource::FontResource;
+use elementalist_game_library::font_resource::FontResource;
 
 use crate::{
-    main_menu::{
-        button_actions::{ButtonAction, MainMenuButton},
-        plugin::OnMainMenuScreen,
-    },
-    resources::style_prefab,
+    main_menu::{button_actions::MainMenuButton, plugin::OnMainMenuScreen},
+    style_prefab,
 };
+
+use super::button_actions::MenuButtons;
 
 /// System to setup the main menu screen
 ///
 /// When the main menu screen is entered, we spawn the main menu entities. This includes the
 /// background, the title, and the buttons.
-pub fn main_menu_setup(mut commands: Commands, fonts: Res<FontResource>) {
+pub fn main_menu_setup(
+    mut commands: Commands,
+    fonts: Res<FontResource>,
+    buttons: Res<MenuButtons>,
+) {
     // Common style for all buttons on the screen
     commands
         .spawn((style_prefab::main_menu_full_node_bundle(), OnMainMenuScreen))
@@ -31,7 +34,7 @@ pub fn main_menu_setup(mut commands: Commands, fonts: Res<FontResource>) {
                     menu_buttons
                         .spawn((
                             style_prefab::menu_button_bundle(),
-                            ButtonAction::StartGame,
+                            buttons.start.clone(),
                             MainMenuButton,
                         ))
                         .with_children(|button| {
@@ -45,7 +48,7 @@ pub fn main_menu_setup(mut commands: Commands, fonts: Res<FontResource>) {
                     menu_buttons
                         .spawn((
                             style_prefab::menu_button_bundle(),
-                            ButtonAction::Settings,
+                            buttons.settings.clone(),
                             MainMenuButton,
                         ))
                         .with_children(|button| {
@@ -59,7 +62,7 @@ pub fn main_menu_setup(mut commands: Commands, fonts: Res<FontResource>) {
                     menu_buttons
                         .spawn((
                             style_prefab::menu_button_bundle(),
-                            ButtonAction::Quit,
+                            buttons.quit.clone(),
                             MainMenuButton,
                         ))
                         .with_children(|button| {

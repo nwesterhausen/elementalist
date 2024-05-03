@@ -1,6 +1,6 @@
-use game_library::data_loader::*;
-use game_library::enums::GameSystem;
-use game_library::{SpellData, Tileset};
+use elementalist_game_library::data_loader::*;
+use elementalist_game_library::enums::GameSystem;
+use elementalist_game_library::{spells::Spell, Tileset};
 
 #[test]
 fn try_into() {
@@ -9,10 +9,10 @@ fn try_into() {
             system: GameSystem::Spell,
             ..DataFileHeader::default()
         },
-        data: SpellData::default(),
+        data: Spell::default(),
     };
 
-    let spell: Result<SpellData, ()> = data_file.try_into();
+    let spell: Result<Spell, ()> = data_file.try_into();
     assert!(spell.is_ok());
 
     let data_file = DataFile {
@@ -34,7 +34,7 @@ fn try_into_wrong() {
             system: GameSystem::Spell,
             ..DataFileHeader::default()
         },
-        data: SpellData::default(),
+        data: Spell::default(),
     };
 
     let tileset: Result<Tileset, ()> = data_file.try_into();

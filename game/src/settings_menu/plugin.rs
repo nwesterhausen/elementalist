@@ -4,13 +4,13 @@
 use bevy::prelude::*;
 
 use crate::despawn_with_tag;
-use game_library::state::{Overlay, Settings};
+use elementalist_game_library::state::{Overlay, Settings};
 
 use super::{
     accessibility::AccessibilitySettingsMenuPlugin,
     audio::AudioSettingsMenuPlugin,
     base::{clear_background, transition_to_base_menu, SettingsMenuBackground, SettingsMenuEntity},
-    button_actions::menu_actions,
+    button_actions::initialize_settings_buttons,
     controls::ControlsSettingsMenuPlugin,
     display::DisplaySettingsMenuPlugin,
     events::ChangeSetting,
@@ -23,8 +23,9 @@ pub struct SettingsMenuPlugin;
 
 impl Plugin for SettingsMenuPlugin {
     fn build(&self, app: &mut App) {
-        app.add_state::<Settings>();
+        app.init_state::<Settings>();
         app.add_event::<ChangeSetting>();
+        app.add_systems(Startup, initialize_settings_buttons);
         // Add system to setup the menu
         app.add_systems(
             OnEnter(Settings::Main),
@@ -50,8 +51,6 @@ impl Plugin for SettingsMenuPlugin {
             DisplaySettingsMenuPlugin,
             GameplaySettingsMenuPlugin,
         ));
-        // Add system to update the buttons on hover, and respond to button presses
-        app.add_systems(Update, menu_actions.run_if(in_state(Overlay::Settings)));
         // Add system to transition to the next state when the settings menu is entered
         app.add_systems(OnEnter(Overlay::Settings), transition_to_base_menu);
         // Add system to transition to the next state when the settings menu is exited

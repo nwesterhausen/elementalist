@@ -11,12 +11,17 @@ data:
   name: Ice Spike
   description: Launch a spike of ice at your target.
   manaCost: 2
-  castSlot: secondary
-  castTime: 0
+  castSlot: Slot
   cooldown: 5
-  magic: ice
-  spellTier: 3
-  long_description: >-
+  talisman:
+    shaping: Projectile
+    behavior: Damage
+    tier: Rare
+  skill: Cryomancy
+  castType: Instant
+  spriteTileset: placeholder
+  spriteIndex: 0
+  lore: >-
     Launch a wickedly sharp spike of ice towards your target. In practice, the spike has such momentum to be able to go straight through your
     practice target.
 

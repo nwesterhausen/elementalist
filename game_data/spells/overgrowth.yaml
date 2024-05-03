@@ -11,9 +11,14 @@ data:
   name: Overgrown
   description: Grow a wall of plants at the target location.
   manaCost: 2
-  castSlot: secondary
+  castSlot: Slot
   castTime: .15
   cooldown: 4.00
-  castType: cast
-  magic: life
-  spellTier: 0
+  castType: Cast
+  talisman:
+    shaping: AreaOfEffect
+    behavior: Utility
+    tier: Mundane
+  skill: Vitomancy
+  spriteTileset: placeholder
+  spriteIndex: 0

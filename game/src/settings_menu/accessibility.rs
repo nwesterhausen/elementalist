@@ -1,17 +1,17 @@
 //! Has systems for the display settings menu.
 
 use bevy::prelude::*;
-use game_library::{
+use elementalist_game_library::{
     font_resource::{ChangeFont, FontChoice, FontResource},
     settings::{next_font_family, AccessibilitySettings, SettingCategory, SettingChanged},
     state::Settings,
 };
 
-use crate::{despawn_with_tag, resources::style_prefab};
+use crate::{despawn_with_tag, style_prefab};
 
 use super::{
     base::SettingsMenuEntity,
-    button_actions::{ButtonAction, SettingsMenuButton},
+    button_actions::{SettingsButtons, SettingsMenuButton},
     events::{ChangeSetting, IndividualSetting},
 };
 
@@ -22,6 +22,7 @@ struct AccessibilitySettingsMenuEntity;
 fn show_accessibility_settings(
     mut commands: Commands,
     fonts: Res<FontResource>,
+    settings_buttons: Res<SettingsButtons>,
     accessibility_settings: Res<AccessibilitySettings>,
 ) {
     commands
@@ -47,7 +48,7 @@ fn show_accessibility_settings(
                             // Button for rotating font family
                             row.spawn((
                                 style_prefab::menu_button_bundle(),
-                                ButtonAction::RotateFontFamily,
+                                settings_buttons.rotate_font_family.clone(),
                                 SettingsMenuButton,
                             ))
                             .with_children(|button| {
@@ -69,7 +70,7 @@ fn show_accessibility_settings(
                     menu_buttons
                         .spawn((
                             style_prefab::menu_button_bundle(),
-                            ButtonAction::BackToMenu,
+                            settings_buttons.back_to_menu.clone(),
                             SettingsMenuButton,
                         ))
                         .with_children(|button| {

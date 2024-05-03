@@ -14,7 +14,7 @@ use serde::{Deserialize, Serialize};
 use crate::StatBonus;
 
 /// A stat is a value that should be used to represent a character's speed,
-/// strength or other statistic. This is not an [`game_library::Attribute`] which has a
+/// strength or other statistic. This is not an [`elementalist_game_library::Attribute`] which has a
 /// maximum and exists between 0 and that maximum. A stat is a value that
 /// really is a value which can be used directly in the game.
 ///
@@ -25,7 +25,7 @@ use crate::StatBonus;
 /// - base damage
 /// - damage reduction
 /// - attack speed
-/// - other items in [`game_library::enums::StatEnum`]
+/// - other items in [`elementalist_game_library::enums::StatEnum`]
 #[derive(
     Resource, Component, Reflect, Clone, Copy, PartialEq, Serialize, Deserialize, InspectorOptions,
 )]
@@ -69,7 +69,7 @@ impl Stat {
     /// # Examples
     ///
     /// ```no_run
-    /// use game_library::Stat;
+    /// use elementalist_game_library::Stat;
     ///
     /// let stat = Stat::new(10.0);
     /// assert_eq!(stat.value(), 10.0);
@@ -90,7 +90,7 @@ impl Stat {
     /// # Examples
     ///
     /// ```no_run
-    /// use game_library::Stat;
+    /// use elementalist_game_library::Stat;
     ///
     /// let mut stat = Stat::new(6.0);
     /// assert_eq!(stat.value(), 6.0);
@@ -107,7 +107,7 @@ impl Stat {
     /// # Examples
     ///
     /// ```no_run
-    /// use game_library::Stat;
+    /// use elementalist_game_library::Stat;
     ///
     /// let mut stat = Stat::new(10.0);
     /// assert_eq!(stat.bonus(), 1.0);
@@ -124,7 +124,7 @@ impl Stat {
     /// # Examples
     ///
     /// ```no_run
-    /// use game_library::Stat;
+    /// use elementalist_game_library::Stat;
     ///
     /// let mut stat = Stat::new(6.0);
     /// assert_eq!(stat.base_value(), 6.0);
@@ -160,7 +160,7 @@ impl Stat {
     /// # Examples
     ///
     /// ```no_run
-    /// use game_library::Stat;
+    /// use elementalist_game_library::Stat;
     ///
     /// let mut stat = Stat::new(6.0);
     /// assert_eq!(stat.base_value(), 6.0);
@@ -304,7 +304,7 @@ impl Stat {
     /// # Examples
     ///
     /// ```no_run
-    /// use game_library::Stat;
+    /// use elementalist_game_library::Stat;
     ///
     /// let mut stat = Stat::new(10.0);
     /// assert_eq!(stat.base_value(), 10.0);
@@ -329,7 +329,7 @@ impl Stat {
     /// # Examples
     ///
     /// ```no_run
-    /// use game_library::Stat;
+    /// use elementalist_game_library::Stat;
     ///
     /// let mut stat = Stat::new(10.0);
     /// assert_eq!(stat.bonus(), 1.0);

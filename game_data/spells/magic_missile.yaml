@@ -10,11 +10,13 @@ header:
 data:
   name: Magic Missile
   description: Shoot a magic missile at the target.
-  manaCost: 0
-  castSlot: primary
-  castTime: 0
   cooldown: .25
-  magic: force
-  spellTier: 0
   spriteTileset: spell_projectiles
   spriteIndex: 6
+  talisman:
+    shaping: Projectile
+    behavior: Damage
+    tier: Mundane
+  skill: Arcanomancy
+  castSlot: Cantrip
+  castType: Instant

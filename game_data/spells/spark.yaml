@@ -10,20 +10,16 @@ header:
 data:
   name: Spark
   description: Shoot a spark of electricity at your target.
-  spellTier: 0
-  magic: lightning
-  castSlot: primary
-  manaCost: 0
-  castTime: 0
+  castSlot: Cantrip
   cooldown: 2.50
-  flags:
-    - instant
-    - target
-    - homing
+  talisman:
+    shaping: Projectile
+    behavior: Damage
+    tier: Mundane
+  skill: Fulgomancy
   spriteTileset: spell_projectiles
   spriteIndex: 9
-  castCategory: projectile
-  castType: instant
+  castType: Instant
   particles:
     - attachment: Projectile
       particleId: spark

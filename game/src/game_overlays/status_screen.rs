@@ -1,13 +1,13 @@
 //! This may end up a full module. It is the plugin/systems for the status screen overlay.
 use bevy::prelude::*;
-use game_library::{
+use elementalist_game_library::{
     font_resource::FontResource,
     state::{AppState, Overlay},
     StatBundle,
 };
 use leafwing_input_manager::action_state::ActionState;
 
-use crate::{despawn_with_tag, events::PlayerAction, player::Player, resources::style_prefab};
+use crate::{despawn_with_tag, events::PlayerAction, player::Player, style_prefab};
 
 pub(super) struct StatusScreenPlugin;
 
@@ -87,7 +87,7 @@ fn toggle_status_screen(
     query: Query<&ActionState<PlayerAction>, With<Player>>,
 ) {
     if let Ok(action_state) = query.get_single() {
-        if action_state.just_pressed(PlayerAction::StatusOverlay) {
+        if action_state.just_pressed(&PlayerAction::StatusOverlay) {
             if *state == Overlay::Status {
                 next_state.set(Overlay::None);
             } else {

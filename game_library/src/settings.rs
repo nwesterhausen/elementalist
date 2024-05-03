@@ -54,6 +54,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::{
     font_resource::{FontChoice, FontFamily},
+    save_file::settings_directory,
     CameraScaleLevel, Volume,
 };
 
@@ -150,7 +151,7 @@ pub struct AccessibilitySettings {
 /// # Example
 ///
 /// ```
-/// use game_library::{font_resource::FontChoice, settings::next_font_choice};
+/// use elementalist_game_library::{font_resource::FontChoice, settings::next_font_choice};
 ///
 /// assert_eq!(next_font_choice(FontChoice::Display), FontChoice::Interface);
 /// assert_eq!(next_font_choice(FontChoice::Interface), FontChoice::Main);
@@ -174,7 +175,7 @@ pub const fn next_font_choice(font_choice: FontChoice) -> FontChoice {
 /// # Example
 ///
 /// ```
-/// use game_library::{font_resource::FontFamily, settings::next_font_family};
+/// use elementalist_game_library::{font_resource::FontFamily, settings::next_font_family};
 ///
 /// assert_eq!(next_font_family(FontFamily::Display), FontFamily::Dyslexic);
 /// assert_eq!(next_font_family(FontFamily::Fancy), FontFamily::Dyslexic);
@@ -221,10 +222,7 @@ impl Default for SettingsPlugin {
 impl Plugin for SettingsPlugin {
     fn build(&self, app: &mut App) {
         // Initialize the PKV store
-        app.insert_resource(PkvStore::new(
-            self.organization.as_str(),
-            self.application.as_str(),
-        ));
+        app.insert_resource(PkvStore::new_in_dir(settings_directory()));
 
         app
             // SettingChanged is a helper event for responding to button interaction
@@ -297,7 +295,7 @@ impl SettingCategory {
     /// # Example
     ///
     /// ```
-    /// use game_library::settings::SettingCategory;
+    /// use elementalist_game_library::settings::SettingCategory;
     ///
     /// assert_eq!(SettingCategory::Volume.name(), "Volume");
     /// ```

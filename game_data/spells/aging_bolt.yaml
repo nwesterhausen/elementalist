@@ -2,18 +2,15 @@
 data:
   name: Aging Bolt
   description: Shoot a bolt of aging magic at a target.
+  talisman:
+    shaping: Projectile
+    behavior: Damage
+    tier: Mundane
   manaCost: 1
-  castSlot: primary
-  castTime: 0
+  castSlot: Cantrip
   cooldown: 2.50
-  magic: time
-  skill: chronomancy
-  spellTier: 0
-  flags:
-    - debuff
-    - projectile
-  castCategory: projectile
-  castType: instant
+  skill: Chronomancy
+  castType: Instant
   spriteTileset: spell_projectiles
   spriteIndex: 11
   particles:

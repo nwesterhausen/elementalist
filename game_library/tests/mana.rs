@@ -1,4 +1,4 @@
-use game_library::Mana;
+use elementalist_game_library::Mana;
 
 #[test]
 fn mana() {

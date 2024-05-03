@@ -1,17 +1,21 @@
 use bevy::prelude::*;
 use bevy_rapier2d::prelude::*;
-use game_library::{
+use elementalist_game_library::{
     colors,
     data_loader::storage::GameData,
     enums::StatEnum,
+    images::AnimationBundle,
     progress_bar::{BarState, ProgressBarConfig},
-    Health, Layer, Mana, MovementBundle, SpellChoices, StatBundle, Xp,
+    spells::SpellSelection,
+    Health, Layer, Mana, MovementBundle, StatBundle, Xp,
 };
 
 use super::{
     bundle::{player_base_stats, PlayerBundle, BASE_HEALTH, BASE_MANA},
     Player,
 };
+
+const INITIAL_SPRITE_INDEX: usize = 3;
 
 /// `PlayerAvatar` is a marker component for the player's avatar, i.e. the entity that the player
 /// controls. This is used to ensure that only one player avatar is spawned at a time. It also
@@ -29,7 +33,7 @@ pub struct PlayerAvatar;
 /// This will put the avatar as a child of the player entity, which should exist already.
 pub fn spawn_player_avatar(
     mut commands: Commands,
-    mut spell_choices: ResMut<SpellChoices>,
+    mut spell_choices: ResMut<SpellSelection>,
     game_data: Res<GameData>,
     existing_players: Query<&PlayerAvatar>,
 ) {
@@ -56,13 +60,14 @@ pub fn spawn_player_avatar(
 
     commands.spawn((
         PlayerBundle {
+            animation: AnimationBundle::new("player-avatar"),
             movement: MovementBundle::default(),
             sprite: SpriteSheetBundle {
-                texture_atlas: tileset.clone(),
-                sprite: TextureAtlasSprite {
-                    index: 3,
-                    ..default()
+                atlas: TextureAtlas {
+                    layout: tileset.atlas_handle.clone(),
+                    index: INITIAL_SPRITE_INDEX,
                 },
+                texture: tileset.texture_handle.clone(),
                 transform: Transform {
                     translation: Vec3::new(0.0, 0.0, 150.0),
                     scale: Vec3::splat(0.85),

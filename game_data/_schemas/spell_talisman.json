@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.nwest.one/games/elementalist/spell_talisman.json",
+  "title": "Elementalist Spell Talisman Schema",
+  "description": "A spell talisman defines the properties of a spell, and is used to create a spell in the game.",
+  "type": "object",
+  "properties": {
+    "shaping": {
+      "description": "The shaping of the spell talisman. This defines the shape of the spell.",
+      "type": "string",
+      "oneOf": [
+        {
+          "const": "Projectile",
+          "title": "Projectile spells are cast at a target and travel away from the caster."
+        },
+        {
+          "const": "AreaOfEffect",
+          "title": "Area of Effect spells affect all targets within a specified area."
+        },
+        {
+          "const": "Cone",
+          "title": "Cone spells affect all targets within a specified cone."
+        },
+        {
+          "const": "Line",
+          "title": "Line spells affect all targets within a specified line."
+        },
+        {
+          "const": "Touch",
+          "title": "Touch spells are cast by touching the target."
+        },
+        {
+          "const": "OnSelf",
+          "title": "On Self spells affect the caster."
+        },
+        {
+          "const": "Melee",
+          "title": "Melee spells are cast at a target within melee range."
+        }
+      ]
+    },
+    "behavior": {
+      "description": "The behavior of the spell talisman. This defines the behavior of the spell.",
+      "type": "string",
+      "oneOf": [
+        {
+          "const": "Damage",
+          "title": "Damage spells deal damage to the target."
+        },
+        {
+          "const": "Heal",
+          "title": "Heal spells heal the target."
+        },
+        {
+          "const": "Buff",
+          "title": "Buff spells provide a beneficial effect to the target."
+        },
+        {
+          "const": "Debuff",
+          "title": "Debuff spells provide a detrimental effect to the target."
+        },
+        {
+          "const": "Utility",
+          "title": "Utility spells provide a non-damaging effect to the target."
+        },
+        {
+          "const": "Summon",
+          "title": "Summon spells summon a creature to fight for the caster."
+        },
+        {
+          "const": "Polymorph",
+          "title": "Polymorph spells change the form of the target."
+        },
+        {
+          "const": "Teleport",
+          "title": "Teleport spells move the target to a different location."
+        }
+      ]
+    },
+    "tier": {
+      "description": "The tier of the spell talisman. This (loosely) defines the power of the spell.",
+      "type": "string",
+      "oneOf": [
+        {
+          "const": "Mundane",
+          "title": "Tier 0: Mundane"
+        },
+        {
+          "const": "Common",
+          "title": "Tier 1: Common"
+        },
+        {
+          "const": "Uncommon",
+          "title": "Tier 2: Uncommon"
+        },
+        {
+          "const": "Rare",
+          "title": "Tier 3: Rare"
+        },
+        {
+          "const": "Epic",
+          "title": "Tier 4: Epic"
+        },
+        {
+          "const": "Legendary",
+          "title": "Tier 5: Legendary"
+        },
+        {
+          "const": "Mythic",
+          "title": "Tier 6: Mythic"
+        },
+        {
+          "const": "Divine",
+          "title": "Tier 7 (highest): Divine"
+        },
+        {
+          "const": "Unique",
+          "title": "Special tier: Unique",
+          "description": "Unique tier should only be used for restricted spells that are unique to a specific character or have other requirements. It cannot be inscribed by the player."
+        },
+        {
+          "const": "Astral",
+          "title": "Special tier: Astral",
+          "description": "Astral tier spells are a step above divine. An astral talisman is not possible in the normal game."
+        }
+      ]
+    }
+  },
+  "required": [
+    "shaping",
+    "behavior",
+    "tier"
+  ]
+}

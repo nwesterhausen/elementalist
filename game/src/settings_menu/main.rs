@@ -1,13 +1,13 @@
 //! Main menu systems.
 use bevy::prelude::*;
-use game_library::font_resource::FontResource;
-use game_library::state::AppState;
+use elementalist_game_library::font_resource::FontResource;
+use elementalist_game_library::state::AppState;
 
-use crate::resources::style_prefab;
+use crate::style_prefab;
 
 use super::{
     base::SettingsMenuEntity,
-    button_actions::{ButtonAction, SettingsMenuButton},
+    button_actions::{SettingsButtons, SettingsMenuButton},
 };
 
 /// Tags for the (main) menu buttons/text/etc.
@@ -18,6 +18,7 @@ pub struct BaseSettingsMenuEntity;
 #[allow(clippy::too_many_lines)]
 pub fn show_main_menu(
     mut commands: Commands,
+    settings_buttons: Res<SettingsButtons>,
     fonts: Res<FontResource>,
     current_state: Res<State<AppState>>,
 ) {
@@ -41,7 +42,7 @@ pub fn show_main_menu(
                     menu_buttons
                         .spawn((
                             style_prefab::menu_button_bundle(),
-                            ButtonAction::SettingsAudio,
+                            settings_buttons.show_audio_settings.clone(),
                             SettingsMenuButton,
                         ))
                         .with_children(|button| {
@@ -54,7 +55,7 @@ pub fn show_main_menu(
                     menu_buttons
                         .spawn((
                             style_prefab::menu_button_bundle(),
-                            ButtonAction::SettingsDisplay,
+                            settings_buttons.show_video_settings.clone(),
                             SettingsMenuButton,
                         ))
                         .with_children(|button| {
@@ -67,7 +68,7 @@ pub fn show_main_menu(
                     menu_buttons
                         .spawn((
                             style_prefab::menu_button_bundle(),
-                            ButtonAction::SettingsControls,
+                            settings_buttons.show_controls_settings.clone(),
                             SettingsMenuButton,
                         ))
                         .with_children(|button| {
@@ -80,7 +81,7 @@ pub fn show_main_menu(
                     menu_buttons
                         .spawn((
                             style_prefab::menu_button_bundle(),
-                            ButtonAction::SettingsGameplay,
+                            settings_buttons.show_gameplay_settings.clone(),
                             SettingsMenuButton,
                         ))
                         .with_children(|button| {
@@ -93,7 +94,7 @@ pub fn show_main_menu(
                     menu_buttons
                         .spawn((
                             style_prefab::menu_button_bundle(),
-                            ButtonAction::SettingsAccessibility,
+                            settings_buttons.show_accessibility_settings.clone(),
                             SettingsMenuButton,
                         ))
                         .with_children(|button| {
@@ -106,7 +107,7 @@ pub fn show_main_menu(
                     menu_buttons
                         .spawn((
                             style_prefab::menu_button_bundle(),
-                            ButtonAction::CloseMenu,
+                            settings_buttons.close.clone(),
                             SettingsMenuButton,
                         ))
                         .with_children(|button| {
@@ -120,7 +121,7 @@ pub fn show_main_menu(
                         menu_buttons
                             .spawn((
                                 style_prefab::menu_button_bundle(),
-                                ButtonAction::GoToMainGameMenu,
+                                settings_buttons.quit_to_main_menu.clone(),
                                 SettingsMenuButton,
                             ))
                             .with_children(|button| {

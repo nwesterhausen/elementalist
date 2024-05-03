@@ -86,12 +86,10 @@ fn spawn_progress_bars<T: Percentage + Component>(
 ) {
     for (entity, percentage, config) in query.iter() {
         // spawn progress bar
-        let foreground_color = materials.add(config.color(percentage).into());
-        let foreground_color_moderate =
-            materials.add(config.color_for_state(&BarState::Moderate).into());
-        let foreground_color_critical =
-            materials.add(config.color_for_state(&BarState::Critical).into());
-        let background_color = materials.add(config.background_color().into());
+        let foreground_color = materials.add(config.color(percentage));
+        let foreground_color_moderate = materials.add(config.color_for_state(&BarState::Moderate));
+        let foreground_color_critical = materials.add(config.color_for_state(&BarState::Critical));
+        let background_color = materials.add(config.background_color());
 
         let Ok(entity_transform) = transform_query.get(entity) else {
             tracing::warn!("Failed to get parent transform for progress bar");
@@ -151,40 +149,42 @@ fn update<T: Percentage + Component>(
     parent_query: Query<(&T, &ProgressBarConfig<T>, &WithProgressBar<T>, &Children), Changed<T>>,
     mut mesh_query: Query<&mut Transform>,
 ) {
-    parent_query.for_each(|(percentage, config, progress_bar, children)| {
-        let (_, foreground) = progress_bar.get();
+    parent_query
+        .iter()
+        .for_each(|(percentage, config, progress_bar, children)| {
+            let (_, foreground) = progress_bar.get();
 
-        // loop over child entity ids
-        for child in children {
-            // if this isn't the foreground entity, skip it
-            if *child != foreground {
-                continue;
-            }
+            // loop over child entity ids
+            for child in children {
+                // if this isn't the foreground entity, skip it
+                if *child != foreground {
+                    continue;
+                }
 
-            tracing::info!(
-                "Updating progress bar for entity with percentage {}",
-                percentage.percentage()
-            );
-
-            // grab the mutable mesh
-            let Ok(mut transform) = mesh_query.get_mut(*child) else {
-                tracing::warn!(
-                    "Failed to get foreground mesh for progress bar Entity {foreground:?}"
+                tracing::info!(
+                    "Updating progress bar for entity with percentage {}",
+                    percentage.percentage()
                 );
-                return;
-            };
 
-            // update the mesh
-            commands
-                .entity(*child)
-                .insert(progress_bar.get_material(config, percentage));
-            // update the transform
-            transform.scale = Vec3::new(percentage.percentage(), 1.0, 1.0);
-            // update the translation.x to be the percentage of the parent's width
-            transform.translation.x =
-                config.position_translation.x + (percentage.percentage() * config.size.x / 2.0);
-        }
-    });
+                // grab the mutable mesh
+                let Ok(mut transform) = mesh_query.get_mut(*child) else {
+                    tracing::warn!(
+                        "Failed to get foreground mesh for progress bar Entity {foreground:?}"
+                    );
+                    return;
+                };
+
+                // update the mesh
+                commands
+                    .entity(*child)
+                    .insert(progress_bar.get_material(config, percentage));
+                // update the transform
+                transform.scale = Vec3::new(percentage.percentage(), 1.0, 1.0);
+                // update the translation.x to be the percentage of the parent's width
+                transform.translation.x =
+                    config.position_translation.x + (percentage.percentage() * config.size.x / 2.0);
+            }
+        });
 }
 
 #[allow(clippy::needless_pass_by_value)]

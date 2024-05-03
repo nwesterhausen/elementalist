@@ -1,9 +1,9 @@
 use bevy::prelude::*;
 
 use crate::despawn_with_tag;
-use game_library::state::AppState;
+use elementalist_game_library::state::AppState;
 
-use super::{button_actions::menu_actions, screens};
+use super::{button_actions, main_screen};
 
 // State used for the current menu screen
 #[derive(Clone, Copy, Default, Eq, PartialEq, Debug, Hash, States)]
@@ -40,13 +40,13 @@ impl Plugin for MainMenuPlugin {
     fn build(&self, app: &mut App) {
         app
             // Add a resource to track which menu state we are in
-            .add_state::<MenuState>()
+            .init_state::<MenuState>()
+            // Register the button actions
+            .add_systems(Startup, button_actions::register_buttons)
             // Transition to the main menu when entering the main menu state (starts tracking our MenuState at Main)
             .add_systems(OnEnter(AppState::MainMenu), transition_to_main_menu)
-            // Add system to update the buttons on hover, etc
-            .add_systems(Update, menu_actions.run_if(in_state(AppState::MainMenu)))
             // Main main screen
-            .add_systems(OnEnter(MenuState::Main), screens::main_menu)
+            .add_systems(OnEnter(MenuState::Main), main_screen::main_menu_setup)
             .add_systems(
                 OnExit(MenuState::Main),
                 despawn_with_tag::<OnMainMenuScreen>,

@@ -1,5 +1,5 @@
 use bevy::{prelude::*, window::PrimaryWindow};
-use game_library::CursorPosition;
+use elementalist_game_library::CursorPosition;
 
 use crate::camera::MainCamera;
 

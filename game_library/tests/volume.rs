@@ -1,4 +1,4 @@
-use game_library::Volume;
+use elementalist_game_library::Volume;
 
 #[test]
 fn mute() {

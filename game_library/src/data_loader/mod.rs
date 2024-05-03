@@ -6,19 +6,19 @@
 pub mod events;
 pub mod storage;
 
+mod entity_sprites;
 mod header_def;
 mod loader;
 mod particles;
 mod plugin;
 mod realms;
+mod resources;
 mod simple_objects;
 mod spells;
 mod tilesets;
 
-/// The directory where the game data files are stored
-pub const DATA_FILE_DIR: &str = "game_data";
-
 pub use header_def::*;
-pub use loader::*;
 #[allow(clippy::module_name_repetitions)]
 pub use plugin::DataLoaderPlugin;
+pub use resources::CreateMissingDirs;
+pub use resources::DataFileDirs;

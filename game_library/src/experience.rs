@@ -20,7 +20,7 @@
 //! If you want to define a custom curve, you should create the component with the desired values:
 //!
 //! ```no_run
-//! use game_library::Xp;
+//! use elementalist_game_library::Xp;
 //!
 //! let xp = Xp {
 //!   value: 0,
@@ -62,7 +62,7 @@ use crate::progress_bar::Percentage;
 ///
 /// ```no_run
 /// use bevy::prelude::*;
-/// use game_library::Xp;
+/// use elementalist_game_library::Xp;
 ///
 /// #[derive(Component)]
 /// struct Player;
@@ -132,7 +132,7 @@ impl Xp {
     /// # Examples
     ///
     /// ```no_run
-    /// use game_library::Xp;
+    /// use elementalist_game_library::Xp;
     ///
     /// let xp = Xp {
     ///   value: 0,

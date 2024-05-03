@@ -11,9 +11,14 @@ data:
   name: Tornado
   description: Summon a tornado at the target location.
   manaCost: 2
-  castSlot: secondary
+  castSlot: Slot
   castTime: 5.0
   cooldown: 5.00
-  castType: cast
-  magic: air
-  spellTier: 2
+  castType: Cast
+  talisman:
+    shaping: AreaOfEffect
+    behavior: Damage
+    tier: Rare
+  skill: Aeromancy
+  spriteTileset: placeholder
+  spriteIndex: 0

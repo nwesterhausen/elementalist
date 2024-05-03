@@ -12,9 +12,10 @@ use bevy::{
     render::{render_resource::WgpuFeatures, settings::WgpuSettings, RenderPlugin},
 };
 use bevy_rapier2d::prelude::*;
-use game_library::{
-    data_loader::storage::GameData, state::Game, GeneratedMaps, GenerationSeed, Layer, LayerPlugin,
-    MarkersToBiomes, NoisePlugin, PhysicsPlugin, SchedulingPlugin,
+use elementalist_game_library::{
+    data_loader::storage::GameData, images::ImagesPlugin, save_file::SaveFilePlugin, state::Game,
+    AudioPlugin, GeneratedMaps, GenerationSeed, Layer, LayerPlugin, MarkersToBiomes, NoisePlugin,
+    PhysicsPlugin, SchedulingPlugin,
 };
 use in_game::InGamePlugin;
 use leafwing_input_manager::plugin::InputManagerPlugin;
@@ -33,6 +34,7 @@ mod resources;
 mod settings_menu;
 mod spells;
 mod splash_screen;
+mod style_prefab;
 
 pub use app_systems::despawn_with_tag;
 use events::{MenuInteraction, PlayerAction};
@@ -82,10 +84,12 @@ fn main() {
                 .set(LogPlugin {
                     level: log_level,
                     filter: log_filter.to_string(),
+                    update_subscriber: None,
                 })
                 // Add our the wgpu settings per bevy_hanabi
                 .set(RenderPlugin {
                     render_creation: wgpu_settings.into(),
+                    ..default()
                 }),
         )
         // Add the gameplay plugins
@@ -105,6 +109,8 @@ fn main() {
         // Some test plugins for environment stuff
         .add_systems(OnEnter(Game::Playing), spawn_random_environment)
         .add_systems(OnExit(Game::Playing), despawn_with_tag::<EnvironmentStuff>)
+        // For the generated map, with a 32x32 tile size.
+        .insert_resource(GeneratedMaps::new((120, 120)).with_tile_dimension(32.0))
         // Launch
         .run();
 }
@@ -119,9 +125,11 @@ impl Plugin for ElementalistDefaultPlugins {
         // Never attempts to look up meta files. The default meta configuration will be used for each asset.
         app.insert_resource(AssetMetaCheck::Never);
         // The clear color is the color the screen is cleared to before each frame is drawn
-        app.insert_resource(ClearColor(game_library::colors::CLEAR_COLOR));
+        app.insert_resource(ClearColor(elementalist_game_library::colors::CLEAR_COLOR));
         // Add the window icon
         app.add_systems(Startup, app_systems::set_window_icon);
+        // Add the save game system
+        app.add_plugins(SaveFilePlugin);
         // Add camera plugin
         app.add_plugins(camera::CameraPlugin);
         // Add the schedule plugin
@@ -130,6 +138,8 @@ impl Plugin for ElementalistDefaultPlugins {
         app.add_plugins(PhysicsPlugin);
         // Add the layer plugin
         app.add_plugins(LayerPlugin);
+        // Add the images plugin
+        app.add_plugins(ImagesPlugin);
     }
 }
 
@@ -158,6 +168,8 @@ struct ElementalistGameplayPlugins;
 impl Plugin for ElementalistGameplayPlugins {
     fn build(&self, app: &mut App) {
         app.add_plugins((
+            // Add the audio plugin
+            AudioPlugin,
             // Add the plugin for the player
             player::PlayerPlugin,
             // Add the plugin for the spells
@@ -181,8 +193,8 @@ fn spawn_random_environment(
     seed: Res<GenerationSeed>,
 ) {
     // get the biomes for the current map
-    let Some(realm) = game_data.realms.get("simple test realm") else {
-        tracing::error!("No realm found for 'simple test realm'");
+    let Some(realm) = game_data.realms.get("backterria-simple") else {
+        tracing::error!("No realm found for 'backterria-simple'");
         return;
     };
 
@@ -200,7 +212,7 @@ fn spawn_random_environment(
             };
 
             let Some(ground) = game_data.tile_atlas.get(rnd_ground.0) else {
-                tracing::error!("Failed to load ground tileselt: {}", rnd_ground.0);
+                tracing::error!("Failed to load ground tileset: {}", rnd_ground.0);
                 continue;
             };
             let ground_id = rnd_ground.1;
@@ -208,8 +220,11 @@ fn spawn_random_environment(
             let ground_transform = Transform::from_translation(ground_translation);
             commands.spawn((
                 SpriteSheetBundle {
-                    texture_atlas: ground.clone(),
-                    sprite: bevy::sprite::TextureAtlasSprite::new(ground_id),
+                    atlas: TextureAtlas {
+                        layout: ground.atlas_handle.clone(),
+                        index: ground_id,
+                    },
+                    texture: ground.texture_handle.clone(),
                     transform: ground_transform,
                     ..Default::default()
                 },
@@ -258,8 +273,11 @@ fn spawn_random_environment(
 
                 commands.spawn((
                     SpriteSheetBundle {
-                        texture_atlas: tileset.clone(),
-                        sprite: bevy::sprite::TextureAtlasSprite::new(tile_index),
+                        atlas: TextureAtlas {
+                            layout: tileset.atlas_handle.clone(),
+                            index: tile_index,
+                        },
+                        texture: tileset.texture_handle.clone(),
                         transform: obj_transform,
                         ..Default::default()
                     },

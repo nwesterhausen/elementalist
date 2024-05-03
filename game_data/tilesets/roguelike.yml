@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://schemas.nwest.one/games/elementalist/tileset.json
+header:
+  uniqueId: backterria-rl
+  system: Tileset
+  author: Backterria
+  description: Roguelike tileset
+  internalVersion: 1
+  displayVersion: v1.0
+  validGameInternalVersion: 1
+data:
+  path: backterria/roguelike.png
+  tileWidth: 16
+  tileHeight: 16
+  tilesetWidth: 51
+  tilesetHeight: 39
+  horizontalOffset: 0
+  horizontalPadding: 0
+  verticalOffset: 0
+  verticalPadding: 0

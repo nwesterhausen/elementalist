@@ -46,8 +46,22 @@
     "validGameInternalVersion": {
       "description": "Internal version of the game that this data file is valid for. This is used to ensure that the data file is not loaded for an incompatible game version.",
       "type": "integer",
-      "enum": [1]
+      "oneOf": [
+        {
+          "const": 1,
+          "description": "Version 0 of the game, this encompasses all of 0.x since it's the first version and there's no consideration for backwards compatibility or API stability.",
+          "title": "Versions 0.x of the game"
+        }
+      ]
     }
   },
-  "required": ["uniqueId", "system", "author", "description", "displayVersion", "internalVersion", "validGameInternalVersion"]
+  "required": [
+    "uniqueId",
+    "system",
+    "author",
+    "description",
+    "displayVersion",
+    "internalVersion",
+    "validGameInternalVersion"
+  ]
 }

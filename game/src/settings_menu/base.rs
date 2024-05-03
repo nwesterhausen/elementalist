@@ -1,9 +1,9 @@
 //! Base systems for the menu.
 
 use bevy::{prelude::*, sprite::MaterialMesh2dBundle, window::PrimaryWindow};
-use game_library::colors::BACKGROUND_COLOR_50;
+use elementalist_game_library::colors::BACKGROUND_COLOR_50;
 
-use game_library::state::Settings;
+use elementalist_game_library::state::Settings;
 
 /// An entity tag for ease of cleanup when the menu is disabled.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Component)]
@@ -36,7 +36,7 @@ pub(super) fn clear_background(
     commands.spawn((
         MaterialMesh2dBundle {
             mesh: meshes
-                .add(shape::Quad::new(Vec2::new(window.width(), window.height())).into())
+                .add(Rectangle::new(window.width(), window.height()))
                 .into(),
             material: materials.add(ColorMaterial::from(BACKGROUND_COLOR_50)),
             transform: Transform::from_xyz(0., 0., 10.),

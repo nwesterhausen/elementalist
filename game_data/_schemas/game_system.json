@@ -4,5 +4,30 @@
   "title": "Elementalist Game System",
   "description": "A system in the Elementalist game",
   "type": "string",
-  "enum": ["Spell", "Tileset", "Particle", "Realm", "SimpleObject"]
+  "oneOf": [
+    {
+      "const": "Spell",
+      "title": "A spell that can be learned and cast by a player"
+    },
+    {
+      "const": "Tileset",
+      "title": "A spritesheet"
+    },
+    {
+      "const": "Particle",
+      "title": "A particle effect that can be used to create a visual effect"
+    },
+    {
+      "const": "Realm",
+      "title": "A realm that can be explored by a player"
+    },
+    {
+      "const": "SimpleObject",
+      "title": "A simple object that can be placed in a realm"
+    },
+    {
+      "const": "EntitySprite",
+      "title": "A sprite that can be used to represent an entity. Includes animations and other visual effects"
+    }
+  ]
 }

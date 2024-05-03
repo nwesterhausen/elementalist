@@ -4,12 +4,30 @@
   "title": "Elementalist Biome Altitude",
   "description": "The available altitudes for biomes in the Elementalist game.",
   "type": "string",
-  "enum": [
-    "Alvar",
-    "Alpine",
-    "Subalpine",
-    "Montane",
-    "LowerMontane",
-    "Premontane"
+  "oneOf": [
+    {
+      "const": "Alvar",
+      "description": "An alvar altitude is characterized by average temperatures less than 1.5 degrees Celsius"
+    },
+    {
+      "const": "Alpine",
+      "description": "An alpine altitude is characterized by average temperatures within 1.5 to 3 degrees Celsius"
+    },
+    {
+      "const": "Subalpine",
+      "description": "A subalpine altitude is characterized by average temperatures within 3 to 6 degrees Celsius"
+    },
+    {
+      "const": "Montane",
+      "description": "A montane altitude is characterized by average temperatures within 6 to 12 degrees Celsius"
+    },
+    {
+      "const": "LowerMontane",
+      "description": "A lower montane altitude is characterized by average temperatures within 12 to 24 degrees Celsius"
+    },
+    {
+      "const": "Premontane",
+      "description": "A premontane altitude is characterized by average temperatures higher than 24 degrees Celsius"
+    }
   ]
 }

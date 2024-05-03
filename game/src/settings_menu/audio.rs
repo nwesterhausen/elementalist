@@ -1,17 +1,17 @@
 //! Has systems for the display settings menu.
 
 use bevy::prelude::*;
-use game_library::{
+use elementalist_game_library::{
     font_resource::FontResource,
     settings::{SettingCategory, SettingChanged, VolumeSettings},
     state::Settings,
 };
 
-use crate::{despawn_with_tag, resources::style_prefab};
+use crate::{despawn_with_tag, style_prefab};
 
 use super::{
     base::SettingsMenuEntity,
-    button_actions::{ButtonAction, SettingsMenuButton},
+    button_actions::{SettingsButtons, SettingsMenuButton},
     events::{ChangeSetting, IndividualSetting},
 };
 
@@ -21,6 +21,7 @@ struct AudioSettingsMenuEntity;
 
 fn show_audio_settings(
     mut commands: Commands,
+    settings_buttons: Res<SettingsButtons>,
     fonts: Res<FontResource>,
     volume_settings: Res<VolumeSettings>,
 ) {
@@ -49,7 +50,7 @@ fn show_audio_settings(
                             // Button for main volume
                             row.spawn((
                                 style_prefab::menu_button_bundle(),
-                                ButtonAction::IncrementMainVolume,
+                                settings_buttons.increment_main_volume.clone(),
                                 SettingsMenuButton,
                             ))
                             .with_children(|button| {
@@ -74,7 +75,7 @@ fn show_audio_settings(
                             // Button for music volume
                             row.spawn((
                                 style_prefab::menu_button_bundle(),
-                                ButtonAction::IncrementMusicVolume,
+                                settings_buttons.increment_music_volume.clone(),
                                 SettingsMenuButton,
                             ))
                             .with_children(|button| {
@@ -99,7 +100,7 @@ fn show_audio_settings(
                             // Button for sound effects volume
                             row.spawn((
                                 style_prefab::menu_button_bundle(),
-                                ButtonAction::IncrementSoundEffectsVolume,
+                                settings_buttons.increment_sound_effects.clone(),
                                 SettingsMenuButton,
                             ))
                             .with_children(|button| {
@@ -121,7 +122,7 @@ fn show_audio_settings(
                     menu_buttons
                         .spawn((
                             style_prefab::menu_button_bundle(),
-                            ButtonAction::BackToMenu,
+                            settings_buttons.back_to_menu.clone(),
                             SettingsMenuButton,
                         ))
                         .with_children(|button| {

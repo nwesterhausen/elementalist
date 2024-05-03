@@ -10,10 +10,14 @@ header:
 data:
   name: Lightning Ball
   description: Launch a ball of pure lightning towards a target.
-  manaCost: 0
-  castSlot: primary
-  castTime: 0
+  castSlot: Slot
   cooldown: 1.75
-  magic: lightning
-  spellTier: 3
   long_description: As the ball travels it will launch a lightning bolt at the closest target to it up to 4 times before its exhausted.
+  talisman:
+    shaping: Projectile
+    behavior: Damage
+    tier: Rare
+  skill: Fulgomancy
+  castType: Instant
+  spriteTileset: placeholder
+  spriteIndex: 0

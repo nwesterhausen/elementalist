@@ -156,7 +156,7 @@ impl<T: Percentage + Component> ProgressBarConfig<T> {
     /// This is a [`Quad`] with the size of the progress bar.
     #[must_use]
     pub fn background_mesh(&self) -> Mesh {
-        shape::Quad::new(self.size).into()
+        Rectangle::new(self.size.x, self.size.y).into()
     }
     /// Get the mesh for the progress bar foreground.
     ///
@@ -164,11 +164,7 @@ impl<T: Percentage + Component> ProgressBarConfig<T> {
     /// bar background scaled by the percentage.
     #[must_use]
     pub fn foreground_mesh(&self, percentage: &T) -> Mesh {
-        shape::Quad::new(Vec2::new(
-            self.size.x * percentage.percentage(),
-            self.size.y,
-        ))
-        .into()
+        Rectangle::new(self.size.x * percentage.percentage(), self.size.y).into()
     }
     /// Get the current [`BarState`] for the given percentage.
     #[must_use]

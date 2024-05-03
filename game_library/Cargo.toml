@@ -1,42 +1,57 @@
 [package]
-name = "game_library"
-version = "1.5.0"
+name = "elementalist_game_library"
+version = "2.6.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+
 [dependencies]
-bevy = "0.12.1"
-bevy-inspector-egui = "0.22.1"
-bevy_hanabi = "0.9.0"
-# Local disk storage in a key-value store. Settings are stored with this.
-bevy_pkv = "0.9.1"
+bevy-inspector-egui = "0.24.0"
+bevy_hanabi = "0.10.0"
+# Local disk storage in a key-value store. Settings are stored with this. Has to track main until next release.
+bevy_pkv = { git = "https://github.com/johanhelsing/bevy_pkv", rev = "af0b750b1dbfc8db58dbb2bd07c5eda72e714b79" } # main
 noise = "0.9.0"
 serde = "1.0.198"
 serde_default_utils = "0.2.1"
-serde_yaml = "0.9.34"
+serde_yaml = "0.9.32"
 tracing = "0.1.40"
 walkdir = "2.5.0"
-bevy_rapier2d = { version = "0.24.0", features = [
+bevy_rapier2d = { version = "0.25.0", features = [
     "parallel",
     "debug-render-2d",
 ] }
+platform-dirs = "0.3.0"
+bevy_kira_audio = "0.19.0"
+
+[dependencies.bevy]
+version = "0.13"
+default-features = false
+features = [
+    "animation",
+    "bevy_asset",
+    "bevy_gilrs",
+    "bevy_scene",
+    "bevy_winit",
+    "bevy_core_pipeline",
+    "bevy_pbr",
+    "bevy_gltf",
+    "bevy_render",
+    "bevy_sprite",
+    "bevy_text",
+    "bevy_ui",
+    "multi-threaded",
+    "png",
+    "hdr",
+    "x11",
+    "bevy_gizmos",
+    "android_shared_stdcxx",
+    "tonemapping_luts",
+    "default_font",
+    "webgl2",
+    "bevy_debug_stepping",
+]
 
 [dependencies.rand]
 version = "0.8.5"
 features = ["small_rng"]
-
-
-[lints.rust]
-unsafe_code = "forbid"
-missing_docs = "deny"
-unreachable_code = "warn"
-unreachable_patterns = "warn"
-
-[lints.clippy]
-enum_glob_use = "deny"
-pedantic = "deny"
-nursery = "deny"
-unwrap_used = "deny"
-cast_possible_truncation = "allow"
-cast_precision_loss = "allow"

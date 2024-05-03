@@ -5,7 +5,7 @@
 //! ```no_run
 //! use bevy::prelude::*;
 //! use bevy::window::PrimaryWindow;
-//! use game_library::CursorPosition;
+//! use elementalist_game_library::CursorPosition;
 //!
 //! #[derive(Component)]
 //! struct MainCamera;

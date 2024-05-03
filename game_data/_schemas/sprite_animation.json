@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.nwest.one/games/elementalist/sprite_animation.json",
+  "title": "Elementalist Sprite Animation Schema",
+  "description": "An animation for use in a sprite sheet",
+  "type": "object",
+  "properties": {
+    "state": {
+      "title": "Animation State",
+      "description": "The state of animation this represents",
+      "$ref": "https://schemas.nwest.one/games/elementalist/animation_state.json"
+    },
+    "tileset": {
+      "description": "The tileset to use for this animation, identified by its unique_id (from the tileset's header)",
+      "type": "string"
+    },
+    "tileIndices": {
+      "description": "The indices of the tiles to use for this animation",
+      "type": "array",
+      "items": {
+        "type": "integer"
+      }
+    },
+    "frameDuration": {
+      "description": "The duration of each frame in seconds",
+      "type": "number"
+    }
+  },
+  "required": [
+    "state",
+    "tileset",
+    "tileIndices",
+    "frameDuration"
+  ]
+}

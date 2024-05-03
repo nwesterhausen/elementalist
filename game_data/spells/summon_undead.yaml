@@ -10,9 +10,13 @@ header:
 data:
   name: Summon Undead (Basic)
   description: Summon a random basic-tier undead at a location.
-  manaCost: 0
-  castSlot: primary
-  castTime: 0
   cooldown: 5
-  magic: necromancy
-  spellTier: 0
+  talisman:
+    shaping: OnSelf
+    behavior: Summon
+    tier: Mundane
+  skill: Necromancy
+  castSlot: Cantrip
+  castType: Instant
+  spriteTileset: placeholder
+  spriteIndex: 0

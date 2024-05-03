@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use game_library::{font_resource::FontResource, settings::AccessibilitySettings};
+use elementalist_game_library::{font_resource::FontResource, settings::AccessibilitySettings};
 
 /// Set the initial fonts.
 pub fn set_initial_fonts(

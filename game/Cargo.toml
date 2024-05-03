@@ -1,6 +1,6 @@
 [package]
 name = "elementalist"
-version = "0.6.0"
+version = "0.7.0"
 edition = "2021"
 build = "build.rs"
 
@@ -13,45 +13,54 @@ features = ["git2"]
 
 [build-dependencies]
 # Used to set the icon of the .exe file on Windows.
-embed-resource = "2.4.2"
+embed-resource = "2.4.1"
 
 [dependencies]
-# When running the game in development, use the dynamic linking feature of Bevy to speed
-# up compilation times. `cargo run --features bevy/dynamic_linking` will enable this.
-bevy = "0.12.1"
 # Input abstraction layer, makes for easy input handling and rebinding.
-leafwing-input-manager = "0.11.2"
+leafwing-input-manager = "0.13.3"
 # Used for logging. This might be able to be replaced with a re-pub from bevy.
 tracing = "0.1.40"
-# The game library contains a lot of resources, logic and compoents used in the game.
-game_library = { path = "../game_library" }
+# The game library contains a lot of resources, logic and components used in the game.
+elementalist_game_library = { path = "../game_library" }
 # For setting the icon on Windows, we use this, which must match the version in bevy.
-winit = "0.28"
+winit = "0.29.10"
 # Used to load our icon for the window.
-image = "0.24"
+image = "0.25.1"
 # Random noise generation library
 rand = "0.8.5"
-# DEBUG ONLY: docking support for the inspector egui
-egui_dock = "0.12.0"
-# DEBUG ONLY: inspector for bevy
-bevy-inspector-egui = "0.22.1"
 # Particle system
-bevy_hanabi = { version = "0.9.0", default-features = false, features = ["2d"] }
+bevy_hanabi = { version = "0.10.0", default-features = false, features = [
+  "2d",
+] }
 # Physics engine
-bevy_rapier2d = { version = "0.24.0", features = ["parallel"] }
+bevy_rapier2d = { version = "0.25.0", features = ["parallel"] }
+# Audio system plugin
+bevy_kira_audio = "0.19"
 
-# Some very strict lints.
-[lints.rust]
-unsafe_code = "forbid"
-missing_docs = "warn"
-unreachable_code = "warn"
-unreachable_patterns = "warn"
-[lints.clippy]
-enum_glob_use = "deny"
-pedantic = "deny"
-nursery = "deny"
-unwrap_used = "deny"
-module_name_repetitions = "allow"
-needless_pass_by_value = "allow"
-cast_possible_truncation = "allow"
-cast_precision_loss = "allow"
+[dependencies.bevy]
+version = "0.13"
+default-features = false
+features = [
+  "animation",
+  "bevy_asset",
+  "bevy_gilrs",
+  "bevy_scene",
+  "bevy_winit",
+  "bevy_core_pipeline",
+  "bevy_pbr",
+  "bevy_gltf",
+  "bevy_render",
+  "bevy_sprite",
+  "bevy_text",
+  "bevy_ui",
+  "multi-threaded",
+  "png",
+  "hdr",
+  "x11",
+  "bevy_gizmos",
+  "android_shared_stdcxx",
+  "tonemapping_luts",
+  "default_font",
+  "webgl2",
+  "bevy_debug_stepping",
+]

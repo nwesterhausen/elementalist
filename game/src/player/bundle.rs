@@ -1,6 +1,8 @@
 use bevy::prelude::*;
 use bevy_rapier2d::prelude::*;
-use game_library::{enums::StatEnum, Health, Layer, Mana, MovementBundle, StatBundle, Xp};
+use elementalist_game_library::{
+    enums::StatEnum, images::AnimationBundle, Health, Layer, Mana, MovementBundle, StatBundle, Xp,
+};
 
 /// Base stats for the player. These are the stats that the player starts with, and are used to
 /// initiate the [`StatBundle`] for the player.
@@ -65,6 +67,8 @@ pub struct PlayerBundle {
     pub movement: MovementBundle,
     /// The player's sprite bundle.
     pub sprite: SpriteSheetBundle,
+    /// Animation (entity sprite)
+    pub animation: AnimationBundle,
     /// The player's health.
     pub health: Health,
     /// The player's mana.

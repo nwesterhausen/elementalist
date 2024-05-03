@@ -67,7 +67,7 @@ impl BiomeData {
         Some((tileset.id.as_str(), tile.tile))
     }
 
-    /// Flat map of objects against the `OJECT_POOL` for the biome.
+    /// Flat map of objects against the `OBJECT_POOL` for the biome.
     #[must_use]
     pub fn object_pool(&self, seed: u64) -> Vec<Option<&str>> {
         let mut pool = Vec::with_capacity(OBJECT_POOL);

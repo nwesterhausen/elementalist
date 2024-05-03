@@ -1,22 +1,21 @@
 use bevy::prelude::*;
 use bevy_rapier2d::prelude::*;
-use game_library::{enums::StatEnum, StatBundle};
+use elementalist_game_library::{
+    enums::StatEnum,
+    images::{AnimationMovementState, AnimationStatus},
+    StatBundle,
+};
 use leafwing_input_manager::action_state::ActionState;
 
 use crate::{events::PlayerAction, player::Player};
 
-use super::{
-    animation::{PlayerAnimation, PlayerFacing},
-    avatar::PlayerAvatar,
-};
+use super::avatar::PlayerAvatar;
 
 /// Handle player input for movement
 pub fn player_movement_controls(
-    mut query: Query<&mut KinematicCharacterController, With<Player>>,
+    mut query: Query<(&mut KinematicCharacterController, &mut AnimationStatus), With<Player>>,
     action_query: Query<&ActionState<PlayerAction>, With<Player>>,
     stat_query: Query<&StatBundle, With<Player>>,
-    mut sprite_state_next: ResMut<NextState<PlayerAnimation>>,
-    mut player_facing_next: ResMut<NextState<PlayerFacing>>,
 ) {
     let Ok(action_state) = action_query.get_single() else {
         tracing::error!("player_movement_controls: failed to get action state");
@@ -34,24 +33,24 @@ pub fn player_movement_controls(
     };
 
     // we expect just one `KinematicCharacterController` for the player
-    let Ok(mut controller) = query.get_single_mut() else {
-        tracing::error!("player_movement_controls: failed to get player controller");
+    let Ok((mut controller, mut status)) = query.get_single_mut() else {
+        tracing::error!("player_movement_controls: failed to get player components");
         return;
     };
 
-    if action_state.pressed(PlayerAction::Move) {
-        sprite_state_next.set(PlayerAnimation::Walking);
-        if let Some(axis_pair) = action_state.clamped_axis_pair(PlayerAction::Move) {
+    if action_state.pressed(&PlayerAction::Move) {
+        // update the animation only when needed
+        status.movement = AnimationMovementState::Walk;
+
+        if let Some(axis_pair) = action_state.clamped_axis_pair(&PlayerAction::Move) {
             controller.translation = Some(axis_pair.xy().normalize_or_zero() * (speed.value()));
 
-            if axis_pair.x() < 0.0 {
-                player_facing_next.set(PlayerFacing::Left);
-            } else {
-                player_facing_next.set(PlayerFacing::Right);
+            if axis_pair.x() > 0.0 || axis_pair.x() < 0.0 {
+                status.facing_left = axis_pair.x() < 0.0;
             }
         }
     } else {
-        sprite_state_next.set(PlayerAnimation::Idle);
+        status.movement = AnimationMovementState::Idle;
     }
 }
 

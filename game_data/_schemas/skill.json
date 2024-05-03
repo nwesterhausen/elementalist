@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.nwest.one/games/elementalist/skill.json",
+  "title": "Skill in the Elementalist game",
+  "description": "A skill governs the player's magical abilities for the various schools of magic.",
+  "type": "string",
+  "oneOf": [
+    {
+      "title": "Fire magic",
+      "description": "Pyromancy is the school of fire magic.",
+      "const": "Pyromancy"
+    },
+    {
+      "title": "Lightning magic",
+      "description": "Fulgomancy is the school of lightning magic.",
+      "const": "Fulgomancy"
+    },
+    {
+      "title": "Water magic",
+      "description": "Hydromancy is the school of water magic.",
+      "const": "Hydromancy"
+    },
+    {
+      "title": "Earth magic",
+      "description": "Geomancy is the school of earth magic.",
+      "const": "Geomancy"
+    },
+    {
+      "title": "Air magic",
+      "description": "Aeromancy is the school of air magic.",
+      "const": "Aeromancy"
+    },
+    {
+      "title": "Ice magic",
+      "description": "Cryomancy is the school of ice magic.",
+      "const": "Cryomancy"
+    },
+    {
+      "title": "Force magic",
+      "description": "Trudomancy is the school of force magic.",
+      "const": "Trudomancy"
+    },
+    {
+      "title": "Light magic",
+      "description": "Photomancy is the school of light magic.",
+      "const": "Photomancy"
+    },
+    {
+      "title": "Dark magic",
+      "description": "Umbramancy is the school of dark magic.",
+      "const": "Umbramancy"
+    },
+    {
+      "title": "Arcane magic",
+      "description": "Arcanomancy is the school of arcane magic.",
+      "const": "Arcanomancy"
+    },
+    {
+      "title": "Life magic",
+      "description": "Vitomancy is the school of life magic.",
+      "const": "Vitomancy"
+    },
+    {
+      "title": "Death magic",
+      "description": "Mortomancy is the school of death magic.",
+      "const": "Mortomancy"
+    },
+    {
+      "title": "Enhancement magic",
+      "description": "Ampiliomancy is the school of enhancement magic.",
+      "const": "Ampiliomancy"
+    },
+    {
+      "title": "Reduction magic",
+      "description": "Diminiomancy is the school of reduction magic.",
+      "const": "Diminiomancy"
+    },
+    {
+      "title": "Summoning magic",
+      "description": "Citomancy is the school of summoning magic.",
+      "const": "Citomancy"
+    },
+    {
+      "title": "Necromancy is the school of necromancy.",
+      "const": "Necromancy"
+    },
+    {
+      "title": "Polymorph magic",
+      "description": "Mutatiomancy is the school of polymorph magic.",
+      "const": "Mutatiomancy"
+    },
+    {
+      "title": "Time magic",
+      "description": "Chronomancy is the school of time magic.",
+      "const": "Chronomancy"
+    }
+  ]
+}

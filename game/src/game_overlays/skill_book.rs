@@ -1,8 +1,8 @@
 //! The skill book UI overlay.
 use bevy::prelude::*;
-use game_library::{
+use elementalist_game_library::{
     colors, data_loader::storage::GameData, enums::Skill, font_resource::FontResource,
-    state::Overlay,
+    images::StoredTextureAtlas, state::Overlay,
 };
 
 pub struct SkillBookUiPlugin;
@@ -16,8 +16,11 @@ impl Plugin for SkillBookUiPlugin {
 }
 
 /// system to change system to skill screen when pressing 'k'
-fn toggle_skill_screen(mut next_overlay: ResMut<NextState<Overlay>>, input: Res<Input<KeyCode>>) {
-    if input.just_pressed(KeyCode::K) {
+fn toggle_skill_screen(
+    mut next_overlay: ResMut<NextState<Overlay>>,
+    input: Res<ButtonInput<KeyCode>>,
+) {
+    if input.just_pressed(KeyCode::KeyK) {
         next_overlay.set(Overlay::SkillScreen);
     }
 }
@@ -76,7 +79,7 @@ const RIGHT_COLUMN_SKILLS: [Skill; 9] = [
 
 fn add_skill_to_ui(
     font: Handle<Font>,
-    icon_tileset: Handle<TextureAtlas>,
+    icon_tileset: StoredTextureAtlas,
     skill: Skill,
     commands: &mut Commands,
 ) -> Entity {
@@ -130,9 +133,12 @@ fn add_skill_to_ui(
         .id();
     let skill_icon = commands
         .spawn(AtlasImageBundle {
-            texture_atlas: icon_tileset,
-            texture_atlas_image: UiTextureAtlasImage {
+            texture_atlas: TextureAtlas {
+                layout: icon_tileset.atlas_handle.clone(),
                 index: skill.icon_index(),
+            },
+            image: UiImage {
+                texture: icon_tileset.texture_handle,
                 ..default()
             },
             ..default()

@@ -11,8 +11,13 @@ data:
   name: Rock Pillar
   description: Summon a pillar of rock at the target location.
   manaCost: 2
-  castSlot: secondary
-  castTime: 0
   cooldown: 2.50
-  magic: earth
-  spellTier: 2
+  talisman:
+    shaping: AreaOfEffect
+    behavior: Utility
+    tier: Uncommon
+  skill: Geomancy
+  castSlot: Slot
+  castType: Instant
+  spriteTileset: placeholder
+  spriteIndex: 0

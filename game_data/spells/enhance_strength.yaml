@@ -11,14 +11,13 @@ data:
   name: Enhance Strength
   description: Enhance the strength of the target (typically the caster).
   manaCost: 2
-  castSlot: secondary
-  castTime: 0
+  castType: Instant
+  castSlot: Slot
   cooldown: .10
-  magic: enhancement
-  spellTier: 0
-  flags:
-    - buff
-  castType: instant
-  castCategory: onSelf
   spriteTileset: tileset/spell_icons.png
   spriteIndex: 0
+  talisman:
+    shaping: OnSelf
+    behavior: Buff
+    tier: Mundane
+  skill: Ampiliomancy

@@ -17,7 +17,7 @@ pub fn status_screen_stats_node_bundle() -> NodeBundle {
     }
 }
 
-/// Status screen shows the player's stats. The text is the stat name and value, and we need ot make
+/// Status screen shows the player's stats. The text is the stat name and value, and we need to make
 /// it small enough to fit a lot of stats on the screen.
 #[must_use]
 pub fn status_screen_text_bundle(text: impl Into<String>, font: Handle<Font>) -> TextBundle {

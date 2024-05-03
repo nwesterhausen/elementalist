@@ -20,7 +20,7 @@ embed-resource = "2.4.1"
 leafwing-input-manager = "0.13.3"
 # Used for logging. This might be able to be replaced with a re-pub from bevy.
 tracing = "0.1.40"
-# The game library contains a lot of resources, logic and compoents used in the game.
+# The game library contains a lot of resources, logic and components used in the game.
 elementalist_game_library = { path = "../game_library" }
 # For setting the icon on Windows, we use this, which must match the version in bevy.
 winit = "0.29.10"

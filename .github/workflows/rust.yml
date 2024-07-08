@@ -93,7 +93,7 @@ jobs:
         with:
           targets: x86_64-unknown-linux-gnu
           toolchain: ${{ env.nightly_toolchain }}
-      - uses: taiki-e/install-action@3b0d937160738a7a458c7b13f8b05f08f3f72d80 # v2.41.5
+      - uses: taiki-e/install-action@64e4e2f995104968c78bd697b253d55bf557af66 # v2.41.11
         with:
           tool: cargo-nextest
       - name: Run tests

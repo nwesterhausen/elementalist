@@ -955,25 +955,19 @@ impl From<Attribute> for u32 {
 
 impl From<Attribute> for u16 {
     fn from(value: Attribute) -> Self {
-        Self::try_from(value.current).map_or_else(
-            |_| {
-                tracing::warn!("attribute value {} too big for u16", value.current);
-                Self::MAX
-            },
-            |value| value,
-        )
+        Self::try_from(value.current).unwrap_or_else(|_| {
+            tracing::warn!("attribute value {} too big for u16", value.current);
+            Self::MAX
+        })
     }
 }
 
 impl From<Attribute> for u8 {
     fn from(value: Attribute) -> Self {
-        Self::try_from(value.current).map_or_else(
-            |_| {
-                tracing::warn!("attribute value {} too big for u8", value.current);
-                Self::MAX
-            },
-            |value| value,
-        )
+        Self::try_from(value.current).unwrap_or_else(|_| {
+            tracing::warn!("attribute value {} too big for u8", value.current);
+            Self::MAX
+        })
     }
 }
 
@@ -985,37 +979,28 @@ impl From<Attribute> for i64 {
 
 impl From<Attribute> for i32 {
     fn from(value: Attribute) -> Self {
-        Self::try_from(value.current).map_or_else(
-            |_| {
-                tracing::warn!("attribute value {} too big for i32", value.current);
-                Self::MAX
-            },
-            |value| value,
-        )
+        Self::try_from(value.current).unwrap_or_else(|_| {
+            tracing::warn!("attribute value {} too big for i32", value.current);
+            Self::MAX
+        })
     }
 }
 
 impl From<Attribute> for i16 {
     fn from(value: Attribute) -> Self {
-        Self::try_from(value.current).map_or_else(
-            |_| {
-                tracing::warn!("attribute value {} too big for i16", value.current);
-                Self::MAX
-            },
-            |value| value,
-        )
+        Self::try_from(value.current).unwrap_or_else(|_| {
+            tracing::warn!("attribute value {} too big for i16", value.current);
+            Self::MAX
+        })
     }
 }
 
 impl From<Attribute> for i8 {
     fn from(value: Attribute) -> Self {
-        Self::try_from(value.current).map_or_else(
-            |_| {
-                tracing::warn!("attribute value {} too big for i8", value.current);
-                Self::MAX
-            },
-            |value| value,
-        )
+        Self::try_from(value.current).unwrap_or_else(|_| {
+            tracing::warn!("attribute value {} too big for i8", value.current);
+            Self::MAX
+        })
     }
 }
 

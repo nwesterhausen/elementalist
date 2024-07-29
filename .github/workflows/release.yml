@@ -36,7 +36,7 @@ jobs:
       contents: write
 
     steps:
-      - uses: step-security/harden-runner@17d0e2bd7d51742c71671bd19fa12bdc9d40a3d6 # v2.8.1
+      - uses: step-security/harden-runner@0d381219ddf674d61a7572ddd19d7941e271515c # v2.9.0
         with:
           egress-policy: audit
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
@@ -70,7 +70,7 @@ jobs:
           zip --recurse-paths ../${{ env.binary }}.zip .
 
       - name: Upload binaries to artifacts
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4
+        uses: actions/upload-artifact@0b2256b8c012f0828dc542b3febcab082c67f72b # v4
         with:
           path: ${{ env.binary }}.zip
           name: linux
@@ -94,7 +94,7 @@ jobs:
       contents: write
 
     steps:
-      - uses: step-security/harden-runner@17d0e2bd7d51742c71671bd19fa12bdc9d40a3d6 # v2.8.1
+      - uses: step-security/harden-runner@0d381219ddf674d61a7572ddd19d7941e271515c # v2.9.0
         with:
           egress-policy: audit
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
@@ -124,7 +124,7 @@ jobs:
           Compress-Archive -Path windows/* -DestinationPath ${{ env.binary }}.zip
 
       - name: Upload binaries to artifacts
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4
+        uses: actions/upload-artifact@0b2256b8c012f0828dc542b3febcab082c67f72b # v4
         with:
           path: ${{ env.binary }}.zip
           name: windows
@@ -148,7 +148,7 @@ jobs:
       contents: write
 
     steps:
-      - uses: step-security/harden-runner@17d0e2bd7d51742c71671bd19fa12bdc9d40a3d6 # v2.8.1
+      - uses: step-security/harden-runner@0d381219ddf674d61a7572ddd19d7941e271515c # v2.9.0
         with:
           egress-policy: audit
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
@@ -193,7 +193,7 @@ jobs:
           hdiutil create -fs HFS+ -volname "${{ env.binary }}" -srcfolder ${{ env.binary }}.app ${{ env.binary }}-macOS.dmg
 
       - name: Upload binaries to artifacts
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4
+        uses: actions/upload-artifact@0b2256b8c012f0828dc542b3febcab082c67f72b # v4
         with:
           path: ${{ env.binary }}-macOS.dmg
           name: macOS-intel
@@ -234,11 +234,11 @@ jobs:
     if: ${{ needs.check-if-upload-to-itch-is-configured.outputs.should-upload == 'yes' }}
 
     steps:
-      - uses: step-security/harden-runner@17d0e2bd7d51742c71671bd19fa12bdc9d40a3d6 # v2.8.1
+      - uses: step-security/harden-runner@0d381219ddf674d61a7572ddd19d7941e271515c # v2.9.0
         with:
           egress-policy: audit
       - name: Download artifacts
-        uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4
+        uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4
         with:
           path: ./builds
 

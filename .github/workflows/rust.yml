@@ -36,7 +36,7 @@ jobs:
         run: sudo apt-get update; sudo apt-get install --no-install-recommends libasound2-dev libudev-dev
       - name: Run sccache-cache
         uses: mozilla-actions/sccache-action@89e9040de88b577a072e3760aaf59f585da083af # 0.0.5
-      - uses: dtolnay/rust-toolchain@21dc36fb71dd22e3317045c0c31a3f4249868b17 # master
+      - uses: dtolnay/rust-toolchain@7b1c307e0dcbda6122208f10795a713336a9b35a # master
         with:
           targets: x86_64-unknown-linux-gnu
           toolchain: ${{ env.nightly_toolchain }}
@@ -64,12 +64,12 @@ jobs:
         run: sudo apt-get update; sudo apt-get install --no-install-recommends libasound2-dev libudev-dev
       - name: Run sccache-cache
         uses: mozilla-actions/sccache-action@89e9040de88b577a072e3760aaf59f585da083af # 0.0.5
-      - uses: dtolnay/rust-toolchain@21dc36fb71dd22e3317045c0c31a3f4249868b17 # master
+      - uses: dtolnay/rust-toolchain@7b1c307e0dcbda6122208f10795a713336a9b35a # master
         with:
           targets: x86_64-unknown-linux-gnu
           toolchain: ${{ env.nightly_toolchain }}
       - name: Install Nightly Toolchain
-        uses: dtolnay/rust-toolchain@21dc36fb71dd22e3317045c0c31a3f4249868b17 # stable
+        uses: dtolnay/rust-toolchain@7b1c307e0dcbda6122208f10795a713336a9b35a # stable
         with:
           components: clippy
           toolchain: nightly-2024-01-17
@@ -89,7 +89,7 @@ jobs:
         run: sudo apt-get update; sudo apt-get install --no-install-recommends libasound2-dev libudev-dev
       - name: Run sccache-cache
         uses: mozilla-actions/sccache-action@89e9040de88b577a072e3760aaf59f585da083af # 0.0.5
-      - uses: dtolnay/rust-toolchain@21dc36fb71dd22e3317045c0c31a3f4249868b17 # master
+      - uses: dtolnay/rust-toolchain@7b1c307e0dcbda6122208f10795a713336a9b35a # master
         with:
           targets: x86_64-unknown-linux-gnu
           toolchain: ${{ env.nightly_toolchain }}

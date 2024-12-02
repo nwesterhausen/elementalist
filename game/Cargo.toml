@@ -22,17 +22,17 @@ bevy = "0.12.1"
 # Input abstraction layer, makes for easy input handling and rebinding.
 leafwing-input-manager = "0.11.2"
 # Used for logging. This might be able to be replaced with a re-pub from bevy.
-tracing = "0.1.40"
+tracing = "0.1.41"
 # The game library contains a lot of resources, logic and compoents used in the game.
 game_library = { path = "../game_library" }
 # For setting the icon on Windows, we use this, which must match the version in bevy.
-winit = "0.28"
+winit = "0.30"
 # Used to load our icon for the window.
 image = "0.24"
 # Random noise generation library
 rand = "0.8.5"
 # DEBUG ONLY: docking support for the inspector egui
-egui_dock = "0.12.0"
+egui_dock = "0.14.0"
 # DEBUG ONLY: inspector for bevy
 bevy-inspector-egui = "0.22.1"
 # Particle system
